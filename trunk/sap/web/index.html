@@ -71,19 +71,18 @@
                     <a href="index.html" class="brand">Sistema de Autoevaluación de Programas</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li class="active"><a href="index.html">Inicio</a></li>
+                            <li class="active"><a href="#inicio">Inicio</a></li>
                             <li><a href="#">About</a></li>
                             <li ><a href="#">Products</a></li>
                             <li><a href="#">Gallery</a></li>
-                            <li><a href="#">Blog</a></li>			
-                            <li><a href="#">Ingresar</a></li>
+                            <li><a href="#ingresar">Ingresar</a></li>
                         </ul>
                     </div>
                     <!--/.nav-collapse -->
                 </div>
             </div>
         </div>
-        <header>
+        <header class="inicio">
             <div class="header-content home">
                 <div class="parallax-bg" id="slider-wrap">
                     <div class="slider parallax-bg" id="slider"> <div class="slider-sections sandbox"> 
@@ -95,7 +94,7 @@
             </div>
         </header>
         <div class="container">
-            <div class="row">
+            <div class="row" id="login" style="display: none">
                 <form name="formularioLogin" class="form-signin">
                     <h2 class="form-signin-heading">Ingresar</h2>
                     <input type="text" placeholder="Usuario" id="codigo" class="input-block-level">
@@ -108,7 +107,7 @@
             </div>
 
             <!-- Example row of columns -->
-            <div class="row">
+            <div class="row inicio">
                 <div class="span4">
                     <h2>Heading</h2>
                     <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
@@ -138,95 +137,31 @@
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
 
         <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/jquery.ba-hashchange.min.js"></script>
 
         <script src="js/main.js"></script>
         <script type="text/javascript">
                                             $(function() {
-                                                state = false;
-
-                                                var naviButton = $('#contact'),
-                                                        sitenavMain = $('#sitenav-main'),
-                                                        slogan = $('#telerik-slogan'),
-                                                        sitenav = $('#sitenav'),
-                                                        sitenaviPanel = $(".sitenavi-panel"),
-                                                        speedIn = 800,
-                                                        speedOut = 600,
-                                                        doc = $('body');
-
-                                                naviButton.click(function(e) {
-                                                    var $this = $(this);
-                                                    (!state) ? showSitenavMain() : hideSitenavMain();
-
-                                                    e.stopPropagation();
+                                                $(".nav-collapse ul.nav li a").click(function(event) {
+                                                    $(".nav li").removeClass("active");
+                                                    $(this).parent().siblings().removeClass("active");
+                                                    $(this).parent().addClass("active");
+                                                    location = $(this).attr("href");
                                                 });
+                                                $(window).hashchange(function() {
+                                                    var hash = location.hash;
+                                                    if (hash === "#ingresar") {
+                                                        $(".inicio").hide();
+                                                        $("#login").show();
 
-                                                sitenav.add(sitenaviPanel).click(function(e) {
-                                                    e.stopPropagation();
+
+                                                    }else if(hash === "#inicio"){
+                                                        $(".inicio").show();
+                                                        $("#login").hide();
+                                                    }
                                                 });
-
-                                                doc.click(function(event) {
-                                                    if (state && sitenavMain.not(':animated')) {
-                                                        hideSitenavMain();
-                                                    }
-
-
-                                                });
-
-                                                function showSitenavMain() {
-                                                    if (!sitenavMain.is(':animated')) {
-
-
-                                                        sitenavMain.animate({
-                                                            top: "-40"
-                                                        }, speedIn, 'easeOutBack', function() {
-                                                            state = true;
-                                                            //animate slogan
-                                                            slogan.css({display: 'block'}).delay(100).animate({bottom: -12, opacity: 1});
-                                                        });
-
-                                                        naviButton.toggleClass('active');
-
-                                                        if (typeof homepage != 'undefined' && homepage == true) {
-                                                            sitenav.css({position: 'fixed'});
-                                                            doc.animate({scrollTop: 426});
-                                                        }
-                                                    }
-                                                    else {
-                                                        return false;
-                                                    }
-                                                }
-
-
-                                                function hideSitenavMain() {
-                                                    if (!sitenavMain.is(':animated')) {
-                                                        //animate slogan
-                                                        slogan.animate({opacity: 0}, function() {
-                                                            $(this).css({bottom: -22, display: 'none'})
-                                                        });
-
-                                                        sitenavMain.animate({
-                                                            top: "-=490"
-                                                        }, speedOut, 'easeInBack', function() {
-                                                            state = false;
-                                                            naviButton.toggleClass('active');
-                                                        });
-
-                                                        if (typeof homepage != 'undefined' && homepage == true) {
-                                                            doc.delay(400).animate({scrollTop: 0}, function() {
-                                                                sitenav.css({position: 'absolute'});
-                                                            });
-                                                        }
-                                                    }
-                                                    else {
-                                                        return false;
-                                                    }
-                                                }
-
-
 
                                             });
-
-
                                             //Jquery Easings
                                             eval(function(p, a, c, k, e, r) {
                                                 e = function(c) {
