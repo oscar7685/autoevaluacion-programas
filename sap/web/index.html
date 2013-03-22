@@ -17,10 +17,13 @@
         <style>
             body {
                 padding-top: 60px;
-                padding-bottom: 40px;
+                /* padding-bottom: 40px;*/
             }
         </style>
         <style type="text/css">
+            .form-signin label{
+                margin-bottom: 2px;
+            }
             .form-signin {
                 max-width: 300px;
                 padding: 19px 29px 29px;
@@ -40,7 +43,8 @@
                 margin-bottom: 10px;
             }
             .form-signin input[type="text"],
-            .form-signin input[type="password"] {
+            .form-signin input[type="password"],
+            .form-signin select{
                 font-size: 16px;
                 height: auto;
                 margin-bottom: 15px;
@@ -99,6 +103,20 @@
                     <h2 class="form-signin-heading">Ingresar</h2>
                     <input type="text" placeholder="Usuario" id="codigo" class="input-block-level">
                     <input type="password" placeholder="Contraseña" id="pass" class="input-block-level">
+                    <label>Perfil de ingreso</label>
+                    <select id="perfilIngreso" class="input-block-level">
+                        <option>Comite central</option>
+                        <option>Comite de programa</option>
+                        <optgroup label="Fuente">
+                            <option>Estudiantes</option>
+                            <option>Docentes</option>
+                            <option>Administrativos</option>
+                            <option>Egresados</option>
+                            <option>Directivos</option>
+                            <option>Agencias Gubernamentales</option>
+                            <option>Empleadores</option>
+                        </optgroup>
+                    </select>
                     <label class="checkbox">
                         <input type="checkbox" value="remember-me"> Recordar
                     </label>
