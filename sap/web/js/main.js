@@ -50,13 +50,13 @@ $(function() {
         if (hash === "#ingresar") {
             $(".inicio").hide();
             $("#login").show();
-
+   
 
         } else if (hash === "#inicio") {
             $(".inicio").show();
             $("#login").hide();
         }
-    });
+});
 
 });
 //Jquery Easings

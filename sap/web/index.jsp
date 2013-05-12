@@ -4,15 +4,15 @@
     if (aux == null || aux.equals("")) {
     } else {
         if (aux.equals("Comite de programa")) {
-            RequestDispatcher rd = request.getRequestDispatcher("/ControllerAI?action=indexAI");
+            RequestDispatcher rd = request.getRequestDispatcher("/controladorCP?action=indexAI");
             rd.forward(request, response);
         } else {
             if (aux.equals("Comite central")) {
-                RequestDispatcher rd = request.getRequestDispatcher("/ControllerCC?action=indexCC");
+                RequestDispatcher rd = request.getRequestDispatcher("/controladorCC?action=indexCC");
                 rd.forward(request, response);
             } else {
                 if (aux.equals("Fuente")) {
-                    RequestDispatcher rd = request.getRequestDispatcher("/ControllerF?action=indexF");
+                    RequestDispatcher rd = request.getRequestDispatcher("/controladorF?action=indexF");
                     rd.forward(request, response);
                 }
             }

@@ -4,25 +4,22 @@
  */
 package com.sap.controller;
 
-import com.sap.ejb.RepresentanteFacade;
-import com.sap.entity.Representante;
+import com.sap.actions.Action;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
+import java.util.Enumeration;
+import java.util.ResourceBundle;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Ususario
  */
-public class loginController extends HttpServlet {
-
-    @EJB
-    private RepresentanteFacade representanteFacade;
+public class fontControllerCC extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -36,21 +33,40 @@ public class loginController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+       
+
+       
+
+
         try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet loginController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet loginController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
+            ResourceBundle rb = ResourceBundle.getBundle("/properties/actions");
+            String action = request.getParameter("action");
+            String clase = null;
+            clase = rb.getString(action);
+            
+            System.out.println("action: '" + action + "' recibida.");
+            
+            Action objeto = (Action) Class.forName(clase).newInstance();
+
+
+            String ruta = objeto.procesar(request);
+
+            System.out.println("action: '" + action + "' procesada.");
+
+            RequestDispatcher rd = request.getRequestDispatcher(ruta);
+
+            if (rd == null) {
+                throw new ServletException("Vista NO encontrada");
+            }
+
+            rd.forward(request, response);
+
+        } catch (Exception ex) {
+            System.out.println("errrroor");
+            String ruta = "error.html";
+            RequestDispatcher rd = request.getRequestDispatcher(ruta);
+            rd.forward(request, response);
+            throw new ServletException("ha ocurrido un error");
         }
     }
 
@@ -82,33 +98,7 @@ public class loginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = (String) request.getParameter("action");
-        if (action != null) {
-            request.getSession().invalidate();
-        } else {
-            String un = (String) request.getParameter("un");
-            String pw = (String) request.getParameter("pw");
-            String tp = (String) request.getParameter("tp");
-            HttpSession session = request.getSession();
-
-            response.setContentType("text/plain");
-            PrintWriter out = response.getWriter();
-
-
-            if (tp != null && tp.equals("Comite central")) {
-
-                Representante r = representanteFacade.find(Integer.parseInt(un));
-                if (r != null && r.getPassword().equals(pw)) {
-                    session.setAttribute("tipoLogin", "Comite central");
-                    out.println(0);
-                } else {
-                    out.println(1);
-                }
-            }
-
-        }
-
-
+        processRequest(request, response);
     }
 
     /**
