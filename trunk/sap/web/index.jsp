@@ -134,7 +134,7 @@
             <hr>
 
             <footer>
-                <p>&copy; Company 2012</p>
+                <p>&copy; Universidad de Cartagena 2013</p>
             </footer>
 
         </div> <!-- /container -->

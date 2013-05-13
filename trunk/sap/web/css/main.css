@@ -1,47 +1,136 @@
 body {
-                padding-top: 60px;
-                /* padding-bottom: 40px;*/
-            }
-        
-            .form-signin label{
-                margin-bottom: 2px;
-            }
-            .form-signin {
-                max-width: 300px;
-                padding: 19px 29px 29px;
-                margin: 0 auto 20px;
-                background-color: #fff;
-                border: 1px solid #e5e5e5;
-                -webkit-border-radius: 5px;
-                -moz-border-radius: 5px;
-                border-radius: 5px;
-                -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                margin-top: 80px;
-            }
-            .form-signin .form-signin-heading,
-            .form-signin .checkbox {
-                margin-bottom: 10px;
-            }
-            .form-signin input[type="text"],
-            .form-signin input[type="password"],
-            .form-signin select{
-                font-size: 16px;
-                height: auto;
-                margin-bottom: 15px;
-                padding: 7px 9px;
-            }
+    padding-top: 60px;
+    /* padding-bottom: 40px;*/
+}
+
+.form-signin label{
+    margin-bottom: 2px;
+}
+.form-signin {
+    max-width: 300px;
+    padding: 19px 29px 29px;
+    margin: 0 auto 20px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    margin-top: 80px;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+.form-signin input[type="text"],
+.form-signin input[type="password"],
+.form-signin select{
+    font-size: 16px;
+    height: auto;
+    margin-bottom: 15px;
+    padding: 7px 9px;
+}
+
+.ui-layout-north {
+    /* Drop-Down */
+    bottom:		auto;
+    margin:		0;
+    padding-bottom: 30px;
+}
+
+.ui-layout-center{
+    overflow: auto;
+}
+.ui-layout-south{
+    padding-top: 0px;
+}
+.ui-layout-west{
+    padding-right: 0;
+}
+.inner-layout-north {
+    /* Drop-Down */
+    bottom:		auto;
+    margin:		0;
+
+}
+.ui-layout-pane2 { /* solo header */
+    background:	#FFF; 
+    /* <<<< ojo comentado por mi >>>>> */
+    /*border: 1px solid #BBB; */
 
 
+    /* DO NOT add scrolling (or padding) to 'panes' that have a content-div,
+       otherwise you may get double-scrollbars - on the pane AND on the content-div
+    */
 
+    padding: 0;
+    overflow:	auto;
+}
 
+.ui-layout-pane-west{
+    border-right: 1px solid #BBBBBB; 
+}
+.ui-layout-south hr{
+    margin-top: 0px;    
+}
 
+.nav-list li a:hover [class^="icon-"]:before, .nav-list li a:hover [class*=" icon-"]:before, .nav-list li.active a [class^="icon-"]:before {
+    font-size: 28px;
+    vertical-align: -5px;
+}
 
-
-
-
-
-
-
-
+.nav-list li{
+    line-height: 29px;
+}
+.nav-header {
+    font-size: 12px;
+    line-height: 20px;
+}
+.nav-list li a [class^="icon-"], .nav-list li a [class*=" icon-"] {
+    font-size: 14px;
+    width: 32px;
+}
+.nav-list li [class^="icon-"], .nav-list li [class*=" icon-"] {
+    display: inline-block;
+    text-align: center;
+}
+.nav-list li a >i, .nav-list li a:hover >i{
+    color: #222222;
+}
+.page_loading {
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: #8F8F8F;
+    background-image: none;
+    background-origin: padding-box;
+    background-position: 0 0;
+    background-repeat: repeat;
+    background-size: auto auto;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: #FFFFFF;
+    height: 32px;
+    left: 45%;
+    line-height: 32px;
+    margin-bottom: 0;
+    margin-left: -62px;
+    margin-right: 0;
+    margin-top: -16px;
+    padding-bottom: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 0;
+    position: absolute;
+    top: 30%;
+}
+.page_loading span {
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 32px;
+    font-family: Helvetica,Arial,sans-serif;
+}

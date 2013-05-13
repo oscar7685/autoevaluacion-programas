@@ -4,25 +4,27 @@
  */
 package com.sap.controller;
 
-import com.sap.ejb.RepresentanteFacade;
-import com.sap.entity.Representante;
+import com.sap.ejb.ModeloFacade;
+import com.sap.entity.Modelo;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Ususario
  */
-public class loginController extends HttpServlet {
+public class formController2 extends HttpServlet {
 
     @EJB
-    private RepresentanteFacade representanteFacade;
+    private ModeloFacade modeloFacade;
 
     /**
      * Processes requests for both HTTP
@@ -38,23 +40,37 @@ public class loginController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+
         try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet loginController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet loginController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
+
+            if (request.getParameter("action").equals("crearModeloCC")) {
+                String nombre = (String) request.getParameter("nombre");
+                String descripcion = (String) request.getParameter("descripcion");
+                java.util.Date date = new java.util.Date();
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                String fecha = sdf.format(date);
+                SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                Date fecha2 = null;
+                try {
+
+                    fecha2 = formatoDelTexto.parse(fecha);
+
+                } catch (ParseException ex) {
+
+                    ex.printStackTrace();
+
+                }
+                Modelo m = new Modelo();
+                m.setFechacreacion(fecha2);
+                m.setDescripcion(descripcion);
+                m.setNombre(nombre);
+                modeloFacade.create(m);
+            }
+        } catch (Exception e) {
         }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP
      * <code>GET</code> method.
@@ -82,34 +98,7 @@ public class loginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = (String) request.getParameter("action");
-        if (action != null) {
-            request.getSession().invalidate();
-        } else {
-            String un = (String) request.getParameter("un");
-            String pw = (String) request.getParameter("pw");
-            String tp = (String) request.getParameter("tp");
-            HttpSession session = request.getSession();
-
-            response.setContentType("text/plain");
-            PrintWriter out = response.getWriter();
-
-
-            if (tp != null && tp.equals("Comite central")) {
-
-                Representante r = representanteFacade.find(Integer.parseInt(un));
-                if (r != null && r.getPassword().equals(pw)) {
-                    session.setAttribute("tipoLogin", "Comite central");
-                    session.setAttribute("nombre", ""+r.getNombre()+" "+r.getApellido());
-                    out.println(0);
-                } else {
-                    out.println(1);
-                }
-            }
-
-        }
-
-
+        processRequest(request, response);
     }
 
     /**
