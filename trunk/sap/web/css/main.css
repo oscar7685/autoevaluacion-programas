@@ -134,3 +134,36 @@ body {
     line-height: 32px;
     font-family: Helvetica,Arial,sans-serif;
 }
+.action a:hover [class^="icon-"]:before, .action a:hover [class*=" icon-"]:before {
+    font-size: 28px;
+    vertical-align: -5px;
+}
+
+.action a [class^="icon-"], .action a [class*=" icon-"] {
+    font-size: 14px;
+    width: 32px;
+}
+.action [class^="icon-"], .action [class*=" icon-"] {
+    display: inline-block;
+    text-align: center;
+}
+
+.action  a, .action a:hover {
+    color: #222222;
+    -moz-text-blink: none;
+    -moz-text-decoration-line: none;
+    text-decoration: none;
+}
+.action  a {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    cursor: pointer;
+    display: inline;
+    height: 32px;
+    line-height: 32px;
+}
+.hero-unit{
+    padding: 10px 60px;
+}

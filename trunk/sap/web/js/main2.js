@@ -1,4 +1,5 @@
 $(function() {
+    location = "/sap/#inicio";
     $(document).ajaxStart(function() {
         $("div.ui-layout-center").append("<div id='contenido'></div>");
         $("#contenido").hide();
@@ -62,13 +63,14 @@ $(function() {
         location = $(this).attr("href");
     });
 
-    $("ul.nav-list li a").click(function(event) {
-        $(".nav li").removeClass("active");
-        $("ul.nav-list li a").children("i").removeClass("icon-white");
-        $(this).parent().addClass("active");
-        $(this).children("i").addClass("icon-white");
-        location = $(this).attr("href");
-    })
+    var a = function() {
+        $("ul.nav-list li a").click(function() {
+            $(".nav li").removeClass("active");
+            $(this).parent().addClass("active");
+            location = $(this).attr("href");
+        });
+    };
+    a();
 
     $(window).hashchange(function() {
         var hash = location.hash;
@@ -79,7 +81,7 @@ $(function() {
             });//fin post
 
         } else {
-            if (hash === "#crearModelo" || hash === "#listarModelo") {
+            if (hash === "#entrarModelo") {
                 var url3 = "/sap/" + hash;
                 url3 = url3.replace('#', "controladorCC?action=") + "CC";
                 $("div.ui-layout-center").empty();
@@ -89,13 +91,53 @@ $(function() {
                     success: function(data)
                     {
                         $("#contenido").append(data);
-                        $("#contenido").show(200, function() {
-                            $(".page_loading").hide();
-                        });
+                        $.ajax({
+                            type: "POST",
+                            url: "/sap/controladorCC?action=menuCC",
+                            success: function(data)
+                            {
+                                $("#contenido").show(200, function() {
+                                    $("#menu").html(data);
+                                    $(".page_loading").hide();
+                                    myLayout.addCloseBtn("#west-closer", "west");
+                                    a();
+                                });
+                            } //fin success
+                        }); //fin del $.ajax
 
                     } //fin success
                 }); //fin del $.ajax
+
+            } else {
+                if (hash === "#crearModelo" || hash === "#listarModelo") {
+                    var url3 = "/sap/" + hash;
+                    url3 = url3.replace('#', "controladorCC?action=") + "CC";
+                    $("div.ui-layout-center").empty();
+                    $.ajax({
+                        type: "POST",
+                        url: url3,
+                        success: function(data)
+                        {
+                            $("#contenido").append(data);
+                            if ($("ul.nav-list li:eq(0)").html() !== "Modelo") {
+                                $("#menu").html('<ul class="nav nav-list"> ' +
+                                        '<button id="west-closer" class="close">&laquo;</button>' +
+                                        '<li class="nav-header">Modelo</li>' +
+                                        '<li><a href="#crearModelo"><i class="icon-plus"></i> Crear Modelo</a></li>' +
+                                        '<li><a href="#listarModelo"><i class="icon-reorder"></i> Listar Modelos</a></li>' +
+                                        '</ul>');
+                                myLayout.addCloseBtn("#west-closer", "west");
+                                a();
+                            }
+                            $("#contenido").show(200, function() {
+                                $(".page_loading").hide();
+                            });
+
+                        } //fin success
+                    }); //fin del $.ajax
+                }
             }
+
         }
     });
 
