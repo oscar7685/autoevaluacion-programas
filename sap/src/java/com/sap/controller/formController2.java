@@ -86,6 +86,13 @@ public class formController2 extends HttpServlet {
                             sesion.setAttribute("listaM", modeloFacade.findAll());
                             rd.forward(request, response);
 
+                        } else {
+                            if (request.getParameter("action").equals("menuCC")) {
+                                String url = "/WEB-INF/vista/comiteCentral/menu.jsp";
+                                RequestDispatcher rd = request.getRequestDispatcher(url);
+                                rd.forward(request, response);
+
+                            }
                         }
                     }
                 }

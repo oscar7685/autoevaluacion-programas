@@ -4,7 +4,7 @@
     <div class="row">
         <div id="conte" class="span10">
             <br/>
-            <h2>Listado de  Modelos</h2>
+            <h3>Listado de  Modelos</h3>
               <c:choose>
                 <c:when test="${fn:length(listaM)!= 0}">
 
@@ -23,8 +23,9 @@
                                     <td>   
                                         <c:out value="${row.descripcion}"/>
                                     </td>
-                                    <td class="action icon16">
-                                        <a title="Editar" href="#editarModelo&${row.id}" class="edit"></a>
+                                    <td class="action span2">
+                                        <a href="#editarModelo" title="Editar"><i class="icon-edit"></i></a>
+                                        <a href="#entrarModelo" title="Entrar"><i class="icon-level-down"></i></a>
                                     </td>
                                 </tr>
                             </c:forEach>
