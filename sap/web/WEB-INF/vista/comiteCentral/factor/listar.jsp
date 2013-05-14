@@ -4,28 +4,27 @@
     <div class="row">
         <div id="conte" class="span10">
             <br/>
-            <h3>Listado de  Modelos</h3>
+            <h3>Listado de  Factores</h3>
             <c:choose>
-                <c:when test="${fn:length(listaM)!= 0}">
+                <c:when test="${fn:length(listaF)!= 0}">
 
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
-                        <th>Modelo</th>    
-                        <th>Descripcion</th>
+                        <th>C&oacute;digo</th>    
+                        <th>Nombre</th>
                         <th>Acci&oacute;n</th>
                         </thead>
                         <tbody>
-                            <c:forEach items="${listaM}" var="row" varStatus="iter">
+                            <c:forEach items="${listaF}" var="row" varStatus="iter">
                                 <tr>
+                                    <td>   
+                                        <c:out value="${row.codigo}"/>
+                                    </td>
                                     <td>   
                                         <c:out value="${row.nombre}"/>
                                     </td>
-                                    <td>   
-                                        <c:out value="${row.descripcion}"/>
-                                    </td>
                                     <td class="action span2">
-                                        <a href="#editarModelo" title="Editar"><i class="icon-edit"></i></a>
-                                        <a href="#entrarModelo" title="Entrar"><i class="icon-signin"></i></a>
+                                        <a href="#editarFactor" title="Editar"><i class="icon-edit"></i></a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -33,9 +32,12 @@
                     </table>
                 </c:when>
                 <c:otherwise>
-                    No Existen Modelos Registrados en el Sistema.
+                    No existen factores registrados en el sistema para este modelo.
                 </c:otherwise>
             </c:choose>
+             <br/>       
+             <a href="#crearFactor" class="btn btn-large btn-primary"><i class="icon-plus"></i> Crear factor</a>
+             
         </div>
     </div>
 </div>    
