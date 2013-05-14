@@ -4,6 +4,7 @@
  */
 package com.sap.controller;
 
+import com.sap.ejb.ModeloFacade;
 import com.sap.ejb.RepresentanteFacade;
 import com.sap.entity.Representante;
 import java.io.IOException;

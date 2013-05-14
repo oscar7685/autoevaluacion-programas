@@ -12,10 +12,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -40,10 +42,11 @@ public class formController2 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        HttpSession sesion = request.getSession();
 
         try {
 
-            if (request.getParameter("action").equals("crearModeloCC")) {
+            if (request.getParameter("action").equals("crearModelo")) {
                 String nombre = (String) request.getParameter("nombre");
                 String descripcion = (String) request.getParameter("descripcion");
                 java.util.Date date = new java.util.Date();
@@ -65,6 +68,27 @@ public class formController2 extends HttpServlet {
                 m.setDescripcion(descripcion);
                 m.setNombre(nombre);
                 modeloFacade.create(m);
+            } else {
+                if (request.getParameter("action").equals("indexCC")) {
+                    String url = "/WEB-INF/vista/comiteCentral/index.jsp";
+                    RequestDispatcher rd = request.getRequestDispatcher(url);
+                    rd.forward(request, response);
+
+                } else {
+                    if (request.getParameter("action").equals("crearModeloCC")) {
+                        String url = "/WEB-INF/vista/comiteCentral/modelo/crear.jsp";
+                        RequestDispatcher rd = request.getRequestDispatcher(url);
+                        rd.forward(request, response);
+                    } else {
+                        if (request.getParameter("action").equals("listarModeloCC")) {
+                            String url = "/WEB-INF/vista/comiteCentral/modelo/listar.jsp";
+                            RequestDispatcher rd = request.getRequestDispatcher(url);
+                            sesion.setAttribute("listaM", modeloFacade.findAll());
+                            rd.forward(request, response);
+
+                        }
+                    }
+                }
             }
         } catch (Exception e) {
         }
