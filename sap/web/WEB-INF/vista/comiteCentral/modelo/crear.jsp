@@ -5,7 +5,7 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/formController2",
+                    url: "/sap/controladorCC",
                     data: $fom.serialize(),
                     success: function() {
                         location = "/sap/" + $fom.attr("action");
@@ -37,7 +37,7 @@
                     <div class="form-actions">
                         <button class="btn btn-primary" type="submit">Crear Modelo</button>
                         <button class="btn" type="reset">Cancelar</button>
-                        <input type="hidden" name="action" value="crearModeloCC">
+                        <input type="hidden" name="action" value="crearModelo">
                     </div>
                 </fieldset>
             </form>
