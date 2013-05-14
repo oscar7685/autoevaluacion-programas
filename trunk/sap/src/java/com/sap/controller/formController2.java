@@ -4,7 +4,9 @@
  */
 package com.sap.controller;
 
+import com.sap.ejb.FactorFacade;
 import com.sap.ejb.ModeloFacade;
+import com.sap.entity.Factor;
 import com.sap.entity.Modelo;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,6 +28,8 @@ import javax.servlet.http.HttpSession;
 public class formController2 extends HttpServlet {
 
     @EJB
+    private FactorFacade factorFacade;
+    @EJB
     private ModeloFacade modeloFacade;
 
     /**
@@ -43,56 +47,71 @@ public class formController2 extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         HttpSession sesion = request.getSession();
-
+        String action = (String) request.getParameter("action");
+        System.out.println("ACTION" + action);
         try {
+            if (action.equals("indexCC")) {
+                String url = "/WEB-INF/vista/comiteCentral/index.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
 
-            if (request.getParameter("action").equals("crearModelo")) {
-                String nombre = (String) request.getParameter("nombre");
-                String descripcion = (String) request.getParameter("descripcion");
-                java.util.Date date = new java.util.Date();
-                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                String fecha = sdf.format(date);
-                SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
-                Date fecha2 = null;
-                try {
-
-                    fecha2 = formatoDelTexto.parse(fecha);
-
-                } catch (ParseException ex) {
-
-                    ex.printStackTrace();
-
-                }
-                Modelo m = new Modelo();
-                m.setFechacreacion(fecha2);
-                m.setDescripcion(descripcion);
-                m.setNombre(nombre);
-                modeloFacade.create(m);
             } else {
-                if (request.getParameter("action").equals("indexCC")) {
-                    String url = "/WEB-INF/vista/comiteCentral/index.jsp";
-                    RequestDispatcher rd = request.getRequestDispatcher(url);
-                    rd.forward(request, response);
+                System.out.println("ACTION" + action);
+                if (action.toLowerCase().contains("modelo")) {
+                    if (action.equals("crearModelo")) {
+                        String nombre = (String) request.getParameter("nombre");
+                        String descripcion = (String) request.getParameter("descripcion");
+                        java.util.Date date = new java.util.Date();
+                        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                        String fecha = sdf.format(date);
+                        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                        Date fecha2 = null;
+                        try {
 
-                } else {
-                    if (request.getParameter("action").equals("crearModeloCC")) {
-                        String url = "/WEB-INF/vista/comiteCentral/modelo/crear.jsp";
-                        RequestDispatcher rd = request.getRequestDispatcher(url);
-                        rd.forward(request, response);
+                            fecha2 = formatoDelTexto.parse(fecha);
+
+                        } catch (ParseException ex) {
+
+                            ex.printStackTrace();
+
+                        }
+                        Modelo m = new Modelo();
+                        m.setFechacreacion(fecha2);
+                        m.setDescripcion(descripcion);
+                        m.setNombre(nombre);
+                        modeloFacade.create(m);
                     } else {
-                        if (request.getParameter("action").equals("listarModeloCC")) {
-                            String url = "/WEB-INF/vista/comiteCentral/modelo/listar.jsp";
+                        if (action.equals("crearModeloCC")) {
+                            String url = "/WEB-INF/vista/comiteCentral/modelo/crear.jsp";
                             RequestDispatcher rd = request.getRequestDispatcher(url);
-                            sesion.setAttribute("listaM", modeloFacade.findAll());
                             rd.forward(request, response);
-
                         } else {
-                            if (request.getParameter("action").equals("menuCC")) {
-                                String url = "/WEB-INF/vista/comiteCentral/menu.jsp";
+                            if (action.equals("listarModeloCC")) {
+                                String url = "/WEB-INF/vista/comiteCentral/modelo/listar.jsp";
                                 RequestDispatcher rd = request.getRequestDispatcher(url);
+                                sesion.setAttribute("listaM", modeloFacade.findAll());
                                 rd.forward(request, response);
 
                             }
+                        }
+                    }
+                } else {
+                    if (action.toLowerCase().contains("factor")) {
+                        if (action.equals("crearFactor")) {
+                            String codigo = (String) request.getParameter("codigo");
+                            String nombre = (String) request.getParameter("nombre");
+                            Factor f = new Factor();
+                            f.setCodigo(codigo);
+                            f.setNombre(nombre);
+                            factorFacade.create(f);
+                        } else {
+                            if (action.equals("listarFactoresCC")) {
+                                String url = "/WEB-INF/vista/comiteCentral/factor/listar.jsp";
+                                RequestDispatcher rd = request.getRequestDispatcher(url);
+                                sesion.setAttribute("listaF", factorFacade.findAll());
+                                rd.forward(request, response);
+                            }
+
                         }
                     }
                 }

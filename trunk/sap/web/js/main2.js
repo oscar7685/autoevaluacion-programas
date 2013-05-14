@@ -62,15 +62,44 @@ $(function() {
         $(this).parent().addClass("active");
         location = $(this).attr("href");
     });
-
-    var a = function() {
+    
+    var actualizaEnlaces = function() {
         $("ul.nav-list li a").click(function() {
             $(".nav li").removeClass("active");
             $(this).parent().addClass("active");
             location = $(this).attr("href");
         });
     };
-    a();
+    actualizaEnlaces();
+
+    var menuModelo = function() {
+        $("#menu").html('<ul class="nav nav-list"> ' +
+                '<button id="west-closer" class="close">&laquo;</button>' +
+                '<li class="nav-header">Modelo</li>' +
+                '<li><a href="#crearModelo"><i class="icon-plus"></i> Crear Modelo</a></li>' +
+                '<li><a href="#listarModelo"><i class="icon-reorder"></i> Listar Modelos</a></li>' +
+                '</ul>');
+    };
+    var menuFactores = function() {
+        $("#menu").html('<ul class="nav nav-list">' +
+                '<button id="west-closer" class="close">&laquo;</button>' +
+                '<li class="nav-header">Factores</li>' +
+                '<li><a href="#listarFactores"><i class="icon-th-large"></i> Listar factores</a></li>' +
+                '<li class="divider"></li>' +
+                '<li class="nav-header">Caracteristicas</li>' +
+                '<li><a href="#listarCaracteristicas"><i class="icon-th-list"></i> Listar caracteristicas</a></li>' +
+                '<li class="divider"></li>' +
+                '<li class="nav-header">Indicadores</li>' +
+                '<li><a href="#listarIndicadores"><i class="icon-list"></i> Listar indicadores</a></li>' +
+                '<li class="divider"></li>' +
+                '<li class="nav-header">Preguntas</li>' +
+                '<li><a href="#listarPreguntas"><i class="icon-question"></i> Listar preguntas</a></li>' +
+                '<li class="divider"></li>' +
+                '<li class="nav-header">Encuestas</li>' +
+                '<li><a href="#listarEncuestas"><i class="icon-tasks"></i> Listar encuestas</a></li>' +
+                '</ul>');
+    };
+
 
     $(window).hashchange(function() {
         var hash = location.hash;
@@ -91,20 +120,12 @@ $(function() {
                     success: function(data)
                     {
                         $("#contenido").append(data);
-                        $.ajax({
-                            type: "POST",
-                            url: "/sap/controladorCC?action=menuCC",
-                            success: function(data)
-                            {
-                                $("#contenido").show(200, function() {
-                                    $("#menu").html(data);
-                                    $(".page_loading").hide();
-                                    myLayout.addCloseBtn("#west-closer", "west");
-                                    a();
-                                });
-                            } //fin success
-                        }); //fin del $.ajax
-
+                        $("#contenido").show(200, function() {
+                            menuFactores();
+                            $(".page_loading").hide();
+                            myLayout.addCloseBtn("#west-closer", "west");
+                            actualizaEnlaces();
+                        });
                     } //fin success
                 }); //fin del $.ajax
 
@@ -120,14 +141,9 @@ $(function() {
                         {
                             $("#contenido").append(data);
                             if ($("ul.nav-list li:eq(0)").html() !== "Modelo") {
-                                $("#menu").html('<ul class="nav nav-list"> ' +
-                                        '<button id="west-closer" class="close">&laquo;</button>' +
-                                        '<li class="nav-header">Modelo</li>' +
-                                        '<li><a href="#crearModelo"><i class="icon-plus"></i> Crear Modelo</a></li>' +
-                                        '<li><a href="#listarModelo"><i class="icon-reorder"></i> Listar Modelos</a></li>' +
-                                        '</ul>');
+                                menuModelo();
                                 myLayout.addCloseBtn("#west-closer", "west");
-                                a();
+                                actualizaEnlaces();
                             }
                             $("#contenido").show(200, function() {
                                 $(".page_loading").hide();
@@ -135,6 +151,29 @@ $(function() {
 
                         } //fin success
                     }); //fin del $.ajax
+                } else {
+                    if (hash === "#listarFactores") {
+                        var url3 = "/sap/" + hash;
+                        url3 = url3.replace('#', "controladorCC?action=") + "CC";
+                        $("div.ui-layout-center").empty();
+                        $.ajax({
+                            type: "POST",
+                            url: url3,
+                            success: function(data)
+                            {
+                                $("#contenido").append(data);
+                                if ($("ul.nav-list li:eq(0)").html() !== "Factores") {
+                                    menuFactores();
+                                    myLayout.addCloseBtn("#west-closer", "west");
+                                    actualizaEnlaces();
+                                }
+                                $("#contenido").show(200, function() {
+                                    $(".page_loading").hide();
+                                });
+
+                            } //fin success
+                        }); //fin del $.ajax
+                    }
                 }
             }
 
