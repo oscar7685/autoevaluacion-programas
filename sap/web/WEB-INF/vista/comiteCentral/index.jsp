@@ -37,10 +37,10 @@
                         </a>
                         <a href="index.html" class="brand">Sistema de Autoevaluación de Programas</a>
                         <div class="nav-collapse collapse">
-                            <ul class="nav">
-                                <li class="active"><a href="#inicio">Inicio</a></li>
-                                <li><a href="#">Contacto</a></li>
-                                <li ><a href="#">Acerca de</a></li>
+                            <ul class="nav barra" >
+                                <li class="active"><a href="#inicio"><i class="icon-home"></i> Inicio</a></li>
+                                <li><a href="#"><i class="icon-phone"></i> Contacto</a></li>
+                                <li ><a href="#"><i class="icon-info-sign"></i> Acerca de</a></li>
                                 <li class="dropdown loggining"> 
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                         <i class="icon-user"></i> ${nombre}

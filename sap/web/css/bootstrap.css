@@ -2044,12 +2044,12 @@ legend + .control-group {
   color: #333333;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
   background-color: #f5f5f5;
-  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+ /* background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
   background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
   background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
   background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
-  background-repeat: repeat-x;
+  background-repeat: repeat-x;*/
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
   border-color: #e6e6e6 #e6e6e6 #bfbfbf;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
@@ -2179,13 +2179,13 @@ input[type="button"].btn-block {
 .btn-primary {
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #f39b19;
-  background-image: -moz-linear-gradient(top, #f37e19, #f3c719);
+  background-color: #F37E19;
+/*  background-image: -moz-linear-gradient(top, #f37e19, #f3c719);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f37e19), to(#f3c719));
   background-image: -webkit-linear-gradient(top, #f37e19, #f3c719);
   background-image: -o-linear-gradient(top, #f37e19, #f3c719);
   background-image: linear-gradient(to bottom, #f37e19, #f3c719);
-  background-repeat: repeat-x;
+  background-repeat: repeat-x;*/
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff37e19', endColorstr='#fff3c719', GradientType=0);
   border-color: #f3c719 #f3c719 #b69309;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
