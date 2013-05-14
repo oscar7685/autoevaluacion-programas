@@ -4,7 +4,6 @@
  */
 package com.sap.controller;
 
-import com.sap.ejb.ModeloFacade;
 import com.sap.ejb.RepresentanteFacade;
 import com.sap.entity.Representante;
 import java.io.IOException;
@@ -101,7 +100,19 @@ public class loginController extends HttpServlet {
                 Representante r = representanteFacade.find(Integer.parseInt(un));
                 if (r != null && r.getPassword().equals(pw)) {
                     session.setAttribute("tipoLogin", "Comite central");
-                    session.setAttribute("nombre", ""+r.getNombre()+" "+r.getApellido());
+                    session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
+                    out.println(0);
+                } else {
+                    out.println(1);
+                }
+            } else if (tp != null && tp.equals("Comite programa")) {
+
+                Representante r = representanteFacade.find(Integer.parseInt(un));
+                if (r != null && r.getPassword().equals(pw)) {
+                    session.setAttribute("tipoLogin", "Comite programa");
+                    session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
+                    session.setAttribute("Programa", r.getProgramaId());
+                    System.out.println("Entroo");
                     out.println(0);
                 } else {
                     out.println(1);

@@ -39,6 +39,7 @@
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="css/otro.css">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
         <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
@@ -59,11 +60,10 @@
                     </a>
                     <a href="index.html" class="brand">Sistema de Autoevaluación de Programas</a>
                     <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li class="active"><a href="#inicio">Inicio</a></li>
-                            <li><a href="#">About</a></li>
-                            <li ><a href="#">Products</a></li>
-                            <li><a href="#">Gallery</a></li>
+                        <ul class="nav barra" >
+                            <li class="active"><a href="#inicio"><i class="icon-home"></i> Inicio</a></li>
+                            <li><a href="#"><i class="icon-phone"></i> Contacto</a></li>
+                            <li ><a href="#"><i class="icon-info-sign"></i> Acerca de</a></li>
                             <li><a href="#ingresar">Ingresar</a></li>
                         </ul>
                     </div>

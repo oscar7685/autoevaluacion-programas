@@ -167,3 +167,37 @@ body {
 .hero-unit{
     padding: 10px 60px;
 }
+
+
+
+
+.barra a:hover [class^="icon-"]:before, .barra a:hover [class*=" icon-"]:before, .barra li.active a [class^="icon-"]:before {
+    font-size: 28px;
+    vertical-align: -5px;
+}
+
+.barra a [class^="icon-"], .barra a [class*=" icon-"] {
+    font-size: 14px;
+    width: 32px;
+}
+.barra [class^="icon-"], .barra [class*=" icon-"] {
+    display: inline-block;
+    text-align: center;
+}
+
+.barra  a, .barra a:hover {
+    color: #222222;
+    -moz-text-blink: none;
+    -moz-text-decoration-line: none;
+    text-decoration: none;
+}
+.barra  a {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    cursor: pointer;
+    display: inline;
+    height: 23px;
+    line-height: 23px;
+}
