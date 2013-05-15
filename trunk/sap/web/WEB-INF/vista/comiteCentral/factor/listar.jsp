@@ -36,7 +36,7 @@
                 </c:otherwise>
             </c:choose>
              <br/>       
-             <a href="#crearFactor" class="btn btn-large btn-primary"><i class="icon-plus"></i> Crear factor</a>
+             <a href="#crearFactor" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Crear factor</a>
              
         </div>
     </div>

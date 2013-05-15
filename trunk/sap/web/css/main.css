@@ -82,7 +82,8 @@ body {
 }
 
 .nav-list li{
-    line-height: 29px;
+    height: 32px;
+    line-height: 32px;
 }
 .nav-header {
     font-size: 12px;

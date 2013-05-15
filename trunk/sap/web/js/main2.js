@@ -56,21 +56,12 @@ $(function() {
 
 
 
-    $(".nav-collapse ul.nav li a").click(function() {
+
+    var actualizaEnlaces = function(hash) {
         $(".nav li").removeClass("active");
-        $(this).parent().siblings().removeClass("active");
-        $(this).parent().addClass("active");
-        location = $(this).attr("href");
-    });
-    
-    var actualizaEnlaces = function() {
-        $("ul.nav-list li a").click(function() {
-            $(".nav li").removeClass("active");
-            $(this).parent().addClass("active");
-            location = $(this).attr("href");
-        });
+        $("a[href='" + hash + "']").parent().addClass("active");
     };
-    actualizaEnlaces();
+
 
     var menuModelo = function() {
         $("#menu").html('<ul class="nav nav-list"> ' +
@@ -83,6 +74,7 @@ $(function() {
     var menuFactores = function() {
         $("#menu").html('<ul class="nav nav-list">' +
                 '<button id="west-closer" class="close">&laquo;</button>' +
+                '<li><a href="#listarModelo"><i class="icon-level-up"></i>Men&uacute; modelo</a></li>' +
                 '<li class="nav-header">Factores</li>' +
                 '<li><a href="#listarFactores"><i class="icon-th-large"></i> Listar factores</a></li>' +
                 '<li class="divider"></li>' +
@@ -100,9 +92,9 @@ $(function() {
                 '</ul>');
     };
 
-
+    var hash;
     $(window).hashchange(function() {
-        var hash = location.hash;
+        hash = location.hash;
         if (hash === "#CerrarSesion") {
             $.post('/sap/loginController?action=CerrarSesion', function() {
                 location = "/sap";
@@ -110,7 +102,7 @@ $(function() {
             });//fin post
 
         } else {
-            if (hash === "#entrarModelo") {
+            if (hash === "#inicio") {
                 var url3 = "/sap/" + hash;
                 url3 = url3.replace('#', "controladorCC?action=") + "CC";
                 $("div.ui-layout-center").empty();
@@ -123,14 +115,12 @@ $(function() {
                         $("#contenido").show(200, function() {
                             menuFactores();
                             $(".page_loading").hide();
-                            myLayout.addCloseBtn("#west-closer", "west");
-                            actualizaEnlaces();
                         });
+                        actualizaEnlaces(hash);
                     } //fin success
                 }); //fin del $.ajax
-
             } else {
-                if (hash === "#crearModelo" || hash === "#listarModelo") {
+                if (hash === "#entrarModelo") {
                     var url3 = "/sap/" + hash;
                     url3 = url3.replace('#', "controladorCC?action=") + "CC";
                     $("div.ui-layout-center").empty();
@@ -140,19 +130,17 @@ $(function() {
                         success: function(data)
                         {
                             $("#contenido").append(data);
-                            if ($("ul.nav-list li:eq(0)").html() !== "Modelo") {
-                                menuModelo();
-                                myLayout.addCloseBtn("#west-closer", "west");
-                                actualizaEnlaces();
-                            }
                             $("#contenido").show(200, function() {
+                                menuFactores();
                                 $(".page_loading").hide();
+                                myLayout.addCloseBtn("#west-closer", "west");
                             });
-
+                            actualizaEnlaces(hash);
                         } //fin success
                     }); //fin del $.ajax
+
                 } else {
-                    if (hash === "#listarFactores") {
+                    if (hash === "#crearModelo" || hash === "#listarModelo") {
                         var url3 = "/sap/" + hash;
                         url3 = url3.replace('#', "controladorCC?action=") + "CC";
                         $("div.ui-layout-center").empty();
@@ -162,19 +150,43 @@ $(function() {
                             success: function(data)
                             {
                                 $("#contenido").append(data);
-                                if ($("ul.nav-list li:eq(0)").html() !== "Factores") {
-                                    menuFactores();
+                                if ($("ul.nav-list li:eq(0)").html() !== "Modelo") {
+                                    menuModelo();
                                     myLayout.addCloseBtn("#west-closer", "west");
-                                    actualizaEnlaces();
+
                                 }
                                 $("#contenido").show(200, function() {
                                     $(".page_loading").hide();
                                 });
+                                actualizaEnlaces(hash);
+                            }
 
-                            } //fin success
                         }); //fin del $.ajax
+                    } else {
+                        if (hash === "#listarFactores" || hash === "#crearFactor") {
+                            var url3 = "/sap/" + hash;
+                            url3 = url3.replace('#', "controladorCC?action=") + "CC";
+                            $("div.ui-layout-center").empty();
+                            $.ajax({
+                                type: "POST",
+                                url: url3,
+                                success: function(data)
+                                {
+                                    $("#contenido").append(data);
+                                    if ($("ul.nav-list li:eq(0)").html() !== "Factores") {
+                                        menuFactores();
+                                        myLayout.addCloseBtn("#west-closer", "west");
+                                    }
+                                    $("#contenido").show(200, function() {
+                                        $(".page_loading").hide();
+                                    });
+                                    actualizaEnlaces(hash);
+                                } //fin success
+                            }); //fin del $.ajax
+                        }
                     }
                 }
+
             }
 
         }
