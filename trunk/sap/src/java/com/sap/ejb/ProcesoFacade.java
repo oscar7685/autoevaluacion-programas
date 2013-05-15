@@ -5,9 +5,12 @@
 package com.sap.ejb;
 
 import com.sap.entity.Proceso;
+import com.sap.entity.Programa;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -15,6 +18,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ProcesoFacade extends AbstractFacade<Proceso> {
+
     @PersistenceContext(unitName = "sapPU")
     private EntityManager em;
 
@@ -26,5 +30,11 @@ public class ProcesoFacade extends AbstractFacade<Proceso> {
     public ProcesoFacade() {
         super(Proceso.class);
     }
-    
+
+  /*  public List findByPrograma(Programa p) {
+        Query q = em.createNativeQuery("MdcoreUser.findByID");
+        q.setParameteR("id", "100");
+        MdcoreUser u = q.getSingleResult();
+        return null;
+    }*/
 }

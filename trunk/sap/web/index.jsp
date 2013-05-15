@@ -3,8 +3,8 @@
     String aux = (String) session1.getAttribute("tipoLogin");
     if (aux == null || aux.equals("")) {
     } else {
-        if (aux.equals("Comite de programa")) {
-            RequestDispatcher rd = request.getRequestDispatcher("/controladorCP?action=indexAI");
+        if (aux.equals("Comite programa")) {
+            RequestDispatcher rd = request.getRequestDispatcher("/controladorCP?action=indexCP");
             rd.forward(request, response);
         } else {
             if (aux.equals("Comite central")) {
@@ -94,7 +94,7 @@
                     <label>Perfil de ingreso</label>
                     <select id="perfilIngreso" name="perfilIngreso" class="input-block-level">
                         <option>Comite central</option>
-                        <option>Comite de programa</option>
+                        <option>Comite programa</option>
                         <optgroup label="Fuente">
                             <option>Estudiantes</option>
                             <option>Docentes</option>

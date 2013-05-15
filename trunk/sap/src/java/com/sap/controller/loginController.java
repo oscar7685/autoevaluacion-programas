@@ -4,10 +4,14 @@
  */
 package com.sap.controller;
 
+import com.sap.ejb.ProcesoFacade;
 import com.sap.ejb.RepresentanteFacade;
+import com.sap.entity.Proceso;
 import com.sap.entity.Representante;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +27,8 @@ public class loginController extends HttpServlet {
 
     @EJB
     private RepresentanteFacade representanteFacade;
+    @EJB
+    private ProcesoFacade procesoFacade;
 
     /**
      * Processes requests for both HTTP
@@ -112,15 +118,31 @@ public class loginController extends HttpServlet {
                     session.setAttribute("tipoLogin", "Comite programa");
                     session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
                     session.setAttribute("Programa", r.getProgramaId());
-                    System.out.println("Entroo");
-                    out.println(0);
-                } else {
-                    out.println(1);
+                  /*  List procesos = (List) procesoFacade.find(r.getProgramaId().getId());
+                    if (procesos != null) {
+                        Iterator iter = procesos.iterator();
+                        while (iter.hasNext()) {
+                            Proceso p = (Proceso) iter.next();
+                            if (p.getFechacierre().equals("En Configuración")) {
+                                session.setAttribute("EstadoProceso", 1);
+                                session.setAttribute("Proceso", p);
+                            } else if (p.getFechacierre().equals("En Ejecución")) {
+                                session.setAttribute("EstadoProceso", 2);
+                                session.setAttribute("Proceso", p);
+                            } else {
+                                session.setAttribute("EstadoProceso", 3);
+                            }
+                        }
+                    } else {
+                        session.setAttribute("EstadoProceso", 0);
+                    }*/
                 }
+                System.out.println("Estado del Proceso: " + session.getAttribute("EstadoProceso"));
+                out.println(0);
+            } else {
+                out.println(1);
             }
-
         }
-
 
     }
 
