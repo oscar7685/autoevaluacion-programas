@@ -78,7 +78,7 @@ body {
 
 .nav-list li a:hover [class^="icon-"]:before, .nav-list li a:hover [class*=" icon-"]:before, .nav-list li.active a [class^="icon-"]:before {
     font-size: 28px;
-    vertical-align: -5px;
+    vertical-align: -3px;
 }
 
 .nav-list li{
@@ -173,13 +173,23 @@ body {
 
 .barra a:hover [class^="icon-"]:before, .barra a:hover [class*=" icon-"]:before, .barra li.active a [class^="icon-"]:before {
     font-size: 28px;
-    vertical-align: -5px;
+    vertical-align: -2px;
 }
 
 .barra a [class^="icon-"], .barra a [class*=" icon-"] {
     font-size: 14px;
     width: 32px;
 }
+.navbar .barra > li > a {
+    display: block;
+    height: 32px;
+    line-height: 32px;
+    padding-left: 12px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+
 .barra [class^="icon-"], .barra [class*=" icon-"] {
     display: inline-block;
     text-align: center;
