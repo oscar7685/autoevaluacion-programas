@@ -8,6 +8,10 @@
         <servlet-name>formController2</servlet-name>
         <servlet-class>com.sap.controller.formController2</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>cpController</servlet-name>
+        <servlet-class>com.sap.controller.cpController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>formController2</servlet-name>
         <url-pattern>/controladorCC</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>cpController</servlet-name>
+        <url-pattern>/controladorCP</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
