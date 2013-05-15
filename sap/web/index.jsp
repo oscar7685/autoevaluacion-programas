@@ -62,7 +62,7 @@
                     <div class="nav-collapse collapse">
                         <ul class="nav barra" >
                             <li class="active"><a href="#inicio"><i class="icon-home"></i> Inicio</a></li>
-                            <li><a href="#"><i class="icon-phone"></i> Contacto</a></li>
+                            <li><a href="#contacto"><i class="icon-phone"></i> Contacto</a></li>
                             <li ><a href="#"><i class="icon-info-sign"></i> Acerca de</a></li>
                             <li><a href="#ingresar"><i class="icon-user"></i>Ingresar</a></li>
                         </ul>

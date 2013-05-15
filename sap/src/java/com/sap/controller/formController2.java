@@ -56,7 +56,6 @@ public class formController2 extends HttpServlet {
                 rd.forward(request, response);
 
             } else {
-                System.out.println("ACTION" + action);
                 if (action.toLowerCase().contains("modelo")) {
                     if (action.equals("crearModelo")) {
                         String nombre = (String) request.getParameter("nombre");
@@ -110,8 +109,20 @@ public class formController2 extends HttpServlet {
                                 RequestDispatcher rd = request.getRequestDispatcher(url);
                                 sesion.setAttribute("listaF", factorFacade.findAll());
                                 rd.forward(request, response);
+                            } else {
+                                if (action.equals("crearFactorCC")) {
+                                    String url = "/WEB-INF/vista/comiteCentral/factor/crear.jsp";
+                                    RequestDispatcher rd = request.getRequestDispatcher(url);
+                                    rd.forward(request, response);
+                                }
                             }
 
+                        }
+                    } else {
+                        if (action.equals("inicioCC")) {
+                            String url = "/WEB-INF/vista/comiteCentral/inicio.jsp";
+                            RequestDispatcher rd = request.getRequestDispatcher(url);
+                            rd.forward(request, response);
                         }
                     }
                 }
