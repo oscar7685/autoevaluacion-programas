@@ -12,8 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -50,10 +48,7 @@ public class Privilegio implements Serializable {
     @Size(max = 500)
     @Column(name = "descripcion")
     private String descripcion;
-    @JoinTable(name = "representantehasprivilegio", joinColumns = {
-        @JoinColumn(name = "privilegio_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "representante_id", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "privilegioList")
     private List<Representante> representanteList;
 
     public Privilegio() {

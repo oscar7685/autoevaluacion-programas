@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -56,7 +57,10 @@ public class Proceso implements Serializable {
     @Size(max = 500)
     @Column(name = "descripcion")
     private String descripcion;
-    @ManyToMany(mappedBy = "procesoList")
+    @JoinTable(name = "procesohasindicador", joinColumns = {
+        @JoinColumn(name = "proceso_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "indicador_id", referencedColumnName = "id")})
+    @ManyToMany
     private List<Indicador> indicadorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Ponderacioncaracteristica> ponderacioncaracteristicaList;
@@ -70,12 +74,12 @@ public class Proceso implements Serializable {
     private List<Encabezado> encabezadoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Numericadocumental> numericadocumentalList;
-    @JoinColumn(name = "programa_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Programa programaId;
     @JoinColumn(name = "modelo_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Modelo modeloId;
+    @JoinColumn(name = "programa_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Programa programaId;
 
     public Proceso() {
     }
@@ -184,20 +188,20 @@ public class Proceso implements Serializable {
         this.numericadocumentalList = numericadocumentalList;
     }
 
-    public Programa getProgramaId() {
-        return programaId;
-    }
-
-    public void setProgramaId(Programa programaId) {
-        this.programaId = programaId;
-    }
-
     public Modelo getModeloId() {
         return modeloId;
     }
 
     public void setModeloId(Modelo modeloId) {
         this.modeloId = modeloId;
+    }
+
+    public Programa getProgramaId() {
+        return programaId;
+    }
+
+    public void setProgramaId(Programa programaId) {
+        this.programaId = programaId;
     }
 
     @Override

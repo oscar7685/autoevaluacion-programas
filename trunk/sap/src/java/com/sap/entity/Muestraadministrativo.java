@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sap.entity;
 
 import java.io.Serializable;
@@ -100,5 +99,5 @@ public class Muestraadministrativo implements Serializable {
     public String toString() {
         return "com.sap.entity.Muestraadministrativo[ id=" + id + " ]";
     }
-
+    
 }
