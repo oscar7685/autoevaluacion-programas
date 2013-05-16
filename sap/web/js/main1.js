@@ -128,7 +128,7 @@ $(function() {
 
             });//fin post
 
-        } else if (hash === "#preparedCrearProceso" || hash === "#listarProceso") {
+        } else if (hash === "#preparedCrearProceso" || hash === "#listarProceso" || hash === "#detalleProceso" || hash === "#detalleProceso" || hash === "#preparedPonderarFactor" || hash === "#ponderarFactor") {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
@@ -157,11 +157,9 @@ $(function() {
                 success: function(data)
                 {
                     $("#contenido").append(data);
-                    if ($("ul.nav-list li:eq(0)").html() !== "Factores") {
-                        menuFactores();
-                        myLayout.addCloseBtn("#west-closer", "west");
-                        actualizaEnlaces();
-                    }
+                    menuProceso1();
+                    myLayout.addCloseBtn("#west-closer", "west");
+                    actualizaEnlaces();
                     $("#contenido").show(200, function() {
                         $(".page_loading").hide();
                     });

@@ -119,7 +119,6 @@ public class loginController extends HttpServlet {
                     session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
                     session.setAttribute("Programa", r.getProgramaId());
                     List procesos = (List) procesoFacade.findByPrograma(r.getProgramaId());
-                    System.out.println("Listaaa: " + procesos.size());
                     if (procesos.size() != 0) {
                         Iterator iter = procesos.iterator();
                         while (iter.hasNext()) {
@@ -127,9 +126,11 @@ public class loginController extends HttpServlet {
                             if (p.getFechacierre().equals("En Configuración")) {
                                 session.setAttribute("EstadoProceso", 1);
                                 session.setAttribute("Proceso", p);
+                                session.setAttribute("Modelo", p.getModeloId());
                             } else if (p.getFechacierre().equals("En Ejecución")) {
                                 session.setAttribute("EstadoProceso", 2);
                                 session.setAttribute("Proceso", p);
+                                session.setAttribute("Modelo", p.getModeloId());
                             } else {
                                 session.setAttribute("EstadoProceso", 3);
                             }

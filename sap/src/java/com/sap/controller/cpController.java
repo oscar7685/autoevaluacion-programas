@@ -4,13 +4,19 @@
  */
 package com.sap.controller;
 
+import com.sap.ejb.FactorFacade;
 import com.sap.ejb.ModeloFacade;
 import com.sap.ejb.ProcesoFacade;
+import com.sap.entity.Factor;
 import com.sap.entity.Modelo;
+import com.sap.entity.Ponderacionfactor;
 import com.sap.entity.Proceso;
 import com.sap.entity.Programa;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,6 +35,8 @@ public class cpController extends HttpServlet {
     private ModeloFacade modeloFacade;
     @EJB
     private ProcesoFacade procesoFacade;
+    @EJB
+    private FactorFacade factorFacade;
 
     /**
      * Processes requests for both HTTP
@@ -60,6 +68,15 @@ public class cpController extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
 
+            } else if (action.equals("detalleProceso")) {
+                Proceso p = (Proceso) sesion.getAttribute("Proceso");
+                ArrayList<Proceso> l = new ArrayList<Proceso>();
+                l.add(procesoFacade.find(p.getId()));
+                sesion.setAttribute("listProceso", l);
+                String url = "/WEB-INF/vista/comitePrograma/proceso/detalle.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+
             } else if (action.equals("preparedCrearProceso")) {
                 sesion.setAttribute("listModelo", modeloFacade.findAll());
                 String url = "/WEB-INF/vista/comitePrograma/proceso/crear.jsp";
@@ -83,7 +100,29 @@ public class cpController extends HttpServlet {
                 p.setModeloId(m);
                 p.setFechacierre("En Configuración");
 
+                sesion.setAttribute("EstadoProceso", 1);
+                sesion.setAttribute("Proceso", p);
+                sesion.setAttribute("Modelo", m);
+
                 procesoFacade.create(p);
+            } else if (action.equals("preparedPonderarFactor")) {
+                sesion.setAttribute("listFactor", factorFacade.findByModelo(sesion.getAttribute("Modelo")));
+                String url = "/WEB-INF/vista/comitePrograma/ponderacion/ponderarFactor.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("ponderarFactor")) {
+                Ponderacionfactor pf = new Ponderacionfactor();
+
+                List listFactor = (List) sesion.getAttribute("listFactor");
+
+                Iterator i = listFactor.iterator();
+
+                while (i.hasNext()) {
+                    Factor f = (Factor) i.next();
+
+                }
+
+
             }
         } finally {
             out.close();
