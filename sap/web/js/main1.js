@@ -72,7 +72,7 @@ $(function() {
     };
     actualizaEnlaces();
 
-    var menuProceso = function() {
+    var menuProceso0 = function() {
         $("#menu").html('<ul class="nav nav-list"> ' +
                 '<button id="west-closer" class="close">&laquo;</button>' +
                 '<li class="nav-header">Proceso de Autoevaluación</li>' +
@@ -80,7 +80,26 @@ $(function() {
                 '<li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>' +
                 '</ul>');
     };
-    var menuFactores = function() {
+    var menuProceso1 = function() {
+        $("#menu").html('<ul class="nav nav-list">' +
+                '<button id="west-closer" class="close">&laquo;</button>' +
+                '<li class="nav-header">Factores</li>' +
+                '<li><a href="#listarFactores"><i class="icon-th-large"></i> Listar factores</a></li>' +
+                '<li class="divider"></li>' +
+                '<li class="nav-header">Caracteristicas</li>' +
+                '<li><a href="#listarCaracteristicas"><i class="icon-th-list"></i> Listar caracteristicas</a></li>' +
+                '<li class="divider"></li>' +
+                '<li class="nav-header">Indicadores</li>' +
+                '<li><a href="#listarIndicadores"><i class="icon-list"></i> Listar indicadores</a></li>' +
+                '<li class="divider"></li>' +
+                '<li class="nav-header">Preguntas</li>' +
+                '<li><a href="#listarPreguntas"><i class="icon-question"></i> Listar preguntas</a></li>' +
+                '<li class="divider"></li>' +
+                '<li class="nav-header">Encuestas</li>' +
+                '<li><a href="#listarEncuestas"><i class="icon-tasks"></i> Listar encuestas</a></li>' +
+                '</ul>');
+    };
+    var menuProceso2 = function() {
         $("#menu").html('<ul class="nav nav-list">' +
                 '<button id="west-closer" class="close">&laquo;</button>' +
                 '<li class="nav-header">Factores</li>' +
@@ -109,53 +128,70 @@ $(function() {
 
             });//fin post
 
-        } else {
-            if (hash === "#preparedCrearProceso" || hash === "#listarProceso") {
-                var url3 = "/sap/" + hash;
-                url3 = url3.replace('#', "controladorCP?action=");
-                $("div.ui-layout-center").empty();
-                $.ajax({
-                    type: "POST",
-                    url: url3,
-                    success: function(data)
-                    {
-                        $("#contenido").append(data);
-                        if ($("ul.nav-list li:eq(0)").html() !== "Modelo") {
-                            menuProceso();
-                            myLayout.addCloseBtn("#west-closer", "west");
-                            actualizaEnlaces();
-                        }
-                        $("#contenido").show(200, function() {
-                            $(".page_loading").hide();
-                        });
+        } else if (hash === "#preparedCrearProceso" || hash === "#listarProceso") {
+            var url3 = "/sap/" + hash;
+            url3 = url3.replace('#', "controladorCP?action=");
+            $("div.ui-layout-center").empty();
+            $.ajax({
+                type: "POST",
+                url: url3,
+                success: function(data)
+                {
+                    $("#contenido").append(data);
+                    if ($("ul.nav-list li:eq(0)").html() !== "Modelo") {
+                        myLayout.addCloseBtn("#west-closer", "west");
+                    }
+                    $("#contenido").show(200, function() {
+                        $(".page_loading").hide();
+                    });
 
-                    } //fin success
-                }); //fin del $.ajax
-            } else {
-                if (hash === "#listarFactores") {
-                    var url3 = "/sap/" + hash;
-                    url3 = url3.replace('#', "controladorCC?action=") + "CC";
-                    $("div.ui-layout-center").empty();
-                    $.ajax({
-                        type: "POST",
-                        url: url3,
-                        success: function(data)
-                        {
-                            $("#contenido").append(data);
-                            if ($("ul.nav-list li:eq(0)").html() !== "Factores") {
-                                menuFactores();
-                                myLayout.addCloseBtn("#west-closer", "west");
-                                actualizaEnlaces();
-                            }
-                            $("#contenido").show(200, function() {
-                                $(".page_loading").hide();
-                            });
+                } //fin success
+            }); //fin del $.ajax
+        } else if (hash === "#crearProceso") {
+            var url3 = "/sap/" + hash;
+            url3 = url3.replace('#', "controladorCP?action=crearProceso") + "CC";
+            $("div.ui-layout-center").empty();
+            $.ajax({
+                type: "POST",
+                url: url3,
+                success: function(data)
+                {
+                    $("#contenido").append(data);
+                    if ($("ul.nav-list li:eq(0)").html() !== "Factores") {
+                        menuFactores();
+                        myLayout.addCloseBtn("#west-closer", "west");
+                        actualizaEnlaces();
+                    }
+                    $("#contenido").show(200, function() {
+                        $(".page_loading").hide();
+                    });
 
-                        } //fin success
-                    }); //fin del $.ajax
-                }
-            }
+                } //fin success
+            }); //fin del $.ajax
+        } else if (hash === "#listarFactores") {
+            var url3 = "/sap/" + hash;
+            url3 = url3.replace('#', "controladorCC?action=") + "CC";
+            $("div.ui-layout-center").empty();
+            $.ajax({
+                type: "POST",
+                url: url3,
+                success: function(data)
+                {
+                    $("#contenido").append(data);
+                    if ($("ul.nav-list li:eq(0)").html() !== "Factores") {
+                        menuFactores();
+                        myLayout.addCloseBtn("#west-closer", "west");
+                        actualizaEnlaces();
+                    }
+                    $("#contenido").show(200, function() {
+                        $(".page_loading").hide();
+                    });
+
+                } //fin success
+            }); //fin del $.ajax
         }
+
+
     });
 
 });

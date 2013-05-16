@@ -10,7 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -31,10 +31,11 @@ public class ProcesoFacade extends AbstractFacade<Proceso> {
         super(Proceso.class);
     }
 
-  /*  public List findByPrograma(Programa p) {
-        Query q = em.createNativeQuery("MdcoreUser.findByID");
-        q.setParameteR("id", "100");
-        MdcoreUser u = q.getSingleResult();
-        return null;
-    }*/
+    public List findByPrograma(Programa p) {
+
+        TypedQuery<Proceso> query = em.createQuery(
+                "SELECT c FROM Proceso c WHERE c.programaId = :name", Proceso.class);
+        return query.setParameter("name", p).getResultList();
+
+    }
 }
