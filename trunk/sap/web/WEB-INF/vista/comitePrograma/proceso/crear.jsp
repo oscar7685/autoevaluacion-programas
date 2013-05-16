@@ -8,6 +8,9 @@
                     url: "/sap/controladorCP?action=crearProceso",
                     data: $("#formCrearProceso").serialize(),
                     success: function() {
+                        menuProceso1();
+                        myLayout.addCloseBtn("#west-closer", "west");
+                        actualizaEnlaces();
                         location = "/sap/#listarProceso";
                     } //fin success
                 }); //fin $.ajax    

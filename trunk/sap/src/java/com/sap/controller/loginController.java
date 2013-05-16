@@ -118,8 +118,9 @@ public class loginController extends HttpServlet {
                     session.setAttribute("tipoLogin", "Comite programa");
                     session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
                     session.setAttribute("Programa", r.getProgramaId());
-                  /*  List procesos = (List) procesoFacade.find(r.getProgramaId().getId());
-                    if (procesos != null) {
+                    List procesos = (List) procesoFacade.findByPrograma(r.getProgramaId());
+                    System.out.println("Listaaa: " + procesos.size());
+                    if (procesos.size() != 0) {
                         Iterator iter = procesos.iterator();
                         while (iter.hasNext()) {
                             Proceso p = (Proceso) iter.next();
@@ -135,7 +136,7 @@ public class loginController extends HttpServlet {
                         }
                     } else {
                         session.setAttribute("EstadoProceso", 0);
-                    }*/
+                    }
                 }
                 System.out.println("Estado del Proceso: " + session.getAttribute("EstadoProceso"));
                 out.println(0);

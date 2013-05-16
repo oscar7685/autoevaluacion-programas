@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -77,12 +78,34 @@
         <div id="ui-layout-west" class="ui-layout-west">
             <div class="ui-layout-content">
                 <div id="menu" style="padding: 8px 0pt;" class="well">
-                    <ul class="nav nav-list">  
-                        <button id="west-closer" class="close">&laquo;</button>
-                        <li class="nav-header">Proceso de Atoevaluación</li>
-                        <li><a href="#preparedCrearProceso"><i class="icon-plus"></i> Crear Proceso</a></li>
-                        <li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>
-                    </ul>
+                    <c:choose>
+                        <c:when test="${EstadoProceso == 0}">
+                            <ul class="nav nav-list">  
+                                <button id="west-closer" class="close">&laquo;</button>
+                                <li class="nav-header">Proceso de Atoevaluación</li>
+                                <li><a href="#preparedCrearProceso"><i class="icon-plus"></i> Crear Proceso</a></li>
+                                <li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>
+                            </ul>
+                        </c:when>
+                        <c:when test="${EstadoProceso == 1}">
+                            <ul class="nav nav-list">  
+                                <button id="west-closer" class="close">&laquo;</button>
+                                <li class="nav-header">Proceso en configuración</li>
+                                <li><a href="#preparedCrearProceso"><i class="icon-plus"></i> Ponderaciòn</a></li>
+                                <li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>
+                            </ul>
+                        </c:when>
+                        <c:when test="${EstadoProceso == 2}">
+                            <ul class="nav nav-list">  
+                                <button id="west-closer" class="close">&laquo;</button>
+                                <li class="nav-header">Proceso en ejecución</li>
+                                <li><a href="#preparedCrearProceso"><i class="icon-plus"></i> Ponderaciòn</a></li>
+                                <li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>
+                            </ul>
+                        </c:when>
+                        <c:otherwise>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
 
