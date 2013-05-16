@@ -40,12 +40,12 @@ public class Administrativo implements Serializable {
     @Size(max = 255)
     @Column(name = "cargo")
     private String cargo;
-    @JoinColumn(name = "programa_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Programa programaId;
     @JoinColumn(name = "persona_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Persona personaId;
+    @JoinColumn(name = "programa_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Programa programaId;
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
@@ -73,20 +73,20 @@ public class Administrativo implements Serializable {
         this.cargo = cargo;
     }
 
-    public Programa getProgramaId() {
-        return programaId;
-    }
-
-    public void setProgramaId(Programa programaId) {
-        this.programaId = programaId;
-    }
-
     public Persona getPersonaId() {
         return personaId;
     }
 
     public void setPersonaId(Persona personaId) {
         this.personaId = personaId;
+    }
+
+    public Programa getProgramaId() {
+        return programaId;
+    }
+
+    public void setProgramaId(Programa programaId) {
+        this.programaId = programaId;
     }
 
     public Fuente getFuenteId() {

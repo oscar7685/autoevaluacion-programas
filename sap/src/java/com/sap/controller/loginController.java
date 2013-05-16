@@ -104,7 +104,7 @@ public class loginController extends HttpServlet {
             if (tp != null && tp.equals("Comite central")) {
 
                 Representante r = representanteFacade.find(Integer.parseInt(un));
-                if (r != null && r.getPassword().equals(pw)) {
+                if (r != null && r.getPassword().equals(pw) && r.getRol().equals("Comite central") ) {
                     session.setAttribute("tipoLogin", "Comite central");
                     session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
                     out.println(0);

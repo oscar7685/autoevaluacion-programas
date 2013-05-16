@@ -48,12 +48,12 @@ public class Ponderacionfactor implements Serializable {
     @Size(min = 1, max = 500)
     @Column(name = "justificacion")
     private String justificacion;
-    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Proceso procesoId;
     @JoinColumn(name = "factor_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Factor factorId;
+    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Proceso procesoId;
 
     public Ponderacionfactor() {
     }
@@ -92,20 +92,20 @@ public class Ponderacionfactor implements Serializable {
         this.justificacion = justificacion;
     }
 
-    public Proceso getProcesoId() {
-        return procesoId;
-    }
-
-    public void setProcesoId(Proceso procesoId) {
-        this.procesoId = procesoId;
-    }
-
     public Factor getFactorId() {
         return factorId;
     }
 
     public void setFactorId(Factor factorId) {
         this.factorId = factorId;
+    }
+
+    public Proceso getProcesoId() {
+        return procesoId;
+    }
+
+    public void setProcesoId(Proceso procesoId) {
+        this.procesoId = procesoId;
     }
 
     @Override

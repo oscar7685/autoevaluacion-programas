@@ -5,9 +5,12 @@
 package com.sap.ejb;
 
 import com.sap.entity.Caracteristica;
+import com.sap.entity.Modelo;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -25,6 +28,11 @@ public class CaracteristicaFacade extends AbstractFacade<Caracteristica> {
 
     public CaracteristicaFacade() {
         super(Caracteristica.class);
+    }
+    public List findByModelo(Modelo m) {
+        Query q = em.createNamedQuery("Caracteristica.findByModelo");
+        q.setParameter("modelo", m);
+        return q.getResultList();
     }
     
 }

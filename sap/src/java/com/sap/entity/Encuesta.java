@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -38,7 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Encuesta.findByCodigo", query = "SELECT e FROM Encuesta e WHERE e.codigo = :codigo"),
     @NamedQuery(name = "Encuesta.findByNombre", query = "SELECT e FROM Encuesta e WHERE e.nombre = :nombre"),
     @NamedQuery(name = "Encuesta.findByObjetivo", query = "SELECT e FROM Encuesta e WHERE e.objetivo = :objetivo"),
-    @NamedQuery(name = "Encuesta.findByInstrucciones", query = "SELECT e FROM Encuesta e WHERE e.instrucciones = :instrucciones")})
+    @NamedQuery(name = "Encuesta.findByInstrucciones", query = "SELECT e FROM Encuesta e WHERE e.instrucciones = :instrucciones"),
+    @NamedQuery(name = "Encuesta.findByModelo", query = "SELECT e FROM Encuesta e WHERE e.modeloId = :modelo")})
 public class Encuesta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -71,6 +73,9 @@ public class Encuesta implements Serializable {
         @JoinColumn(name = "pregunta_id", referencedColumnName = "id")})
     @ManyToMany
     private List<Pregunta> preguntaList;
+    @JoinColumn(name = "modelo_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Modelo modeloId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "encuestaId")
     private List<Asignacionencuesta> asignacionencuestaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "encuestaId")
@@ -138,6 +143,14 @@ public class Encuesta implements Serializable {
 
     public void setPreguntaList(List<Pregunta> preguntaList) {
         this.preguntaList = preguntaList;
+    }
+
+    public Modelo getModeloId() {
+        return modeloId;
+    }
+
+    public void setModeloId(Modelo modeloId) {
+        this.modeloId = modeloId;
     }
 
     @XmlTransient

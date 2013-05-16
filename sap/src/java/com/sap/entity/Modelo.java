@@ -68,9 +68,17 @@ public class Modelo implements Serializable {
     @Column(name = "observaciones")
     private String observaciones;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "modeloId")
+    private List<Encuesta> encuestaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modeloId")
     private List<Factor> factorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "modeloId")
+    private List<Pregunta> preguntaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modeloId")
+    private List<Indicador> indicadorList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modeloId")
     private List<Proceso> procesoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modeloId")
+    private List<Caracteristica> caracteristicaList;
 
     public Modelo() {
     }
@@ -135,6 +143,15 @@ public class Modelo implements Serializable {
     }
 
     @XmlTransient
+    public List<Encuesta> getEncuestaList() {
+        return encuestaList;
+    }
+
+    public void setEncuestaList(List<Encuesta> encuestaList) {
+        this.encuestaList = encuestaList;
+    }
+
+    @XmlTransient
     public List<Factor> getFactorList() {
         return factorList;
     }
@@ -144,12 +161,39 @@ public class Modelo implements Serializable {
     }
 
     @XmlTransient
+    public List<Pregunta> getPreguntaList() {
+        return preguntaList;
+    }
+
+    public void setPreguntaList(List<Pregunta> preguntaList) {
+        this.preguntaList = preguntaList;
+    }
+
+    @XmlTransient
+    public List<Indicador> getIndicadorList() {
+        return indicadorList;
+    }
+
+    public void setIndicadorList(List<Indicador> indicadorList) {
+        this.indicadorList = indicadorList;
+    }
+
+    @XmlTransient
     public List<Proceso> getProcesoList() {
         return procesoList;
     }
 
     public void setProcesoList(List<Proceso> procesoList) {
         this.procesoList = procesoList;
+    }
+
+    @XmlTransient
+    public List<Caracteristica> getCaracteristicaList() {
+        return caracteristicaList;
+    }
+
+    public void setCaracteristicaList(List<Caracteristica> caracteristicaList) {
+        this.caracteristicaList = caracteristicaList;
     }
 
     @Override

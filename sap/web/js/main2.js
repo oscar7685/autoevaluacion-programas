@@ -3,11 +3,10 @@ $(function() {
     $(document).ajaxStart(function() {
         $("div.ui-layout-center").append("<div id='contenido'></div>");
         $("#contenido").hide();
-        $("div.ui-layout-center").append("<div class='page_loading'>"
-                + "<span>Cargando</span>"
-                + "<img src='css/images/loading.gif' style='margin-left:6px;'>"
+        $("div.ui-layout-center").append(""
+                + "<div id='dancing-dots-text'>"
+                + "Cargando <span><span>.</span><span>.</span><span>.</span><span>.</span><span>.</span></span> "
                 + "</div>");
-
     });
 
     var myLayout;
@@ -113,16 +112,18 @@ $(function() {
                     {
                         $("#contenido").append(data);
                         $("#contenido").show(200, function() {
-                            menuFactores();
-                            $(".page_loading").hide();
+                            menuModelo();
+                            $("#dancing-dots-text").hide();
                         });
                         actualizaEnlaces(hash);
                     } //fin success
                 }); //fin del $.ajax
             } else {
-                if (hash === "#entrarModelo") {
-                    var url3 = "/sap/" + hash;
-                    url3 = url3.replace('#', "controladorCC?action=") + "CC";
+                if (hash.indexOf("#entrarModelo") !== -1) {
+                    var cual = hash.split("&");
+                    hash = cual[0];
+                    var url3 = "/sap/controladorCC?action=";
+                    url3 = url3.concat(cual[0].substring(1), "CC&id=", cual[1]);
                     $("div.ui-layout-center").empty();
                     $.ajax({
                         type: "POST",
@@ -132,7 +133,7 @@ $(function() {
                             $("#contenido").append(data);
                             $("#contenido").show(200, function() {
                                 menuFactores();
-                                $(".page_loading").hide();
+                                $("#dancing-dots-text").hide();
                                 myLayout.addCloseBtn("#west-closer", "west");
                             });
                             actualizaEnlaces(hash);
@@ -156,14 +157,17 @@ $(function() {
 
                                 }
                                 $("#contenido").show(200, function() {
-                                    $(".page_loading").hide();
+                                    $("#dancing-dots-text").hide();
                                 });
                                 actualizaEnlaces(hash);
                             }
 
                         }); //fin del $.ajax
                     } else {
-                        if (hash === "#listarFactores" || hash === "#crearFactor") {
+                        if (hash === "#listarFactores" || hash === "#crearFactor"
+                                || hash === "#listarCaracteristicas" || hash === "#crearCaracteristica"
+                                || hash === "#listarIndicadores" || hash === "#crearIndicador"
+                                || hash === "#listarPreguntas" || hash === "#crearPregunta") {
                             var url3 = "/sap/" + hash;
                             url3 = url3.replace('#', "controladorCC?action=") + "CC";
                             $("div.ui-layout-center").empty();
@@ -173,12 +177,12 @@ $(function() {
                                 success: function(data)
                                 {
                                     $("#contenido").append(data);
-                                    if ($("ul.nav-list li:eq(0)").html() !== "Factores") {
+                                    if ($("ul.nav-list li:eq(1)").html() !== "Factores") {
                                         menuFactores();
                                         myLayout.addCloseBtn("#west-closer", "west");
                                     }
                                     $("#contenido").show(200, function() {
-                                        $(".page_loading").hide();
+                                        $("#dancing-dots-text").hide();
                                     });
                                     actualizaEnlaces(hash);
                                 } //fin success

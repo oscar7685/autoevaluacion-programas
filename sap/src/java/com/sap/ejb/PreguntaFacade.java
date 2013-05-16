@@ -4,10 +4,13 @@
  */
 package com.sap.ejb;
 
+import com.sap.entity.Modelo;
 import com.sap.entity.Pregunta;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,4 +30,9 @@ public class PreguntaFacade extends AbstractFacade<Pregunta> {
         super(Pregunta.class);
     }
     
+    public List findByModelo(Modelo m) {
+        Query q = em.createNamedQuery("Pregunta.findByModelo");
+        q.setParameter("modelo", m);
+        return q.getResultList();
+    }
 }

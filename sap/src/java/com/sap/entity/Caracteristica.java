@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Caracteristica.findAll", query = "SELECT c FROM Caracteristica c"),
     @NamedQuery(name = "Caracteristica.findById", query = "SELECT c FROM Caracteristica c WHERE c.id = :id"),
     @NamedQuery(name = "Caracteristica.findByCodigo", query = "SELECT c FROM Caracteristica c WHERE c.codigo = :codigo"),
-    @NamedQuery(name = "Caracteristica.findByNombre", query = "SELECT c FROM Caracteristica c WHERE c.nombre = :nombre")})
+    @NamedQuery(name = "Caracteristica.findByNombre", query = "SELECT c FROM Caracteristica c WHERE c.nombre = :nombre"),
+    @NamedQuery(name = "Caracteristica.findByModelo", query = "SELECT c FROM Caracteristica c WHERE c.modeloId = :modelo")})
 public class Caracteristica implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -57,6 +58,9 @@ public class Caracteristica implements Serializable {
     private List<Ponderacioncaracteristica> ponderacioncaracteristicaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "caracteristicaId")
     private List<Indicador> indicadorList;
+    @JoinColumn(name = "modelo_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Modelo modeloId;
     @JoinColumn(name = "factor_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Factor factorId;
@@ -114,6 +118,14 @@ public class Caracteristica implements Serializable {
 
     public void setIndicadorList(List<Indicador> indicadorList) {
         this.indicadorList = indicadorList;
+    }
+
+    public Modelo getModeloId() {
+        return modeloId;
+    }
+
+    public void setModeloId(Modelo modeloId) {
+        this.modeloId = modeloId;
     }
 
     public Factor getFactorId() {
