@@ -34,5 +34,5 @@ public class PreguntaFacade extends AbstractFacade<Pregunta> {
         Query q = em.createNamedQuery("Pregunta.findByModelo");
         q.setParameter("modelo", m);
         return q.getResultList();
-    }
+}
 }

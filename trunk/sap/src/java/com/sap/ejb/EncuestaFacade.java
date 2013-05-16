@@ -33,5 +33,5 @@ public class EncuestaFacade extends AbstractFacade<Encuesta> {
         Query q = em.createNamedQuery("Encuesta.findByModelo");
         q.setParameter("modelo", m);
         return q.getResultList();
-    }
+}
 }

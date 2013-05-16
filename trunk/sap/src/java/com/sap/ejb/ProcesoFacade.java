@@ -18,7 +18,6 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class ProcesoFacade extends AbstractFacade<Proceso> {
-
     @PersistenceContext(unitName = "sapPU")
     private EntityManager em;
 
@@ -30,12 +29,12 @@ public class ProcesoFacade extends AbstractFacade<Proceso> {
     public ProcesoFacade() {
         super(Proceso.class);
     }
-
+    
     public List findByPrograma(Programa p) {
 
         TypedQuery<Proceso> query = em.createQuery(
                 "SELECT c FROM Proceso c WHERE c.programaId = :name", Proceso.class);
         return query.setParameter("name", p).getResultList();
 
-    }
+}
 }
