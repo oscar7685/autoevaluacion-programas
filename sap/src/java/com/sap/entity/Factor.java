@@ -149,4 +149,5 @@ public class Factor implements Serializable {
     public String toString() {
         return "com.sap.entity.Factor[ id=" + id + " ]";
     }
+    
 }
