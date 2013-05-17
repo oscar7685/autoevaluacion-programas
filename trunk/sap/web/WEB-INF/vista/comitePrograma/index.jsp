@@ -100,7 +100,7 @@
                                 <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
                                 <li class="nav-header">Ponderación</li>
                                 <li><a href="#preparedPonderarFactor"><i class="icon-list-ol"></i> Ponderar Factores</a></li>
-                                <li><a href="#listarProceso"><i class="icon-list-ol"></i> Ponderar Características</a></li>
+                                <li><a href="#preparedPonderarCara"><i class="icon-list-ol"></i> Ponderar Características</a></li>
                             </ul>
                         </div>
                     </c:when>
