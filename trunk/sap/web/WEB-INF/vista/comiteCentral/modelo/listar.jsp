@@ -3,7 +3,7 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <br/>
+           
             <h3>Listado de  Modelos</h3>
             <c:choose>
                 <c:when test="${fn:length(listaM)!= 0}">

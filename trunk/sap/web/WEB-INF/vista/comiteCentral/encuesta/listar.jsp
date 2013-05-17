@@ -3,28 +3,28 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-           
-            <h3>Listado de  Preguntas</h3>
+            <h3>Listado de  Encuestas</h3>
             <c:choose>
-                <c:when test="${fn:length(listaP)!= 0}">
+                <c:when test="${fn:length(listaE)!= 0}">
 
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
-                        <th>C&oacute;digo</th>    
-                        <th>Pregunta</th>
+                        <th>Nombre</th>    
+                        <th>Objetivo</th>
                         <th>Acci&oacute;n</th>
                         </thead>
                         <tbody>
-                            <c:forEach items="${listaP}" var="row" varStatus="iter">
+                            <c:forEach items="${listaE}" var="row" varStatus="iter">
                                 <tr>
                                     <td>   
-                                        <c:out value="${row.codigo}"/>
+                                        <c:out value="${row.nombre}"/>
                                     </td>
                                     <td>   
-                                        <c:out value="${row.pregunta}"/>
+                                        <c:out value="${row.objetivo}"/>
                                     </td>
                                     <td class="action span2">
-                                        <a href="#editarPregunta" title="Editar"><i class="icon-edit"></i></a>
+                                        <a href="#editarEncuesta&${row.id}" title="Editar"><i class="icon-edit"></i></a>
+                                        <a href="#vistaPreviaEncuesta&${row.id}" title="Vista previa"><i class="icon-eye-open"></i></a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -32,12 +32,12 @@
                     </table>
                 </c:when>
                 <c:otherwise>
-                    No existen preguntas registradas en el sistema para este modelo.
+                    No existen encuestas registradas en el sistema para este modelo.
                 </c:otherwise>
             </c:choose>
 
-             <a href="#crearPregunta" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Crear pregunta</a>
-             
+            <a href="#crearEncuesta" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Crear encuesta</a>
+
         </div>
     </div>
 </div>    

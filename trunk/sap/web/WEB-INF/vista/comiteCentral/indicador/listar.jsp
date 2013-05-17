@@ -3,7 +3,6 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <br/>
             <h3>Listado de  Indicadores</h3>
             <c:choose>
                 <c:when test="${fn:length(listaI)!= 0}">
@@ -35,7 +34,7 @@
                     No existen indicadores registrados en el sistema para este modelo.
                 </c:otherwise>
             </c:choose>
-             <br/>       
+             
              <a href="#crearIndicador" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Crear indicador</a>
              
         </div>
