@@ -128,7 +128,7 @@ $(function() {
 
             });//fin post
 
-        } else if (hash === "#preparedCrearProceso" || hash === "#listarProceso" || hash === "#detalleProceso" || hash === "#detalleProceso" || hash === "#preparedPonderarFactor" || hash === "#ponderarFactor") {
+        } else if (hash === "#preparedCrearProceso" || hash === "#listarProceso" || hash === "#detalleProceso" || hash === "#detalleProceso" || hash === "#preparedPonderarFactor" || hash === "#ponderarFactor" || hash === "#listPonderacionFactor"  || hash === "#preparedPonderarCara"|| hash === "#listPonderacionCara"  ) {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();

@@ -1,14 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <script type="text/javascript">
     $(function() {
-        $("#formPonderarFactor").validate({
+        $("#formPonderarCara").validate({
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/controladorCP?action=ponderarFactor",
-                    data: $("#formPonderarFactor").serialize(),
+                    url: "/sap/controladorCP?action=ponderarCara",
+                    data: $("#formPonderarCara").serialize(),
                     success: function() {
-                        location = "/sap/#listPonderacionFactor";
+                        location = "/sap/#listPonderacionCara";
                     } //fin success
                 }); //fin $.ajax    
             }
@@ -19,26 +19,30 @@
     <div class="row">
         <div id="conte" class="span10">
             <ul class="nav nav-pills">
-                <form id="formPonderarFactor" class="form-horizontal" method="post">
+                <form id="formPonderarCara" class="form-horizontal" method="post">
                     <fieldset>
-                        <legend>Ponderación de Factores</legend>
+                        <legend>Ponderación de Características</legend>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Factor</th>
+                                    <th>Característica</th>
+                                    <th>Nivel de importancia</th>
                                     <th>Ponderacion</th>
                                     <th>Justificacion</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${listFactor}" var="row" varStatus="iter">
-                                    <tr id="PonderacionFactores${iter.index+1}">    
+                                <c:forEach items="${listCara}" var="row" varStatus="iter">
+                                    <tr id="PonderacionCaracteristica${iter.index+1}">    
                                         <td>   
                                             <c:out value="${row.codigo}"/>
                                         </td>
                                         <td>   
                                             <c:out value="${row.nombre}"/>
+                                        </td>
+                                        <td>
+                                            <input name="importancia${row.id}" class="span1 {required:true,number:true}" type="text">
                                         </td>
                                         <td>
                                             <input name="ponderacion${row.id}" class="span1 {required:true,number:true}" type="text">
