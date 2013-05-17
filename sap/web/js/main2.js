@@ -35,10 +35,10 @@ $(function() {
                 , west__togglerTip_closed: "Mostrar menú"
                 , west__togglerTip_open: "Ocultar menú"
                 , west__onclose_end: function() {
-            //$("#conte").removeClass("span10").addClass("span12")
+            $("#conte").removeClass("span10").addClass("span12");
         }
         , west__onopen_end: function() {
-            //$("#conte").removeClass("span12").addClass("span10")
+            $("#conte").removeClass("span12").addClass("span10");
         }
         , south__paneClass: "ui-layout-pane"
                 , west__togglerContent_open: ""
@@ -119,7 +119,7 @@ $(function() {
                     } //fin success
                 }); //fin del $.ajax
             } else {
-                if (hash.indexOf("#entrarModelo") !== -1) {
+                if (hash.indexOf("#entrarModelo") !== -1 || hash.indexOf("#editarEncuesta") !== -1 || hash.indexOf("#vistaPreviaEncuesta") !== -1) {
                     var cual = hash.split("&");
                     hash = cual[0];
                     var url3 = "/sap/controladorCC?action=";
@@ -131,11 +131,17 @@ $(function() {
                         success: function(data)
                         {
                             $("#contenido").append(data);
-                            $("#contenido").show(200, function() {
+
+                            if ($("ul.nav-list li:eq(1)").html() !== "Factores") {
                                 menuFactores();
-                                $("#dancing-dots-text").hide();
                                 myLayout.addCloseBtn("#west-closer", "west");
+                            }
+                            $("#contenido").show(200, function() {
+                                $("#dancing-dots-text").hide();
                             });
+
+
+
                             actualizaEnlaces(hash);
                         } //fin success
                     }); //fin del $.ajax
@@ -167,7 +173,8 @@ $(function() {
                         if (hash === "#listarFactores" || hash === "#crearFactor"
                                 || hash === "#listarCaracteristicas" || hash === "#crearCaracteristica"
                                 || hash === "#listarIndicadores" || hash === "#crearIndicador"
-                                || hash === "#listarPreguntas" || hash === "#crearPregunta") {
+                                || hash === "#listarPreguntas" || hash === "#crearPregunta"
+                                || hash === "#listarEncuestas" || hash === "#crearEncuesta") {
                             var url3 = "/sap/" + hash;
                             url3 = url3.replace('#', "controladorCC?action=") + "CC";
                             $("div.ui-layout-center").empty();

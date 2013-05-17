@@ -3,7 +3,6 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <br/>
             <h3>Listado de  Factores</h3>
             <c:choose>
                 <c:when test="${fn:length(listaF)!= 0}">
@@ -35,7 +34,7 @@
                     No existen factores registrados en el sistema para este modelo.
                 </c:otherwise>
             </c:choose>
-             <br/>       
+
              <a href="#crearFactor" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Crear factor</a>
              
         </div>

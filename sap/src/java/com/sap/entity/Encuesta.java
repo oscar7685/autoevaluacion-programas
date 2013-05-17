@@ -76,6 +76,16 @@ public class Encuesta implements Serializable {
     @JoinColumn(name = "modelo_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Modelo modeloId;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "version")
+    private String version;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "fecha")
+    private String fecha;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "encuestaId")
     private List<Asignacionencuesta> asignacionencuestaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "encuestaId")
@@ -88,12 +98,14 @@ public class Encuesta implements Serializable {
         this.id = id;
     }
 
-    public Encuesta(Integer id, String codigo, String nombre, String objetivo, String instrucciones) {
+    public Encuesta(Integer id, String codigo, String nombre, String objetivo, String instrucciones, String version, String fecha) {
         this.id = id;
         this.codigo = codigo;
         this.nombre = nombre;
         this.objetivo = objetivo;
         this.instrucciones = instrucciones;
+        this.version=version;
+        this.fecha=fecha;
     }
 
     public Integer getId() {
@@ -134,6 +146,22 @@ public class Encuesta implements Serializable {
 
     public void setInstrucciones(String instrucciones) {
         this.instrucciones = instrucciones;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 
     @XmlTransient

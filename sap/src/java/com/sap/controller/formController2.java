@@ -10,13 +10,17 @@ import com.sap.ejb.FactorFacade;
 import com.sap.ejb.IndicadorFacade;
 import com.sap.ejb.ModeloFacade;
 import com.sap.ejb.PreguntaFacade;
+import com.sap.entity.Encuesta;
 import com.sap.entity.Factor;
 import com.sap.entity.Modelo;
+import com.sap.entity.Pregunta;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -60,7 +64,7 @@ public class formController2 extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession sesion = request.getSession();
         String action = (String) request.getParameter("action");
-        System.out.println("ACTION" + action);
+
         try {
             if (action.equals("indexCC")) {
                 String url = "/WEB-INF/vista/comiteCentral/index.jsp";
@@ -151,12 +155,13 @@ public class formController2 extends HttpServlet {
                             if (action.equals("crearCaracteristica")) {
                                 String codigo = (String) request.getParameter("codigo");
                                 String nombre = (String) request.getParameter("nombre");
-                                /*  Modelo m2 = (Modelo) sesion.getAttribute("modelo");
-                                 Factor f = new Factor();
-                                 f.setCodigo(codigo);
-                                 f.setNombre(nombre);
-                                 f.setModeloId(m2);
-                                 factorFacade.create(f);*/
+                                Modelo m2 = (Modelo) sesion.getAttribute("modelo");
+                                Factor f = new Factor();
+                                f.setCodigo(codigo);
+                                f.setNombre(nombre);
+                                f.setModeloId(m2);
+                                factorFacade.create(f);
+                                sesion.setAttribute("listaF", factorFacade.findByModelo(m2));
                             } else {
                                 if (action.equals("crearCaracteristicaCC")) {
                                     String url = "/WEB-INF/vista/comiteCentral/caracteristica/crear.jsp";
@@ -213,11 +218,100 @@ public class formController2 extends HttpServlet {
                                         }
                                     }
                                 } else {
-                                    if (action.equals("inicioCC")) {
-                                        String url = "/WEB-INF/vista/comiteCentral/inicio.jsp";
-                                        RequestDispatcher rd = request.getRequestDispatcher(url);
-                                        rd.forward(request, response);
+                                    if (action.toLowerCase().contains("encuesta")) {
+                                        if (action.equals("crearEncuesta")) {
+                                            String nombre = (String) request.getParameter("nombre");
+                                            String objetivo = (String) request.getParameter("objetivo");
+                                            String instrucciones = (String) request.getParameter("instrucciones");
+                                            String codigo = (String) request.getParameter("codigo");
+                                            String version = (String) request.getParameter("version");
+                                            String fecha = (String) request.getParameter("fecha");
+                                            Modelo m = (Modelo) sesion.getAttribute("modelo");
+                                            Encuesta e = new Encuesta();
+                                            e.setCodigo(codigo);
+                                            e.setNombre(nombre);
+                                            e.setObjetivo(objetivo);
+                                            e.setInstrucciones(instrucciones);
+                                            e.setVersion(version);
+                                            e.setFecha(fecha);
+                                            e.setModeloId(m);
+                                            encuestaFacade.create(e);
+                                            sesion.setAttribute("listaE", encuestaFacade.findByModelo(m));
+
+                                        } else {
+                                            if (action.equals("crearEncuestaCC")) {
+                                                String url = "/WEB-INF/vista/comiteCentral/encuesta/crear.jsp";
+
+                                                RequestDispatcher rd = request.getRequestDispatcher(url);
+                                                rd.forward(request, response);
+                                            } else {
+                                                if (action.equals("listarEncuestasCC")) {
+                                                    String url = "/WEB-INF/vista/comiteCentral/encuesta/listar.jsp";
+                                                    RequestDispatcher rd = request.getRequestDispatcher(url);
+                                                    rd.forward(request, response);
+                                                } else {
+                                                    if (action.equals("editarEncuestaCC")) {
+                                                        String idE = request.getParameter("id");
+                                                        Encuesta e = encuestaFacade.find(Integer.parseInt(idE));
+                                                        sesion.setAttribute("encuesta", e);
+                                                        String url = "/WEB-INF/vista/comiteCentral/encuesta/editar.jsp";
+                                                        RequestDispatcher rd = request.getRequestDispatcher(url);
+                                                        rd.forward(request, response);
+
+                                                    } else {
+                                                        if (action.equals("editarEncuesta")) {
+                                                            Encuesta e = (Encuesta) sesion.getAttribute("encuesta");
+                                                            String nombre = (String) request.getParameter("nombre");
+                                                            String objetivo = (String) request.getParameter("objetivo");
+                                                            String instrucciones = (String) request.getParameter("instrucciones");
+                                                            String codigo = (String) request.getParameter("codigo");
+                                                            String version = (String) request.getParameter("version");
+                                                            String fecha = (String) request.getParameter("fecha");
+                                                            Modelo m = (Modelo) sesion.getAttribute("modelo");
+                                                            e.setCodigo(codigo);
+                                                            e.setNombre(nombre);
+                                                            e.setObjetivo(objetivo);
+                                                            e.setInstrucciones(instrucciones);
+                                                            e.setVersion(version);
+                                                            e.setFecha(fecha);
+                                                            e.setModeloId(m);
+
+                                                            List<Pregunta> listadePreguntas = (List<Pregunta>) sesion.getAttribute("listaP");
+                                                            List<Pregunta> aux = new ArrayList<Pregunta>();
+                                                            for (int i = 0; i < listadePreguntas.size(); i++) {
+                                                                Pregunta pregunta = listadePreguntas.get(i);
+                                                                if (request.getParameter("P" + listadePreguntas.get(i).getId()).equals("1")) {
+                                                                    aux.add(pregunta);
+                                                                }
+                                                            }
+                                                            e.setPreguntaList(aux);
+                                                            encuestaFacade.edit(e);
+                                                            sesion.setAttribute("listaE", encuestaFacade.findByModelo(m));
+                                                            sesion.setAttribute("listaP", preguntaFacade.findByModelo(m));
+
+
+                                                        } else {
+                                                            if (action.equals("vistaPreviaEncuestaCC")) {
+                                                                String idE = request.getParameter("id");
+                                                                Encuesta e = encuestaFacade.find(Integer.parseInt(idE));
+                                                                sesion.setAttribute("encuesta", e);
+                                                                String url = "/WEB-INF/vista/comiteCentral/encuesta/vistaPrevia.jsp";
+                                                                RequestDispatcher rd = request.getRequestDispatcher(url);
+                                                                rd.forward(request, response);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        if (action.equals("inicioCC")) {
+                                            String url = "/WEB-INF/vista/comiteCentral/inicio.jsp";
+                                            RequestDispatcher rd = request.getRequestDispatcher(url);
+                                            rd.forward(request, response);
+                                        }
                                     }
+
                                 }
                             }
                         }

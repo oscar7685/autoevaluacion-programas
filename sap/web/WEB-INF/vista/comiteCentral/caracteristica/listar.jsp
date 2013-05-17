@@ -3,7 +3,7 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <br/>
+           
             <h3>Listado de  Caracteristicas</h3>
             <c:choose>
                 <c:when test="${fn:length(listaC)!= 0}">
@@ -35,7 +35,7 @@
                     No existen caracteristicas registradas en el sistema para este modelo.
                 </c:otherwise>
             </c:choose>
-             <br/>       
+
              <a href="#crearCaracteristica" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Crear caracteristica</a>
              
         </div>
