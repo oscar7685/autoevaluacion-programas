@@ -61,7 +61,28 @@ $(function() {
 
             });//fin post
 
-        } 
+        }else{
+            if (hash.indexOf("#responderEncuesta") !== -1 ) {
+                    var cual = hash.split("&");
+                    hash = cual[0];
+                    var url3 = "/sap/controladorF?action=";
+                    url3 = url3.concat(cual[0].substring(1), "F&id=", cual[1]);
+                    $("div.ui-layout-center").empty();
+                    $.ajax({
+                        type: "POST",
+                        url: url3,
+                        success: function(data)
+                        {
+                            $("#contenido").append(data);
+                            $("#contenido").show(200, function() {
+                                $("#dancing-dots-text").hide();
+                            });
+
+                        } //fin success
+                    }); //fin del $.ajax
+
+                }
+        } //fin else
     });
 
 });

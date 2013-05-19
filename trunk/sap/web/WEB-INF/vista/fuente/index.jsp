@@ -92,7 +92,7 @@
                                     programa X
                                 </td>
                                 <td class="action">
-                                    <a title="Responder Encuesta" href="#responderEncuesta&${item[0]}">Responder encuesta</a>
+                                    <a title="Responder Encuesta" href="#responderEncuesta&1">Responder encuesta</a>
                                 </td>
                             </tr>
 
