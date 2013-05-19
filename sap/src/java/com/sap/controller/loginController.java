@@ -4,8 +4,10 @@
  */
 package com.sap.controller;
 
+import com.sap.ejb.EncuestaFacade;
 import com.sap.ejb.ProcesoFacade;
 import com.sap.ejb.RepresentanteFacade;
+import com.sap.entity.Encuesta;
 import com.sap.entity.Proceso;
 import com.sap.entity.Representante;
 import java.io.IOException;
@@ -27,6 +29,8 @@ public class loginController extends HttpServlet {
 
     @EJB
     private RepresentanteFacade representanteFacade;
+    @EJB
+    private EncuestaFacade encuestaFacade;
     @EJB
     private ProcesoFacade procesoFacade;
 
@@ -100,50 +104,58 @@ public class loginController extends HttpServlet {
             response.setContentType("text/plain");
             PrintWriter out = response.getWriter();
 
+            if (tp != null && tp.equals("Estudiantes")) {
+                session.setAttribute("tipoLogin", "Fuente");
+                Encuesta e = encuestaFacade.find(1);
+                session.setAttribute("encuesta", e);
+                out.println(0);
 
-            if (tp != null && tp.equals("Comite central")) {
+            } else {
+                if (tp != null && tp.equals("Comite central")) {
 
-                Representante r = representanteFacade.find(Integer.parseInt(un));
-                if (r != null && r.getPassword().equals(pw) && r.getRol().equals("Comite central") ) {
-                    session.setAttribute("tipoLogin", "Comite central");
-                    session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
+                    Representante r = representanteFacade.find(Integer.parseInt(un));
+                    if (r != null && r.getPassword().equals(pw) && r.getRol().equals("Comite central")) {
+                        session.setAttribute("tipoLogin", "Comite central");
+                        session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
+                        out.println(0);
+                    } else {
+                        out.println(1);
+                    }
+                } else if (tp != null && tp.equals("Comite programa")) {
+
+                    Representante r = representanteFacade.find(Integer.parseInt(un));
+                    if (r != null && r.getPassword().equals(pw)) {
+                        session.setAttribute("tipoLogin", "Comite programa");
+                        session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
+                        session.setAttribute("Programa", r.getProgramaId());
+                        List procesos = (List) procesoFacade.findByPrograma(r.getProgramaId());
+                        if (procesos.size() != 0) {
+                            Iterator iter = procesos.iterator();
+                            while (iter.hasNext()) {
+                                Proceso p = (Proceso) iter.next();
+                                if (p.getFechacierre().equals("En Configuración")) {
+                                    session.setAttribute("EstadoProceso", 1);
+                                    session.setAttribute("Proceso", p);
+                                    session.setAttribute("Modelo", p.getModeloId());
+                                } else if (p.getFechacierre().equals("En Ejecución")) {
+                                    session.setAttribute("EstadoProceso", 2);
+                                    session.setAttribute("Proceso", p);
+                                    session.setAttribute("Modelo", p.getModeloId());
+                                } else {
+                                    session.setAttribute("EstadoProceso", 3);
+                                }
+                            }
+                        } else {
+                            session.setAttribute("EstadoProceso", 0);
+                        }
+                    }
+                    System.out.println("Estado del Proceso: " + session.getAttribute("EstadoProceso"));
                     out.println(0);
                 } else {
                     out.println(1);
                 }
-            } else if (tp != null && tp.equals("Comite programa")) {
-
-                Representante r = representanteFacade.find(Integer.parseInt(un));
-                if (r != null && r.getPassword().equals(pw)) {
-                    session.setAttribute("tipoLogin", "Comite programa");
-                    session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
-                    session.setAttribute("Programa", r.getProgramaId());
-                    List procesos = (List) procesoFacade.findByPrograma(r.getProgramaId());
-                    if (procesos.size() != 0) {
-                        Iterator iter = procesos.iterator();
-                        while (iter.hasNext()) {
-                            Proceso p = (Proceso) iter.next();
-                            if (p.getFechacierre().equals("En Configuración")) {
-                                session.setAttribute("EstadoProceso", 1);
-                                session.setAttribute("Proceso", p);
-                                session.setAttribute("Modelo", p.getModeloId());
-                            } else if (p.getFechacierre().equals("En Ejecución")) {
-                                session.setAttribute("EstadoProceso", 2);
-                                session.setAttribute("Proceso", p);
-                                session.setAttribute("Modelo", p.getModeloId());
-                            } else {
-                                session.setAttribute("EstadoProceso", 3);
-                            }
-                        }
-                    } else {
-                        session.setAttribute("EstadoProceso", 0);
-                    }
-                }
-                System.out.println("Estado del Proceso: " + session.getAttribute("EstadoProceso"));
-                out.println(0);
-            } else {
-                out.println(1);
             }
+
         }
 
     }

@@ -12,6 +12,10 @@
         <servlet-name>cpController</servlet-name>
         <servlet-class>com.sap.controller.cpController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>controladorF</servlet-name>
+        <servlet-class>com.sap.controller.controladorF</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>cpController</servlet-name>
         <url-pattern>/controladorCP</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controladorF</servlet-name>
+        <url-pattern>/controladorF</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
