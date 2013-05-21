@@ -3,7 +3,6 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <br/>
             <h3>Ponderación de  Factores</h3>
             <c:choose>
                 <c:when test="${fn:length(listPonderacionFactor)!= 0}">
@@ -32,9 +31,14 @@
                             </c:forEach>
                         </tbody>
                     </table>
+                    <c:if test="${EstadoProceso == 1}">
+                        <a href="#preparedEditPonderarFactor" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Ponderación</a>
+                    </c:if>
                 </c:when>
                 <c:otherwise>
                     No  se han ponderado los factores en el sistema para este proceso.
+                    <br><br>
+                    <a href="#preparedPonderarFactor" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Asignar Ponderación</a>
                 </c:otherwise>
             </c:choose>
         </div>
