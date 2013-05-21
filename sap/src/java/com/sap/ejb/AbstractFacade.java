@@ -5,13 +5,16 @@
 package com.sap.ejb;
 
 import java.util.List;
+import java.util.Random;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
  * @author Ususario
  */
 public abstract class AbstractFacade<T> {
+
     private Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
@@ -58,5 +61,39 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+
+    public T findBySingle(String property, Object m) {
+        System.out.println("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name");
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        return getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name", entityClass).setParameter("name", m).getSingleResult();
+    }
+
+    public List<T> findByList(String property, Object m) {
+        System.out.println("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name");
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        return getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name", entityClass).setParameter("name", m).getResultList();
+    }
+
+    public List<T> generarMuestra(Object m, int tamanio) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c.programaId = :name", entityClass);
+        q.setMaxResults(tamanio);
+        return q.setParameter("name", m).getResultList();
+    }
+
+    public <T> T randomEntity(EntityManager em, Class<T> clazz) {
+        Query countQuery = em.createQuery("select count(id) from " + clazz.getName());
+        long count = (Long) countQuery.getSingleResult();
+
+        Random random = new Random();
+        int number = random.nextInt((int) count);
+
+        Query selectQuery = em.createQuery("from " + clazz.getName());
+        selectQuery.setFirstResult(number);
+        selectQuery.setMaxResults(1);
+        return (T) selectQuery.getSingleResult();
+    }
 }

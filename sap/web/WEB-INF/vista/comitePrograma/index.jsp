@@ -76,10 +76,12 @@
         </div><!--/Center-->
 
         <div id="ui-layout-west" class="ui-layout-west">
-            <div class="ui-layout-content">
+            <div id="menu0" class="ui-layout-content">
                 <c:choose>
                     <c:when test="${EstadoProceso == 0}">
-                        <div align="center" class="alert alert-info"><i class="icon-info-sign"></i> Proceso en configuración</div>
+                        <div  align="center" class="alert alert-block">
+                            <i class="icon-info-sign"></i> No existen proceso activos
+                        </div>
                         <div id="menu" style="padding: 8px 0pt;" class="well">
 
                             <ul class="nav nav-list">  
@@ -91,28 +93,31 @@
                         </div>
                     </c:when>
                     <c:when test="${EstadoProceso == 1}">
-                        <div align="center" class="alert alert-info"><i class="icon-info-sign"></i> Proceso en configuración</div>
+                        <div align="center" class="alert alert-info"><i class="icon-cog"></i> Proceso en configuración</div>
                         <div id="menu" style="padding: 8px 0pt;" class="well">
-
                             <ul class="nav nav-list">  
                                 <button id="west-closer" class="close">&laquo;</button>
-                                <li class="nav-header">Proceso</li>
+                                <li class="nav-header">Proceso de Atoevaluación</li>
                                 <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
                                 <li class="nav-header">Ponderación</li>
-                                <li><a href="#preparedPonderarFactor"><i class="icon-list-ol"></i> Ponderar Factores</a></li>
-                                <li><a href="#preparedPonderarCara"><i class="icon-list-ol"></i> Ponderar Características</a></li>
+                                <li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Ponderar Factores</a></li>
+                                <li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Ponderar Características</a></li>
+                                <li class="nav-header">Muestra</li>
+                                <li><a href="#listMuestra"><i class="icon-group"></i> Asignar Muestra</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#iniciarProceso"><i class="icon-play-sign"></i> Iniciar proceso</a></li>
                             </ul>
                         </div>
                     </c:when>
                     <c:when test="${EstadoProceso == 2}">
-                        <div align="center" class="alert alert-info"><i class="icon-info-sign"></i> Proceso en configuración</div>
+                        <div align="center" class="alert alert-success"><i class="icon-play-sign"></i> Proceso en ejecución</div>
                         <div id="menu" style="padding: 8px 0pt;" class="well">
-
                             <ul class="nav nav-list">  
                                 <button id="west-closer" class="close">&laquo;</button>
-                                <li class="nav-header">Proceso en ejecución</li>
-                                <li><a href="#preparedCrearProceso"><i class="icon-plus"></i> Ponderaciòn</a></li>
-                                <li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>
+                                <li class="nav-header">Proceso de Atoevaluación</li>
+                                <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
+                                <li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Ponderación de Factores</a></li>
+                                <li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Ponderación de Características</a></li>
                             </ul>
                         </div>
                     </c:when>

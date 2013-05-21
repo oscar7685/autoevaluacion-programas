@@ -125,24 +125,28 @@ public class loginController extends HttpServlet {
 
                     Representante r = representanteFacade.find(Integer.parseInt(un));
                     if (r != null && r.getPassword().equals(pw)) {
+
                         session.setAttribute("tipoLogin", "Comite programa");
                         session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
                         session.setAttribute("Programa", r.getProgramaId());
+
                         List procesos = (List) procesoFacade.findByPrograma(r.getProgramaId());
-                        if (procesos.size() != 0) {
+                        if (!procesos.isEmpty()) {
                             Iterator iter = procesos.iterator();
                             while (iter.hasNext()) {
                                 Proceso p = (Proceso) iter.next();
-                                if (p.getFechacierre().equals("En Configuración")) {
+                                if (p.getFechainicio().equals("En Configuración")) {
                                     session.setAttribute("EstadoProceso", 1);
                                     session.setAttribute("Proceso", p);
                                     session.setAttribute("Modelo", p.getModeloId());
-                                } else if (p.getFechacierre().equals("En Ejecución")) {
+                                } else if (p.getFechacierre().equals("--")) {
                                     session.setAttribute("EstadoProceso", 2);
                                     session.setAttribute("Proceso", p);
                                     session.setAttribute("Modelo", p.getModeloId());
                                 } else {
                                     session.setAttribute("EstadoProceso", 3);
+                                    session.setAttribute("Proceso", p);
+                                    session.setAttribute("Modelo", p.getModeloId());
                                 }
                             }
                         } else {

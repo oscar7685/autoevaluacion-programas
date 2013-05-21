@@ -73,50 +73,46 @@ $(function() {
     actualizaEnlaces();
 
     var menuProceso0 = function() {
-        $("#menu").html('<ul class="nav nav-list"> ' +
+        $("#menu0").html('<div  align="center" class="alert alert-block">' +
+                ' <i class="icon-info-sign"></i> No existen proceso activos' +
+                '</div>' +
+                '<div id="menu" style="padding: 8px 0pt;" class="well">' +
+                '<ul class="nav nav-list">  ' +
                 '<button id="west-closer" class="close">&laquo;</button>' +
-                '<li class="nav-header">Proceso de Autoevaluación</li>' +
+                '<li class="nav-header">Proceso de Atoevaluación</li>' +
                 '<li><a href="#preparedCrearProceso"><i class="icon-plus"></i> Crear Proceso</a></li>' +
                 '<li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>' +
-                '</ul>');
+                '</ul>' +
+                '</div>');
     };
     var menuProceso1 = function() {
-        $("#menu").html('<ul class="nav nav-list">' +
+        $("#menu0").html('<div align="center" class="alert alert-info"><i class="icon-cog"></i> Proceso en configuración</div>' +
+                ' <div id="menu" style="padding: 8px 0pt;" class="well">' +
+                '<ul class="nav nav-list">' +
                 '<button id="west-closer" class="close">&laquo;</button>' +
-                '<li class="nav-header">Factores</li>' +
-                '<li><a href="#listarFactores"><i class="icon-th-large"></i> Listar factores</a></li>' +
+                '<li class="nav-header">Proceso de Atoevaluación</li>' +
+                '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
+                '<li class="nav-header">Ponderación</li>' +
+                '<li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Ponderar Factores</a></li>' +
+                '<li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Ponderar Características</a></li>' +
+                '<li class="nav-header">Muestra</li>' +
+                '<li><a href="#listMuestra"><i class="icon-group"></i> Asignar Muestra</a></li>' +
                 '<li class="divider"></li>' +
-                '<li class="nav-header">Caracteristicas</li>' +
-                '<li><a href="#listarCaracteristicas"><i class="icon-th-list"></i> Listar caracteristicas</a></li>' +
-                '<li class="divider"></li>' +
-                '<li class="nav-header">Indicadores</li>' +
-                '<li><a href="#listarIndicadores"><i class="icon-list"></i> Listar indicadores</a></li>' +
-                '<li class="divider"></li>' +
-                '<li class="nav-header">Preguntas</li>' +
-                '<li><a href="#listarPreguntas"><i class="icon-question"></i> Listar preguntas</a></li>' +
-                '<li class="divider"></li>' +
-                '<li class="nav-header">Encuestas</li>' +
-                '<li><a href="#listarEncuestas"><i class="icon-tasks"></i> Listar encuestas</a></li>' +
-                '</ul>');
+                '<li><a href="#iniciarProceso"><i class="icon-play-sign"></i> Iniciar proceso</a></li>' +
+                '</ul>' +
+                '</div>');
     };
     var menuProceso2 = function() {
-        $("#menu").html('<ul class="nav nav-list">' +
+        $("#menu0").html('<div align="center" class="alert alert-success"><i class="icon-play-sign"></i> Proceso en ejecución</div>' +
+                '<div id="menu" style="padding: 8px 0pt;" class="well">' +
+                '<ul class="nav nav-list">' +
                 '<button id="west-closer" class="close">&laquo;</button>' +
-                '<li class="nav-header">Factores</li>' +
-                '<li><a href="#listarFactores"><i class="icon-th-large"></i> Listar factores</a></li>' +
-                '<li class="divider"></li>' +
-                '<li class="nav-header">Caracteristicas</li>' +
-                '<li><a href="#listarCaracteristicas"><i class="icon-th-list"></i> Listar caracteristicas</a></li>' +
-                '<li class="divider"></li>' +
-                '<li class="nav-header">Indicadores</li>' +
-                '<li><a href="#listarIndicadores"><i class="icon-list"></i> Listar indicadores</a></li>' +
-                '<li class="divider"></li>' +
-                '<li class="nav-header">Preguntas</li>' +
-                '<li><a href="#listarPreguntas"><i class="icon-question"></i> Listar preguntas</a></li>' +
-                '<li class="divider"></li>' +
-                '<li class="nav-header">Encuestas</li>' +
-                '<li><a href="#listarEncuestas"><i class="icon-tasks"></i> Listar encuestas</a></li>' +
-                '</ul>');
+                '<li class="nav-header">Proceso de Atoevaluación</li>' +
+                '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
+                '<li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Ponderación de Factores</a></li>' +
+                '<li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Ponderación de Características</a></li>' +
+                '</ul>' +
+                '</div>');
     };
 
 
@@ -128,7 +124,7 @@ $(function() {
 
             });//fin post
 
-        } else if (hash === "#preparedCrearProceso" || hash === "#listarProceso" || hash === "#detalleProceso" || hash === "#detalleProceso" || hash === "#preparedPonderarFactor" || hash === "#ponderarFactor" || hash === "#listPonderacionFactor"  || hash === "#preparedPonderarCara"|| hash === "#listPonderacionCara"  ) {
+        } else if (hash === "#preparedCrearProceso" || hash === "#listarProceso" || hash === "#detalleProceso" || hash === "#detalleProceso" || hash === "#preparedPonderarFactor" || hash === "#ponderarFactor" || hash === "#listPonderacionFactor" || hash === "#preparedPonderarCara" || hash === "#listPonderacionCara" || hash === "#preparedAsignarMuestra" || hash === "#selectorListMuestra" || hash === "#listMuestra" || hash === "#preparedEvaluador" || hash === "#preparedEditPonderarFactor" || hash === "#preparedEditPonderarCara") {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
@@ -158,6 +154,25 @@ $(function() {
                 {
                     $("#contenido").append(data);
                     menuProceso1();
+                    myLayout.addCloseBtn("#west-closer", "west");
+                    actualizaEnlaces();
+                    $("#contenido").show(200, function() {
+                        $(".page_loading").hide();
+                    });
+
+                } //fin success
+            }); //fin del $.ajax
+        } else if (hash === "#iniciarProceso") {
+            var url3 = "/sap/" + hash;
+            url3 = url3.replace('#', "controladorCP?action=");
+            $("div.ui-layout-center").empty();
+            $.ajax({
+                type: "POST",
+                url: url3,
+                success: function(data)
+                {
+                   // $("#contenido").append(data);
+                    menuProceso2();
                     myLayout.addCloseBtn("#west-closer", "west");
                     actualizaEnlaces();
                     $("#contenido").show(200, function() {

@@ -33,7 +33,6 @@ public class FactorFacade extends AbstractFacade<Factor> {
     }
     
      public List findByModelo(Object m) {
-         System.out.println("Modelo : " + m);
         TypedQuery<Proceso> query = em.createQuery(
                 "SELECT c FROM Factor c WHERE c.modeloId = :name", Proceso.class);
         return query.setParameter("name", m).getResultList();

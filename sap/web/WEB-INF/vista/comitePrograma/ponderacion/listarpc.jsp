@@ -3,7 +3,6 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <br/>
             <h3>Ponderación de  Características</h3>
             <c:choose>
                 <c:when test="${fn:length(listPonderacionCara)!= 0}">
@@ -37,9 +36,14 @@
                             </c:forEach>
                         </tbody>
                     </table>
+                    <c:if test="${EstadoProceso == 1}">
+                        <a href="#preparedEditPonderarCara" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Ponderación</a>
+                    </c:if>
                 </c:when>
                 <c:otherwise>
-                    No  se han ponderado los factores en el sistema para este proceso.
+                    No  se han ponderado las características en el sistema para este proceso.
+                    <br><br>
+                    <a href="#preparedPonderarCara" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Ponderación</a>
                 </c:otherwise>
             </c:choose>
         </div>

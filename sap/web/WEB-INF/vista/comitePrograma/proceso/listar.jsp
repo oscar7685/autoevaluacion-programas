@@ -44,7 +44,7 @@
                     </table>
                 </c:when>
                 <c:otherwise>
-                    No Existen Modelos Registrados en el Sistema.
+                    No existen procesos registrados en el Sistema.
                 </c:otherwise>
             </c:choose>
         </div>
