@@ -395,6 +395,7 @@ public class cpController extends HttpServlet {
                 p.setFechainicio(fecha);
                 p.setFechacierre("--");
                 procesoFacade.edit(p);
+                sesion.setAttribute("Proceso", p);
                 sesion.setAttribute("EstadoProceso", "2");
 
                 String url = "/WEB-INF/vista/comitePrograma/index.jsp";
