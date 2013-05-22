@@ -23,7 +23,7 @@
                                         <c:out value="${row.nombre}"/>
                                     </td>
                                     <td class="action span2">
-                                        <a href="#editarFactor" title="Editar"><i class="icon-edit"></i></a>
+                                        <a href="#editarFactor&${row.id}" title="Editar"><i class="icon-edit"></i></a>
                                     </td>
                                 </tr>
                             </c:forEach>

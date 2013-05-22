@@ -119,7 +119,10 @@ $(function() {
                     } //fin success
                 }); //fin del $.ajax
             } else {
-                if (hash.indexOf("#entrarModelo") !== -1 || hash.indexOf("#editarEncuesta") !== -1 || hash.indexOf("#vistaPreviaEncuesta") !== -1) {
+                if (hash.indexOf("#entrarModelo") !== -1 || hash.indexOf("#editarEncuesta") !== -1 
+                 || hash.indexOf("#vistaPreviaEncuesta") !== -1 || hash.indexOf("#editarFactor") !== -1
+                 || hash.indexOf("#editarCaracteristica") !== -1 || hash.indexOf("#editarIndicador") !== -1
+                 || hash.indexOf("#editarPregunta") !== -1  ) {
                     var cual = hash.split("&");
                     hash = cual[0];
                     var url3 = "/sap/controladorCC?action=";

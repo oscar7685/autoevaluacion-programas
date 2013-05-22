@@ -10,14 +10,17 @@ import com.sap.ejb.FactorFacade;
 import com.sap.ejb.IndicadorFacade;
 import com.sap.ejb.ModeloFacade;
 import com.sap.ejb.PreguntaFacade;
+import com.sap.entity.Caracteristica;
 import com.sap.entity.Encuesta;
 import com.sap.entity.Factor;
+import com.sap.entity.Indicador;
 import com.sap.entity.Modelo;
 import com.sap.entity.Pregunta;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -135,6 +138,15 @@ public class formController2 extends HttpServlet {
                             f.setCodigo(codigo);
                             f.setNombre(nombre);
                             f.setModeloId(m2);
+                            List<Caracteristica> aux = new ArrayList<Caracteristica>();
+                            List<Caracteristica> listadeCaracteristicas = (List<Caracteristica>) request.getAttribute("listaC");
+                            for (int i = 0; i < listadeCaracteristicas.size(); i++) {
+                                if (request.getParameter("C" + listadeCaracteristicas.get(i).getId()).equals("1")) {
+                                    aux.add(listadeCaracteristicas.get(i));
+
+                                }
+                            }
+                            f.setCaracteristicaList(aux);
                             factorFacade.create(f);
                         } else {
                             if (action.equals("listarFactoresCC")) {
@@ -146,6 +158,28 @@ public class formController2 extends HttpServlet {
                                     String url = "/WEB-INF/vista/comiteCentral/factor/crear.jsp";
                                     RequestDispatcher rd = request.getRequestDispatcher(url);
                                     rd.forward(request, response);
+                                } else {
+                                    if (action.equals("editarFactorCC")) {
+                                        String id = request.getParameter("id");
+                                        Factor f = factorFacade.find(Integer.parseInt(id));
+                                        sesion.setAttribute("factor", f);
+                                        String url = "/WEB-INF/vista/comiteCentral/factor/editar.jsp";
+                                        RequestDispatcher rd = request.getRequestDispatcher(url);
+                                        rd.forward(request, response);
+
+                                    } else {
+                                        if (action.equals("editarFactor")) {
+                                            Factor f = (Factor) sesion.getAttribute("factor");
+                                            String nombre = (String) request.getParameter("nombre");
+                                            String codigo = (String) request.getParameter("codigo");
+                                            f.setCodigo(codigo);
+                                            f.setNombre(nombre);
+                                            factorFacade.edit(f);
+                                            Modelo m = (Modelo) sesion.getAttribute("modelo");
+                                            sesion.setAttribute("listaF", factorFacade.findByModelo(m));
+                                        }
+
+                                    }
                                 }
                             }
 
@@ -174,6 +208,27 @@ public class formController2 extends HttpServlet {
                                         String url = "/WEB-INF/vista/comiteCentral/caracteristica/listar.jsp";
                                         RequestDispatcher rd = request.getRequestDispatcher(url);
                                         rd.forward(request, response);
+                                    } else {
+                                        if (action.equals("editarCaracteristicaCC")) {
+                                            String id = request.getParameter("id");
+                                            Caracteristica c = caracteristicaFacade.find(Integer.parseInt(id));
+                                            sesion.setAttribute("caracteristica", c);
+                                            String url = "/WEB-INF/vista/comiteCentral/caracteristica/editar.jsp";
+                                            RequestDispatcher rd = request.getRequestDispatcher(url);
+                                            rd.forward(request, response);
+
+                                        } else {
+                                            if (action.equals("editarCaracteristica")) {
+                                                Caracteristica c = (Caracteristica) sesion.getAttribute("caracteristica");
+                                                String nombre = (String) request.getParameter("nombre");
+                                                String codigo = (String) request.getParameter("codigo");
+                                                c.setCodigo(codigo);
+                                                c.setNombre(nombre);
+                                                caracteristicaFacade.edit(c);
+                                                Modelo m = (Modelo) sesion.getAttribute("modelo");
+                                                sesion.setAttribute("listaC", caracteristicaFacade.findByModelo(m));
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -194,6 +249,27 @@ public class formController2 extends HttpServlet {
                                             String url = "/WEB-INF/vista/comiteCentral/indicador/listar.jsp";
                                             RequestDispatcher rd = request.getRequestDispatcher(url);
                                             rd.forward(request, response);
+                                        } else {
+                                            if (action.equals("editarIndicadorCC")) {
+                                                String id = request.getParameter("id");
+                                                Indicador i = indicadorFacade.find(Integer.parseInt(id));
+                                                sesion.setAttribute("indicador", i);
+                                                String url = "/WEB-INF/vista/comiteCentral/indicador/editar.jsp";
+                                                RequestDispatcher rd = request.getRequestDispatcher(url);
+                                                rd.forward(request, response);
+
+                                            } else {
+                                                if (action.equals("editarIndicador")) {
+                                                    Indicador c = (Indicador) sesion.getAttribute("indicador");
+                                                    String nombre = (String) request.getParameter("nombre");
+                                                    String codigo = (String) request.getParameter("codigo");
+                                                    c.setCodigo(codigo);
+                                                    c.setNombre(nombre);
+                                                    indicadorFacade.edit(c);
+                                                    Modelo m = (Modelo) sesion.getAttribute("modelo");
+                                                    sesion.setAttribute("listaI", indicadorFacade.findByModelo(m));
+                                                }
+                                            }
                                         }
                                     }
                                 }

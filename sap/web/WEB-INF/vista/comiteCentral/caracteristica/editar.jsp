@@ -78,12 +78,12 @@
             }
         });
 
-        $("#formCrearCaracteristica").validate({
+        $("#formEditarCaracteristica").validate({
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/controladorCC?action=crearCaracteristica",
-                    data: $("#formCrearCaracteristica").serialize(),
+                    url: "/sap/controladorCC?action=editarCaracteristica",
+                    data: $("#formEditarCaracteristica").serialize(),
                     success: function() {
                         location = "/sap/#listarCaracteristicas";
                     } //fin success
@@ -172,28 +172,34 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <form id="formCrearCaracteristica" class="form-horizontal" method="post">
+            <form id="formEditarCaracteristica" class="form-horizontal" method="post">
                 <fieldset>
-                    <legend>Crear Caracteristica</legend>
+                    <legend>Editar Caracteristica</legend>
                     <div class="control-group">
                         <label for="codigo" class="control-label">C&oacute;digo</label>
                         <div class="controls">
-                            <input type="text" name="codigo" id="codigo" class="input-xlarge {required:true}" value=""/>
+                            <input type="text" name="codigo" id="codigo" class="input-xlarge {required:true}" value="${caracteristica.codigo}"/>
                         </div>
                     </div>
                     <div class="control-group">
                         <label for="nombre" class="control-label">Caracteristica</label>
                         <div class="controls">
-                            <textarea rows="3" name="nombre" id="nombre" class="input-xlarge {required:true}"></textarea>
+                            <textarea rows="3" name="nombre" id="nombre" class="input-xlarge {required:true}">${caracteristica.nombre}</textarea>
                         </div>
                     </div>
                     <div class="control-group">
                         <label for="factor" class="control-label">Asignar Factor</label>
                         <div class="controls">
                             <select id="factor" name="factor" class="{required:true}">
-                                <option></option>
                                 <c:forEach items="${listaF}" var="row" varStatus="iter">
-                                    <option value="${row.id}">${row.codigo} ${row.nombre}</option>
+                                    <c:choose>
+                                        <c:when test="${row != caracteristica.getFactorId()}">
+                                            <option value="${row.id}">${row.codigo} ${row.nombre}</option>    
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option selected="selected" value="${row.id}">${row.codigo} ${row.nombre}</option>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:forEach>
                             </select>                
                         </div>
@@ -202,18 +208,30 @@
                         <label  class="control-label">Asignar Indicadores</label>
                         <div class="controls">
                             <ul id="fcbklist">
-                                <c:forEach items="${listaI}" var="row" varStatus="iter">
-                                    <li>
-                                        <strong>${row.codigo}</strong><br/> 
-                                        <span class="fcbkitem_text">${row.nombre}</span>
-                                        <input name="I${row.id}" type="hidden" value="0"/>
-                                    </li>
+                                <c:forEach items="${listaI}" var="item" varStatus="iter">
+                                    <c:choose>
+                                        <c:when test="${item.caracteristicaId != caracteristica}">
+                                            <li>
+                                                <strong>${item.codigo}</strong><br/> 
+                                                <span class="fcbkitem_text">${item.nombre}</span>
+                                                <input name="I${item.id}" type="hidden" value="0"/>
+                                            </li>
+
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li>
+                                                <strong>${item.codigo}</strong><br/> 
+                                                <span class="fcbkitem_text">${item.nombre}</span>
+                                                <input name="I${item.id}" type="hidden" checked="checked" value="0"/>
+                                            </li>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:forEach>
                             </ul>
                         </div>
                     </div> 
                     <div class="form-actions">
-                        <button class="btn btn-primary" type="submit">Crear Caracteristica</button>
+                        <button class="btn btn-primary" type="submit">Guardar cambios</button>
                         <button class="btn" type="reset">Cancelar</button>
                     </div>
                 </fieldset>
