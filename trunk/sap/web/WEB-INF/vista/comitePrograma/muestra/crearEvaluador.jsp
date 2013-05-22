@@ -74,7 +74,7 @@
                             <div class="control-group">
                                 <label for="anio"  class="control-label">Año</label>
                                 <div class="controls">
-                                    <input type="text" name="v" id="anio" class="input-xlarge {required:true}" value=""/>
+                                    <input type="text" name="anio" id="anio" class="input-xlarge {required:true}" value=""/>
                                 </div>
                             </div>
                         </c:when>
