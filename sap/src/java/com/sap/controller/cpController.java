@@ -82,7 +82,7 @@ public class cpController extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession sesion = request.getSession();
         String action = (String) request.getParameter("action");
-        System.out.println("ACTION" + action);
+        System.out.println("ACTION: " + action);
         Programa programa = (Programa) sesion.getAttribute("Programa");
         Modelo modelo = (Modelo) sesion.getAttribute("Modelo");
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
@@ -355,33 +355,51 @@ public class cpController extends HttpServlet {
                 String pass = request.getParameter("password");
                 String mail = request.getParameter("mail");
 
-                Muestrapersona mp = new Muestrapersona();
-                mp.setId(cedula);
-                mp.setNombre(nombre);
-                mp.setApellido(apellido);
-                mp.setPassword(pass);
-                mp.setMail(mail);
-                mp.setMuestraId((Muestra) sesion.getAttribute("Muestra"));
+                Muestrapersona mp = muestrapersonaFacade.find(cedula);
 
-                System.out.println("Muestraaa " + sesion.getAttribute("Muestra"));
+                if (mp == null) {
+                    Muestrapersona mp1 = new Muestrapersona();
+                    mp1.setId(cedula);
+                    mp1.setNombre(nombre);
+                    mp1.setApellido(apellido);
+                    mp1.setPassword(pass);
+                    mp1.setMail(mail);
+                    mp1.setMuestraId((Muestra) sesion.getAttribute("Muestra"));
+                    muestrapersonaFacade.create(mp1);
+                    mp = mp1;
+                }
 
-                muestrapersonaFacade.create(mp);
-
+               
                 String fuente = (String) sesion.getAttribute("selectorFuente");
 
                 if (fuente.equals("Estudiante")) {
+
                     String codigo = request.getParameter("codigo");
-                    String semestre = request.getParameter("nombre");
-                    String periodo = request.getParameter("nombre");
-                    String anio = request.getParameter("nombre");
+                    String semestre = request.getParameter("semestre");
+                    String periodo = request.getParameter("periodo");
+                    String anio = request.getParameter("anio");
 
-                    Muestraestudiante me = new Muestraestudiante();
-                    me.setId(codigo);
-                    me.setPeriodo(periodo);
-                    me.setAnio(anio);
-                    me.setSemestre(semestre);
+                    Muestraestudiante me = muestraestudianteFacade.find(codigo);
+                    
+                    Muestra m = (Muestra) sesion.getAttribute("Muestra");
 
-                    muestraestudianteFacade.create(me);
+                    if (me == null) {
+                        Muestraestudiante me1 = new Muestraestudiante();
+                        me1.setId(codigo);
+                        me1.setPeriodo(periodo);
+                        me1.setAnio(anio);
+                        me1.setSemestre(semestre);
+                        me1.setMuestrapersonaId(mp);
+                        muestraestudianteFacade.create(me1);
+                    } else if (me.getMuestrapersonaId().getMuestraId().getId() != m.getId()) {
+                        System.out.println("Muestra 1 = " +  me.getMuestrapersonaId().getMuestraId());
+                        System.out.println("Muestra 2 = " + sesion.getAttribute("Muestra"));
+                        System.out.println("Cree para nuevo proceso");
+                        muestrapersonaFacade.create(mp);
+                        muestraestudianteFacade.create(me);
+                    } else {
+                        System.out.println("No inserte nada");
+                    }
                 }
 
                 String url = "/WEB-INF/vista/comitePrograma/muestra/crearEvaluador.jsp";
