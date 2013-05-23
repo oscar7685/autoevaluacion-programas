@@ -4,6 +4,7 @@
  */
 package com.sap.ejb;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 import javax.persistence.EntityManager;
@@ -96,4 +97,13 @@ public abstract class AbstractFacade<T> {
         selectQuery.setMaxResults(1);
         return (T) selectQuery.getSingleResult();
     }
+    
+      public List<T> findLast(Object muestra) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c.muestraId = :name ORDER BY c.id DESC", entityClass);
+        q.setMaxResults(1);
+        return q.setParameter("name", muestra).getResultList();
+    }
+
 }
