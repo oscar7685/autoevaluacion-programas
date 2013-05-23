@@ -8,7 +8,18 @@
                     url: "/sap/controladorCP?action=crearEvaluador",
                     data: $("#formCrearEvaluador").serialize(),
                     success: function() {
-                        location = "/sap/#listMuestra";
+                        $("#listM").empty();
+                        $.ajax({
+                            type: 'POST',
+                            url: "/sap/controladorCP?action=selectorListMuestra",
+                            data: $("#formListarMuestra").serialize(),
+                            success: function(datos) {
+                                $("#listM").append(datos);
+                                $("#contenido").show(200, function() {
+                                    $(".page_loading").hide();
+                                });
+                            } //fin success
+                        }); //fin $.ajax 
                     } //fin success
                 }); //fin $.ajax    
             }

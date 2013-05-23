@@ -87,6 +87,7 @@ public class cpController extends HttpServlet {
         Modelo modelo = (Modelo) sesion.getAttribute("Modelo");
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
 
+
         try {
             if (action.equals("indexCP")) {
                 String url = "/WEB-INF/vista/comitePrograma/index.jsp";
@@ -369,7 +370,7 @@ public class cpController extends HttpServlet {
                     mp = mp1;
                 }
 
-               
+
                 String fuente = (String) sesion.getAttribute("selectorFuente");
 
                 if (fuente.equals("Estudiante")) {
@@ -380,7 +381,7 @@ public class cpController extends HttpServlet {
                     String anio = request.getParameter("anio");
 
                     Muestraestudiante me = muestraestudianteFacade.find(codigo);
-                    
+
                     Muestra m = (Muestra) sesion.getAttribute("Muestra");
 
                     if (me == null) {
@@ -392,7 +393,7 @@ public class cpController extends HttpServlet {
                         me1.setMuestrapersonaId(mp);
                         muestraestudianteFacade.create(me1);
                     } else if (me.getMuestrapersonaId().getMuestraId().getId() != m.getId()) {
-                        System.out.println("Muestra 1 = " +  me.getMuestrapersonaId().getMuestraId());
+                        System.out.println("Muestra 1 = " + me.getMuestrapersonaId().getMuestraId());
                         System.out.println("Muestra 2 = " + sesion.getAttribute("Muestra"));
                         System.out.println("Cree para nuevo proceso");
                         muestrapersonaFacade.create(mp);
@@ -419,6 +420,71 @@ public class cpController extends HttpServlet {
                 String url = "/WEB-INF/vista/comitePrograma/index.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
+            } else if (action.equals("generarMuestraAleatoria")) {
+
+                Muestra muestra = (Muestra) sesion.getAttribute("Muestra");
+                List l = muestrapersonaFacade.findLast(sesion.getAttribute("Muestra"));
+
+                Iterator it = l.iterator();
+
+                int id = 0;
+
+                while (it.hasNext()) {
+                    Muestrapersona mp = (Muestrapersona) it.next();
+                    String string = mp.getId();
+                    String[] parts = string.split("-");
+                    String part2 = parts[1]; // 034556
+                    System.out.println("ID: " + part2);
+                    id = Integer.valueOf(part2) + 1;
+                }
+
+                int numero = Integer.valueOf(request.getParameter("numero"));
+
+                for (int i = 0; i < numero; i++) {
+                    
+                    id++;
+
+                    String pass = passwordGenerator.getPassword(
+                            passwordGenerator.MAYUSCULAS
+                            + passwordGenerator.NUMEROS, 6);
+
+
+                    String nombre = "Usuario";
+                    String apellido = "Aleatorio";
+                    String cedula = programa.getId() + proceso.getId() + " - ";
+                    String mail = "correo@correo.com";
+
+                    Muestrapersona mp1 = new Muestrapersona();
+                    String idx = "00" + programa.getId() + proceso.getId() + muestra.getId() + "-" + id;
+                    mp1.setId(idx);
+                    mp1.setNombre(nombre);
+                    mp1.setApellido(apellido);
+                    mp1.setPassword(pass);
+                    mp1.setMail(mail);
+                    mp1.setMuestraId((Muestra) sesion.getAttribute("Muestra"));
+
+                    muestrapersonaFacade.create(mp1);
+
+                    String fuente = (String) sesion.getAttribute("selectorFuente");
+
+                    /*    if (fuente.equals("Estudiante")) {
+
+                     String codigo = String.valueOf(i);
+                     String semestre = "--";
+                     String periodo = "--";
+                     String anio = "--";
+
+                     Muestra m = (Muestra) sesion.getAttribute("Muestra");
+
+                     Muestraestudiante me1 = new Muestraestudiante();
+                     me1.setId(codigo);
+                     me1.setPeriodo(periodo);
+                     me1.setAnio(anio);
+                     me1.setSemestre(semestre);
+                     me1.setMuestrapersonaId(mp1);
+                     muestraestudianteFacade.create(me1);
+                     }*/
+                }
             }
         } finally {
             out.close();
