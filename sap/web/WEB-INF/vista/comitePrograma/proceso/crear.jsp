@@ -34,13 +34,14 @@
                         </div>
                     </div>
                     <div class="control-group">
-                        <label for="modelo" class="control-label">Descripci&oacute;n</label>
+                        <label for="modelo" class="control-label">Modelo</label>
                         <div class="controls">
                             <select id="modelo" name="modelo">
                                 <c:forEach items="${listModelo}" var="item" >
                                     <option value="${item.id}">${item.nombre}</option>
                                 </c:forEach>
-                            </select>    </div>
+                            </select>   
+                        </div>
                     </div>
                     <div class="form-actions">
                         <button class="btn btn-primary" type="submit">Crear</button>
