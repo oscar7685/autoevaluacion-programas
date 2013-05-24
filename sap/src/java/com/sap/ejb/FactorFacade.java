@@ -37,6 +37,6 @@ public class FactorFacade extends AbstractFacade<Factor> {
                 "SELECT c FROM Factor c WHERE c.modeloId = :name", Proceso.class);
         return query.setParameter("name", m).getResultList();
 
-    }
+}
     
 }

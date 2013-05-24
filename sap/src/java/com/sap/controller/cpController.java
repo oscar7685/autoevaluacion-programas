@@ -314,7 +314,7 @@ public class cpController extends HttpServlet {
 
                         Muestrapersona mp = new Muestrapersona();
 
-                        mp.setId(per.getId());
+                        mp.setCedula(per.getId());
                         mp.setNombre(per.getNombre());
                         mp.setApellido(per.getApellido());
                         mp.setPassword(per.getPassword());
@@ -324,7 +324,7 @@ public class cpController extends HttpServlet {
                         muestrapersonaFacade.create(mp);
 
                         Muestraestudiante me = new Muestraestudiante();
-                        me.setId(est.getId());
+                        me.setCodigo(est.getId());
                         me.setSemestre(est.getPeriodo());
                         me.setPeriodo(est.getPeriodo());
                         me.setAnio(est.getAnio());
@@ -360,7 +360,7 @@ public class cpController extends HttpServlet {
 
                 if (mp == null) {
                     Muestrapersona mp1 = new Muestrapersona();
-                    mp1.setId(cedula);
+                    mp1.setCedula(cedula);
                     mp1.setNombre(nombre);
                     mp1.setApellido(apellido);
                     mp1.setPassword(pass);
@@ -386,7 +386,7 @@ public class cpController extends HttpServlet {
 
                     if (me == null) {
                         Muestraestudiante me1 = new Muestraestudiante();
-                        me1.setId(codigo);
+                        me1.setCodigo(codigo);
                         me1.setPeriodo(periodo);
                         me1.setAnio(anio);
                         me1.setSemestre(semestre);
@@ -431,7 +431,7 @@ public class cpController extends HttpServlet {
 
                 while (it.hasNext()) {
                     Muestrapersona mp = (Muestrapersona) it.next();
-                    String string = mp.getId();
+                    String string = mp.getCedula();
                     String[] parts = string.split("-");
                     String part2 = parts[1]; // 034556
                     System.out.println("ID: " + part2);
@@ -456,7 +456,7 @@ public class cpController extends HttpServlet {
 
                     Muestrapersona mp1 = new Muestrapersona();
                     String idx = "00" + programa.getId() + proceso.getId() + muestra.getId() + "-" + id;
-                    mp1.setId(idx);
+                    mp1.setCedula(idx);
                     mp1.setNombre(nombre);
                     mp1.setApellido(apellido);
                     mp1.setPassword(pass);

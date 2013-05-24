@@ -4,9 +4,7 @@
  */
 package com.sap.ejb;
 
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -85,25 +83,11 @@ public abstract class AbstractFacade<T> {
         return q.setParameter("name", m).getResultList();
     }
 
-    public <T> T randomEntity(EntityManager em, Class<T> clazz) {
-        Query countQuery = em.createQuery("select count(id) from " + clazz.getName());
-        long count = (Long) countQuery.getSingleResult();
-
-        Random random = new Random();
-        int number = random.nextInt((int) count);
-
-        Query selectQuery = em.createQuery("from " + clazz.getName());
-        selectQuery.setFirstResult(number);
-        selectQuery.setMaxResults(1);
-        return (T) selectQuery.getSingleResult();
-    }
-    
-      public List<T> findLast(Object muestra) {
+    public List<T> findLast(Object muestra) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c.muestraId = :name ORDER BY c.id DESC", entityClass);
         q.setMaxResults(1);
         return q.setParameter("name", muestra).getResultList();
     }
-
 }

@@ -56,13 +56,13 @@ public class Caracteristica implements Serializable {
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "caracteristicaId")
     private List<Ponderacioncaracteristica> ponderacioncaracteristicaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "caracteristicaId")
+    @OneToMany(mappedBy = "caracteristicaId")
     private List<Indicador> indicadorList;
     @JoinColumn(name = "modelo_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Modelo modeloId;
     @JoinColumn(name = "factor_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Factor factorId;
 
     public Caracteristica() {

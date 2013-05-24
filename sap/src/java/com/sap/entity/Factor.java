@@ -59,7 +59,7 @@ public class Factor implements Serializable {
     @JoinColumn(name = "modelo_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Modelo modeloId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "factorId")
+    @OneToMany(mappedBy = "factorId")
     private List<Caracteristica> caracteristicaList;
 
     public Factor() {
