@@ -10,6 +10,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -32,6 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Muestrapersona.findAll", query = "SELECT m FROM Muestrapersona m"),
     @NamedQuery(name = "Muestrapersona.findById", query = "SELECT m FROM Muestrapersona m WHERE m.id = :id"),
+    @NamedQuery(name = "Muestrapersona.findByCedula", query = "SELECT m FROM Muestrapersona m WHERE m.cedula = :cedula"),
     @NamedQuery(name = "Muestrapersona.findByNombre", query = "SELECT m FROM Muestrapersona m WHERE m.nombre = :nombre"),
     @NamedQuery(name = "Muestrapersona.findByApellido", query = "SELECT m FROM Muestrapersona m WHERE m.apellido = :apellido"),
     @NamedQuery(name = "Muestrapersona.findByPassword", query = "SELECT m FROM Muestrapersona m WHERE m.password = :password"),
@@ -39,11 +42,15 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Muestrapersona implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "id")
-    private String id;
+    @Column(name = "cedula")
+    private String cedula;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -85,24 +92,33 @@ public class Muestrapersona implements Serializable {
     public Muestrapersona() {
     }
 
-    public Muestrapersona(String id) {
+    public Muestrapersona(Integer id) {
         this.id = id;
     }
 
-    public Muestrapersona(String id, String nombre, String apellido, String password, String mail) {
+    public Muestrapersona(Integer id, String cedula, String nombre, String apellido, String password, String mail) {
         this.id = id;
+        this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
         this.password = password;
         this.mail = mail;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
 
     public String getNombre() {

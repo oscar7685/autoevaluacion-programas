@@ -37,8 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pregunta.findById", query = "SELECT p FROM Pregunta p WHERE p.id = :id"),
     @NamedQuery(name = "Pregunta.findByCodigo", query = "SELECT p FROM Pregunta p WHERE p.codigo = :codigo"),
     @NamedQuery(name = "Pregunta.findByPregunta", query = "SELECT p FROM Pregunta p WHERE p.pregunta = :pregunta"),
-    @NamedQuery(name = "Pregunta.findByTipo", query = "SELECT p FROM Pregunta p WHERE p.tipo = :tipo"),
-    @NamedQuery(name = "Pregunta.findByModelo", query = "SELECT p FROM Pregunta p WHERE p.modeloId = :modelo")})
+    @NamedQuery(name = "Pregunta.findByTipo", query = "SELECT p FROM Pregunta p WHERE p.tipo = :tipo")})
 public class Pregunta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -67,7 +66,7 @@ public class Pregunta implements Serializable {
     @ManyToOne(optional = false)
     private Modelo modeloId;
     @JoinColumn(name = "indicador_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Indicador indicadorId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaId")
     private List<Resultadoevaluacion> resultadoevaluacionList;

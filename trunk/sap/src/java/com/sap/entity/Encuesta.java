@@ -40,6 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Encuesta.findByNombre", query = "SELECT e FROM Encuesta e WHERE e.nombre = :nombre"),
     @NamedQuery(name = "Encuesta.findByObjetivo", query = "SELECT e FROM Encuesta e WHERE e.objetivo = :objetivo"),
     @NamedQuery(name = "Encuesta.findByInstrucciones", query = "SELECT e FROM Encuesta e WHERE e.instrucciones = :instrucciones"),
+    @NamedQuery(name = "Encuesta.findByVersion", query = "SELECT e FROM Encuesta e WHERE e.version = :version"),
+    @NamedQuery(name = "Encuesta.findByFecha", query = "SELECT e FROM Encuesta e WHERE e.fecha = :fecha"),
     @NamedQuery(name = "Encuesta.findByModelo", query = "SELECT e FROM Encuesta e WHERE e.modeloId = :modelo")})
 public class Encuesta implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -68,14 +70,6 @@ public class Encuesta implements Serializable {
     @Size(min = 1, max = 1000)
     @Column(name = "instrucciones")
     private String instrucciones;
-    @JoinTable(name = "encuestahaspregunta", joinColumns = {
-        @JoinColumn(name = "encuesta_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "pregunta_id", referencedColumnName = "id")})
-    @ManyToMany
-    private List<Pregunta> preguntaList;
-    @JoinColumn(name = "modelo_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Modelo modeloId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -86,6 +80,14 @@ public class Encuesta implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "fecha")
     private String fecha;
+    @JoinTable(name = "encuestahaspregunta", joinColumns = {
+        @JoinColumn(name = "encuesta_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "pregunta_id", referencedColumnName = "id")})
+    @ManyToMany
+    private List<Pregunta> preguntaList;
+    @JoinColumn(name = "modelo_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Modelo modeloId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "encuestaId")
     private List<Asignacionencuesta> asignacionencuestaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "encuestaId")
@@ -104,8 +106,8 @@ public class Encuesta implements Serializable {
         this.nombre = nombre;
         this.objetivo = objetivo;
         this.instrucciones = instrucciones;
-        this.version=version;
-        this.fecha=fecha;
+        this.version = version;
+        this.fecha = fecha;
     }
 
     public Integer getId() {

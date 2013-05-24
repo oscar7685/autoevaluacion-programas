@@ -36,7 +36,7 @@ public class CaracteristicaFacade extends AbstractFacade<Caracteristica> {
         TypedQuery<Proceso> query = em.createQuery(
                 "SELECT c FROM Caracteristica c WHERE c.modeloId = :name", Proceso.class);
         return query.setParameter("name", m).getResultList();
-
-    }
+     
+}
     
 }

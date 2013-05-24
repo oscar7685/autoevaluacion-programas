@@ -8,6 +8,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,17 +30,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Muestraestudiante.findAll", query = "SELECT m FROM Muestraestudiante m"),
     @NamedQuery(name = "Muestraestudiante.findById", query = "SELECT m FROM Muestraestudiante m WHERE m.id = :id"),
+    @NamedQuery(name = "Muestraestudiante.findByCodigo", query = "SELECT m FROM Muestraestudiante m WHERE m.codigo = :codigo"),
     @NamedQuery(name = "Muestraestudiante.findBySemestre", query = "SELECT m FROM Muestraestudiante m WHERE m.semestre = :semestre"),
     @NamedQuery(name = "Muestraestudiante.findByPeriodo", query = "SELECT m FROM Muestraestudiante m WHERE m.periodo = :periodo"),
     @NamedQuery(name = "Muestraestudiante.findByAnio", query = "SELECT m FROM Muestraestudiante m WHERE m.anio = :anio")})
 public class Muestraestudiante implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 25)
-    @Column(name = "id")
-    private String id;
+    @Size(min = 1, max = 45)
+    @Column(name = "codigo")
+    private String codigo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -61,23 +68,32 @@ public class Muestraestudiante implements Serializable {
     public Muestraestudiante() {
     }
 
-    public Muestraestudiante(String id) {
+    public Muestraestudiante(Integer id) {
         this.id = id;
     }
 
-    public Muestraestudiante(String id, String semestre, String periodo, String anio) {
+    public Muestraestudiante(Integer id, String codigo, String semestre, String periodo, String anio) {
         this.id = id;
+        this.codigo = codigo;
         this.semestre = semestre;
         this.periodo = periodo;
         this.anio = anio;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getSemestre() {
