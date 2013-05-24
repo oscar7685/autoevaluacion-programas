@@ -335,8 +335,16 @@ public class cpController extends HttpServlet {
                 }
 
             } else if (action.equals("selectorListMuestra")) {
-                String fuente = request.getParameter("fuente");
-                sesion.setAttribute("selectorFuente", fuente);
+                String fuente = "";
+                if (request.getParameter("fuente") == null) {
+                    fuente = (String) sesion.getAttribute("selectorFuente");
+                } else {
+                    fuente = request.getParameter("fuente");
+                    sesion.setAttribute("selectorFuente", fuente);
+                }
+
+                System.out.println("Fuente: " + fuente);
+
                 Muestra m = (Muestra) sesion.getAttribute("Muestra");
                 if (fuente.equals("Estudiante")) {
                     sesion.setAttribute("listMuestraSeleccionada", muestrapersonaFacade.findByList("muestraId", m));
@@ -356,7 +364,15 @@ public class cpController extends HttpServlet {
                 String pass = request.getParameter("password");
                 String mail = request.getParameter("mail");
 
-                Muestrapersona mp = muestrapersonaFacade.find(cedula);
+                List lmp = muestrapersonaFacade.findByList("cedula", cedula);
+
+                Iterator it = lmp.iterator();
+
+                Muestrapersona mp = null;
+
+                while (it.hasNext()) {
+                    mp = (Muestrapersona) it.next();
+                }
 
                 if (mp == null) {
                     Muestrapersona mp1 = new Muestrapersona();
@@ -380,9 +396,17 @@ public class cpController extends HttpServlet {
                     String periodo = request.getParameter("periodo");
                     String anio = request.getParameter("anio");
 
-                    Muestraestudiante me = muestraestudianteFacade.find(codigo);
+                    List lme = muestraestudianteFacade.findByList("codigo", codigo);
 
                     Muestra m = (Muestra) sesion.getAttribute("Muestra");
+
+                    Iterator it2 = lme.iterator();
+
+                    Muestraestudiante me = null;
+
+                    while (it2.hasNext()) {
+                        me = (Muestraestudiante) it2.next();
+                    }
 
                     if (me == null) {
                         Muestraestudiante me1 = new Muestraestudiante();
@@ -403,9 +427,6 @@ public class cpController extends HttpServlet {
                     }
                 }
 
-                String url = "/WEB-INF/vista/comitePrograma/muestra/crearEvaluador.jsp";
-                RequestDispatcher rd = request.getRequestDispatcher(url);
-                rd.forward(request, response);
             } else if (action.equals("iniciarProceso")) {
                 Proceso p = (Proceso) sesion.getAttribute("Proceso");
                 java.util.Date date = new java.util.Date();
@@ -431,17 +452,13 @@ public class cpController extends HttpServlet {
 
                 while (it.hasNext()) {
                     Muestrapersona mp = (Muestrapersona) it.next();
-                    String string = mp.getCedula();
-                    String[] parts = string.split("-");
-                    String part2 = parts[1]; // 034556
-                    System.out.println("ID: " + part2);
-                    id = Integer.valueOf(part2) + 1;
+                    id = mp.getId();
                 }
 
                 int numero = Integer.valueOf(request.getParameter("numero"));
 
                 for (int i = 0; i < numero; i++) {
-                    
+
                     id++;
 
                     String pass = passwordGenerator.getPassword(
@@ -467,23 +484,23 @@ public class cpController extends HttpServlet {
 
                     String fuente = (String) sesion.getAttribute("selectorFuente");
 
-                    /*    if (fuente.equals("Estudiante")) {
+                    if (fuente.equals("Estudiante")) {
 
-                     String codigo = String.valueOf(i);
-                     String semestre = "--";
-                     String periodo = "--";
-                     String anio = "--";
+                        String codigo = String.valueOf(i);
+                        String semestre = "--";
+                        String periodo = "--";
+                        String anio = "--";
 
-                     Muestra m = (Muestra) sesion.getAttribute("Muestra");
+                        Muestra m = (Muestra) sesion.getAttribute("Muestra");
 
-                     Muestraestudiante me1 = new Muestraestudiante();
-                     me1.setId(codigo);
-                     me1.setPeriodo(periodo);
-                     me1.setAnio(anio);
-                     me1.setSemestre(semestre);
-                     me1.setMuestrapersonaId(mp1);
-                     muestraestudianteFacade.create(me1);
-                     }*/
+                        Muestraestudiante me1 = new Muestraestudiante();
+                        me1.setCodigo(idx);
+                        me1.setPeriodo(periodo);
+                        me1.setAnio(anio);
+                        me1.setSemestre(semestre);
+                        me1.setMuestrapersonaId(mp1);
+                        muestraestudianteFacade.create(me1);
+                    }
                 }
             }
         } finally {

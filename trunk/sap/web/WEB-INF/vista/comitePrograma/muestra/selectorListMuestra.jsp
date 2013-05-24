@@ -64,7 +64,7 @@
                     <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter">
                         <tr>
                             <td>   
-                                <c:out value="${row.id}"/>
+                                <c:out value="${row.cedula}"/>
                             </td>
                             <td>   
                                 <c:out value="${row.nombre}"/>
@@ -76,9 +76,9 @@
             <a href="#preparedEvaluador" class="btn btn-large btn-primary llamador"><i class="icon-plus"> </i><i class="icon-user"></i> Registrar Evaluador</a>
         </c:when>
         <c:otherwise>
-            No  se han ponderado los factores en el sistema para este proceso.
+            No  se ha generado la muestra para la fuente seleccionada.
             <br><br>
-            <a href="#preparedPonderarFactor" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Asignar Ponderación</a>
+            <a href="#preparedEvaluador" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i><i class="icon-user"></i> Registrar Evaluador</a>
         </c:otherwise>
     </c:choose>
 </div>
