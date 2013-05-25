@@ -8,12 +8,14 @@ import com.sap.ejb.CaracteristicaFacade;
 import com.sap.ejb.EncuestaFacade;
 import com.sap.ejb.FactorFacade;
 import com.sap.ejb.IndicadorFacade;
+import com.sap.ejb.InstrumentoFacade;
 import com.sap.ejb.ModeloFacade;
 import com.sap.ejb.PreguntaFacade;
 import com.sap.entity.Caracteristica;
 import com.sap.entity.Encuesta;
 import com.sap.entity.Factor;
 import com.sap.entity.Indicador;
+import com.sap.entity.Instrumento;
 import com.sap.entity.Modelo;
 import com.sap.entity.Pregunta;
 import java.io.IOException;
@@ -38,6 +40,8 @@ import javax.servlet.http.HttpSession;
  */
 public class formController2 extends HttpServlet {
 
+    @EJB
+    private InstrumentoFacade instrumentoFacade;
     @EJB
     private EncuestaFacade encuestaFacade;
     @EJB
@@ -120,9 +124,30 @@ public class formController2 extends HttpServlet {
                                     sesion.setAttribute("listaI", indicadorFacade.findByModelo(m));
                                     sesion.setAttribute("listaP", preguntaFacade.findByModelo(m));
                                     sesion.setAttribute("listaE", encuestaFacade.findByModelo(m));
+                                    sesion.setAttribute("instrumentos", instrumentoFacade.findAll());
                                     String url = "/WEB-INF/vista/comiteCentral/inicio.jsp";
                                     RequestDispatcher rd = request.getRequestDispatcher(url);
                                     rd.forward(request, response);
+
+                                } else {
+                                    if (action.equals("editarModeloCC")) {
+                                        String id = request.getParameter("id");
+                                        Modelo m = modeloFacade.find(Integer.parseInt(id));
+                                        sesion.setAttribute("modelo", m);
+                                        String url = "/WEB-INF/vista/comiteCentral/modelo/editar.jsp";
+                                        RequestDispatcher rd = request.getRequestDispatcher(url);
+                                        rd.forward(request, response);
+
+                                    } else {
+                                        if (action.equals("editarModelo")) {
+                                            Modelo m = (Modelo) sesion.getAttribute("modelo");
+                                            String nombre = (String) request.getParameter("nombre");
+                                            String descripcion = (String) request.getParameter("descripcion");
+                                            m.setDescripcion(descripcion);
+                                            m.setNombre(nombre);
+                                            modeloFacade.edit(m);
+                                        }
+                                    }
 
                                 }
                             }
@@ -139,15 +164,18 @@ public class formController2 extends HttpServlet {
                             f.setNombre(nombre);
                             f.setModeloId(m2);
                             List<Caracteristica> aux = new ArrayList<Caracteristica>();
-                            List<Caracteristica> listadeCaracteristicas = (List<Caracteristica>) request.getAttribute("listaC");
-                            for (int i = 0; i < listadeCaracteristicas.size(); i++) {
-                                if (request.getParameter("C" + listadeCaracteristicas.get(i).getId()).equals("1")) {
-                                    aux.add(listadeCaracteristicas.get(i));
+                            List<Caracteristica> listadeCaracteristicas = (List<Caracteristica>) sesion.getAttribute("listaC");
+                            if (listadeCaracteristicas != null) {
+                                for (int i = 0; i < listadeCaracteristicas.size(); i++) {
+                                    if (request.getParameter("C" + listadeCaracteristicas.get(i).getId()).equals("1")) {
+                                        aux.add(listadeCaracteristicas.get(i));
 
+                                    }
                                 }
                             }
                             f.setCaracteristicaList(aux);
                             factorFacade.create(f);
+                            sesion.setAttribute("listaF", factorFacade.findByModelo(m2));
                         } else {
                             if (action.equals("listarFactoresCC")) {
                                 String url = "/WEB-INF/vista/comiteCentral/factor/listar.jsp";
@@ -162,6 +190,7 @@ public class formController2 extends HttpServlet {
                                     if (action.equals("editarFactorCC")) {
                                         String id = request.getParameter("id");
                                         Factor f = factorFacade.find(Integer.parseInt(id));
+                                        f.setCaracteristicaList(caracteristicaFacade.findByFactor(f));
                                         sesion.setAttribute("factor", f);
                                         String url = "/WEB-INF/vista/comiteCentral/factor/editar.jsp";
                                         RequestDispatcher rd = request.getRequestDispatcher(url);
@@ -174,9 +203,34 @@ public class formController2 extends HttpServlet {
                                             String codigo = (String) request.getParameter("codigo");
                                             f.setCodigo(codigo);
                                             f.setNombre(nombre);
+
+                                            List<Caracteristica> actuales = caracteristicaFacade.findByFactor(f);
+                                            if (actuales != null) {
+                                                for (int i = 0; i < actuales.size(); i++) {
+                                                    actuales.get(i).setFactorId(null);
+                                                    caracteristicaFacade.edit(actuales.get(i));
+
+                                                }
+                                            }
+
+
+                                            List<Caracteristica> aux = new ArrayList<Caracteristica>();
+                                            List<Caracteristica> listadeCaracteristicas = (List<Caracteristica>) sesion.getAttribute("listaC");
+                                            if (listadeCaracteristicas != null) {
+                                                for (int i = 0; i < listadeCaracteristicas.size(); i++) {
+                                                    if (request.getParameter("C" + listadeCaracteristicas.get(i).getId()).equals("1")) {
+                                                        aux.add(listadeCaracteristicas.get(i));
+                                                        listadeCaracteristicas.get(i).setFactorId(f);
+                                                        caracteristicaFacade.edit(listadeCaracteristicas.get(i));
+
+                                                    }
+                                                }
+                                            }
+                                            f.setCaracteristicaList(aux);
                                             factorFacade.edit(f);
                                             Modelo m = (Modelo) sesion.getAttribute("modelo");
                                             sesion.setAttribute("listaF", factorFacade.findByModelo(m));
+                                            sesion.setAttribute("listaC", caracteristicaFacade.findByModelo(m));
                                         }
 
                                     }
@@ -189,13 +243,27 @@ public class formController2 extends HttpServlet {
                             if (action.equals("crearCaracteristica")) {
                                 String codigo = (String) request.getParameter("codigo");
                                 String nombre = (String) request.getParameter("nombre");
+                                String factor = (String) request.getParameter("factor");
+                                Factor f = factorFacade.find(Integer.parseInt(factor));
                                 Modelo m2 = (Modelo) sesion.getAttribute("modelo");
-                                Factor f = new Factor();
-                                f.setCodigo(codigo);
-                                f.setNombre(nombre);
-                                f.setModeloId(m2);
-                                factorFacade.create(f);
-                                sesion.setAttribute("listaF", factorFacade.findByModelo(m2));
+                                Caracteristica c = new Caracteristica();
+                                c.setCodigo(codigo);
+                                c.setNombre(nombre);
+                                c.setModeloId(m2);
+                                c.setFactorId(f);
+                                List<Indicador> aux = new ArrayList<Indicador>();
+                                List<Indicador> listadeIndicadores = (List<Indicador>) request.getAttribute("listaI");
+                                if (listadeIndicadores != null) {
+                                    for (int i = 0; i < listadeIndicadores.size(); i++) {
+                                        if (request.getParameter("I" + listadeIndicadores.get(i).getId()).equals("1")) {
+                                            aux.add(listadeIndicadores.get(i));
+
+                                        }
+                                    }
+                                }
+                                c.setIndicadorList(aux);
+                                caracteristicaFacade.create(c);
+                                sesion.setAttribute("listaC", caracteristicaFacade.findByModelo(m2));
                             } else {
                                 if (action.equals("crearCaracteristicaCC")) {
                                     String url = "/WEB-INF/vista/comiteCentral/caracteristica/crear.jsp";
@@ -222,11 +290,38 @@ public class formController2 extends HttpServlet {
                                                 Caracteristica c = (Caracteristica) sesion.getAttribute("caracteristica");
                                                 String nombre = (String) request.getParameter("nombre");
                                                 String codigo = (String) request.getParameter("codigo");
+                                                String factor = (String) request.getParameter("factor");
                                                 c.setCodigo(codigo);
                                                 c.setNombre(nombre);
+                                                c.setFactorId(factorFacade.find(Integer.parseInt(factor)));
+                                                List<Indicador> actuales = indicadorFacade.findByCaracteristica(c);
+                                                if (actuales != null) {
+                                                    for (int i = 0; i < actuales.size(); i++) {
+                                                        actuales.get(i).setCaracteristicaId(null);
+                                                        indicadorFacade.edit(actuales.get(i));
+
+                                                    }
+                                                }
+
+
+                                                List<Indicador> aux = new ArrayList<Indicador>();
+                                                List<Indicador> lista = (List<Indicador>) sesion.getAttribute("listaI");
+                                                if (lista != null) {
+                                                    for (int i = 0; i < lista.size(); i++) {
+                                                        if (request.getParameter("I" + lista.get(i).getId()).equals("1")) {
+                                                            aux.add(lista.get(i));
+                                                            lista.get(i).setCaracteristicaId(c);
+                                                            indicadorFacade.edit(lista.get(i));
+
+                                                        }
+                                                    }
+                                                }
+                                                c.setIndicadorList(aux);
+
                                                 caracteristicaFacade.edit(c);
                                                 Modelo m = (Modelo) sesion.getAttribute("modelo");
                                                 sesion.setAttribute("listaC", caracteristicaFacade.findByModelo(m));
+                                                sesion.setAttribute("listaI", indicadorFacade.findByModelo(m));
                                             }
                                         }
                                     }
@@ -237,6 +332,41 @@ public class formController2 extends HttpServlet {
                                 if (action.equals("crearIndicador")) {
                                     String codigo = (String) request.getParameter("codigo");
                                     String nombre = (String) request.getParameter("nombre");
+                                    String caracteristica = (String) request.getParameter("caracteristica");
+                                    Caracteristica c = caracteristicaFacade.find(Integer.parseInt(caracteristica));
+                                    Modelo m2 = (Modelo) sesion.getAttribute("modelo");
+                                    List<Pregunta> listadePreguntas = (List<Pregunta>) sesion.getAttribute("listaP");
+                                    List<Pregunta> aux = new ArrayList<Pregunta>();
+                                    for (int i = 0; i < listadePreguntas.size(); i++) {
+                                        if (request.getParameter("P" + listadePreguntas.get(i).getId()).equals("1")) {
+                                            aux.add(listadePreguntas.get(i));
+
+                                        }
+                                    }
+                                    Indicador i = new Indicador();
+                                    i.setCodigo(codigo);
+                                    i.setNombre(nombre);
+                                    i.setModeloId(m2);
+                                    i.setInstrumentoList(null);
+                                    i.setCaracteristicaId(c);
+                                    i.setPreguntaList(aux);
+                                    indicadorFacade.create(i);
+                                    Indicador i2 = indicadorFacade.findByUltimo();
+                                    String instrumentos[] = request.getParameterValues("instrumento");
+                                    List<Instrumento> instrumentoList = new ArrayList<Instrumento>();
+                                    if (instrumentos != null) {
+                                        for (int k = 0; k < instrumentos.length; k++) {
+                                            Instrumento instr = instrumentoFacade.find(Integer.parseInt(instrumentos[k]));
+                                            instr.getIndicadorList().add(i2);
+                                            instr.setIndicadorList(instr.getIndicadorList());
+                                            instrumentoFacade.edit(instr);
+                                            instrumentoList.add(instr);
+                                        }
+                                    }
+                                    i.setInstrumentoList(instrumentoList);
+                                    indicadorFacade.edit(i2);
+                                    sesion.setAttribute("listaI", indicadorFacade.findByModelo(m2));
+
 
                                 } else {
                                     if (action.equals("crearIndicadorCC")) {
@@ -253,6 +383,7 @@ public class formController2 extends HttpServlet {
                                             if (action.equals("editarIndicadorCC")) {
                                                 String id = request.getParameter("id");
                                                 Indicador i = indicadorFacade.find(Integer.parseInt(id));
+                                                i.setInstrumentoList(i.getInstrumentoList());
                                                 sesion.setAttribute("indicador", i);
                                                 String url = "/WEB-INF/vista/comiteCentral/indicador/editar.jsp";
                                                 RequestDispatcher rd = request.getRequestDispatcher(url);

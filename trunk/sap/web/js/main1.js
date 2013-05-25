@@ -124,7 +124,7 @@ $(function() {
 
             });//fin post
 
-        } else if (hash === "#preparedCrearProceso" || hash === "#listarProceso" || hash === "#detalleProceso" || hash === "#detalleProceso" || hash === "#preparedPonderarFactor" || hash === "#ponderarFactor" || hash === "#listPonderacionFactor" || hash === "#preparedPonderarCara" || hash === "#listPonderacionCara" || hash === "#preparedAsignarMuestra" || hash === "#selectorListMuestra" || hash === "#listMuestra" || hash === "#preparedEvaluador" || hash === "#preparedEditPonderarFactor" || hash === "#preparedEditPonderarCara" || hash === "#generarMuestraAleatoria") {
+        } else if (hash === "#preparedCrearProceso" || hash === "#listarProceso" || hash === "#detalleProceso" || hash === "#detalleProceso" || hash === "#preparedPonderarFactor" || hash === "#ponderarFactor" || hash === "#listPonderacionFactor" || hash === "#preparedPonderarCara" || hash === "#listPonderacionCara" || hash === "#preparedAsignarMuestra" || hash === "#selectorListMuestra" || hash === "#listMuestra" || hash === "#preparedEditPonderarFactor" || hash === "#preparedEditPonderarCara" || hash === "#generarMuestraAleatoria") {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
@@ -171,7 +171,7 @@ $(function() {
                 url: url3,
                 success: function(data)
                 {
-                   // $("#contenido").append(data);
+                    // $("#contenido").append(data);
                     menuProceso2();
                     myLayout.addCloseBtn("#west-closer", "west");
                     actualizaEnlaces();
@@ -199,6 +199,21 @@ $(function() {
                     $("#contenido").show(200, function() {
                         $(".page_loading").hide();
                     });
+
+                } //fin success
+            }); //fin del $.ajax
+        } else if (hash === "#preparedEvaluador") {
+            var url3 = "/sap/" + hash;
+            url3 = url3.replace('#', "controladorCP?action=");
+            //$("div.ui-layout-center").empty();
+            $.ajax({
+                type: "POST",
+                url: url3,
+                success: function(data)
+                {   
+                    $("#contenido").after(data);
+                    $(".page_loading").hide();
+                    
 
                 } //fin success
             }); //fin del $.ajax

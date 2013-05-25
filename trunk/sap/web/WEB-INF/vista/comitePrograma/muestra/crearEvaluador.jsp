@@ -14,6 +14,7 @@
                             url: "/sap/controladorCP?action=selectorListMuestra",
                             data: $("#formListarMuestra").serialize(),
                             success: function(datos) {
+                               $(".divEvaluador").remove();
                                 $("#listM").append(datos);
                                 $("#contenido").show(200, function() {
                                     $(".page_loading").hide();
@@ -26,7 +27,7 @@
         });
     });
 </script>
-<div class="hero-unit">
+<div class="hero-unit divEvaluador">
     <div class="row">
         <div id="conte" class="span10">
             <form id="formCrearEvaluador" class="form-horizontal" method="post">

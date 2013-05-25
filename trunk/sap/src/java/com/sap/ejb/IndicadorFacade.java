@@ -4,6 +4,7 @@
  */
 package com.sap.ejb;
 
+import com.sap.entity.Caracteristica;
 import com.sap.entity.Indicador;
 import com.sap.entity.Modelo;
 import java.util.List;
@@ -33,6 +34,17 @@ public class IndicadorFacade extends AbstractFacade<Indicador> {
         Query q = em.createNamedQuery("Indicador.findByModelo");
         q.setParameter("modelo", m);
         return q.getResultList();
+    }
+    
+        public List findByCaracteristica(Caracteristica c) {
+        Query q = em.createNamedQuery("Indicador.findByCaracteristica");
+        q.setParameter("caracteristica", c);
+        return q.getResultList();
+    }
+        public Indicador findByUltimo() {
+        Query q = em.createNamedQuery("Indicador.findByUltimo");
+        q.setMaxResults(1);
+        return (Indicador)q.getSingleResult() ;
     }
     
 }
