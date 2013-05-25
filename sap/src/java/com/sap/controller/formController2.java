@@ -391,12 +391,42 @@ public class formController2 extends HttpServlet {
 
                                             } else {
                                                 if (action.equals("editarIndicador")) {
-                                                    Indicador c = (Indicador) sesion.getAttribute("indicador");
+                                                    Indicador i = (Indicador) sesion.getAttribute("indicador");
                                                     String nombre = (String) request.getParameter("nombre");
                                                     String codigo = (String) request.getParameter("codigo");
-                                                    c.setCodigo(codigo);
-                                                    c.setNombre(nombre);
-                                                    indicadorFacade.edit(c);
+                                                    String caracteristica = (String) request.getParameter("caracteristica");
+                                                    Caracteristica c = caracteristicaFacade.find(Integer.parseInt(caracteristica));
+                                                    Modelo m2 = (Modelo) sesion.getAttribute("modelo");
+                                                    String instrumentos[] = request.getParameterValues("instrumento");
+                                                    List<Instrumento> instrumentoList = new ArrayList<Instrumento>();
+                                                    if (instrumentos != null) {
+                                                        for (int k = 0; k < instrumentos.length; k++) {
+                                                            Instrumento instr = instrumentoFacade.find(Integer.parseInt(instrumentos[k]));
+                                                            instr.getIndicadorList().add(i);
+                                                            instr.setIndicadorList(instr.getIndicadorList());
+                                                            instrumentoFacade.edit(instr);
+                                                            instrumentoList.add(instr);
+                                                        }
+                                                    }
+                                                    List<Pregunta> listadePreguntas = (List<Pregunta>) sesion.getAttribute("listaP");
+                                                    List<Pregunta> aux = new ArrayList<Pregunta>();
+                                                    for (int k = 0; k < listadePreguntas.size(); k++) {
+                                                        if (request.getParameter("P" + listadePreguntas.get(k).getId()).equals("1")) {
+                                                            aux.add(listadePreguntas.get(k));
+                                                            listadePreguntas.get(k).setIndicadorId(i);
+                                                            preguntaFacade.edit(listadePreguntas.get(k));
+                                                        }
+                                                    }
+
+                                                  
+
+                                                    i.setCodigo(codigo);
+                                                    i.setNombre(nombre);
+                                                    i.setModeloId(m2);
+                                                    i.setPreguntaList(aux);
+                                                    i.setCaracteristicaId(c);
+                                                    i.setInstrumentoList(instrumentoList);
+                                                    indicadorFacade.edit(i);
                                                     Modelo m = (Modelo) sesion.getAttribute("modelo");
                                                     sesion.setAttribute("listaI", indicadorFacade.findByModelo(m));
                                                 }
@@ -409,6 +439,20 @@ public class formController2 extends HttpServlet {
                                     if (action.equals("crearPregunta")) {
                                         String codigo = (String) request.getParameter("codigo");
                                         String nombre = (String) request.getParameter("nombre");
+                                        String tipo = (String) request.getParameter("tipo");
+                                        String indicador = (String) request.getParameter("indicador");
+                                        Indicador i = indicadorFacade.find(Integer.parseInt(indicador));
+                                        Modelo m2 = (Modelo) sesion.getAttribute("modelo");
+
+                                        Pregunta p = new Pregunta();
+                                        p.setCodigo(codigo);
+                                        p.setPregunta(nombre);
+                                        p.setModeloId(m2);
+                                        p.setTipo(tipo);
+                                        p.setIndicadorId(i);
+                                        preguntaFacade.create(p);
+                                        sesion.setAttribute("listaP", preguntaFacade.findByModelo(m2));
+
 
                                     } else {
                                         if (action.equals("crearPreguntaCC")) {
@@ -421,6 +465,33 @@ public class formController2 extends HttpServlet {
                                                 String url = "/WEB-INF/vista/comiteCentral/pregunta/listar.jsp";
                                                 RequestDispatcher rd = request.getRequestDispatcher(url);
                                                 rd.forward(request, response);
+                                            } else {
+                                                if (action.equals("editarPreguntaCC")) {
+                                                    String id = request.getParameter("id");
+                                                    Pregunta p = preguntaFacade.find(Integer.parseInt(id));
+                                                    p.setIndicadorId(p.getIndicadorId());
+                                                    sesion.setAttribute("pregunta", p);
+                                                    String url = "/WEB-INF/vista/comiteCentral/pregunta/editar.jsp";
+                                                    RequestDispatcher rd = request.getRequestDispatcher(url);
+                                                    rd.forward(request, response);
+                                                } else {
+                                                    if (action.equals("editarPregunta")) {
+                                                        Pregunta p = (Pregunta) sesion.getAttribute("pregunta");
+                                                        String pregunta = (String) request.getParameter("nombre");
+                                                        String codigo = (String) request.getParameter("codigo");
+                                                        String tipo = (String) request.getParameter("tipo");
+                                                        String indicador = (String) request.getParameter("indicador");
+                                                        p.setIndicadorId(indicadorFacade.find(Integer.parseInt(indicador)));
+
+
+                                                        p.setCodigo(codigo);
+                                                        p.setPregunta(pregunta);
+                                                        p.setTipo(tipo);
+                                                        preguntaFacade.edit(p);
+                                                        Modelo m = (Modelo) sesion.getAttribute("modelo");
+                                                        sesion.setAttribute("listaP", preguntaFacade.findByModelo(m));
+                                                    }
+                                                }
                                             }
                                         }
                                     }

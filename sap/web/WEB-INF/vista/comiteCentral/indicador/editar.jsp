@@ -253,7 +253,7 @@
                     </div>   
 
                     <div class="form-actions">
-                        <button class="btn btn-primary" type="submit">Crear Indicador</button>
+                        <button class="btn btn-primary" type="submit">Guardar cambios</button>
                         <button class="btn" type="reset">Cancelar</button>
                     </div>
                 </fieldset>

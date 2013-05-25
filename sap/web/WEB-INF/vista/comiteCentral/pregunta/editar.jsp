@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
     $(function() {
         $("#formEditarPregunta").validate({
@@ -32,6 +33,45 @@
                             <input type="text" name="nombre" id="nombre" class="input-xlarge {required:true}" value="${pregunta.pregunta}"/>
                         </div>
                     </div>
+                    <div class="control-group">
+                        <label for="tipo" class="control-label">Tipo de la Pregunta</label>
+                        <div class="controls">
+                            <select name="tipo" id="tipo">
+                                <c:choose>
+                                    <c:when test="${pregunta.getTipo().equals('1')}">
+                                        <option selected="selected"  value="1">Elegir del 1 al 5</option>
+                                        <option value="2">Si/No</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option  value="1">Elegir del 1 al 5</option>
+                                        <option selected="selected" value="2">Si/No</option>
+                                    </c:otherwise>   
+                                </c:choose>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="indicador" class="control-label">Asignar Indicador</label>
+                        <div class="controls">
+                            <select id="indicador" name="indicador">
+                                <option></option>
+                                <c:forEach items="${listaI}" var="row" varStatus="iter">
+                                    <c:choose>
+                                        <c:when test="${pregunta.getIndicadorId()!= row}">
+                                            <option value="${row.id}">${row.codigo}</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option selected="selected" value="${row.id}">${row.codigo}</option>
+                                        </c:otherwise>       
+                                    </c:choose>    
+
+                                </c:forEach>
+                            </select>                
+
+                        </div>
+                    </div>
+
                     <div class="form-actions">
                         <button class="btn btn-primary" type="submit">Guardar cambios</button>
                         <button class="btn" type="reset">Cancelar</button>
