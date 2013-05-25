@@ -24,7 +24,7 @@
                                         <c:out value="${row.descripcion}"/>
                                     </td>
                                     <td class="action span2">
-                                        <a href="#editarModelo" title="Editar"><i class="icon-edit"></i></a>
+                                        <a href="#editarModelo&${row.id}" title="Editar"><i class="icon-edit"></i></a>
                                         <a href="#entrarModelo&${row.id}" title="Entrar"><i class="icon-signin"></i></a>
                                     </td>
                                 </tr>

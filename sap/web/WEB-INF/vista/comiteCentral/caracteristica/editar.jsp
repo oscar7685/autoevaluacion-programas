@@ -191,6 +191,7 @@
                         <label for="factor" class="control-label">Asignar Factor</label>
                         <div class="controls">
                             <select id="factor" name="factor" class="{required:true}">
+                                <option value=""></option>    
                                 <c:forEach items="${listaF}" var="row" varStatus="iter">
                                     <c:choose>
                                         <c:when test="${row != caracteristica.getFactorId()}">

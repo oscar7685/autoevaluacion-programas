@@ -5,6 +5,7 @@
 package com.sap.ejb;
 
 import com.sap.entity.Caracteristica;
+import com.sap.entity.Factor;
 import com.sap.entity.Modelo;
 import com.sap.entity.Proceso;
 import java.util.List;
@@ -20,6 +21,7 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class CaracteristicaFacade extends AbstractFacade<Caracteristica> {
+
     @PersistenceContext(unitName = "sapPU")
     private EntityManager em;
 
@@ -31,12 +33,17 @@ public class CaracteristicaFacade extends AbstractFacade<Caracteristica> {
     public CaracteristicaFacade() {
         super(Caracteristica.class);
     }
-    
-     public List findByModelo(Object m) {
+
+    public List findByModelo(Object m) {
         TypedQuery<Proceso> query = em.createQuery(
                 "SELECT c FROM Caracteristica c WHERE c.modeloId = :name", Proceso.class);
         return query.setParameter("name", m).getResultList();
-     
-}
-    
+
+    }
+
+    public List findByFactor(Factor f) {
+        Query q = em.createNamedQuery("Caracteristica.findByFactor");
+        q.setParameter("factor", f);
+        return q.getResultList();
+    }
 }
