@@ -137,7 +137,7 @@ $(function() {
                     if ($("ul.nav-list li:eq(0)").html() !== "Modelo") {
                         myLayout.addCloseBtn("#west-closer", "west");
                     }
-                    $("#contenido").show(200, function() {
+                    $("#contenido").show(400, function() {
                         $(".page_loading").hide();
                     });
 

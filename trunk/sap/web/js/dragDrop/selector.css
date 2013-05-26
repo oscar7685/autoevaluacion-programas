@@ -84,6 +84,11 @@
 	border:1px solid #B94A48 !important;
 	background-color:#F2DEDE !important;
 }
+#fcbklist .itemblockRojo 
+{
+	border:1px solid #B94A48 !important;
+	background-color:#F2DEDE !important;
+}
 #fcbklist .liselected.itemselectedAzul 
 {
 	border:1px solid #3A87AD !important;
@@ -97,6 +102,11 @@
 	background-position:right bottom;	
 }
 #fcbklist .itemselected.itemselectedRojo 
+{
+	background-color:#F2DEDE !important;
+	
+}
+#fcbklist .itemblockRojo 
 {
 	background-color:#F2DEDE !important;
 	
