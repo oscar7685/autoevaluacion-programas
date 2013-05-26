@@ -30,7 +30,13 @@
                             <div class="controls">
                                 <select name="fuente" id="selectListMuestra">
                                     <option>Seleccionar Fuente</option>
-                                    <option value="Estudiante">Estudiante</option>
+                                    <option value="Estudiante">Estudiantes</option>
+                                    <option value="Docente">Docentes</option>
+                                    <option value="Egresado">Egresados</option>
+                                    <option value="Administrativo">Administrativos</option>
+                                    <option value="Directivo">Directivos</option>
+                                    <option value="Empleador">Empleadores</option>
+                                    <option value="Agencia">Agencias</option>
                                 </select>
                             </div>
                         </div>   

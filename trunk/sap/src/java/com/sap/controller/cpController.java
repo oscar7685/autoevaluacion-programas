@@ -11,6 +11,12 @@ import com.sap.ejb.FactorFacade;
 import com.sap.ejb.FuenteFacade;
 import com.sap.ejb.ModeloFacade;
 import com.sap.ejb.MuestraFacade;
+import com.sap.ejb.MuestraadministrativoFacade;
+import com.sap.ejb.MuestraagenciaFacade;
+import com.sap.ejb.MuestradirectorFacade;
+import com.sap.ejb.MuestradocenteFacade;
+import com.sap.ejb.MuestraegresadoFacade;
+import com.sap.ejb.MuestraempleadorFacade;
 import com.sap.ejb.MuestraestudianteFacade;
 import com.sap.ejb.MuestrapersonaFacade;
 import com.sap.ejb.PonderacioncaracteristicaFacade;
@@ -65,6 +71,18 @@ public class cpController extends HttpServlet {
     private MuestrapersonaFacade muestrapersonaFacade;
     @EJB
     private MuestraestudianteFacade muestraestudianteFacade;
+    @EJB
+    private MuestradocenteFacade muestradocenteFacade;
+    @EJB
+    private MuestraegresadoFacade muestraegresadoFacade;
+    @EJB
+    private MuestraadministrativoFacade muestraadministrativoFacade;
+    @EJB
+    private MuestradirectorFacade muestradirectorFacade;
+    @EJB
+    private MuestraagenciaFacade muestraagenciaFacade;
+    @EJB
+    private MuestraempleadorFacade muestraempleadorFacade;
     @EJB
     private EstudianteFacade estudianteFacade;
     @EJB
@@ -298,7 +316,7 @@ public class cpController extends HttpServlet {
                 //Tamaño de la población
                 double N = 0.0;
 
-//Estudiante
+            //********************************Estudiante
                 double aux = estudianteFacade.count();
 
                 N = aux;
@@ -340,6 +358,10 @@ public class cpController extends HttpServlet {
                     }
                 }
 
+
+                //********************************Docente
+
+
             } else if (action.equals("selectorListMuestra")) {
                 String fuente = "";
                 if (request.getParameter("fuente") == null) {
@@ -353,9 +375,29 @@ public class cpController extends HttpServlet {
 
                 Muestra m = (Muestra) sesion.getAttribute("Muestra");
                 if (fuente.equals("Estudiante")) {
-                    sesion.setAttribute("listMuestraSeleccionada", muestrapersonaFacade.findByList("muestraId", m));
+                    sesion.setAttribute("listMuestraSeleccionada", muestraestudianteFacade.findByList("muestrapersonaId.muestraId", m));
                     sesion.setAttribute("Fuente", fuenteFacade.find(1));
+                } else if (fuente.equals("Docente")) {
+                    sesion.setAttribute("listMuestraSeleccionada", muestradocenteFacade.findByList("muestrapersonaId.muestraId", m));
+                    sesion.setAttribute("Fuente", fuenteFacade.find(2));
+                } else if (fuente.equals("Egresado")) {
+                    sesion.setAttribute("listMuestraSeleccionada", muestraegresadoFacade.findByList("muestrapersonaId.muestraId", m));
+                    sesion.setAttribute("Fuente", fuenteFacade.find(2));
+                } else if (fuente.equals("Administrativo")) {
+                    sesion.setAttribute("listMuestraSeleccionada", muestraadministrativoFacade.findByList("muestrapersonaId.muestraId", m));
+                    sesion.setAttribute("Fuente", fuenteFacade.find(4));
+                } else if (fuente.equals("Directivo")) {
+                    sesion.setAttribute("listMuestraSeleccionada", muestradirectorFacade.findByList("muestrapersonaId.muestraId", m));
+                    sesion.setAttribute("Fuente", fuenteFacade.find(5));
+                } else if (fuente.equals("Empleador")) {
+                    sesion.setAttribute("listMuestraSeleccionada", muestraempleadorFacade.findByList("muestrapersonaId.muestraId", m));
+                    sesion.setAttribute("Fuente", fuenteFacade.find(7));
+                } else if (fuente.equals("Agencia")) {
+                    sesion.setAttribute("listMuestraSeleccionada", muestraagenciaFacade.findByList("muestrapersonaId.muestraId", m));
+                    sesion.setAttribute("Fuente", fuenteFacade.find(6));
                 }
+
+
                 String url = "/WEB-INF/vista/comitePrograma/muestra/selectorListMuestra.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
@@ -517,6 +559,61 @@ public class cpController extends HttpServlet {
                 List le = encabezadoFacade.findByList2("procesoId", sesion.getAttribute("Proceso"), "fuenteId", sesion.getAttribute("Fuente"));
 
                 sesion.setAttribute("listEncabezado", le);
+
+                String url = "/WEB-INF/vista/comitePrograma/muestra/editarMuestra.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("editarMuestra")) {
+
+                List lme = muestraestudianteFacade.findByList("muestrapersonaId.muestraId", sesion.getAttribute("Muestra"));
+                Iterator it1 = lme.iterator();
+
+                while (it1.hasNext()) {
+                    Muestraestudiante me1 = (Muestraestudiante) it1.next();
+                    Muestrapersona mp1 = me1.getMuestrapersonaId();
+
+                    muestraestudianteFacade.remove(me1);
+                    muestrapersonaFacade.remove(mp1);
+
+                }
+
+                Muestra m = (Muestra) sesion.getAttribute("Muestra");
+
+
+                List le = estudianteFacade.findByList("programaId", sesion.getAttribute("Programa"));
+
+                Iterator it = le.iterator();
+
+                while (it.hasNext()) {
+                    Estudiante est = (Estudiante) it.next();
+                    System.out.println("Variable   " + request.getParameter(String.valueOf(est.getPersonaId().getId())));
+                    if ("1".equals(request.getParameter(String.valueOf(est.getPersonaId().getId())))) {
+
+
+                        Persona per = est.getPersonaId();
+
+                        Muestrapersona mp = new Muestrapersona();
+
+                        mp.setCedula(per.getId());
+                        mp.setNombre(per.getNombre());
+                        mp.setApellido(per.getApellido());
+                        mp.setPassword(per.getPassword());
+                        mp.setMail(per.getMail());
+                        mp.setMuestraId(m);
+
+                        muestrapersonaFacade.create(mp);
+
+                        Muestraestudiante me = new Muestraestudiante();
+                        me.setCodigo(est.getId());
+                        me.setSemestre(est.getPeriodo());
+                        me.setPeriodo(est.getPeriodo());
+                        me.setAnio(est.getAnio());
+                        me.setMuestrapersonaId(mp);
+
+                        muestraestudianteFacade.create(me);
+
+                    }
+                }
 
                 String url = "/WEB-INF/vista/comitePrograma/muestra/editarMuestra.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
