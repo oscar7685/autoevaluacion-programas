@@ -38,7 +38,7 @@
                 <c:otherwise>
                     No  se han ponderado los factores en el sistema para este proceso.
                     <br><br>
-                    <a href="#preparedPonderarFactor" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Asignar Ponderación</a>
+                    <a href="#preparedPonderarFactor" class="btn btn-large btn-primary llamador"><i class="icon-plus-sign"></i> Asignar Ponderación</a>
                 </c:otherwise>
             </c:choose>
         </div>

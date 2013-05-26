@@ -45,6 +45,22 @@
             })
 
         });
+
+        $("#preparedEditarMuestra").click(function() {
+            $("#editM").empty();
+            $.ajax({
+                type: 'POST',
+                url: "/sap/controladorCP?action=preparedEditarMuestra",
+                success: function(datos) {
+                    $("#editM").append(datos);
+                    $("#contenido").show(200, function() {
+                        $(".page_loading").hide();
+                    });
+                } //fin success
+            }); //fin $.ajax    
+
+        });
+
     });
 </script>
 <div class="input-append span10 input-prepend" style="text-align: right; margin-left: 0px;">
@@ -55,30 +71,33 @@
 <div class="span10" style="margin-left: 0px;">
     <c:choose>
         <c:when test="${fn:length(listMuestraSeleccionada)!= 0}">
-            <table class="table table-striped table-bordered table-condensed">
-                <thead>
-                <th>Cedula</th>    
-                <th>Nombre</th>
-                </thead>
-                <tbody>
-                    <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter">
-                        <tr>
-                            <td>   
-                                <c:out value="${row.cedula}"/>
-                            </td>
-                            <td>   
-                                <c:out value="${row.nombre}"/>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-            <a href="#preparedEvaluador" class="btn btn-large btn-primary llamador"><i class="icon-plus"> </i><i class="icon-user"></i> Registrar Evaluador</a>
+            <div id="editM">
+                <table class="table table-striped table-bordered table-condensed">
+                    <thead>
+                    <th>Cedula</th>    
+                    <th>Nombre</th>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter">
+                            <tr>
+                                <td>   
+                                    <c:out value="${row.cedula}"/>
+                                </td>
+                                <td>   
+                                    <c:out value="${row.nombre}"/>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+                <a href="#preparedEvaluador" class="btn btn-large btn-primary llamador"><i class="icon-plus"> </i><i class="icon-user"></i> Registrar Evaluador</a>
+                <a href="#preparedEditarMuestra" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
+            </div>
         </c:when>
         <c:otherwise>
             No  se ha generado la muestra para la fuente seleccionada.
             <br><br>
-            <a href="#preparedEvaluador" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i><i class="icon-user"></i> Registrar Evaluador</a>
+            <a href="#preparedEvaluador" class="btn btn-large btn-primary llamador"><i class="icon-plus"> </i><i class="icon-user"></i> Registrar Evaluador</a>
         </c:otherwise>
     </c:choose>
 </div>

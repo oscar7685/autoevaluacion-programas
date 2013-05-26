@@ -5,8 +5,10 @@
 package com.sap.controller;
 
 import com.sap.ejb.CaracteristicaFacade;
+import com.sap.ejb.EncabezadoFacade;
 import com.sap.ejb.EstudianteFacade;
 import com.sap.ejb.FactorFacade;
+import com.sap.ejb.FuenteFacade;
 import com.sap.ejb.ModeloFacade;
 import com.sap.ejb.MuestraFacade;
 import com.sap.ejb.MuestraestudianteFacade;
@@ -65,6 +67,10 @@ public class cpController extends HttpServlet {
     private MuestraestudianteFacade muestraestudianteFacade;
     @EJB
     private EstudianteFacade estudianteFacade;
+    @EJB
+    private EncabezadoFacade encabezadoFacade;
+    @EJB
+    private FuenteFacade fuenteFacade;
 
     /**
      * Processes requests for both HTTP
@@ -348,6 +354,7 @@ public class cpController extends HttpServlet {
                 Muestra m = (Muestra) sesion.getAttribute("Muestra");
                 if (fuente.equals("Estudiante")) {
                     sesion.setAttribute("listMuestraSeleccionada", muestrapersonaFacade.findByList("muestraId", m));
+                    sesion.setAttribute("Fuente", fuenteFacade.find(1));
                 }
                 String url = "/WEB-INF/vista/comitePrograma/muestra/selectorListMuestra.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
@@ -502,6 +509,18 @@ public class cpController extends HttpServlet {
                         muestraestudianteFacade.create(me1);
                     }
                 }
+            } else if (action.equals("preparedEditarMuestra")) {
+
+                List e = estudianteFacade.findByList("programaId", sesion.getAttribute("Programa"));
+                sesion.setAttribute("listPoblacion", e);
+
+                List le = encabezadoFacade.findByList2("procesoId", sesion.getAttribute("Proceso"), "fuenteId", sesion.getAttribute("Fuente"));
+
+                sesion.setAttribute("listEncabezado", le);
+
+                String url = "/WEB-INF/vista/comitePrograma/muestra/editarMuestra.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
             }
         } finally {
             out.close();
