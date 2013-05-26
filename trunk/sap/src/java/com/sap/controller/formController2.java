@@ -4,16 +4,20 @@
  */
 package com.sap.controller;
 
+import com.sap.ejb.AsignacionencuestaFacade;
 import com.sap.ejb.CaracteristicaFacade;
 import com.sap.ejb.EncuestaFacade;
 import com.sap.ejb.FactorFacade;
+import com.sap.ejb.FuenteFacade;
 import com.sap.ejb.IndicadorFacade;
 import com.sap.ejb.InstrumentoFacade;
 import com.sap.ejb.ModeloFacade;
 import com.sap.ejb.PreguntaFacade;
+import com.sap.entity.Asignacionencuesta;
 import com.sap.entity.Caracteristica;
 import com.sap.entity.Encuesta;
 import com.sap.entity.Factor;
+import com.sap.entity.Fuente;
 import com.sap.entity.Indicador;
 import com.sap.entity.Instrumento;
 import com.sap.entity.Modelo;
@@ -40,6 +44,10 @@ import javax.servlet.http.HttpSession;
  */
 public class formController2 extends HttpServlet {
 
+    @EJB
+    private FuenteFacade fuenteFacade;
+    @EJB
+    private AsignacionencuestaFacade asignacionencuestaFacade;
     @EJB
     private InstrumentoFacade instrumentoFacade;
     @EJB
@@ -124,6 +132,7 @@ public class formController2 extends HttpServlet {
                                     sesion.setAttribute("listaI", indicadorFacade.findByModelo(m));
                                     sesion.setAttribute("listaP", preguntaFacade.findByModelo(m));
                                     sesion.setAttribute("listaE", encuestaFacade.findByModelo(m));
+                                    sesion.setAttribute("listaFu", fuenteFacade.findAll());
                                     sesion.setAttribute("instrumentos", instrumentoFacade.findAll());
                                     String url = "/WEB-INF/vista/comiteCentral/inicio.jsp";
                                     RequestDispatcher rd = request.getRequestDispatcher(url);
@@ -418,7 +427,7 @@ public class formController2 extends HttpServlet {
                                                         }
                                                     }
 
-                                                  
+
 
                                                     i.setCodigo(codigo);
                                                     i.setNombre(nombre);
@@ -531,6 +540,16 @@ public class formController2 extends HttpServlet {
                                                     if (action.equals("editarEncuestaCC")) {
                                                         String idE = request.getParameter("id");
                                                         Encuesta e = encuestaFacade.find(Integer.parseInt(idE));
+                                                        List<Asignacionencuesta> as = asignacionencuestaFacade.findByEncuesta(e);
+
+                                                        Fuente f = new Fuente();
+                                                        if (as != null) {
+                                                            for (int i = 0; i < as.size(); i++) {
+                                                                f = as.get(i).getFuenteId();
+
+                                                            }
+                                                        }
+                                                        sesion.setAttribute("fuenteSeleccionada", f);
                                                         sesion.setAttribute("encuesta", e);
                                                         String url = "/WEB-INF/vista/comiteCentral/encuesta/editar.jsp";
                                                         RequestDispatcher rd = request.getRequestDispatcher(url);
@@ -545,7 +564,27 @@ public class formController2 extends HttpServlet {
                                                             String codigo = (String) request.getParameter("codigo");
                                                             String version = (String) request.getParameter("version");
                                                             String fecha = (String) request.getParameter("fecha");
+                                                            String fuente = (String) request.getParameter("fuente");
                                                             Modelo m = (Modelo) sesion.getAttribute("modelo");
+                                                            if (fuente != null) {
+                                                                Fuente f = fuenteFacade.find(Integer.parseInt(fuente));
+                                                                List<Asignacionencuesta> la = asignacionencuestaFacade.findByEncuesta(e);
+                                                                if (la.size() > 0) {
+                                                                    for (int i = 0; i < la.size(); i++) {
+                                                                        Asignacionencuesta individual = la.get(i);
+                                                                        individual.setFuenteId(f);
+                                                                        asignacionencuestaFacade.edit(individual);
+                                                                    }
+                                                                } else {
+                                                                    Asignacionencuesta nueva = new Asignacionencuesta();
+                                                                    nueva.setEncuestaId(e);
+                                                                    nueva.setFuenteId(f);
+                                                                    asignacionencuestaFacade.create(nueva);
+
+                                                                }
+
+                                                            }
+
                                                             e.setCodigo(codigo);
                                                             e.setNombre(nombre);
                                                             e.setObjetivo(objetivo);

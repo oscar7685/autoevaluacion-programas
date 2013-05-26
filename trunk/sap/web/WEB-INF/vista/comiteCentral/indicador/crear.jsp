@@ -163,7 +163,18 @@
                 }
             });
         });
+        $("#instrumento").change(function() {
+            $("#preguntas").hide();
+            $("#instrumento option:selected").each(function()
+            {
+                if ($(this).text() === "Encuesta") {
+                    $("#preguntas").show();
+                }
+            });
 
+        });
+
+        $("#preguntas").hide();
 
 
 

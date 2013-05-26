@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Asignacionencuesta.findAll", query = "SELECT a FROM Asignacionencuesta a"),
+    @NamedQuery(name = "Asignacionencuesta.findByEncuesta", query = "SELECT a FROM Asignacionencuesta a WHERE a.encuestaId = :encuesta"),
     @NamedQuery(name = "Asignacionencuesta.findById", query = "SELECT a FROM Asignacionencuesta a WHERE a.id = :id")})
 public class Asignacionencuesta implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -42,7 +43,7 @@ public class Asignacionencuesta implements Serializable {
     @ManyToOne(optional = false)
     private Fuente fuenteId;
     @JoinColumn(name = "proceso_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Proceso procesoId;
 
     public Asignacionencuesta() {

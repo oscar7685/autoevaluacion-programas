@@ -5,9 +5,12 @@
 package com.sap.ejb;
 
 import com.sap.entity.Asignacionencuesta;
+import com.sap.entity.Encuesta;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -15,6 +18,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class AsignacionencuestaFacade extends AbstractFacade<Asignacionencuesta> {
+
     @PersistenceContext(unitName = "sapPU")
     private EntityManager em;
 
@@ -26,5 +30,10 @@ public class AsignacionencuestaFacade extends AbstractFacade<Asignacionencuesta>
     public AsignacionencuestaFacade() {
         super(Asignacionencuesta.class);
     }
-    
+
+    public List findByEncuesta(Encuesta e) {
+        Query q = em.createNamedQuery("Asignacionencuesta.findByEncuesta");
+        q.setParameter("encuesta", e);
+        return q.getResultList();
+    }
 }

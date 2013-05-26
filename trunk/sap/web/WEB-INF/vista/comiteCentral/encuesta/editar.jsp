@@ -215,7 +215,26 @@
                         <div class="controls">
                             <input type="text" name="fecha" id="fecha" class="input-xlarge {required:true}" value="${encuesta.getFecha()}"/>
                         </div>
-                    </div>                    <div class="control-group">
+                    </div>
+                    <div class="control-group">
+                        <label for="fuente" class="control-label">Asignar Fuente</label>
+                        <div class="controls">
+                            <select id="fuente" name="fuente" class="{required:true}">
+                                <option value=""></option>    
+                                <c:forEach items="${listaFu}" var="item" varStatus="iter">
+                                    <c:choose>
+                                        <c:when test="${item==fuenteSeleccionada}">
+                                            <option value="${item.id}" selected="selected">${item.nombre}</option>    
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value="${item.id}">${item.nombre}</option>    
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </select>                
+                        </div>
+                    </div>    
+                    <div class="control-group">
                         <label  class="control-label">Asignar Preguntas</label>
                         <div class="controls">
 
