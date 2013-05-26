@@ -3,6 +3,7 @@
 <script type="text/javascript">
     $(function() {
         $("#selectListMuestra").change(function() {
+            $("#listM").empty();
             $.ajax({
                 type: 'POST',
                 url: "/sap/controladorCP?action=selectorListMuestra",
@@ -16,7 +17,6 @@
             }); //fin $.ajax    
 
         });
-
 
         $("button[rel=popover2]")
                 .popover({placement: 'left'}).click(function(e) {
@@ -81,10 +81,13 @@
                         <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter">
                             <tr>
                                 <td>   
-                                    <c:out value="${row.cedula}"/>
+                                    <c:out value="${row.muestrapersonaId.cedula}"/>
                                 </td>
                                 <td>   
-                                    <c:out value="${row.nombre}"/>
+                                    <c:out value="${row.muestrapersonaId.nombre}"/>
+                                </td>
+                                <td>   
+                                    <c:out value="${row.muestrapersonaId.apellido}"/>
                                 </td>
                             </tr>
                         </c:forEach>
