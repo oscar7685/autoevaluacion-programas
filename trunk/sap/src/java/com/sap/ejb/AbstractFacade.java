@@ -90,4 +90,14 @@ public abstract class AbstractFacade<T> {
         q.setMaxResults(1);
         return q.setParameter("name", muestra).getResultList();
     }
+
+    public List<T> findByList2(String property1, Object m1, String property2, Object m2) {
+        System.out.println("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property1 + " = :" + m1 + " and c." + property2 + " = :" + m2 + "");
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property1 + " = :name1 and c." + property2 + " = :name2", entityClass);
+        q.setParameter("name1", m1);
+        q.setParameter("name2", m2);
+        return q.getResultList();
+    }
 }

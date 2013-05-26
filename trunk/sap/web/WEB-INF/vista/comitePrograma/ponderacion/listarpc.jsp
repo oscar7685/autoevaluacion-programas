@@ -43,7 +43,7 @@
                 <c:otherwise>
                     No  se han ponderado las características en el sistema para este proceso.
                     <br><br>
-                    <a href="#preparedPonderarCara" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Ponderación</a>
+                    <a href="#preparedPonderarCara" class="btn btn-large btn-primary llamador"><i class="icon-plus-sign"></i> Asignar Ponderación</a>
                 </c:otherwise>
             </c:choose>
         </div>

@@ -76,6 +76,7 @@
         </div><!--/Center-->
 
         <div id="ui-layout-west" class="ui-layout-west">
+            <script>alert("estado null"+${EstadoProceso});</script>
             <div id="menu0" class="ui-layout-content">
                 <c:choose>
                     <c:when test="${EstadoProceso == 0}">
