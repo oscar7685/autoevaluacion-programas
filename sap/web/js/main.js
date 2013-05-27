@@ -1,5 +1,5 @@
 $(function() {
-
+    location = "/sap/#inicio";
     $('#close1').on("click", function() {
         $(this).parent().hide();
     });
@@ -50,13 +50,13 @@ $(function() {
         if (hash === "#ingresar") {
             $(".inicio").hide();
             $("#login").show();
-   
+
 
         } else if (hash === "#inicio") {
             $(".inicio").show();
             $("#login").hide();
         }
-});
+    });
 
 });
 //Jquery Easings
