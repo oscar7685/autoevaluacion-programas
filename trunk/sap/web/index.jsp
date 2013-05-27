@@ -113,15 +113,15 @@
             </div>
 
             <!-- Example row of columns -->
-            <div class="row inicio">
-                <div class="span4">
-                    <h2>SAP-UdeC 1.0</h2>
-                    <p>La Universidad de Cartagena cuenta con el Sistema de Autoevaluación de Programas SAP-UdeC, el cual apoya los procesos de autoevaluación con fines de acreditación, renovaci&oacute;n de registro calificado y m&aacute;s.</p>
-                    <p><a class="btn" href="#">Ver m&aacute;s</a></p>
-                </div>
-                <div class="span4">
-                    <br/>
-                    <p><a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/LogoU.png"></a></p>
+            <div class="row inicio" style="vertical-align: middle">
+                <%-- <div class="span4">
+                     <h2>SAP-UdeC 1.0</h2>
+                     <p>La Universidad de Cartagena cuenta con el Sistema de Autoevaluación de Programas SAP-UdeC, el cual apoya los procesos de autoevaluación con fines de acreditación, renovaci&oacute;n de registro calificado y m&aacute;s.</p>
+                     <p><a class="btn" href="#">Ver m&aacute;s</a></p>
+                 </div>
+                 <div class="span4">
+                     <br/>
+                     <p><a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/LogoU.png"></a></p>
 
                 </div>
                 <div class="span4">
@@ -129,14 +129,32 @@
                     <p><a title="Oficina de autoevaluaci&oacute;n" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/selloAcreditacion.png"></a></p>
                     
                 </div>
+                <div class="span1"></div>
+                <div class="span4">
+                    <br/>
+                    <p><a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img  src="<%=request.getContextPath()%>/img/LOGOUNICARTAGENACOLOR.png"></a></p>
+                </div>
+                <div class="span2"></div>
+                <div class="span4">
+                    <br/>
+                    <p><a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/sello2.png"></a></p>
+                </div>
+                <div class="span1"></div>--%>
+                <div class="span2"></div>
+                <div class="span5">
+                    <br/>
+                    <p><a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img  src="<%=request.getContextPath()%>/img/logooficial.png" style="margin-top: 20px"></a></p>
+                </div>
+                <div class="span3">
+                    <br/>
+                    <p><a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/sello2.png"></a></p>
+                </div>
+                <div class="span2"></div>
             </div>
-
             <hr>
-
             <footer>
                 <p>&copy; Universidad de Cartagena 2013</p>
             </footer>
-
         </div> <!-- /container -->
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
