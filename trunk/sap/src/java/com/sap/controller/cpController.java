@@ -156,6 +156,7 @@ public class cpController extends HttpServlet {
 
             } else if (action.equals("detalleProceso")) {
                 Proceso p = (Proceso) sesion.getAttribute("Proceso");
+                System.out.println("Proceso: " + proceso);
                 ArrayList<Proceso> l = new ArrayList<Proceso>();
                 l.add(procesoFacade.find(p.getId()));
                 sesion.setAttribute("listProceso", l);
@@ -379,7 +380,7 @@ public class cpController extends HttpServlet {
 
                         Muestraestudiante me = new Muestraestudiante();
                         me.setCodigo(est.getId());
-                        me.setSemestre(est.getPeriodo());
+                        me.setSemestre(est.getSemestre());
                         me.setPeriodo(est.getPeriodo());
                         me.setAnio(est.getAnio());
                         me.setMuestrapersonaId(mp);
@@ -643,6 +644,7 @@ public class cpController extends HttpServlet {
                 if (fuente.equals("Estudiante")) {
                     sesion.setAttribute("listMuestraSeleccionada", muestraestudianteFacade.findByList("muestrapersonaId.muestraId", m));
                     sesion.setAttribute("Fuente", fuenteFacade.find(1));
+                    sesion.setAttribute("Semestre", "--");
                 } else if (fuente.equals("Docente")) {
                     sesion.setAttribute("listMuestraSeleccionada", muestradocenteFacade.findByList("muestrapersonaId.muestraId", m));
                     sesion.setAttribute("Fuente", fuenteFacade.find(2));
@@ -861,7 +863,7 @@ public class cpController extends HttpServlet {
                 }
             } else if (action.equals("preparedEditarMuestra")) {
 
-                List e = estudianteFacade.findByList("programaId", sesion.getAttribute("Programa"));
+                List e = estudianteFacade.findByList2("programaId", sesion.getAttribute("Programa"), "semestre", sesion.getAttribute("Semestre"));
                 sesion.setAttribute("listPoblacion", e);
 
                 List le = encabezadoFacade.findByList2("procesoId", sesion.getAttribute("Proceso"), "fuenteId", sesion.getAttribute("Fuente"));
@@ -873,7 +875,7 @@ public class cpController extends HttpServlet {
                 rd.forward(request, response);
             } else if (action.equals("editarMuestra")) {
 
-                List lme = muestraestudianteFacade.findByList("muestrapersonaId.muestraId", sesion.getAttribute("Muestra"));
+                List lme = muestraestudianteFacade.findByList2("muestrapersonaId.muestraId", sesion.getAttribute("Muestra"), "semestre", sesion.getAttribute("Semestre"));
                 Iterator it1 = lme.iterator();
 
                 while (it1.hasNext()) {
@@ -888,7 +890,7 @@ public class cpController extends HttpServlet {
                 Muestra m = (Muestra) sesion.getAttribute("Muestra");
 
 
-                List le = estudianteFacade.findByList("programaId", sesion.getAttribute("Programa"));
+                List le = estudianteFacade.findByList2("programaId", sesion.getAttribute("Programa"), "semestre", sesion.getAttribute("Semestre"));
 
                 Iterator it = le.iterator();
 
@@ -913,7 +915,7 @@ public class cpController extends HttpServlet {
 
                         Muestraestudiante me = new Muestraestudiante();
                         me.setCodigo(est.getId());
-                        me.setSemestre(est.getPeriodo());
+                        me.setSemestre(est.getSemestre());
                         me.setPeriodo(est.getPeriodo());
                         me.setAnio(est.getAnio());
                         me.setMuestrapersonaId(mp);
@@ -930,6 +932,8 @@ public class cpController extends HttpServlet {
 
                 String semestre = request.getParameter("semestre");
 
+                sesion.setAttribute("Semestre", semestre);
+                
                 Muestra m = (Muestra) sesion.getAttribute("Muestra");
 
                 sesion.setAttribute("listMuestraSeleccionada", muestraestudianteFacade.findByList2("muestrapersonaId.muestraId", m, "semestre", semestre));

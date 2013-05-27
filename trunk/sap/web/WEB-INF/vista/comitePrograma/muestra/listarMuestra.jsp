@@ -3,6 +3,7 @@
 <script type="text/javascript">
     $(function() {
         $("#selectListMuestra").change(function() {
+            $("#listM").empty();
             $.ajax({
                 type: 'POST',
                 url: "/sap/controladorCP?action=selectorListMuestra",
