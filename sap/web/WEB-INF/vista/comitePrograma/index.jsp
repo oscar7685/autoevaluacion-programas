@@ -116,8 +116,11 @@
                                 <button id="west-closer" class="close">&laquo;</button>
                                 <li class="nav-header">Proceso de Atoevaluación</li>
                                 <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
-                                <li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Ponderación de Factores</a></li>
-                                <li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Ponderación de Características</a></li>
+                                <li class="nav-header">Ponderación</li>
+                                <li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Factores</a></li>
+                                <li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Características</a></li>
+                                <li class="nav-header">Muestra</li>
+                                <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>
                             </ul>
                         </div>
                     </c:when>
