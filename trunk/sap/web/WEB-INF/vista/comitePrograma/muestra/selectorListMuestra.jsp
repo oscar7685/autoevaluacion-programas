@@ -19,7 +19,6 @@
         });
 
         $("#selectSemestre").change(function() {
-            $("#listM").empty();
             $.ajax({
                 type: 'POST',
                 url: "/sap/controladorCP?action=selectorListSemestre",
