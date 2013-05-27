@@ -6,6 +6,7 @@ package com.sap.ejb;
 
 import com.sap.entity.Asignacionencuesta;
 import com.sap.entity.Encuesta;
+import com.sap.entity.Fuente;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -34,6 +35,12 @@ public class AsignacionencuestaFacade extends AbstractFacade<Asignacionencuesta>
     public List findByEncuesta(Encuesta e) {
         Query q = em.createNamedQuery("Asignacionencuesta.findByEncuesta");
         q.setParameter("encuesta", e);
+        return q.getResultList();
+    }
+    public List findByEncuestayFuente(Encuesta e, Fuente f) {
+        Query q = em.createNamedQuery("Asignacionencuesta.findByEncuestayFuente");
+        q.setParameter("encuesta", e);
+        q.setParameter("fuente", f);
         return q.getResultList();
     }
 }

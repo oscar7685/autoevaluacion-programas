@@ -43,7 +43,7 @@
                                 <li ><a href="#"><i class="icon-info-sign"></i> Acerca de</a></li>
                                 <li class="dropdown loggining"> 
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <i class="icon-user"></i> ${nombre}
+                                        <i class="icon-user"></i> ${persona.nombre}
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu">

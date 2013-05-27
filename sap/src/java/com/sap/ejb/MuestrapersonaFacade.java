@@ -5,9 +5,11 @@
 package com.sap.ejb;
 
 import com.sap.entity.Muestrapersona;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -25,6 +27,11 @@ public class MuestrapersonaFacade extends AbstractFacade<Muestrapersona> {
 
     public MuestrapersonaFacade() {
         super(Muestrapersona.class);
+    }
+     public List findByCedula(String c) {
+        Query q = em.createNamedQuery("Muestrapersona.findByCedula");
+        q.setParameter("cedula", c);
+        return q.getResultList();
     }
     
 }
