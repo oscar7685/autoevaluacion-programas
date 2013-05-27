@@ -14,7 +14,7 @@
                             url: "/sap/controladorCP?action=selectorListMuestra",
                             data: $("#formListarMuestra").serialize(),
                             success: function(datos) {
-                               $(".divEvaluador").remove();
+                                $(".divEvaluador").remove();
                                 $("#listM").append(datos);
                                 $("#contenido").show(200, function() {
                                     $(".page_loading").hide();
@@ -90,13 +90,43 @@
                                 </div>
                             </div>
                         </c:when>
-                        <c:when test="">
+                        <c:when test="${selectorFuente == 'Docente'}">
+                            <div class="control-group">
+                                <label for="tipo"  class="control-label">Tipo</label>
+                                <div class="controls">
+                                    <input type="text" name="tipo" id="tipo" class="input-xlarge {required:true}" value=""/>
+                                </div>
+                            </div>
                         </c:when>
-                        <c:when test="">
+                        <c:when test="${selectorFuente == 'Administrativo'}">
+                            <div class="control-group">
+                                <label for="cargo"  class="control-label">Cargo</label>
+                                <div class="controls">
+                                    <input type="text" name="cargo" id="cargo" class="input-xlarge {required:true}" value=""/>
+                                </div>
+                            </div>
                         </c:when>
-                        <c:when test="">
+                        <c:when test="${selectorFuente == 'Agencia'}">
+                            <div class="control-group">
+                                <label for="descripcion"  class="control-label">Descripción</label>
+                                <div class="controls">
+                                    <input type="text" name="descripcion" id="descripcion" class="input-xlarge {required:true}" value=""/>
+                                </div>
+                            </div>
                         </c:when>
-                        <c:when test="">
+                        <c:when test="${selectorFuente == 'Empleador'}">
+                            <div class="control-group">
+                                <label for="empresa"  class="control-label">Empresa</label>
+                                <div class="controls">
+                                    <input type="text" name="empresa" id="empresa" class="input-xlarge {required:true}" value=""/>
+                                </div>
+                            </div>
+                             <div class="control-group">
+                                <label for="cargo"  class="control-label">Cargo</label>
+                                <div class="controls">
+                                    <input type="text" name="cargo" id="cargo" class="input-xlarge {required:true}" value=""/>
+                                </div>
+                            </div>
                         </c:when>
                         <c:otherwise>
                         </c:otherwise>

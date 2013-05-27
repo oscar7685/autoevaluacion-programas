@@ -83,6 +83,14 @@ public abstract class AbstractFacade<T> {
         return q.setParameter("name", m).getResultList();
     }
 
+    public List<T> generarMuestraSinPrograma(int tamanio) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c", entityClass);
+        q.setMaxResults(tamanio);
+        return q.getResultList();
+    }
+
     public List<T> findLast(Object muestra) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
@@ -99,5 +107,13 @@ public abstract class AbstractFacade<T> {
         q.setParameter("name1", m1);
         q.setParameter("name2", m2);
         return q.getResultList();
+    }
+
+    public int countByProperty(String property, Object m) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().createQuery("SELECT COUNT(c) FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name", entityClass);
+        q.setParameter("name", m);
+        return ((Long) q.getSingleResult()).intValue();
     }
 }
