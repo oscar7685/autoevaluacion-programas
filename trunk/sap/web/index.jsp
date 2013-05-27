@@ -44,7 +44,7 @@
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
     </head>
-    <body>
+    <body style="padding-top: 0px;">
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
@@ -71,13 +71,14 @@
                 </div>
             </div>
         </div>
-        <header class="inicio">
+        <header class="inicio" style="padding-top: 60px;">
             <div class="header-content home">
                 <div class="parallax-bg" id="slider-wrap">
                     <div class="slider parallax-bg" id="slider"> <div class="slider-sections sandbox"> 
                             <section class="first"> <img alt="Recolección de informacion" src="img/home-banner-1.png"/> <div class="text"> <h2>Recopile Informaci&oacute;n</h2> <p class="copy">Recolección de informaci&oacute;n a traves de encuestas en linea, información documental y más. </p> <p class="button"><a href="#" >Ver m&aacute;s</a></p> </div> </section>
                             <section> <img src="img/dataviz-home-image-q2.png" alt="Informes" /> <div class="text" style="padding-top: 10px;"> <h2>Analice resultados</h2> <p class="copy">Realiza el procesamiento y sistematización de la información recolectada, mostrando informes en tiempo real.</p> <p class="button"><a >Ver m&aacute;s</a></p> </div> </section>
-                            <section> <img src="img/home_banner_web-q2.png" alt="Kendo UI" /> <div class="text"> <h2>Informes en tiempo real</h2> <p class="copy">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris</p> <p class="button"><a href="http://www.lanrentuku.com/" onclick="_gaq.push(['_trackPageview', 'http://www.lanrentuku.com/']);">Download</a> <a class="dimmed" onclick="_gaq.push(['_trackPageview', 'http://www.lanrentuku.com/']);" href="http://www.lanrentuku.com/">Learn More</a></p> </div> </section></div> </div> <a class="slider-prev" href="javascript: void(0)">?</a> <a class="slider-next" href="javascript: void(0)">?</a>
+                            <section> <img src="img/imagen5.png" /> <div class="text"> <h2>Construcci&oacute;n del Modelo</h2> <p class="copy">Construya su propio modelo de autoevaluaci&oacute;n: factores, características, indicadores, diseño de instrumentos y más.</p> <p class="button"><a href="#">Leer m&aacute;s</a> </p> </div> </section></div> </div>
+                    <a class="slider-prev" href="javascript: void(0)">?</a> <a class="slider-next" href="javascript: void(0)">?</a>
                 </div>
             </div>
         </header>
@@ -114,19 +115,19 @@
             <!-- Example row of columns -->
             <div class="row inicio">
                 <div class="span4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
+                    <h2>SAP-UdeC 1.0</h2>
+                    <p>La Universidad de Cartagena cuenta con el Sistema de Autoevaluación de Programas SAP-UdeC, el cual apoya los procesos de autoevaluación con fines de acreditación, renovaci&oacute;n de registro calificado y m&aacute;s.</p>
+                    <p><a class="btn" href="#">Ver m&aacute;s</a></p>
                 </div>
                 <div class="span4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
+                    <br/>
+                    <p><a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/LogoU.png"></a></p>
+
                 </div>
                 <div class="span4">
-                    <h2>Heading</h2>
-                    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
+                    <br/>
+                    <p><a title="Oficina de autoevaluaci&oacute;n" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/selloAcreditacion.png"></a></p>
+                    
                 </div>
             </div>
 
