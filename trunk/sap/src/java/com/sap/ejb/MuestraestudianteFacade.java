@@ -5,9 +5,12 @@
 package com.sap.ejb;
 
 import com.sap.entity.Muestraestudiante;
+import com.sap.entity.Muestrapersona;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -25,6 +28,11 @@ public class MuestraestudianteFacade extends AbstractFacade<Muestraestudiante> {
 
     public MuestraestudianteFacade() {
         super(Muestraestudiante.class);
+    }
+     public List findByMuestraPersona(Muestrapersona p) {
+        Query q = em.createNamedQuery("Muestraestudiante.findByMuestraPersonaId");
+        q.setParameter("muestrapersona", p);
+        return q.getResultList();
     }
     
 }
