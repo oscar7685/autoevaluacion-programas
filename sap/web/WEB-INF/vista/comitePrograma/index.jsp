@@ -127,6 +127,7 @@
                     <c:otherwise>
                     </c:otherwise>
                 </c:choose>
+                <div align="center" ><a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/selloAcreditacion.png" style="width: 200px;"></img></a></div>
             </div>
         </div><!--/West-->
 
