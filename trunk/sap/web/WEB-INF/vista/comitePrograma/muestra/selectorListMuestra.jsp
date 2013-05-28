@@ -18,21 +18,7 @@
          
          });*/
 
-        $("#selectSemestre").change(function() {
-            $.ajax({
-                type: 'POST',
-                url: "/sap/controladorCP?action=selectorListSemestre",
-                data: $("#formSelectMuestra").serialize(),
-                success: function(datos) {
-                    $("#listM").empty();
-                    $("#listM").append(datos);
-                    $("#contenido").show(200, function() {
-                        $(".page_loading").hide();
-                    });
-                } //fin success
-            }); //fin $.ajax    
-
-        });
+     
 
         $("button[rel=popover2]")
                 .popover({placement: 'left'}).click(function(e) {
@@ -88,32 +74,6 @@
         </form>
     </div>
 </c:if>
-<c:if test="${selectorFuente == 'Estudiante'}">
-    <div class="input-append span10 input-prepend" style="margin-left: 0px;">  
-        <div class="control-group">
-            <label for="selectSemestre"  class="control-label">Semestre: </label>
-            <div class="controls">
-                <form id="formSelectMuestra"  method="post">
-                    <select name="semestre" id="selectSemestre">
-                        <option value="--">Seleccione Semestre</option>
-                        <option value="01">1</option>
-                        <option value="02">2</option>
-                        <option value="03">3</option>
-                        <option value="04">4</option>
-                        <option value="05">5</option>
-                        <option value="06">6</option>
-                        <option value="07">7</option>
-                        <option value="08">8</option>
-                        <option value="09">9</option>
-                        <option value="10">10</option>
-                    </select>
-                </form>
-            </div>
-        </div>  
-
-    </div>
-    Semestre: ${Semestre}
-</c:if>
 <div id="listM2" class="span10" style="margin-left: 0px;">
     <c:choose>
         <c:when test="${fn:length(listMuestraSeleccionada)!= 0}">
@@ -141,7 +101,7 @@
                     <tbody>
                         <c:if test="${EstadoProceso == 2}">
                             <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter">
-                                <tr style="background-color: #F2DEDE">
+                                <tr>
                                     <td style="background-color: #F2DEDE">   
                                         <c:out value="${row.muestrapersonaId.cedula}"/>
                                     </td>

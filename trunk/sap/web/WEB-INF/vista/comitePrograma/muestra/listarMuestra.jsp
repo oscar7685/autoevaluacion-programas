@@ -3,12 +3,34 @@
 <script type="text/javascript">
     $(function() {
         $("#selectListMuestra").change(function() {
-            $("#listM").empty();
+            var a = $("#selectListMuestra option:selected").index();
+            if (a == 1) {
+                $("#divSemestre").show();
+            } else {
+                $("#divSemestre").hide();
+                $("#listM").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: "/sap/controladorCP?action=selectorListMuestra",
+                    data: $("#formListarMuestra").serialize(),
+                    success: function(datos) {
+                        $("#listM").append(datos);
+                        $("#contenido").show(200, function() {
+                            $(".page_loading").hide();
+                        });
+                    } //fin success
+                }); //fin $.ajax    
+            }
+
+        });
+
+        $("#selectSemestre").change(function() {
             $.ajax({
                 type: 'POST',
-                url: "/sap/controladorCP?action=selectorListMuestra",
-                data: $("#formListarMuestra").serialize(),
+                url: "/sap/controladorCP?action=selectorListSemestre",
+                data: $("#formSelectMuestra").serialize(),
                 success: function(datos) {
+                    $("#listM").empty();
                     $("#listM").append(datos);
                     $("#contenido").show(200, function() {
                         $(".page_loading").hide();
@@ -41,6 +63,26 @@
                                 </select>
                             </div>
                         </div>   
+                        <div class="control-group" id="divSemestre" style="display: none">
+                            <label for="selectSemestre"  class="control-label">Semestre: </label>
+                            <div class="controls">
+                                <form id="formSelectMuestra"  method="post">
+                                    <select name="semestre" id="selectSemestre">
+                                        <option value="--">Seleccione Semestre</option>
+                                        <option value="01">1</option>
+                                        <option value="02">2</option>
+                                        <option value="03">3</option>
+                                        <option value="04">4</option>
+                                        <option value="05">5</option>
+                                        <option value="06">6</option>
+                                        <option value="07">7</option>
+                                        <option value="08">8</option>
+                                        <option value="09">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>  
                     </fieldset>
                 </form>
             </ul>
