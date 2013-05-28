@@ -631,6 +631,7 @@ public class cpController extends HttpServlet {
 
             } else if (action.equals("selectorListMuestra")) {
                 String fuente = "";
+
                 if (request.getParameter("fuente") == null) {
                     fuente = (String) sesion.getAttribute("selectorFuente");
                 } else {
@@ -933,11 +934,21 @@ public class cpController extends HttpServlet {
                 String semestre = request.getParameter("semestre");
 
                 sesion.setAttribute("Semestre", semestre);
-                
+
                 Muestra m = (Muestra) sesion.getAttribute("Muestra");
 
                 sesion.setAttribute("listMuestraSeleccionada", muestraestudianteFacade.findByList2("muestrapersonaId.muestraId", m, "semestre", semestre));
                 sesion.setAttribute("Fuente", fuenteFacade.find(1));
+
+                String fuente;
+
+                if (request.getParameter("fuente") == null) {
+                    fuente = (String) sesion.getAttribute("selectorFuente");
+                } else {
+                    fuente = request.getParameter("fuente");
+                    sesion.setAttribute("selectorFuente", fuente);
+                }
+
 
 
                 String url = "/WEB-INF/vista/comitePrograma/muestra/selectorListMuestra.jsp";

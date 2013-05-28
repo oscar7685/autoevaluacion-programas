@@ -2,7 +2,7 @@ $(function() {
     location = "/sap/#inicio";
     $(document).ajaxStart(function() {
         $("div.ui-layout-center").append("<div id='contenido'></div>");
-        $("#contenido").hide();
+       // $("#contenido").hide();
         $("div.ui-layout-center").append("<div class='page_loading'>"
                 + "<span>Cargando</span>"
                 + "<img src='css/images/loading.gif' style='margin-left:6px;'>"

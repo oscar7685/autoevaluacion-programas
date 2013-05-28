@@ -18,7 +18,6 @@
 </c:if>
 <form id="formEditarMuestra">
     <fieldset>
-        <legend>Editar muestra ${Semestre} semestre</legend>
         <ul id="fcbklist">
             <c:forEach items="${listPoblacion}" var="item" varStatus="iter">
                 <c:set var="auxx" value="1"></c:set>

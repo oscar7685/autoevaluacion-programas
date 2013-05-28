@@ -141,13 +141,13 @@
                 </div>
                 <div class="span1"></div>--%>
                 <div class="span2"></div>
-                <div class="span5">
+                <div class="span5" style="margin-left: 0px">
                     <br/>
-                    <p><a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img  src="<%=request.getContextPath()%>/img/logooficial.png" style="margin-top: 20px"></a></p>
+                    <p><a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img  src="<%=request.getContextPath()%>/img/logooficial.png" style="margin-top: 20px; margin-left: 0px;"></a></p>
                 </div>
                 <div class="span3">
                     <br/>
-                    <p><a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/sello2.png"></a></p>
+                    <p><a title="Universidad de Cartagena" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/sello2.png"></a></p>
                 </div>
                 <div class="span2"></div>
             </div>
