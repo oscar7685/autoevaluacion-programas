@@ -87,7 +87,7 @@
                     $("#listM").empty();
                     $.ajax({
                         type: 'POST',
-                        url: "/sap/controladorCP?action=selectorListMuestra",
+                        url: "/sap/controladorCP?action=selectorListSemestre",
                         data: $("#formListarMuestra").serialize(),
                         success: function(datos) {
                             $("#listM").append(datos);
