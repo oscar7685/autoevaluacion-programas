@@ -3,12 +3,17 @@
 <script type="text/javascript">
     $(function() {
         $("#selectListMuestra").change(function() {
-            $("#selectSemestre option:eq(0)").attr("selected", true);
+            $("#listM").empty();
+            $("#selectSemestre option:eq(0)").prop("selected", true);
 
             var a = $("#selectListMuestra option:selected").index();
             if (a == 1) {
                 $("#divSemestre").show();
-            } else {
+            } else if (a == 0) {
+                $("#listM").empty();
+                $("#divSemestre").hide();
+            }
+            else {
                 $("#divSemestre").hide();
                 $("#listM").empty();
                 $.ajax({
@@ -27,19 +32,24 @@
         });
 
         $("#selectSemestre").change(function() {
-            $.ajax({
-                type: 'POST',
-                url: "/sap/controladorCP?action=selectorListSemestre",
-                data: $("#formListarMuestra").serialize(),
-                success: function(datos) {
-                    $("#listM").empty();
-                    $("#listM").append(datos);
-                    $("#contenido").show(200, function() {
-                        $(".page_loading").hide();
-                    });
-                } //fin success
-            }); //fin $.ajax    
+            var a = $("#selectSemestre option:selected").index();
+            if (a == 0) {
+                $("#listM").empty();
+            } else {
 
+                $.ajax({
+                    type: 'POST',
+                    url: "/sap/controladorCP?action=selectorListSemestre",
+                    data: $("#formListarMuestra").serialize(),
+                    success: function(datos) {
+                        $("#listM").empty();
+                        $("#listM").append(datos);
+                        $("#contenido").show(200, function() {
+                            $(".page_loading").hide();
+                        });
+                    } //fin success
+                }); //fin $.ajax    
+            }
         });
     });
 </script>
