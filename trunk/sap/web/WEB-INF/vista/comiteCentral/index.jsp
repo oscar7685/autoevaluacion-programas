@@ -64,14 +64,21 @@
         </div><!--North-->
 
         <div class="ui-layout-south ui-widget-content"> 
-            <hr>
-            <footer>
-                <p>&copy; Universidad de Cartagena 2013</p>
+            <footer id="footer" class="contenedor_footer fondo_footer">
+                <div class="links">
+                    <a style="font-weight: normal;-moz-text-decoration-line: none;"><span class="muted">&copy; Universidad de Cartagena 2013</span></a>
+
+                    <a class="about" href="#"><span>Acerca de</span></a>
+
+                    <a href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto" target="_blank"><span>Contacto</span></a>
+
+                    <a href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto" target="_blank"><span>Ayuda</span></a>
+                </div>
             </footer>
         </div><!--South-->
 
         <div class="ui-layout-center">
-                <div  class="span10" style="text-align: justify">
+            <div  class="span10" style="text-align: justify">
                 <div class="hero-unit">
                     <h1>Autoevaluaci&oacute;n Institucional!</h1>
                     <p style='font-size: 18px; font-weight: 200; line-height: 27px;'>El Consejo Acad&eacute;mico aprob&oacute; el Modelo de Autoevaluaci&oacute;n con fines de Acreditaci&oacute;n Institucional de la Universidad de Cartagena; instrumento de gesti&oacute;n que permite la revisi&oacute;n sistem&aacute;tica de los procesos acad&eacute;micos y administrativos para  la elaboraci&oacute;n y puesta en marcha de planes de mejoramiento y de mantenimiento que den respuesta a su pol&iacute;tica de calidad.</p>
