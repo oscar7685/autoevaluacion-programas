@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -76,28 +77,33 @@
                     <br/>
                     <h2>Listado de  Encuestas Disponibles</h2>
                     <br/>
-
-                    <table class="table table-striped table-bordered table-condensed">
-                        <thead>
-                        <th>Encuesta</th>
-                        <th>Programa</th>
-                        <th></th>
-                        </thead>
-                        <tbody>
-                            <tr>    
-                                <td>   
-                                    encuesta X
-                                </td>
-                                <td>
-                                    programa X
-                                </td>
-                                <td class="action">
-                                    <a title="Responder Encuesta" href="#responderEncuesta&1">Responder encuesta</a>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
+                    <c:choose>
+                        <c:when test="${encuesta!=null}">
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                <th>Encuesta</th>
+                                <th>Programa</th>
+                                <th></th>
+                                </thead>
+                                <tbody>
+                                    <tr>    
+                                        <td>   
+                                            <c:out value="${item[1]}"/>
+                                        </td>
+                                        <td>
+                                            <c:out value="${proceso.programaId.nombre}"/>
+                                        </td>
+                                        <td class="action">
+                                            <a title="Responder Encuesta" href="#responderEncuesta&${item[0]}">Responder encuesta</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </c:when>
+                        <c:otherwise>
+                            No Existen Encuestas Disponibles.
+                        </c:otherwise>
+                    </c:choose>
 
 
                 </div>

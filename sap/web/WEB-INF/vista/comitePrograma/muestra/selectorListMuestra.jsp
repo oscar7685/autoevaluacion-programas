@@ -156,7 +156,7 @@
                         </c:if>
                         <c:if test="${EstadoProceso != 2}">
                             <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter">
-                                <tr style="background-color: #F2DEDE">
+                                <tr>
                                     <td>   
                                         <c:out value="${row.muestrapersonaId.cedula}"/>
                                     </td>
