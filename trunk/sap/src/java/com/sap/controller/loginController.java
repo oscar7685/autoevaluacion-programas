@@ -126,8 +126,8 @@ public class loginController extends HttpServlet {
                 Muestraestudiante estudiante = null;
                 List<Muestraestudiante> aux2 = null;
                 List<Encuesta> aux3 = null;
-                Modelo m = null;
-                Proceso proceso = null;
+                Modelo m;
+                Proceso proceso;
                 List<Muestrapersona> aux = muestrapersonaFacade.findByCedula(un);
                 if (aux != null && aux.size() > 0) {
                     for (int i = 0; i < aux.size(); i++) {

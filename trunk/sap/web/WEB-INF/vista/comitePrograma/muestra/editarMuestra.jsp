@@ -17,54 +17,57 @@
     <br>
 </c:if>
 <form id="formEditarMuestra">
-    <ul id="fcbklist">
-        <c:forEach items="${listPoblacion}" var="item" varStatus="iter">
-            <c:set var="auxx" value="1"></c:set>
-            <c:forEach items="${listMuestraSeleccionada}" var="item2" varStatus="iter2">
-                <c:if test="${item.personaId.id == item2.muestrapersonaId.cedula}">
-                    <c:set var="varaux" value="0"/>
-                    <c:forEach items="${listEncabezado}" var="item3" varStatus="iter2">
-                        <c:if test="${item.personaId.id == item3.personaId.id}">
-                            <c:set var="varaux" value="1"/>
-                            <c:if test="${item3.estado == 'terminado'}">
-                                <li id="itemblockVerde">
-                                    <c:set var="auxx" value="0"></c:set>
-                                    <strong>${item.personaId.nombre} ${item.personaId.apellido}</strong><br/> 
-                                    <span class="fcbkitem_text">${item.personaId.id}</span>
-                                    <input id="itemblockinput" name="${item.personaId.id}" type="hidden" checked="checked" value="0"/>
-                                </li>
+    <fieldset>
+        <legend>Editar muestra ${Semestre} semestre</legend>
+        <ul id="fcbklist">
+            <c:forEach items="${listPoblacion}" var="item" varStatus="iter">
+                <c:set var="auxx" value="1"></c:set>
+                <c:forEach items="${listMuestraSeleccionada}" var="item2" varStatus="iter2">
+                    <c:if test="${item.personaId.id == item2.muestrapersonaId.cedula}">
+                        <c:set var="varaux" value="0"/>
+                        <c:forEach items="${listEncabezado}" var="item3" varStatus="iter2">
+                            <c:if test="${item.personaId.id == item3.personaId.id}">
+                                <c:set var="varaux" value="1"/>
+                                <c:if test="${item3.estado == 'terminado'}">
+                                    <li id="itemblockVerde">
+                                        <c:set var="auxx" value="0"></c:set>
+                                        <strong>${item.personaId.nombre} ${item.personaId.apellido}</strong><br/> 
+                                        <span class="fcbkitem_text">${item.personaId.id}</span>
+                                        <input id="itemblockinput" name="${item.personaId.id}" type="hidden" checked="checked" value="0"/>
+                                    </li>
+                                </c:if>
+                                <c:if test="${item3.estado == 'guardada'}">
+                                    <li id="itemblockAzul">
+                                        <c:set var="auxx" value="0"></c:set>
+                                        <strong>${item.personaId.nombre} ${item.personaId.apellido}</strong><br/> 
+                                        <span class="fcbkitem_text">${item.personaId.id}</span>
+                                        <input name="${item.personaId.id}" type="hidden" checked="checked" value="0"/>
+                                    </li>
+                                </c:if>                   
                             </c:if>
-                            <c:if test="${item3.estado == 'guardada'}">
-                                <li id="itemblockAzul">
-                                    <c:set var="auxx" value="0"></c:set>
-                                    <strong>${item.personaId.nombre} ${item.personaId.apellido}</strong><br/> 
-                                    <span class="fcbkitem_text">${item.personaId.id}</span>
-                                    <input name="${item.personaId.id}" type="hidden" checked="checked" value="0"/>
-                                </li>
-                            </c:if>                   
+                        </c:forEach>
+                        <c:if test="${varaux == 0}">
+                            <li id="itemblockRojo">
+                                <c:set var="auxx" value="0"></c:set>
+                                <strong>${item.personaId.nombre} ${item.personaId.apellido}</strong><br/> 
+                                <span class="fcbkitem_text">${item.personaId.id}</span>
+                                <input name="${item.personaId.id}" type="hidden" checked="checked" value="0"/>
+                            </li>
                         </c:if>
-                    </c:forEach>
-                    <c:if test="${varaux == 0}">
-                        <li id="itemblockRojo">
-                          <c:set var="auxx" value="0"></c:set>
-                             <strong>${item.personaId.nombre} ${item.personaId.apellido}</strong><br/> 
-                             <span class="fcbkitem_text">${item.personaId.id}</span>
-                            <input name="${item.personaId.id}" type="hidden" checked="checked" value="0"/>
-                        </li>
                     </c:if>
+                </c:forEach>
+                <c:if test="${auxx == 1}">
+                    <li>
+                        <c:set var="auxx" value="0"></c:set>
+                        <strong>${item.personaId.nombre} ${item.personaId.apellido}</strong><br/> 
+                        <span class="fcbkitem_text">${item.personaId.id}</span>
+                        <input name="${item.personaId.id}" type="hidden" value="0"/>
+                    </li>
                 </c:if>
-            </c:forEach>
-            <c:if test="${auxx == 1}">
-                <li>
-                    <c:set var="auxx" value="0"></c:set>
-                    <strong>${item.personaId.nombre} ${item.personaId.apellido}</strong><br/> 
-                    <span class="fcbkitem_text">${item.personaId.id}</span>
-                    <input name="${item.personaId.id}" type="hidden" value="0"/>
-                </li>
-            </c:if>
-        </c:forEach> 
+            </c:forEach> 
 
-    </ul>
+        </ul>
+    </fieldset>
     <div class="form-actions">
         <button class="btn btn-primary" id="botonActualizarMuestra" type="button">Actualizar Muestra Para Fuente Seleccionada</button>
         <button class="btn btn-secundary" id="botonCancelar" type="button">Cancelar</button>
