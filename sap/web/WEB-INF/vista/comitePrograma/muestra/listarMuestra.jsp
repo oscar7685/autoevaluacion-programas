@@ -3,6 +3,8 @@
 <script type="text/javascript">
     $(function() {
         $("#selectListMuestra").change(function() {
+            $("#selectSemestre option:eq(0)").attr("selected", true);
+
             var a = $("#selectListMuestra option:selected").index();
             if (a == 1) {
                 $("#divSemestre").show();
@@ -28,7 +30,7 @@
             $.ajax({
                 type: 'POST',
                 url: "/sap/controladorCP?action=selectorListSemestre",
-                data: $("#formSelectMuestra").serialize(),
+                data: $("#formListarMuestra").serialize(),
                 success: function(datos) {
                     $("#listM").empty();
                     $("#listM").append(datos);
@@ -52,7 +54,7 @@
                             <label for="selectListMuestra"  class="control-label">Fuente: </label>
                             <div class="controls">
                                 <select name="fuente" id="selectListMuestra">
-                                    <option>Seleccionar Fuente</option>
+                                    <option value="--">Seleccionar Fuente</option>
                                     <option value="Estudiante">Estudiantes</option>
                                     <option value="Docente">Docentes</option>
                                     <option value="Egresado">Egresados</option>

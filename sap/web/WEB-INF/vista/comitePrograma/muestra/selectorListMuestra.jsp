@@ -44,18 +44,16 @@
                         } //fin success
                     }); //fin $.ajax    
                 }
-            })
+            });
 
         });
 
-        $("#preparedEditarMuestra").click(function() {
-            alert("Funca1");
+        $("#bpreparedEditarMuestra").click(function() {
             $.ajax({
                 type: 'POST',
                 url: "/sap/controladorCP?action=preparedEditarMuestra",
                 success: function(datos) {
-                    //  $("#editM").empty();
-                    alert("Funca");
+                    $("#editM").empty();
                     $("#editM").append(datos);
                     $("#contenido").show(200, function() {
                         $(".page_loading").hide();
@@ -135,7 +133,7 @@
                     <a href="#preparedEvaluador" class="btn btn-large btn-primary llamador"><i class="icon-plus"> </i><i class="icon-user"></i> Registrar Evaluador</a>
                 </c:if>
                 <c:if test="${selectorFuente == 'Estudiante' && Semestre != '--'}">
-                    <a href="#preparedEditarMuestra" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
+                    <a id="bpreparedEditarMuestra" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
                 </c:if>
             </div>
         </c:when>
