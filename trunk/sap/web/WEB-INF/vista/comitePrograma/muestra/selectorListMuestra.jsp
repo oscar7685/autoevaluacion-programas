@@ -125,10 +125,12 @@
                                         <c:out value="${row.muestrapersonaId.apellido}"/>
                                     </td>
                                 </tr>
+                                <c:set var="contador" value="${iter.index}"></c:set>
                             </c:forEach>
                         </c:if>
                     </tbody>
                 </table>
+                <p style="font-weight: bold">Total Estudiantes: ${contador + 1}</p>
                 <c:if test="${selectorFuente != 'Docente' && selectorFuente != 'Estudiante' }">
                     <a href="#preparedEvaluador" class="btn btn-large btn-primary llamador"><i class="icon-plus"> </i><i class="icon-user"></i> Registrar Evaluador</a>
                 </c:if>

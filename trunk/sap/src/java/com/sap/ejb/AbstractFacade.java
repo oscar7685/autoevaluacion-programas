@@ -83,6 +83,16 @@ public abstract class AbstractFacade<T> {
         return q.setParameter("name", m).getResultList();
     }
 
+    public List<T> generarMuestraEst(Object m1, int tamanio, String property2, Object m2) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c.programaId = :name1 and c." + property2 + " = :name2", entityClass);
+        q.setMaxResults(tamanio);
+        q.setParameter("name1", m1);
+        q.setParameter("name2", m2);
+        return q.getResultList();
+    }
+
     public List<T> generarMuestraSinPrograma(int tamanio) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
@@ -114,6 +124,15 @@ public abstract class AbstractFacade<T> {
         cq.select(cq.from(entityClass));
         Query q = getEntityManager().createQuery("SELECT COUNT(c) FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name", entityClass);
         q.setParameter("name", m);
+        return ((Long) q.getSingleResult()).intValue();
+    }
+
+    public int countByProperty2(String property, Object m1, String property2, Object m2) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().createQuery("SELECT COUNT(c) FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name1 and c." + property2 + " = :name2", entityClass);
+        q.setParameter("name1", m1);
+        q.setParameter("name2", m2);
         return ((Long) q.getSingleResult()).intValue();
     }
 }
