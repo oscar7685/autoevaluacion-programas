@@ -157,6 +157,7 @@
                                                 <c:out value="${row.muestrapersonaId.apellido}"/>
                                             </td>
                                         </tr>
+                                        <c:set var="contador" value="${iter.index}"></c:set>
                                     </c:forEach>
                                 </c:if>
                                 <c:if test="${EstadoProceso != 2}">

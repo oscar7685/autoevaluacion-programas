@@ -17,7 +17,6 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <br/>
             <h3>Asignación de  Muestra</h3>
             <c:choose>
                 <c:when test="${Muestra != null}">

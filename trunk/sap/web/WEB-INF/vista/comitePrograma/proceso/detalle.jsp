@@ -3,7 +3,6 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <br/>
             <h3>Detalle de Proceso de Autoevaluación</h3>
             <c:choose>
                 <c:when test="${fn:length(listProceso)!= 0}">
