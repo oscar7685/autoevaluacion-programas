@@ -60,13 +60,13 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-
+    
     public T findBySingle(String property, Object m) {
         System.out.println("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name");
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name", entityClass).setParameter("name", m).getSingleResult();
-    }
+}
 
     public List<T> findByList(String property, Object m) {
         System.out.println("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name");

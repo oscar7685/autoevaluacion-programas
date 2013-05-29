@@ -33,12 +33,11 @@ public class CaracteristicaFacade extends AbstractFacade<Caracteristica> {
     public CaracteristicaFacade() {
         super(Caracteristica.class);
     }
-
-    public List findByModelo(Object m) {
-        TypedQuery<Proceso> query = em.createQuery(
-                "SELECT c FROM Caracteristica c WHERE c.modeloId = :name", Proceso.class);
-        return query.setParameter("name", m).getResultList();
-
+    
+     public List findByModelo(Modelo m) {
+        Query q = em.createNamedQuery("Caracteristica.findByModelo");
+        q.setParameter("modelo", m);
+        return q.getResultList();
     }
 
     public List findByFactor(Factor f) {

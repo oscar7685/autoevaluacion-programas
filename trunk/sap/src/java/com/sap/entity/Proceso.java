@@ -69,8 +69,6 @@ public class Proceso implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Ponderacionfactor> ponderacionfactorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
-    private List<Asignacionencuesta> asignacionencuestaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Encabezado> encabezadoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Numericadocumental> numericadocumentalList;
@@ -159,15 +157,6 @@ public class Proceso implements Serializable {
 
     public void setPonderacionfactorList(List<Ponderacionfactor> ponderacionfactorList) {
         this.ponderacionfactorList = ponderacionfactorList;
-    }
-
-    @XmlTransient
-    public List<Asignacionencuesta> getAsignacionencuestaList() {
-        return asignacionencuestaList;
-    }
-
-    public void setAsignacionencuestaList(List<Asignacionencuesta> asignacionencuestaList) {
-        this.asignacionencuestaList = asignacionencuestaList;
     }
 
     @XmlTransient

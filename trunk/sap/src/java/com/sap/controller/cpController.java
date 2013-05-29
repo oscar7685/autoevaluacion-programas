@@ -190,7 +190,7 @@ public class cpController extends HttpServlet {
 
                 procesoFacade.create(p);
             } else if (action.equals("preparedPonderarFactor")) {
-                sesion.setAttribute("listFactor", factorFacade.findByModelo(sesion.getAttribute("Modelo")));
+                sesion.setAttribute("listFactor", factorFacade.findByModelo((Modelo)sesion.getAttribute("Modelo")));
                 String url = "/WEB-INF/vista/comitePrograma/ponderacion/ponderarFactor.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);

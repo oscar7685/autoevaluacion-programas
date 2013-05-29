@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Asignacionencuesta.findAll", query = "SELECT a FROM Asignacionencuesta a"),
     @NamedQuery(name = "Asignacionencuesta.findByEncuesta", query = "SELECT a FROM Asignacionencuesta a WHERE a.encuestaId = :encuesta"),
-    @NamedQuery(name = "Asignacionencuesta.findByEncuestayFuente", query = "SELECT a FROM Asignacionencuesta a WHERE a.encuestaId = :encuesta and a.fuenteId= :fuente"),
+    @NamedQuery(name = "Asignacionencuesta.findByEncuestayFuenteyModelo", query = "SELECT a FROM Asignacionencuesta a WHERE a.encuestaId = :encuesta and a.fuenteId= :fuente and a.modeloId= :modelo"),
     @NamedQuery(name = "Asignacionencuesta.findById", query = "SELECT a FROM Asignacionencuesta a WHERE a.id = :id")})
 public class Asignacionencuesta implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -37,15 +37,15 @@ public class Asignacionencuesta implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @JoinColumn(name = "modelo_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Modelo modeloId;
     @JoinColumn(name = "encuesta_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Encuesta encuestaId;
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
-    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
-    @ManyToOne
-    private Proceso procesoId;
 
     public Asignacionencuesta() {
     }
@@ -62,6 +62,14 @@ public class Asignacionencuesta implements Serializable {
         this.id = id;
     }
 
+    public Modelo getModeloId() {
+        return modeloId;
+    }
+
+    public void setModeloId(Modelo modeloId) {
+        this.modeloId = modeloId;
+    }
+
     public Encuesta getEncuestaId() {
         return encuestaId;
     }
@@ -76,14 +84,6 @@ public class Asignacionencuesta implements Serializable {
 
     public void setFuenteId(Fuente fuenteId) {
         this.fuenteId = fuenteId;
-    }
-
-    public Proceso getProcesoId() {
-        return procesoId;
-    }
-
-    public void setProcesoId(Proceso procesoId) {
-        this.procesoId = procesoId;
     }
 
     @Override

@@ -69,6 +69,8 @@ public class Programa implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaId")
     private List<Directorprograma> directorprogramaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaId")
+    private List<Muestraestudiante> muestraestudianteList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaId")
     private List<Egresado> egresadoList;
     @OneToMany(mappedBy = "programaId")
     private List<Representante> representanteList;
@@ -162,6 +164,15 @@ public class Programa implements Serializable {
 
     public void setDirectorprogramaList(List<Directorprograma> directorprogramaList) {
         this.directorprogramaList = directorprogramaList;
+    }
+
+    @XmlTransient
+    public List<Muestraestudiante> getMuestraestudianteList() {
+        return muestraestudianteList;
+    }
+
+    public void setMuestraestudianteList(List<Muestraestudiante> muestraestudianteList) {
+        this.muestraestudianteList = muestraestudianteList;
     }
 
     @XmlTransient
