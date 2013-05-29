@@ -391,6 +391,7 @@ public class cpController extends HttpServlet {
                             mp.setPassword(per.getPassword());
                             mp.setMail(per.getMail());
                             mp.setMuestraId(m);
+                           
 
                             muestrapersonaFacade.create(mp);
 
@@ -400,6 +401,7 @@ public class cpController extends HttpServlet {
                             me.setPeriodo(est.getPeriodo());
                             me.setAnio(est.getAnio());
                             me.setMuestrapersonaId(mp);
+                            me.setProgramaId(programa);
 
                             muestraestudianteFacade.create(me);
                         }
@@ -943,6 +945,7 @@ public class cpController extends HttpServlet {
                         me.setPeriodo(est.getPeriodo());
                         me.setAnio(est.getAnio());
                         me.setMuestrapersonaId(mp);
+                        me.setProgramaId(programa);
 
                         muestraestudianteFacade.create(me);
 
