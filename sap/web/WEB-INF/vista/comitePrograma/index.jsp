@@ -65,11 +65,18 @@
         </div><!--North-->
 
         <div class="ui-layout-south ui-widget-content"> 
-            <hr>
-            <footer>
-                <p>&copy; Universidad de Cartagena 2013</p>
+            <footer id="footer" class="contenedor_footer fondo_footer">
+                <div class="links">
+                    <a style="font-weight: normal;-moz-text-decoration-line: none;"><span class="muted">&copy; Universidad de Cartagena 2013</span></a>
+
+                    <a class="about" href="#"><span>Acerca de</span></a>
+
+                    <a href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto" target="_blank"><span>Contacto</span></a>
+
+                    <a href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto" target="_blank"><span>Ayuda</span></a>
+                </div>
             </footer>
-        </div><!--South-->
+        </div><!--South--><!--South-->
 
         <div class="ui-layout-center">
 
@@ -127,7 +134,7 @@
                     <c:otherwise>
                     </c:otherwise>
                 </c:choose>
-                        <div align="center" style="bottom: 10px; position: absolute; "><a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/selloAcreditacion.png" style="width: 200px;"></img></a></div>
+                        <div align="center" class="span2" style="bottom: 0px; position: absolute"><a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/selloAcreditacion.png" style="width: 200px;"></img></a></div>
             </div>
         </div><!--/West-->
 

@@ -18,7 +18,7 @@
 </c:if>
 <form id="formEditarMuestra">
     <fieldset>
-        <ul id="fcbklist">
+        <ul id="fcbklist" class="span10">
             <c:forEach items="${listPoblacion}" var="item" varStatus="iter">
                 <c:set var="auxx" value="1"></c:set>
                 <c:forEach items="${listMuestraSeleccionada}" var="item2" varStatus="iter2">
@@ -76,9 +76,32 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/dragDrop/selector.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $.fcbkListSelection("#fcbklist", "1000", "50", "6");
+        $.fcbkListSelection("#fcbklist", "", "50", "6");
 
         $("#botonActualizarMuestra").click(function() {
+            $.ajax({
+                type: 'POST',
+                url: "/sap/controladorCP?action=editarMuestra",
+                data: $("#formEditarMuestra").serialize(),
+                success: function(datos) {
+                    $("#listM").empty();
+                    $.ajax({
+                        type: 'POST',
+                        url: "/sap/controladorCP?action=selectorListSemestre",
+                        data: $("#formListarMuestra").serialize(),
+                        success: function(datos) {
+                            $("#listM").append(datos);
+                            $("#contenido").show(200, function() {
+                                $(".page_loading").hide();
+                            });
+                        } //fin success
+                    }); //fin $.ajax    
+                } //fin success
+            }); //fin $.ajax    
+
+        });
+        
+        $("#botonCancelar").click(function() {
             $.ajax({
                 type: 'POST',
                 url: "/sap/controladorCP?action=editarMuestra",

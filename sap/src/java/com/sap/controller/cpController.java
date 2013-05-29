@@ -356,37 +356,56 @@ public class cpController extends HttpServlet {
                     n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
                 }
 
-                int tamanioMuestra = (int) Math.floor(n);
 
-                List<Estudiante> le = estudianteFacade.generarMuestra(programa, tamanioMuestra);
 
-                Iterator it = le.iterator();
+                double cociente = n / N;
 
-                if (!le.isEmpty()) {
-                    while (it.hasNext()) {
-                        Estudiante est = (Estudiante) it.next();
-                        Persona per = est.getPersonaId();
 
-                        Muestrapersona mp = new Muestrapersona();
+                for (int i = 3; i < 10; i++) {
 
-                        mp.setCedula(per.getId());
-                        mp.setNombre(per.getNombre());
-                        mp.setApellido(per.getApellido());
-                        mp.setPassword(per.getPassword());
-                        mp.setMail(per.getMail());
-                        mp.setMuestraId(m);
+                    int tamanioMuestra1 = 0;
 
-                        muestrapersonaFacade.create(mp);
+                    int tamaniosem = estudianteFacade.countByProperty2("programaId", sesion.getAttribute("Programa"), "semestre", "0" + i);
 
-                        Muestraestudiante me = new Muestraestudiante();
-                        me.setCodigo(est.getId());
-                        me.setSemestre(est.getSemestre());
-                        me.setPeriodo(est.getPeriodo());
-                        me.setAnio(est.getAnio());
-                        me.setMuestrapersonaId(mp);
+                    tamanioMuestra1 = (int) Math.round(tamaniosem * cociente);
 
-                        muestraestudianteFacade.create(me);
+                    List<Estudiante> le = estudianteFacade.generarMuestraEst(programa, tamanioMuestra1, "semestre", "0" + i);
+
+                    System.out.println("Tamaño: " + le.size());
+
+                    System.out.println("Tmañao smestre " + i + " : " + tamaniosem);
+                    System.out.println("Muestra smestre " + i + " : " + tamanioMuestra1);
+
+                    Iterator it = le.iterator();
+
+                    if (!le.isEmpty()) {
+                        while (it.hasNext()) {
+                            Estudiante est = (Estudiante) it.next();
+                            Persona per = est.getPersonaId();
+
+                            Muestrapersona mp = new Muestrapersona();
+
+                            mp.setCedula(per.getId());
+                            mp.setNombre(per.getNombre());
+                            mp.setApellido(per.getApellido());
+                            mp.setPassword(per.getPassword());
+                            mp.setMail(per.getMail());
+                            mp.setMuestraId(m);
+
+                            muestrapersonaFacade.create(mp);
+
+                            Muestraestudiante me = new Muestraestudiante();
+                            me.setCodigo(est.getId());
+                            me.setSemestre(est.getSemestre());
+                            me.setPeriodo(est.getPeriodo());
+                            me.setAnio(est.getAnio());
+                            me.setMuestrapersonaId(mp);
+
+                            muestraestudianteFacade.create(me);
+                        }
                     }
+
+
                 }
 
 
@@ -400,11 +419,15 @@ public class cpController extends HttpServlet {
                     n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
                 }
 
+
+                int tamanioMuestra = 0;
+
                 tamanioMuestra = (int) Math.floor(n);
 
                 List<Docente> ld = docenteFacade.generarMuestra(programa, tamanioMuestra);
 
-                it = ld.iterator();
+
+                Iterator it = ld.iterator();
 
                 if (!ld.isEmpty()) {
                     while (it.hasNext()) {
