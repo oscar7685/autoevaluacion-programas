@@ -52,7 +52,7 @@ $(function() {
     // setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
     // save selector strings to vars so we don't have to repeat it
     // must prefix paneClass with "body > " to target ONLY the outerLayout panes
-    // myLayout.addCloseBtn("#west-closer", "west");
+     myLayout.addCloseBtn("#west-closer", "west");
 
 
 
@@ -226,15 +226,15 @@ $(function() {
                 {
                     $("#contenido").append(data);
 
-                    $("#contenido").show(400, function() {
+                    setTimeout(function() {
                         $(".page_loading").hide();
-                    });
+                    }, 200);
 
                     setTimeout(function() {
-                        $("div.ui-layout-center").scrollspy();
+                        $("div.ui-layout-center").affix();
                     }, 500);
 
-                    $("div.ui-layout-center").scrollspy('refresh');
+                    $("div.ui-layout-center").affix('refresh');
 
 
                 }

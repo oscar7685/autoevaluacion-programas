@@ -88,13 +88,13 @@
                                 <tbody>
                                     <tr>    
                                         <td>   
-                                            <c:out value="${item[1]}"/>
+                                            <c:out value="${encuesta.nombre}"/>
                                         </td>
                                         <td>
-                                            <c:out value="${proceso.programaId.nombre}"/>
+                                            <c:out value="${programa.nombre}"/>
                                         </td>
                                         <td class="action">
-                                            <a title="Responder Encuesta" href="#responderEncuesta&${item[0]}">Responder encuesta</a>
+                                            <a title="Responder Encuesta" href="#responderEncuesta&${encuesta.id}">Responder encuesta</a>
                                         </td>
                                     </tr>
                                 </tbody>

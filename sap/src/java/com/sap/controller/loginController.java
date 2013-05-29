@@ -136,8 +136,8 @@ public class loginController extends HttpServlet {
                 }
                 if (persona != null && persona.getPassword().equals(pw)) {
                     aux2 = muestraestudianteFacade.findByMuestraPersona(persona);
-                }else{
-                out.println(1);
+                } else {
+                    out.println(1);
                 }
                 if (aux2 != null && aux2.size() > 0) {
                     for (int i = 0; i < aux2.size(); i++) {
@@ -146,24 +146,27 @@ public class loginController extends HttpServlet {
                 }
                 if (estudiante != null) {
                     out.println(0);
+                    session.setAttribute("programa", estudiante.getProgramaId());
+                    session.setAttribute("persona", persona);
                     proceso = persona.getMuestraId().getProcesoId();
                     if (!proceso.getFechainicio().equals("En Configuración") && proceso.getFechacierre().equals("--")) {
                         m = proceso.getModeloId();
                         aux3 = encuestaFacade.findByModelo(m);
 
                     }
-                    for (int i = 0; i < aux3.size(); i++) {
-                        Encuesta en = aux3.get(i);
-                        List<Asignacionencuesta> aux4 = asignacionencuestaFacade.findByEncuestayFuenteyModelo(en, fuenteFacade.find(1),proceso.getModeloId());
-                        if (aux4 != null && aux4.size() > 0) {
-                            session.setAttribute("encuesta", aux4.get(i).getEncuestaId());
-                            session.setAttribute("programa", estudiante.getProgramaId());
-                            session.setAttribute("persona", persona);
-                        }
+                    if (aux3 != null) {
+                        for (int i = 0; i < aux3.size(); i++) {
+                            Encuesta en = aux3.get(i);
+                            List<Asignacionencuesta> aux4 = asignacionencuestaFacade.findByEncuestayFuenteyModelo(en, fuenteFacade.find(1), proceso.getModeloId());
+                            if (aux4 != null && aux4.size() > 0) {
+                                session.setAttribute("encuesta", aux4.get(i).getEncuestaId());
+                            }
 
+                        }
                     }
-                }else{
-                out.println(1);
+
+                } else {
+                    out.println(1);
                 }
 
             } else {
