@@ -6,12 +6,11 @@ package com.sap.ejb;
 
 import com.sap.entity.Factor;
 import com.sap.entity.Modelo;
-import com.sap.entity.Proceso;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.Query;
 
 /**
  *
@@ -31,12 +30,11 @@ public class FactorFacade extends AbstractFacade<Factor> {
     public FactorFacade() {
         super(Factor.class);
     }
-    
-     public List findByModelo(Object m) {
-        TypedQuery<Proceso> query = em.createQuery(
-                "SELECT c FROM Factor c WHERE c.modeloId = :name", Proceso.class);
-        return query.setParameter("name", m).getResultList();
 
-}
+    public List findByModelo(Modelo m) {
+        Query q = em.createNamedQuery("Factor.findByModelo");
+        q.setParameter("modelo", m);
+        return q.getResultList();
+    }
     
 }

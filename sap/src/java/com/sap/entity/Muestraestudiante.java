@@ -62,6 +62,9 @@ public class Muestraestudiante implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "anio")
     private String anio;
+    @JoinColumn(name = "programa_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Programa programaId;
     @JoinColumn(name = "muestrapersona_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Muestrapersona muestrapersonaId;
@@ -119,6 +122,14 @@ public class Muestraestudiante implements Serializable {
 
     public void setAnio(String anio) {
         this.anio = anio;
+    }
+
+    public Programa getProgramaId() {
+        return programaId;
+    }
+
+    public void setProgramaId(Programa programaId) {
+        this.programaId = programaId;
     }
 
     public Muestrapersona getMuestrapersonaId() {

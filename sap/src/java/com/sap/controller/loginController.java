@@ -154,9 +154,10 @@ public class loginController extends HttpServlet {
                     }
                     for (int i = 0; i < aux3.size(); i++) {
                         Encuesta en = aux3.get(i);
-                        List<Asignacionencuesta> aux4 = asignacionencuestaFacade.findByEncuestayFuente(en, fuenteFacade.find(1));
+                        List<Asignacionencuesta> aux4 = asignacionencuestaFacade.findByEncuestayFuenteyModelo(en, fuenteFacade.find(1),proceso.getModeloId());
                         if (aux4 != null && aux4.size() > 0) {
                             session.setAttribute("encuesta", aux4.get(i).getEncuestaId());
+                            session.setAttribute("programa", estudiante.getProgramaId());
                             session.setAttribute("persona", persona);
                         }
 

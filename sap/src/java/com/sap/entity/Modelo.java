@@ -70,6 +70,8 @@ public class Modelo implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "modeloId")
     private List<Encuesta> encuestaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "modeloId")
+    private List<Asignacionencuesta> asignacionencuestaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modeloId")
     private List<Factor> factorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "modeloId")
     private List<Pregunta> preguntaList;
@@ -149,6 +151,15 @@ public class Modelo implements Serializable {
 
     public void setEncuestaList(List<Encuesta> encuestaList) {
         this.encuestaList = encuestaList;
+    }
+
+    @XmlTransient
+    public List<Asignacionencuesta> getAsignacionencuestaList() {
+        return asignacionencuestaList;
+    }
+
+    public void setAsignacionencuestaList(List<Asignacionencuesta> asignacionencuestaList) {
+        this.asignacionencuestaList = asignacionencuestaList;
     }
 
     @XmlTransient

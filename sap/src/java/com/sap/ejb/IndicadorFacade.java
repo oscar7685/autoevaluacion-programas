@@ -40,7 +40,7 @@ public class IndicadorFacade extends AbstractFacade<Indicador> {
         Query q = em.createNamedQuery("Indicador.findByCaracteristica");
         q.setParameter("caracteristica", c);
         return q.getResultList();
-    }
+}
         public Indicador findByUltimo() {
         Query q = em.createNamedQuery("Indicador.findByUltimo");
         q.setMaxResults(1);
