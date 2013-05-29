@@ -3,12 +3,15 @@
 <script type="text/javascript">
     $(function() {
         $("#selectListMuestra").change(function() {
+            $("#help1").html('Seleccione una fuente para ver la muestra asignada a la misma.');
             $("#listM").empty();
             $("#selectSemestre option:eq(0)").prop("selected", true);
 
             var a = $("#selectListMuestra option:selected").index();
             if (a == 1) {
                 $("#divSemestre").show();
+                $("#help1").html('Seleccione un semestre para filtrar los resultados.');
+
             } else if (a == 0) {
                 $("#listM").empty();
                 $("#divSemestre").hide();
@@ -56,26 +59,28 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <ul class="nav nav-pills">
-                <form id="formListarMuestra" class="" method="post">
+            <ul class="nav nav-pills" style="margin-bottom: 0px">
+                <form id="formListarMuestra" class="" method="post" style="margin-bottom: 0px">
                     <fieldset>
                         <legend>Asignación de  Muestra</legend>
-                        <div class="control-group">
-                            <label for="selectListMuestra"  class="control-label">Fuente: </label>
-                            <div class="controls">
-                                <select name="fuente" id="selectListMuestra">
-                                    <option value="--">Seleccionar Fuente</option>
-                                    <option value="Estudiante">Estudiantes</option>
-                                    <option value="Docente">Docentes</option>
-                                    <option value="Egresado">Egresados</option>
-                                    <option value="Administrativo">Administrativos</option>
-                                    <option value="Directivo">Directivos</option>
-                                    <option value="Empleador">Empleadores</option>
-                                    <option value="Agencia">Agencias</option>
-                                </select>
-                            </div>
-                        </div>   
-                        <div class="control-group" id="divSemestre" style="display: none">
+                        <div class="span3" style="margin-left: 0px">
+                            <div class="control-group">
+                                <label for="selectListMuestra"  class="control-label">Fuente: </label>
+                                <div class="controls">
+                                    <select name="fuente" id="selectListMuestra">
+                                        <option value="--">Seleccionar Fuente</option>
+                                        <option value="Estudiante">Estudiantes</option>
+                                        <option value="Docente">Docentes</option>
+                                        <option value="Egresado">Egresados</option>
+                                        <option value="Administrativo">Administrativos</option>
+                                        <option value="Directivo">Directivos</option>
+                                        <option value="Empleador">Empleadores</option>
+                                        <option value="Agencia">Agencias</option>
+                                    </select>
+                                </div>
+                            </div>   
+                        </div>
+                        <div class="control-group" id="divSemestre" style="display: none" class="span7">
                             <label for="selectSemestre"  class="control-label">Semestre: </label>
                             <div class="controls">
                                 <form id="formSelectMuestra"  method="post">
@@ -94,6 +99,7 @@
                         </div>  
                     </fieldset>
                 </form>
+                <p id="help1" class="help-block">Seleccione una fuente para ver la muestra asignada a la misma.</p>
             </ul>
             <div id="listM"></div>
         </div>

@@ -134,7 +134,7 @@
                     <c:otherwise>
                     </c:otherwise>
                 </c:choose>
-                        <div align="center" class="span2" style="bottom: 0px; position: absolute"><a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/selloAcreditacion.png" style="width: 200px;"></img></a></div>
+                <div align="center" class="span2" style="bottom: 0px; position: absolute"><a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/selloAcreditacion.png" style="width: 200px;"></img></a></div>
             </div>
         </div><!--/West-->
 
@@ -143,6 +143,7 @@
         <script src="<%=request.getContextPath()%>/js/jquery.layout-latest.min.js"></script>
         <script src="<%=request.getContextPath()%>/js/jquery.validate.js"></script>
         <script src="<%=request.getContextPath()%>/js/jquery.metadata.js"></script>
+        <script src="<%=request.getContextPath()%>/js/jquery.PrintArea.js"></script>
         <script src="<%=request.getContextPath()%>/js/vendor/bootstrap.min.js"></script>
         <script src="<%=request.getContextPath()%>/js/jquery.ba-hashchange.min.js"></script>
         <script src="<%=request.getContextPath()%>/js/main1.js"></script>
