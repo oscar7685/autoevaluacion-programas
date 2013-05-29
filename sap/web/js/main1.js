@@ -2,7 +2,7 @@ $(function() {
     location = "/sap/#inicio";
     $(document).ajaxStart(function() {
         $("div.ui-layout-center").append("<div id='contenido'></div>");
-       // $("#contenido").hide();
+        // $("#contenido").hide();
         $("div.ui-layout-center").append("<div class='page_loading'>"
                 + "<span>Cargando</span>"
                 + "<img src='css/images/loading.gif' style='margin-left:6px;'>"
@@ -92,10 +92,8 @@ $(function() {
                 '<button id="west-closer" class="close">&laquo;</button>' +
                 '<li class="nav-header">Proceso de Atoevaluación</li>' +
                 '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
-                '<li class="nav-header">Ponderación</li>' +
                 '<li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Ponderar Factores</a></li>' +
                 '<li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Ponderar Características</a></li>' +
-                '<li class="nav-header">Muestra</li>' +
                 '<li><a href="#listMuestra"><i class="icon-group"></i> Asignar Muestra</a></li>' +
                 '<li class="divider"></li>' +
                 '<li><a href="#iniciarProceso"><i class="icon-play-sign"></i> Iniciar proceso</a></li>' +
@@ -109,10 +107,8 @@ $(function() {
                 '<button id="west-closer" class="close">&laquo;</button>' +
                 '<li class="nav-header">Proceso de Atoevaluación</li>' +
                 '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
-                ' <li class="nav-header">Ponderación</li>' +
                 '<li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i>  Factores</a></li>' +
                 '<li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Características</a></li>' +
-                '<li class="nav-header">Muestra</li>' +
                 ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
                 '</ul>' +
                 '</div>');
@@ -125,7 +121,8 @@ $(function() {
             $.post('/sap/loginController?action=CerrarSesion', function() {
                 location = "/sap";
 
-            });//fin post
+            }); //fin post
+
 
         } else if (hash === "#preparedCrearProceso" || hash === "#listarProceso" || hash === "#detalleProceso" || hash === "#detalleProceso" || hash === "#preparedPonderarFactor" || hash === "#ponderarFactor" || hash === "#listPonderacionFactor" || hash === "#preparedPonderarCara" || hash === "#listPonderacionCara" || hash === "#preparedAsignarMuestra" || hash === "#selectorListMuestra" || hash === "#listMuestra" || hash === "#preparedEvaluador" || hash === "#preparedEditPonderarFactor" || hash === "#preparedEditPonderarCara" || hash === "#generarMuestraAleatoria" || hash === "#preparedEditarMuestra" || hash === "#editarMuestra" || hash === "#selectorListSemestre") {
             var url3 = "/sap/" + hash;
@@ -137,13 +134,10 @@ $(function() {
                 success: function(data)
                 {
                     $("#contenido").append(data);
-                    if ($("ul.nav-list li:eq(0)").html() !== "Modelo") {
-                        myLayout.addCloseBtn("#west-closer", "west");
-                    }
                     $("#contenido").show(400, function() {
                         $(".page_loading").hide();
-                    });
-
+                    }
+                    );
                 } //fin success
             }); //fin del $.ajax
         } else if (hash === "#crearProceso") {
@@ -221,8 +215,33 @@ $(function() {
                 } //fin success
             }); //fin del $.ajax
         }
+        else if (hash === "#preparedPonderarFactor") {
+            var url3 = "/sap/" + hash;
+            url3 = url3.replace('#', "controladorCP?action=");
+            $("div.ui-layout-center").empty();
+            $.ajax({
+                type: "POST",
+                url: url3,
+                success: function(data)
+                {
+                    $("#contenido").append(data);
+
+                    $("#contenido").show(400, function() {
+                        $(".page_loading").hide();
+                    });
+
+                    setTimeout(function() {
+                        $("div.ui-layout-center").scrollspy();
+                    }, 500);
+
+                    $("div.ui-layout-center").scrollspy('refresh');
 
 
+                }
+
+                //fin success
+            }); //fin del $.ajax
+        }
     });
 
 });

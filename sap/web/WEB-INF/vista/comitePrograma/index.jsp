@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/font-awesome.min.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/otro.css">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/css/docs.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap-responsive.min.css">
         <script src="<%=request.getContextPath()%>/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -106,10 +107,8 @@
                                 <button id="west-closer" class="close">&laquo;</button>
                                 <li class="nav-header">Proceso de Atoevaluación</li>
                                 <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
-                                <li class="nav-header">Ponderación</li>
                                 <li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Ponderar Factores</a></li>
                                 <li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Ponderar Características</a></li>
-                                <li class="nav-header">Muestra</li>
                                 <li><a href="#listMuestra"><i class="icon-group"></i> Asignar Muestra</a></li>
                                 <li class="divider"></li>
                                 <li><a href="#iniciarProceso"><i class="icon-play-sign"></i> Iniciar proceso</a></li>
@@ -123,10 +122,8 @@
                                 <button id="west-closer" class="close">&laquo;</button>
                                 <li class="nav-header">Proceso de Atoevaluación</li>
                                 <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
-                                <li class="nav-header">Ponderación</li>
                                 <li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Factores</a></li>
                                 <li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Características</a></li>
-                                <li class="nav-header">Muestra</li>
                                 <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>
                             </ul>
                         </div>
@@ -134,7 +131,11 @@
                     <c:otherwise>
                     </c:otherwise>
                 </c:choose>
-                <div align="center" class="span2" style="bottom: 0px; position: absolute"><a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/selloAcreditacion.png" style="width: 200px;"></img></a></div>
+                <div align="center" style="bottom: 0px; position: absolute; margin-left: 10px">
+                    <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank">
+                        <img src="<%=request.getContextPath()%>/img/LogoU.png" style="width: 220px;"></img>
+                    </a>
+                </div>
             </div>
         </div><!--/West-->
 
