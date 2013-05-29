@@ -17,22 +17,57 @@
             $("li a#total").html("<strong>Total Ponderacion: " + suma + "</strong>");
 
         });
-
         $("#formPonderarFactor").validate({
+            errorElement: "em"
+                    ,
+            highlight: function(element, errorClass) {
+                $(element).parent("td").children("div").addClass("in");
+                $(element).parent("td").children("div").show();
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).parent("td").children("div").removeClass("in");
+                $(element).parent("td").children("div").hide();
+            },
+            errorPlacement: function(error, element) {
+                error.appendTo($(element).parent("td").children("div"));
+            },
+            rules: {
+                field: {
+                    required: true,
+                    number: true
+                }
+            },
             submitHandler: function() {
-                $.ajax({
-                    type: 'POST',
-                    url: "/sap/controladorCP?action=ponderarFactor",
-                    data: $("#formPonderarFactor").serialize(),
-                    success: function() {
-                        location = "/sap/#listPonderacionFactor";
-                    } //fin success
-                }); //fin $.ajax    
-            }
+                var suma = 0;
+                $("input[name^='ponderacion']").each(function() {
+                    suma += Number($(this).val());
+
+
+                });
+                if (suma === 100) {
+                    setTimeout(function() {
+                        $.ajax({
+                            type: 'POST',
+                            url: "/sap/controladorCP?action=ponderarFactor",
+                            data: $("#formPonderarFactor").serialize(),
+                            success: function() {
+                                location = "/sap/#listPonderacionFactor";
+                            } //fin success
+                        }); //fin $.ajax    
+                    }, 400);
+                } else {
+
+                    $(".alert-error").show();
+                    $("ul.nav-pills li:eq(0) a").trigger("click");
+                }
+
+
+            } //fin submitHandler
+
         });
     });
 </script>
-<div class="subnav" data-top="80">
+<div class="subnav span10" style="position: fixed;">
     <ul class="nav nav-pills">
         <li><a href="#PonderacionFactores"><strong>Ponderación de Factores</strong></a></li>
             <c:forEach items="${factores.rowsByIndex}" var="row" varStatus="iter">
@@ -52,13 +87,19 @@
         <li><a id="total"><strong>Total Ponderacion: </strong></a></li>
     </ul>
 </div>
-<div class="hero-unit">
+<div class="hero-unit" style="padding-top: 50px;">
     <div class="row">
         <div id="conte" class="span10">
             <ul class="nav nav-pills">
                 <form id="formPonderarFactor" class="form-horizontal" method="post">
                     <fieldset>
                         <legend>Ponderación de Factores</legend>
+                        <div class="alert alert-block alert-error" style="display:none" id="PonderacionFactores">
+                            <a href="#" data-dismiss="alert" class="close">×</a>
+                            <h4 class="alert-heading">Ha ocurrido un error!</h4>
+                            <p>La suma de la ponderacion de los factores debe ser 100.</p>
+                            <a class="btn btn-danger" data-dismiss="alert" href="#">Cerrar</a>
+                        </div>
                         <table class="table table-striped">
                             <thead>
                                 <tr>

@@ -190,7 +190,7 @@ public class cpController extends HttpServlet {
 
                 procesoFacade.create(p);
             } else if (action.equals("preparedPonderarFactor")) {
-                sesion.setAttribute("listFactor", factorFacade.findByModelo((Modelo)sesion.getAttribute("Modelo")));
+                sesion.setAttribute("listFactor", factorFacade.findByModelo((Modelo) sesion.getAttribute("Modelo")));
                 String url = "/WEB-INF/vista/comitePrograma/ponderacion/ponderarFactor.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
@@ -318,13 +318,14 @@ public class cpController extends HttpServlet {
                     RequestDispatcher rd = request.getRequestDispatcher(url);
                     rd.forward(request, response);
 
+                } else {
+                    sesion.setAttribute("Muestra", m);
+                    String url = "/WEB-INF/vista/comitePrograma/muestra/asignarMuestra.jsp";
+                    RequestDispatcher rd = request.getRequestDispatcher(url);
+                    rd.forward(request, response);
                 }
 
-                sesion.setAttribute("Muestra", m);
 
-                String url = "/WEB-INF/vista/comitePrograma/muestra/asignarMuestra.jsp";
-                RequestDispatcher rd = request.getRequestDispatcher(url);
-                rd.forward(request, response);
             } else if (action.equals("generarMuestra")) {
 
                 Muestra m = new Muestra();
@@ -391,7 +392,7 @@ public class cpController extends HttpServlet {
                             mp.setPassword(per.getPassword());
                             mp.setMail(per.getMail());
                             mp.setMuestraId(m);
-                           
+
 
                             muestrapersonaFacade.create(mp);
 

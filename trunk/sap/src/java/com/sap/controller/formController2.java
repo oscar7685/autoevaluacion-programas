@@ -579,6 +579,7 @@ public class formController2 extends HttpServlet {
                                                                     Asignacionencuesta nueva = new Asignacionencuesta();
                                                                     nueva.setEncuestaId(e);
                                                                     nueva.setFuenteId(f);
+                                                                    nueva.setModeloId(m);
                                                                     asignacionencuestaFacade.create(nueva);
 
                                                                 }
