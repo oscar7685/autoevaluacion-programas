@@ -38,8 +38,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Encabezado.findAll", query = "SELECT e FROM Encabezado e"),
     @NamedQuery(name = "Encabezado.findById", query = "SELECT e FROM Encabezado e WHERE e.id = :id"),
     @NamedQuery(name = "Encabezado.findByFecha", query = "SELECT e FROM Encabezado e WHERE e.fecha = :fecha"),
+    @NamedQuery(name = "Encabezado.findByVars", query = "SELECT e FROM Encabezado e WHERE e.procesoId = :proceso and e.muestrapersonaId = :persona and e.fuenteId = :fuente and e.encuestaId = :encuesta"),
+    @NamedQuery(name = "Encabezado.findByUltimo", query = "SELECT e FROM Encabezado e order by e.id desc"),
     @NamedQuery(name = "Encabezado.findByEstado", query = "SELECT e FROM Encabezado e WHERE e.estado = :estado")})
 public class Encabezado implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +57,9 @@ public class Encabezado implements Serializable {
     @Size(max = 45)
     @Column(name = "estado")
     private String estado;
+    @JoinColumn(name = "muestrapersona_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Muestrapersona muestrapersonaId;
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
@@ -63,9 +69,6 @@ public class Encabezado implements Serializable {
     @JoinColumn(name = "proceso_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Proceso procesoId;
-    @JoinColumn(name = "persona_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Persona personaId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "encabezadoId")
     private List<Resultadoevaluacion> resultadoevaluacionList;
 
@@ -105,6 +108,14 @@ public class Encabezado implements Serializable {
         this.estado = estado;
     }
 
+    public Muestrapersona getMuestrapersonaId() {
+        return muestrapersonaId;
+    }
+
+    public void setMuestrapersonaId(Muestrapersona muestrapersonaId) {
+        this.muestrapersonaId = muestrapersonaId;
+    }
+
     public Fuente getFuenteId() {
         return fuenteId;
     }
@@ -127,14 +138,6 @@ public class Encabezado implements Serializable {
 
     public void setProcesoId(Proceso procesoId) {
         this.procesoId = procesoId;
-    }
-
-    public Persona getPersonaId() {
-        return personaId;
-    }
-
-    public void setPersonaId(Persona personaId) {
-        this.personaId = personaId;
     }
 
     @XmlTransient
@@ -170,5 +173,4 @@ public class Encabezado implements Serializable {
     public String toString() {
         return "com.sap.entity.Encabezado[ id=" + id + " ]";
     }
-    
 }

@@ -71,38 +71,34 @@
                         $("#myModalGracias").modal();
                         $('#myModalGracias').on('hidden', function() {
                             location = "<%=request.getContextPath()%>/#inicio"
-                        })
+                        });
 
                     } //fin success
                 }); //fin $.ajax    
             }
         });
+        $("button")
+                .popover({trigger: "hover", placement: 'top'});
 
-        $("button[rel=popover1]")
-                .popover({placement: 'left'})
-                .click(function(e) {
+        $("#guardar").click(function(e) {
             e.preventDefault();
-
-
-            $(this).popover('hide');
             $(this).button('loading');
-
             $.ajax({
                 type: 'POST',
                 url: "<%=request.getContextPath()%>/controladorF?action=guardarE",
                 data: $("#formResponderE").serialize(),
                 success: function() {
-                    $("button[rel=popover1]").button('reset');
-                    marcacion = new Date()
-                    Hora = marcacion.getHours()
-                    Minutos = marcacion.getMinutes()
-                    Segundos = marcacion.getSeconds()
+                    $("#guardar").button('reset');
+                    marcacion = new Date();
+                    Hora = marcacion.getHours();
+                    Minutos = marcacion.getMinutes();
+                    Segundos = marcacion.getSeconds();
                     if (Hora <= 9)
-                        Hora = "0" + Hora
+                        Hora = "0" + Hora;
                     if (Minutos <= 9)
-                        Minutos = "0" + Minutos
+                        Minutos = "0" + Minutos;
                     if (Segundos <= 9)
-                        Segundos = "0" + Segundos
+                        Segundos = "0" + Segundos;
                     var Dia = new Array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
                     var Mes = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
                     var Hoy = new Date();
@@ -111,12 +107,10 @@
                     $("#spanGuardado").show();
                     $("#hora2").html(" " + Fecha);
                 } //fin success
-            })
+            });
 
         });
 
-        $("button[rel=popover2]")
-                .popover({placement: 'left'});
     });
 </script>
 <style type="text/css">
@@ -160,40 +154,138 @@
     <form id="formResponderE" method="POST">
         <table id="preguntas" class="table table-striped table-condensed" style="width: 100%;">
             <tbody>
-                <c:forEach items="${encuesta.preguntaList}" var="pregunta" varStatus="status">
-                    <c:choose>
-                        <c:when test="${pregunta.getTipo() != '1'}">
-                            <tr>
-                                <td>${status.count}</td>   
-                                <td><p>${pregunta[1]}</p></td>
-                                <td>
-                                    <select id="pregunta${pregunta[0]}" name="pregunta${pregunta[0]}" class="span1 {required:true}">
-                                        <option></option>  
-                                        <option value="Si">Si</option>  
-                                        <option value="No">No</option>  
-                                    </select>
-                                </td>
-                            </tr>
-                        </c:when>
-                        <c:otherwise>
-                            <tr>
-                                <td>${status.count}</td>   
-                                <td><p>${pregunta.getPregunta()}</p></td>
-                                <td>
-                                    <select id="pregunta${pregunta.getId()}" name="pregunta${pregunta.getId()}" class="span1 {required:true}">
-                                        <option></option>  
-                                        <option value="0">0</option>  
-                                        <option value="1">1</option>  
-                                        <option value="2">2</option>  
-                                        <option value="3">3</option>  
-                                        <option value="4">4</option>  
-                                        <option value="5">5</option>  
-                                    </select>
-                                </td>
-                            </tr>
-                        </c:otherwise>    
-                    </c:choose>
-                </c:forEach>        
+                <c:choose>
+                    <c:when test="${respuestas == null}">
+                        <c:forEach items="${encuesta.preguntaList}" var="pregunta" varStatus="status">
+                            <c:choose>
+                                <c:when test="${pregunta.getTipo() != '1'}">
+                                    <tr>
+                                        <td>${status.count}</td>   
+                                        <td><p>${pregunta[1]}</p></td>
+                                        <td>
+                                            <select id="pregunta${pregunta[0]}" name="pregunta${pregunta[0]}" class="span1 {required:true}">
+                                                <option></option>  
+                                                <option value="Si">Si</option>  
+                                                <option value="No">No</option>  
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </c:when>
+                                <c:otherwise>
+                                    <tr>
+                                        <td>${status.count}</td>   
+                                        <td><p>${pregunta.getPregunta()}</p></td>
+                                        <td>
+                                            <select id="pregunta${pregunta.getId()}" name="pregunta${pregunta.getId()}" class="span1 {required:true}">
+                                                <option></option>  
+                                                <option value="5">5</option>
+                                                <option value="4">4</option>  
+                                                <option value="3">3</option>  
+                                                <option value="2">2</option>  
+                                                <option value="1">1</option>  
+                                                <option value="0">0</option>  
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </c:otherwise>    
+                            </c:choose>
+                        </c:forEach>                   
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach items="${respuestas}" var="resultado" varStatus="status">
+                            <c:choose>
+                                <c:when test="${resultado.preguntaId.tipo != '1'}">
+                                    <tr>
+                                        <td>${status.count}</td>   
+                                        <td><p>${resultado.preguntaId.pregunta}</p></td>
+                                        <td>
+                                            <select id="pregunta${resultado.preguntaId.id}" name="pregunta${resultado.preguntaId.id}" class="span1 {required:true}">
+                                                <option></option>  
+                                                <c:choose>
+                                                    <c:when test="${resultado.respuesta == 'Si'}">
+                                                        <option selected="selected" value="Si">Si</option>      
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="Si">Si</option>      
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${resultado.respuesta == 'No'}">
+                                                        <option selected="selected" value="No">No</option>      
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="No">No</option>      
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </c:when>
+                                <c:otherwise>
+                                    <tr>
+                                        <td>${status.count}</td>   
+                                        <td><p>${resultado.preguntaId.pregunta}</p></td>
+                                        <td>
+                                            <select id="pregunta${resultado.preguntaId.id}" name="pregunta${resultado.preguntaId.id}" class="span1 {required:true}">
+                                                <option></option>  
+                                                <c:choose>
+                                                    <c:when test="${resultado.respuesta == '5'}">
+                                                        <option selected="selected" value="5">5</option>      
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="5">5</option>      
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${resultado.respuesta == '4'}">
+                                                        <option selected="selected" value="4">1</option>      
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="4">4</option>      
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${resultado.respuesta  == '3'}">
+                                                        <option selected="selected" value="3">3</option>      
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="3">3</option>      
+                                                    </c:otherwise>
+                                                </c:choose>        
+                                                <c:choose>
+                                                    <c:when test="${resultado.respuesta == '2'}">
+                                                        <option selected="selected" value="2">2</option>      
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="2">2</option>      
+                                                    </c:otherwise>
+                                                </c:choose>
+
+                                                <c:choose>
+                                                    <c:when test="${resultado.respuesta  == '1'}">
+                                                        <option selected="selected" value="1">1</option>      
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="1">1</option>      
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${resultado.respuesta  == '0'}">
+                                                        <option selected="selected" value="0">0</option>      
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="0">0</option>      
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </c:otherwise>    
+                            </c:choose>
+                        </c:forEach>
+                    </c:otherwise> 
+                </c:choose>
+
             </tbody>
         </table>
         <div class="row"> 
@@ -210,8 +302,8 @@
             </div>
             <div class="span2">
                 <div style="text-align: right; margin-top: 22px;">
-                    <button class="btn" id="guardar" data-content="<p style='text-align: justify'>Guarda la encuesta sin salir de ella, de esta manera usted podr&aacute; seguir contestando la encuesta cuando desee.<p>" rel="popover1"  value="1" data-original-title="Guardar encuesta" type="button" data-loading-text="Guardando..." autocomplete="off">Guardar</button>
-                    <button class="btn btn-primary" data-content="<p style='text-align: justify'>Env&iacute;a la encuesta evaluada. Verifique que todas las preguntas han sido respondidas correctamente. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Enviar encuesta" type="submit">Enviar</button>
+                    <button class="btn" id="guardar" data-content="Guarda la encuesta sin salir de ella, de esta manera usted podr&aacute; seguir contestando la encuesta cuando desee." value="1" data-original-title="Guardar encuesta" type="button" data-loading-text="Guardando..." autocomplete="off">Guardar</button>
+                    <button class="btn btn-primary" data-content="Env&iacute;a la encuesta evaluada. Verifique que todas las preguntas han sido respondidas correctamente. Esta operación no se podrá deshacer."  value="1" data-original-title="Enviar encuesta" type="submit">Enviar</button>
                 </div>
             </div>
         </div>

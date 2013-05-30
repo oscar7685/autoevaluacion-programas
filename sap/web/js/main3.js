@@ -1,19 +1,14 @@
 $(function() {
     location = "/sap/#inicio";
-    $(document).ajaxStart(function() {
-        $("div.ui-layout-center").append("<div id='contenido'></div>");
-        $("#contenido").hide();
-        $("div.ui-layout-center").append(""
-                + "<div id='dancing-dots-text'>"
-                + "Cargando <span><span>.</span><span>.</span><span>.</span><span>.</span><span>.</span></span> "
-                + "</div>");
-    });
+    /*$(document).ajaxStart(function() {
+     
+     });*/
 
     var myLayout;
     myLayout = $('body').layout({
-        //	enable showOverflow on west-pane so CSS popups will overlap north pane
-        
-                 center__paneSelector: ".ui-layout-center"
+//	enable showOverflow on west-pane so CSS popups will overlap north pane
+
+        center__paneSelector: ".ui-layout-center"
                 , north__paneClass: "ui-layout-pane2"
                 //	reference only - these options are NOT required because 'true' is the default
                 , closable: true	// pane can open & close
@@ -27,10 +22,10 @@ $(function() {
                 , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
                 , south__closable: false
                 , south__spacing_open: 0		// no resizer-bar when open (zero height)
-                
-                
-        
-        , south__paneClass: "ui-layout-pane"
+
+
+
+                , south__paneClass: "ui-layout-pane"
                 , west__togglerContent_open: ""
                 , west__minSize: 200
                 , west__maxSize: 350
@@ -41,7 +36,7 @@ $(function() {
     // setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
     // save selector strings to vars so we don't have to repeat it
     // must prefix paneClass with "body > " to target ONLY the outerLayout panes
-    
+
 
 
 
@@ -50,39 +45,42 @@ $(function() {
         $(".nav li").removeClass("active");
         $("a[href='" + hash + "']").parent().addClass("active");
     };
-
-
     var hash;
     $(window).hashchange(function() {
         hash = location.hash;
         if (hash === "#CerrarSesion") {
             $.post('/sap/loginController?action=CerrarSesion', function() {
                 location = "/sap";
+            }); //fin post
 
-            });//fin post
+        } else {
+            if (hash.indexOf("#responderEncuesta") !== -1) {
+                var cual = hash.split("&");
+                hash = cual[0];
+                var url3 = "/sap/controladorF?action=";
+                url3 = url3.concat(cual[0].substring(1), "F&id=", cual[1]);
+                $("div.ui-layout-center").empty();
+                $.ajax({
+                    type: "POST",
+                    url: url3,
+                    beforeSend: function() {
+                        $("div.ui-layout-center").append("<div id='contenido'></div>");
+                        $("#contenido").hide();
+                        $("div.ui-layout-center").append(""
+                                + "<div id='dancing-dots-text'>"
+                                + "Cargando <span><span>.</span><span>.</span><span>.</span><span>.</span><span>.</span></span> "
+                                + "</div>");
+                    },
+                    success: function(data)
+                    {
+                        $("#contenido").append(data);
+                        $("#contenido").show(200, function() {
+                            $("#dancing-dots-text").hide();
+                        });
+                    } //fin success
+                }); //fin del $.ajax
 
-        }else{
-            if (hash.indexOf("#responderEncuesta") !== -1 ) {
-                    var cual = hash.split("&");
-                    hash = cual[0];
-                    var url3 = "/sap/controladorF?action=";
-                    url3 = url3.concat(cual[0].substring(1), "F&id=", cual[1]);
-                    $("div.ui-layout-center").empty();
-                    $.ajax({
-                        type: "POST",
-                        url: url3,
-                        success: function(data)
-                        {
-                            $("#contenido").append(data);
-                            $("#contenido").show(200, function() {
-                                $("#dancing-dots-text").hide();
-                            });
-
-                        } //fin success
-                    }); //fin del $.ajax
-
-                }
+            }
         } //fin else
     });
-
 });
