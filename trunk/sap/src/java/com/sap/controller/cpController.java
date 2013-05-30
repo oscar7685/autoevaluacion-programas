@@ -937,7 +937,7 @@ public class cpController extends HttpServlet {
                 Proceso p = (Proceso) sesion.getAttribute("Proceso");
 
 
-                if (ponderacionfactorFacade.findByList("procesoId", p).isEmpty() && PonderacioncaracteristicaFacade.findByList("procesoId", p).isEmpty() && muestraFacade.findByList("procesoId", p).isEmpty()) {
+                if (!ponderacionfactorFacade.findByList("procesoId", p).isEmpty() && !PonderacioncaracteristicaFacade.findByList("procesoId", p).isEmpty() && !muestraFacade.findByList("procesoId", p).isEmpty()) {
                     java.util.Date date = new java.util.Date();
                     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
                     String fecha = sdf.format(date);

@@ -110,31 +110,33 @@
         </form>
     </div>
 </c:if>
-<a class="span9" style="text-align: right; margin-left: 30px; text-align: right; cursor: pointer" id="actEnlace"><i class="icon-refresh"></i> Actualizar</a>  
-<a  class="span1" style="text-align: right; margin-left: 0px; text-align: right; cursor: pointer" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
+<c:if test="${EstadoProceso == 2}">
+    <a class="span9" style="text-align: right; margin-left: 30px; text-align: right; cursor: pointer" id="actEnlace"><i class="icon-refresh"></i> Actualizar</a>  
+    <a  class="span1" style="text-align: right; margin-left: 0px; text-align: right; cursor: pointer" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
+</c:if>
+<c:if test="${EstadoProceso != 2}">
+    <a  class="span10" style="text-align: right; margin-left: 0px; text-align: right; cursor: pointer" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
+</c:if>
 <div id="printMuestra">
     <p style="font-weight: bold">Muestra generada para la fuente ${Fuente.nombre}. ${Programa.getNombre()}</p>
-    <div>
-        <div style="margin-left: 0px;" class="span1"><span style="margin-left: 0px;" id="spanActualizado" class="label label-info span1">Actualizado</span></div>
-        <div class="span9"><p id="hora" class="help-block"></p></div>
-    </div>
+    <c:if test="${EstadoProceso == 2}">
+        <div>
+            <div style="margin-left: 0px;" class="span1"><span style="margin-left: 0px;" id="spanActualizado" class="label label-info span1">Actualizado</span></div>
+            <div class="span9"><p id="hora" class="help-block"></p></div>
+        </div>
+    </c:if>
     <div id="listM2" class="span10" style="margin-left: 0px;">
         <div class="span10" style="margin-left: 0px;">
             <c:choose>
                 <c:when test="${fn:length(listMuestraSeleccionada)!= 0}">
                     <c:if test="${EstadoProceso == 2}">
-                        <div>
-                            <span class="label label-success" style="background-color: #F2DEDE;
-                                  border-color: #EED3D7;
-                                  color: #B94A48;">Pendiente</span>
-                            <span class="label label-success" style="background-color: #DFF0D8;
-                                  border-color: #D6E9C6;
-                                  color: #468847;">Terminado</span>
-                            <span class="label label-success" style="background-color: #D9EDF7;
-                                  border-color: #BCE8F1;
-                                  color: #3A87AD; margin-bottom: 5px">Guardado</span>
+                        <div class="btn-group" data-toggle="buttons-radio">
+                            <button type="button" class="btn btn-primary active">Todos</button>
+                            <button type="button" class="btn btn-danger">Pendiente</button>
+                            <button type="button" class="btn btn-success">Terminado</button>
+                            <button type="button" class="btn btn-info">Guardado</button>
                         </div>
-                        <br>
+                        <br><br>
                     </c:if>
                     <div id="editM">
                         <table class="table table-striped table-bordered table-condensed">
@@ -142,6 +144,7 @@
                             <th>Cedula</th>    
                             <th>Nombre</th>
                             <th>Apellido</th>
+                            <th>Contraseña</th>
                             </thead>
                             <tbody>
                                 <c:if test="${EstadoProceso == 2}">
@@ -155,6 +158,9 @@
                                             </td>
                                             <td style="background-color: #F2DEDE">   
                                                 <c:out value="${row.muestrapersonaId.apellido}"/>
+                                            </td>
+                                            <td style="background-color: #F2DEDE">   
+                                                <c:out value="${row.muestrapersonaId.password}"/>
                                             </td>
                                         </tr>
                                         <c:set var="contador" value="${iter.index}"></c:set>
@@ -171,6 +177,9 @@
                                             </td>
                                             <td>   
                                                 <c:out value="${row.muestrapersonaId.apellido}"/>
+                                            </td>
+                                            <td>   
+                                                <c:out value="${row.muestrapersonaId.password}"/>
                                             </td>
                                         </tr>
                                         <c:set var="contador" value="${iter.index}"></c:set>
