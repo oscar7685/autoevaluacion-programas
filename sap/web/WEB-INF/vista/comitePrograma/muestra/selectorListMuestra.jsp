@@ -3,6 +3,33 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/print.css" media="print">
 <script type="text/javascript">
     $(function() {
+
+        $(".btn-group > .btn").click(function(ev) {
+            var boton = $(ev.target);
+            if (boton.text() == "Todos") {
+                $("tr.terminadoC").show();
+                $("tr.pendienteC").show();
+                $("tr.guardadoC").show();
+            } else {
+                if (boton.text() == "Pendiente") {
+                    $("tr.terminadoC").hide();
+                    $("tr.pendienteC").show();
+                    $("tr.guardadoC").hide();
+                } else {
+                    if (boton.text() == "Terminado") {
+                        $("tr.terminadoC").show();
+                        $("tr.pendienteC").hide();
+                        $("tr.guardadoC").hide();
+                    } else {
+                        $("tr.terminadoC").hide();
+                        $("tr.pendienteC").hide();
+                        $("tr.guardadoC").show();
+                    }
+                }
+            }
+            $("#total").text("Total: " + ($("tr.terminadoC:visible").length + $("tr.pendienteC:visible").length + $("tr.guardadoC:visible").length));
+        });
+
         marcacion = new Date()
         Hora = marcacion.getHours()
         Minutos = marcacion.getMinutes()
@@ -148,23 +175,70 @@
                             </thead>
                             <tbody>
                                 <c:if test="${EstadoProceso == 2}">
-                                    <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter">
-                                        <tr>
-                                            <td style="background-color: #F2DEDE">   
-                                                <c:out value="${row.muestrapersonaId.cedula}"/>
-                                            </td>
-                                            <td style="background-color: #F2DEDE">   
-                                                <c:out value="${row.muestrapersonaId.nombre}"/>
-                                            </td>
-                                            <td style="background-color: #F2DEDE">   
-                                                <c:out value="${row.muestrapersonaId.apellido}"/>
-                                            </td>
-                                            <td style="background-color: #F2DEDE">   
-                                                <c:out value="${row.muestrapersonaId.password}"/>
-                                            </td>
-                                        </tr>
-                                        <c:set var="contador" value="${iter.index}"></c:set>
-                                    </c:forEach>
+                                    <c:forEach items="${listPoblacion}" var="item" varStatus="iter">
+                                        <c:set var="auxx" value="1"></c:set>
+                                        <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter2">
+                                            <c:if test="${item.personaId.id == row.muestrapersonaId.cedula}">
+                                                <c:set var="varaux" value="0"/>
+                                                <c:forEach items="${listEncabezado}" var="item3" varStatus="iter2">
+                                                    <c:if test="${item.personaId.id == item3.personaId.id}">
+                                                        <c:set var="varaux" value="1"/>
+                                                        <c:if test="${item3.estado == 'terminado'}">
+                                                            <tr class="terminadoC">
+                                                                <td style="background-color: #DFF0D8; color: #468847;">   
+                                                                    <c:out value="${row.muestrapersonaId.cedula}"/>
+                                                                </td>
+                                                                <td style="background-color: #DFF0D8; color: #468847;">   
+                                                                    <c:out value="${row.muestrapersonaId.nombre}"/>
+                                                                </td>
+                                                                <td style="background-color: #DFF0D8; color: #468847;">    
+                                                                    <c:out value="${row.muestrapersonaId.apellido}"/>
+                                                                </td>
+                                                                <td style="background-color: #DFF0D8; color: #468847;">  
+                                                                    <c:out value="${row.muestrapersonaId.password}"/>
+                                                                </td>
+                                                            </tr>
+                                                            <c:set var="contador" value="${iter.index}"></c:set>
+                                                        </c:if>
+                                                        <c:if test="${item3.estado == 'guardada'}">
+                                                            <tr class="guardadoC">
+                                                                <td style="background-color: #D9EDF7; color: #3A87AD;">
+                                                                    <c:out value="${row.muestrapersonaId.cedula}"/>
+                                                                </td>
+                                                                <td style="background-color: #D9EDF7; color: #3A87AD;">
+                                                                    <c:out value="${row.muestrapersonaId.nombre}"/>
+                                                                </td>
+                                                                <td style="background-color: #D9EDF7; color: #3A87AD;">  
+                                                                    <c:out value="${row.muestrapersonaId.apellido}"/>
+                                                                </td>
+                                                                <td style="background-color: #D9EDF7; color: #3A87AD;">
+                                                                    <c:out value="${row.muestrapersonaId.password}"/>
+                                                                </td>
+                                                            </tr>
+                                                            <c:set var="contador" value="${iter.index}"></c:set>
+                                                        </c:if>                   
+                                                    </c:if>
+                                                </c:forEach>
+                                                <c:if test="${varaux == 0}">
+                                                    <tr class="pendienteC">
+                                                        <td style="background-color: #F2DEDE; color: #B94A48;">
+                                                            <c:out value="${row.muestrapersonaId.cedula}"/>
+                                                        </td>
+                                                        <td style="background-color: #F2DEDE; color: #B94A48;">
+                                                            <c:out value="${row.muestrapersonaId.nombre}"/>
+                                                        </td>
+                                                        <td style="background-color: #F2DEDE; color: #B94A48;"> 
+                                                            <c:out value="${row.muestrapersonaId.apellido}"/>
+                                                        </td>
+                                                        <td style="background-color: #F2DEDE; color: #B94A48;">
+                                                            <c:out value="${row.muestrapersonaId.password}"/>
+                                                        </td>
+                                                    </tr>
+                                                    <c:set var="contador" value="${iter.index}"></c:set>
+                                                </c:if>
+                                            </c:if>
+                                        </c:forEach>
+                                    </c:forEach> 
                                 </c:if>
                                 <c:if test="${EstadoProceso != 2}">
                                     <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter">
@@ -187,7 +261,7 @@
                                 </c:if>
                             </tbody>
                         </table>
-                        <p style="font-weight: bold">Total Estudiantes: ${contador + 1}</p>
+                        <p id="total" style="font-weight: bold">Total: ${contador + 1}</p>
                         <c:if test="${selectorFuente != 'Docente' && selectorFuente != 'Estudiante' }">
                             <a href="#preparedEvaluador" class="btn btn-large btn-primary llamador"><i class="icon-plus"> </i><i class="icon-user"></i> Registrar Evaluador</a>
                         </c:if>

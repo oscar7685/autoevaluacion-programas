@@ -1123,9 +1123,19 @@ public class cpController extends HttpServlet {
                     fuente = request.getParameter("fuente");
                     sesion.setAttribute("selectorFuente", fuente);
                 }
+                if ("Estudiante".equals(fuente)) {
+                    List e = estudianteFacade.findByList2("programaId", sesion.getAttribute("Programa"), "semestre", semestre);
+                    sesion.setAttribute("listPoblacion", e);
 
+                    List le = encabezadoFacade.findByList2("procesoId", sesion.getAttribute("Proceso"), "fuenteId", sesion.getAttribute("Fuente"));
 
-
+                    sesion.setAttribute("listEncabezado", le);
+                    
+                    System.out.println("poblacion: " + e.size());
+                }
+                
+                
+                
                 String url = "/WEB-INF/vista/comitePrograma/muestra/selectorListMuestra.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
