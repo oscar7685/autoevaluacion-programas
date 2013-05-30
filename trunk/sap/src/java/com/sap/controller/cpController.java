@@ -54,6 +54,7 @@ import com.sap.entity.Proceso;
 import com.sap.entity.Programa;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -238,6 +239,53 @@ public class cpController extends HttpServlet {
 
 
                     ponderacionfactorFacade.edit(pf);
+
+                    Factor f = pf.getFactorId();
+
+                    List suma0 = f.getCaracteristicaList();
+
+                    Iterator i1 = suma0.iterator();
+
+                    double suma = 0;
+
+                    while (i1.hasNext()) {
+                        Caracteristica c = (Caracteristica) i1.next();
+                        Ponderacioncaracteristica pc1 = PonderacioncaracteristicaFacade.findBySingle2("caracteristicaId", c, "procesoId", sesion.getAttribute("Proceso"));
+                        suma += pc1.getNivelimportancia();
+                        System.out.println("Factor Id: " + f.getCodigo());
+                        System.out.println("Caracteristica Id: " + c.getCodigo());
+                    }
+
+                    System.out.println("Suma: " + suma);
+                    Iterator i2 = suma0.iterator();;
+
+                    while (i2.hasNext()) {
+                        Caracteristica c = (Caracteristica) i2.next();
+                        Ponderacioncaracteristica pc1 = PonderacioncaracteristicaFacade.findBySingle2("caracteristicaId", c, "procesoId", sesion.getAttribute("Proceso"));
+
+                        double vi = pc1.getNivelimportancia();
+
+                        System.out.println("Ponderacion FActor: " + pf.getPonderacion());
+
+                        double a = (100 * vi) / suma;
+                        double b = ((pf.getPonderacion() * a) / 100);
+
+                        double r;
+
+                        int decimalPlaces = 2;
+                        BigDecimal bde = new BigDecimal(b);
+
+// setScale is immutable
+                        bde = bde.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
+                        r = bde.doubleValue();
+
+                        pc1.setPonderacion(r);
+                        PonderacioncaracteristicaFacade.edit(pc1);
+                    }
+
+
+
+
                 }
 
             } else if (action.equals("listPonderacionFactor")) {
@@ -260,18 +308,68 @@ public class cpController extends HttpServlet {
                 while (i.hasNext()) {
                     Caracteristica c = (Caracteristica) i.next();
                     Float importancia = Float.parseFloat(request.getParameter("importancia" + c.getId()));
-                    Double ponderacion = Double.parseDouble(request.getParameter("ponderacion" + c.getId()));
+                    //Double ponderacion = Double.parseDouble(request.getParameter("ponderacion" + c.getId()));
                     String justificacion = request.getParameter("justificacion" + c.getId());
 
                     pc.setCaracteristicaId(c);
                     pc.setNivelimportancia(importancia);
                     pc.setJustificacion(justificacion);
-                    pc.setPonderacion(ponderacion);
+                    pc.setPonderacion(0);
 
                     pc.setProcesoId(proceso);
 
                     PonderacioncaracteristicaFacade.create(pc);
                 }
+
+
+                List lpc = PonderacioncaracteristicaFacade.findByList("procesoId", sesion.getAttribute("Proceso"));
+
+                i = lpc.iterator();
+
+                while (i.hasNext()) {
+                    pc = (Ponderacioncaracteristica) i.next();
+
+                    double vi = pc.getNivelimportancia();
+
+                    Factor f = pc.getCaracteristicaId().getFactorId();
+
+                    Ponderacionfactor pf = ponderacionfactorFacade.findBySingle2("factorId", f, "procesoId", sesion.getAttribute("Proceso"));
+
+                    List suma0 = f.getCaracteristicaList();
+
+                    Iterator i1 = suma0.iterator();
+
+                    double suma = 0;
+
+                    while (i1.hasNext()) {
+                        Caracteristica c = (Caracteristica) i1.next();
+                        Ponderacioncaracteristica pc1 = PonderacioncaracteristicaFacade.findBySingle2("caracteristicaId", c, "procesoId", sesion.getAttribute("Proceso"));
+                        suma += pc1.getNivelimportancia();
+                        System.out.println("Factor Id: " + f.getCodigo());
+                        System.out.println("Caracteristica Id: " + c.getCodigo());
+                    }
+
+                    System.out.println("Suma: " + suma);
+
+                    double a = (100 * vi) / suma;
+                    double b = ((pf.getPonderacion() * a) / 100);
+
+                    double r;
+
+                    int decimalPlaces = 2;
+                    BigDecimal bde = new BigDecimal(b);
+
+// setScale is immutable
+                    bde = bde.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
+                    r = bde.doubleValue();
+
+                    pc.setPonderacion(r);
+
+                    PonderacioncaracteristicaFacade.edit(pc);
+
+                }
+
+
             } else if (action.equals("preparedEditPonderarCara")) {
                 sesion.setAttribute("listPonderacionCara", PonderacioncaracteristicaFacade.findByList("procesoId", sesion.getAttribute("Proceso")));
                 String url = "/WEB-INF/vista/comitePrograma/ponderacion/editarpc.jsp";
@@ -286,18 +384,64 @@ public class cpController extends HttpServlet {
                 while (i.hasNext()) {
 
                     Ponderacioncaracteristica pc = (Ponderacioncaracteristica) i.next();
-                    Integer importancia = Integer.parseInt(request.getParameter("importancia" + pc.getId()));
-                    Double ponderacion = Double.parseDouble(request.getParameter("ponderacion" + pc.getId()));
+                    Float importancia = Float.parseFloat(request.getParameter("importancia" + pc.getId()));
+                    //Double ponderacion = Double.parseDouble(request.getParameter("ponderacion" + pc.getId()));
                     String justificacion = request.getParameter("justificacion" + pc.getId());
-
 
                     pc.setJustificacion(justificacion);
                     pc.setNivelimportancia(importancia);
-                    pc.setPonderacion(ponderacion);
-
+                    //   pc.setPonderacion(ponderacion);
 
                     PonderacioncaracteristicaFacade.edit(pc);
                 }
+
+                List lpc = PonderacioncaracteristicaFacade.findByList("procesoId", sesion.getAttribute("Proceso"));
+
+                i = lpc.iterator();
+
+                while (i.hasNext()) {
+                    Ponderacioncaracteristica pc = (Ponderacioncaracteristica) i.next();
+
+                    double vi = pc.getNivelimportancia();
+
+                    Factor f = pc.getCaracteristicaId().getFactorId();
+
+                    Ponderacionfactor pf = ponderacionfactorFacade.findBySingle2("factorId", f, "procesoId", sesion.getAttribute("Proceso"));
+
+                    List suma0 = f.getCaracteristicaList();
+
+                    Iterator i1 = suma0.iterator();
+
+                    double suma = 0;
+
+                    while (i1.hasNext()) {
+                        Caracteristica c = (Caracteristica) i1.next();
+                        Ponderacioncaracteristica pc1 = PonderacioncaracteristicaFacade.findBySingle2("caracteristicaId", c, "procesoId", sesion.getAttribute("Proceso"));
+                        suma += pc1.getNivelimportancia();
+                        System.out.println("Factor Id: " + f.getCodigo());
+                        System.out.println("Caracteristica Id: " + c.getCodigo());
+                    }
+
+                    System.out.println("Suma: " + suma);
+
+                    double a = (100 * vi) / suma;
+                    double b = ((pf.getPonderacion() * a) / 100);
+
+                    double r;
+
+                    int decimalPlaces = 2;
+                    BigDecimal bde = new BigDecimal(b);
+
+// setScale is immutable
+                    bde = bde.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
+                    r = bde.doubleValue();
+
+                    pc.setPonderacion(r);
+
+                    PonderacioncaracteristicaFacade.edit(pc);
+
+                }
+
 
             } else if (action.equals("listPonderacionCara")) {
                 sesion.setAttribute("listPonderacionCara", PonderacioncaracteristicaFacade.findAll());
@@ -789,19 +933,23 @@ public class cpController extends HttpServlet {
 
 
             } else if (action.equals("iniciarProceso")) {
-                Proceso p = (Proceso) sesion.getAttribute("Proceso");
-                java.util.Date date = new java.util.Date();
-                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                String fecha = sdf.format(date);
-                p.setFechainicio(fecha);
-                p.setFechacierre("--");
-                procesoFacade.edit(p);
-                sesion.setAttribute("Proceso", p);
-                sesion.setAttribute("EstadoProceso", "2");
 
-                String url = "/WEB-INF/vista/comitePrograma/index.jsp";
-                RequestDispatcher rd = request.getRequestDispatcher(url);
-                rd.forward(request, response);
+                Proceso p = (Proceso) sesion.getAttribute("Proceso");
+
+
+                if (ponderacionfactorFacade.findByList("procesoId", p).isEmpty() && PonderacioncaracteristicaFacade.findByList("procesoId", p).isEmpty() && muestraFacade.findByList("procesoId", p).isEmpty()) {
+                    java.util.Date date = new java.util.Date();
+                    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                    String fecha = sdf.format(date);
+                    p.setFechainicio(fecha);
+                    p.setFechacierre("--");
+                    procesoFacade.edit(p);
+                    sesion.setAttribute("Proceso", p);
+                    sesion.setAttribute("EstadoProceso", "2");
+                    out.println(1);
+                } else {
+                    out.println(0);
+                }
             } else if (action.equals("generarMuestraAleatoria")) {
 
                 Muestra muestra = (Muestra) sesion.getAttribute("Muestra");

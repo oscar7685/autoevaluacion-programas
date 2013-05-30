@@ -52,7 +52,7 @@ $(function() {
     // setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
     // save selector strings to vars so we don't have to repeat it
     // must prefix paneClass with "body > " to target ONLY the outerLayout panes
-     myLayout.addCloseBtn("#west-closer", "west");
+    myLayout.addCloseBtn("#west-closer", "west");
 
 
 
@@ -160,24 +160,28 @@ $(function() {
                 } //fin success
             }); //fin del $.ajax
         } else if (hash === "#iniciarProceso") {
-            var url3 = "/sap/" + hash;
-            url3 = url3.replace('#', "controladorCP?action=");
-            $("div.ui-layout-center").empty();
-            $.ajax({
-                type: "POST",
-                url: url3,
-                success: function(data)
-                {
-                    // $("#contenido").append(data);
-                    menuProceso2();
-                    myLayout.addCloseBtn("#west-closer", "west");
-                    actualizaEnlaces();
-                    $("#contenido").show(200, function() {
-                        $(".page_loading").hide();
-                    });
 
-                } //fin success
-            }); //fin del $.ajax
+            $('#modalCp1').modal();
+
+            /*  var url3 = "/sap/" + hash;
+             url3 = url3.replace('#', "controladorCP?action=");
+             $("div.ui-layout-center").empty();
+             $.ajax({
+             type: "POST",
+             url: url3,
+             success: function(data)
+             {
+             
+             // $("#contenido").append(data);
+             menuProceso2();
+             myLayout.addCloseBtn("#west-closer", "west");
+             actualizaEnlaces();
+             $("#contenido").show(200, function() {
+             $(".page_loading").hide();
+             });
+             
+             } //fin success
+             }); //fin del $.ajax*/
         } else if (hash === "#listarFactores") {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCC?action=") + "CC";
@@ -235,13 +239,42 @@ $(function() {
                     }, 500);
 
                     $("div.ui-layout-center").affix('refresh');
-
-
                 }
-
                 //fin success
             }); //fin del $.ajax
         }
+    });
+
+
+    $('#modalCpb2').click(function() {
+        location = "#detalleProceso";
+    });
+
+    $('#modalCpb1').click(function() {
+        var url3 = "/sap/" + "controladorCP?action=iniciarProceso";
+        url3 = url3.replace('#', "controladorCP?action=");
+        $("div.ui-layout-center").empty();
+        $.ajax({
+            type: "POST",
+            url: url3,
+            success: function(data)
+            {
+                alert(data);
+                if (data == 1) {
+                    // $("#contenido").append(data);
+                    menuProceso2();
+                    myLayout.addCloseBtn("#west-closer", "west");
+                    actualizaEnlaces();
+                    $("#contenido").show(200, function() {
+                        $(".page_loading").hide();
+                    });
+                } else {
+                    $('#modalCp2').modal();
+                    location = "#detalleProceso";
+                }
+
+            } //fin success
+        }); //fin del $.ajax
     });
 
 });
