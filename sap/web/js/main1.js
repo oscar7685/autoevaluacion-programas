@@ -259,7 +259,6 @@ $(function() {
             url: url3,
             success: function(data)
             {
-                alert(data);
                 if (data == 1) {
                     // $("#contenido").append(data);
                     menuProceso2();

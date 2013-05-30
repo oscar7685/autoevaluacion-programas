@@ -28,7 +28,6 @@
                                     <th>#</th>
                                     <th>Característica</th>
                                     <th>Nivel de importancia</th>
-                                    <th>Ponderacion</th>
                                     <th>Justificacion</th>
                                 </tr>
                             </thead>
