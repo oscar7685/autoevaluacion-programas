@@ -148,10 +148,13 @@ public class loginController extends HttpServlet {
                     out.println(0);
                     session.setAttribute("programa", estudiante.getProgramaId());
                     session.setAttribute("persona", persona);
+                    session.setAttribute("fuente", fuenteFacade.find(1));
                     proceso = persona.getMuestraId().getProcesoId();
                     if (!proceso.getFechainicio().equals("En Configuración") && proceso.getFechacierre().equals("--")) {
                         m = proceso.getModeloId();
                         aux3 = encuestaFacade.findByModelo(m);
+                        session.setAttribute("proceso", proceso);
+                        
 
                     }
                     if (aux3 != null) {

@@ -65,14 +65,21 @@
         </div><!--North-->
 
         <div class="ui-layout-south ui-widget-content"> 
-            <hr>
-            <footer>
-                <p>&copy; Universidad de Cartagena 2013</p>
+            <footer id="footer" class="contenedor_footer fondo_footer">
+                <div class="links">
+                    <a style="font-weight: normal;-moz-text-decoration-line: none;"><span class="muted">&copy; Universidad de Cartagena 2013</span></a>
+
+                    <a class="about" href="#"><span>Acerca de</span></a>
+
+                    <a href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto" target="_blank"><span>Contacto</span></a>
+
+                    <a href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto" target="_blank"><span>Ayuda</span></a>
+                </div>
             </footer>
         </div><!--South-->
 
         <div class="ui-layout-center">
-            <div  class="span10" style="text-align: justify">
+            <div  class="span10 offset2" style="text-align: justify">
                 <div class="span8">
                     <br/>
                     <h2>Listado de  Encuestas Disponibles</h2>
@@ -93,8 +100,8 @@
                                         <td>
                                             <c:out value="${programa.nombre}"/>
                                         </td>
-                                        <td class="action">
-                                            <a title="Responder Encuesta" href="#responderEncuesta&${encuesta.id}">Responder encuesta</a>
+                                        <td> 
+                                            <a title="Responder Encuesta" href="#responderEncuesta&${encuesta.id}">Responder encuesta </a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -127,4 +134,16 @@
 
     </body>
 </html>
-
+<div class="modal hide fade" id="myModalGracias">
+    <div class="modal-header">
+        <a data-dismiss="modal" style="margin-top: 0px; padding: 0px" class="close">×</a>
+        <h3>Gracias</h3>
+    </div>
+    <div class="modal-body">
+        La encuesta se ha enviado correctamente.
+        Muchas gracias por participar del proceso de autoevaluaci&oacute;n del programa ${programa.nombre}.
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+    </div>
+</div>

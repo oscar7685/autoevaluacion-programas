@@ -85,6 +85,8 @@ public class Muestrapersona implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "muestrapersonaId")
     private List<Muestraagencia> muestraagenciaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "muestrapersonaId")
+    private List<Encabezado> encabezadoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "muestrapersonaId")
     private List<Muestraestudiante> muestraestudianteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "muestrapersonaId")
     private List<Muestraempleador> muestraempleadorList;
@@ -204,6 +206,15 @@ public class Muestrapersona implements Serializable {
 
     public void setMuestraagenciaList(List<Muestraagencia> muestraagenciaList) {
         this.muestraagenciaList = muestraagenciaList;
+    }
+
+    @XmlTransient
+    public List<Encabezado> getEncabezadoList() {
+        return encabezadoList;
+    }
+
+    public void setEncabezadoList(List<Encabezado> encabezadoList) {
+        this.encabezadoList = encabezadoList;
     }
 
     @XmlTransient

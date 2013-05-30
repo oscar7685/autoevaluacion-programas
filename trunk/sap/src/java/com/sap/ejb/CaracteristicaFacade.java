@@ -38,7 +38,7 @@ public class CaracteristicaFacade extends AbstractFacade<Caracteristica> {
         Query q = em.createNamedQuery("Caracteristica.findByModelo");
         q.setParameter("modelo", m);
         return q.getResultList();
-    }
+}
 
     public List findByFactor(Factor f) {
         Query q = em.createNamedQuery("Caracteristica.findByFactor");

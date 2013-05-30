@@ -30,7 +30,7 @@ public class FactorFacade extends AbstractFacade<Factor> {
     public FactorFacade() {
         super(Factor.class);
     }
-
+    
     public List findByModelo(Modelo m) {
         Query q = em.createNamedQuery("Factor.findByModelo");
         q.setParameter("modelo", m);
