@@ -149,6 +149,36 @@
         <script src="<%=request.getContextPath()%>/js/jquery.ba-hashchange.min.js"></script>
         <script src="<%=request.getContextPath()%>/js/main1.js"></script>
 
+
+        <div class="modal hide fade" id="modalCp1">
+            <div class="modal-header">
+                <a data-dismiss="modal" class="close">×</a>
+                <h3>Atención!</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Iniciar Proceso de Autoevaluación.</h4>
+                <br>
+                <p style="text-align: justify">Esta seguro que desea ejecutar el Proceso?. Tenga en cuenta que sólo la asignación de muestra para la fuente estudiante será editable al ejecutar el proceso. Los demás parámetros no podrán ser modificados.</p>
+            </div>
+            <div class="modal-footer">
+                <a id="modalCpb2" class="btn btn-secundary" data-dismiss="modal" href="#">Cancelar</a>
+                <a id="modalCpb1" class="btn btn-primary" data-dismiss="modal" href="#">Iniciar Proceso</a>
+            </div>
+        </div>
+        <div class="modal hide fade" id="modalCp2">
+            <div class="modal-header">
+                <a data-dismiss="modal" class="close">×</a>
+                <h3>Atención!</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Iniciar Proceso de Autoevaluación Institucional.</h4>
+                <br>
+                <p>Debe configurar todo el proceso para continuar.</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+            </div>
+        </div>
     </body>
 </html>
 
