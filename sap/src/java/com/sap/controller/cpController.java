@@ -37,6 +37,7 @@ import com.sap.entity.Egresado;
 import com.sap.entity.Empleador;
 import com.sap.entity.Estudiante;
 import com.sap.entity.Factor;
+import com.sap.entity.Indicador;
 import com.sap.entity.Modelo;
 import com.sap.entity.Muestra;
 import com.sap.entity.Muestraadministrativo;
@@ -50,8 +51,10 @@ import com.sap.entity.Muestrapersona;
 import com.sap.entity.Persona;
 import com.sap.entity.Ponderacioncaracteristica;
 import com.sap.entity.Ponderacionfactor;
+import com.sap.entity.Pregunta;
 import com.sap.entity.Proceso;
 import com.sap.entity.Programa;
+import com.sap.entity.Resultadoevaluacion;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -1130,13 +1133,131 @@ public class cpController extends HttpServlet {
                     List le = encabezadoFacade.findByList2("procesoId", sesion.getAttribute("Proceso"), "fuenteId", sesion.getAttribute("Fuente"));
 
                     sesion.setAttribute("listEncabezado", le);
-                    
+
                     System.out.println("poblacion: " + e.size());
                 }
-                
-                
-                
+
+
+
                 String url = "/WEB-INF/vista/comitePrograma/muestra/selectorListMuestra.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("estadoProceso")) {
+                Proceso p = (Proceso) sesion.getAttribute("Proceso");
+                Muestra m = p.getMuestraList().get(0);
+                List<Muestrapersona> liMp = muestrapersonaFacade.findByMuestraId(m);
+                int terminados = 0;
+                int totalEst = 0;
+                int terminadosEst = 0;
+                int totalDoc = 0;
+                int terminadosDoc = 0;
+                int totalEgr = 0;
+                int terminadosEgr = 0;
+                int totalAdm = 0;
+                int terminadosAdm = 0;
+                int totalDir = 0;
+                int terminadosDir = 0;
+                int totalEmp = 0;
+                int terminadosEmp = 0;
+                for (int i = 0; i < liMp.size(); i++) {
+                    if (liMp.get(i).getMuestraestudianteList().size() > 0) {
+                        totalEst++;
+                    } else {
+                        if (liMp.get(i).getMuestradocenteList().size() > 0) {
+                            totalDoc++;
+                        } else {
+                            if (liMp.get(i).getMuestraegresadoList().size() > 0) {
+                                totalEgr++;
+                            } else {
+                                if (liMp.get(i).getMuestraempleadorList().size() > 0) {
+                                    totalEmp++;
+                                } else {
+                                    if (liMp.get(i).getMuestraadministrativoList().size() > 0) {
+                                        totalAdm++;
+                                    } else {
+                                        if (liMp.get(i).getMuestradirectorList().size() > 0) {
+                                            totalDir++;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+
+                    for (int j = 0; j < liMp.get(i).getEncabezadoList().size(); j++) {
+                        if (liMp.get(i).getEncabezadoList().get(j).getEstado().equals("terminado")) {
+                            if (liMp.get(i).getMuestraestudianteList().size() > 0) {
+                                terminadosEst++;
+                            } else {
+                                if (liMp.get(i).getMuestradocenteList().size() > 0) {
+                                    terminadosDoc++;
+                                } else {
+                                    if (liMp.get(i).getMuestraegresadoList().size() > 0) {
+                                        terminadosEgr++;
+                                    } else {
+                                        if (liMp.get(i).getMuestraempleadorList().size() > 0) {
+                                            terminadosEmp++;
+                                        } else {
+                                            if (liMp.get(i).getMuestraadministrativoList().size() > 0) {
+                                                terminadosAdm++;
+                                            } else {
+                                                if (liMp.get(i).getMuestradirectorList().size() > 0) {
+                                                    terminadosDir++;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+
+                            terminados++;
+                        }
+                    }
+                }
+                sesion.setAttribute("terminadosX", terminados);
+                sesion.setAttribute("totalMuestraX", liMp.size());
+                sesion.setAttribute("totalEst", totalEst);
+                sesion.setAttribute("terminadosEst", terminadosEst);
+                sesion.setAttribute("totalDoc", totalDoc);
+                sesion.setAttribute("terminadosDoc", terminadosDoc);
+                sesion.setAttribute("totalEgr", totalEgr);
+                sesion.setAttribute("terminadosEgr", terminadosEgr);
+                sesion.setAttribute("totalEmp", totalEmp);
+                sesion.setAttribute("terminadosEmp", terminadosEmp);
+                sesion.setAttribute("totalAdm", totalAdm);
+                sesion.setAttribute("terminadosAdm", terminadosAdm);
+                sesion.setAttribute("totalDir", totalDir);
+                sesion.setAttribute("terminadosDir", terminadosDir);
+                String url = "/WEB-INF/vista/comitePrograma/proceso/informe/estadoProceso.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("informeMatrizFactores")) {
+                Proceso p = (Proceso)sesion.getAttribute("Proceso");
+                Modelo m = p.getModeloId();
+                int suma=0;
+                List<Factor> factores = m.getFactorList();
+                for (int i = 0; i < factores.size(); i++) {
+                    List<Caracteristica> caracteristicas = factores.get(i).getCaracteristicaList();
+                    for (int j = 0; j < caracteristicas.size(); j++) {
+                        List<Indicador> indicadores = caracteristicas.get(j).getIndicadorList();
+                        for (int k = 0; k < indicadores.size(); k++) {
+                            List<Pregunta> preguntas = indicadores.get(k).getPreguntaList();
+                            for (int l = 0; l < preguntas.size(); l++) {
+                                List<Resultadoevaluacion> resultados = preguntas.get(l).getResultadoevaluacionList();
+                                for (int n = 0; n < resultados.size(); n++) {
+                                    suma+=Integer.parseInt(resultados.get(n).getRespuesta());
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+                System.out.println("suma = "+suma);
+                
+                String url = "/WEB-INF/vista/comitePrograma/proceso/informe/matrizFactores.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             }

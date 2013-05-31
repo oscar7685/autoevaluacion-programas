@@ -4,6 +4,7 @@
  */
 package com.sap.ejb;
 
+import com.sap.entity.Muestra;
 import com.sap.entity.Muestrapersona;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -31,6 +32,11 @@ public class MuestrapersonaFacade extends AbstractFacade<Muestrapersona> {
      public List findByCedula(String c) {
         Query q = em.createNamedQuery("Muestrapersona.findByCedula");
         q.setParameter("cedula", c);
+        return q.getResultList();
+    }
+     public List findByMuestraId(Muestra m) {
+        Query q = em.createNamedQuery("Muestrapersona.findByMuestraId");
+        q.setParameter("muestra", m);
         return q.getResultList();
     }
     

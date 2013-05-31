@@ -149,6 +149,8 @@
         <script src="<%=request.getContextPath()%>/js/jquery.PrintArea.js"></script>
         <script src="<%=request.getContextPath()%>/js/vendor/bootstrap.min.js"></script>
         <script src="<%=request.getContextPath()%>/js/jquery.ba-hashchange.min.js"></script>
+        <script src="<%=request.getContextPath()%>/js/highcharts.js"></script>
+        <script src="<%=request.getContextPath()%>/js/highcharts-more.js"></script>
         <script src="<%=request.getContextPath()%>/js/main1.js"></script>
 
 
