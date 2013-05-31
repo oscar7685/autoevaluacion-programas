@@ -238,7 +238,7 @@
                                                 </c:choose>
                                                 <c:choose>
                                                     <c:when test="${resultado.respuesta == '4'}">
-                                                        <option selected="selected" value="4">1</option>      
+                                                        <option selected="selected" value="4">4</option>      
                                                     </c:when>
                                                     <c:otherwise>
                                                         <option value="4">4</option>      
@@ -289,10 +289,10 @@
             </tbody>
         </table>
         <div class="row"> 
-            <div class="span6">
+            <div class="span5">
                 <div class="pagination"></div>
             </div>
-            <div class="span4" style="margin-top: 5px;">
+            <div class="span5" style="margin-top: 5px;">
                 <div style="margin-top: 22px;">
                     <div class="span1" id="spanGuardado" style=" display: none">
                         <span class="label label-info" style="margin-left: 0px">Guardado:</span>

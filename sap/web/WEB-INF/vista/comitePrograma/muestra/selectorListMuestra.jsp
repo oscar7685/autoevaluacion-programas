@@ -181,9 +181,9 @@
                                             <c:if test="${item.personaId.id == row.muestrapersonaId.cedula}">
                                                 <c:set var="varaux" value="0"/>
                                                 <c:forEach items="${listEncabezado}" var="item3" varStatus="iter2">
-                                                    <c:if test="${item.personaId.id == item3.muestrapersonaId.id}">
+                                                    <c:if test="${item.personaId.id == item3.muestrapersonaId.cedula}">
                                                         <c:set var="varaux" value="1"/>
-                                                        <c:if test="${item3.estado == 'terminado'}">
+                                                        <c:if test="${item3.estado.equals('terminado')}">
                                                             <tr class="terminadoC">
                                                                 <td style="background-color: #DFF0D8; color: #468847;">   
                                                                     <c:out value="${row.muestrapersonaId.cedula}"/>
@@ -200,7 +200,7 @@
                                                             </tr>
                                                             <c:set var="contador" value="${iter.index}"></c:set>
                                                         </c:if>
-                                                        <c:if test="${item3.estado == 'guardada'}">
+                                                        <c:if test="${item3.estado.equals('guardada')}">
                                                             <tr class="guardadoC">
                                                                 <td style="background-color: #D9EDF7; color: #3A87AD;">
                                                                     <c:out value="${row.muestrapersonaId.cedula}"/>
