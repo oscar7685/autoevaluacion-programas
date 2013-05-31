@@ -4,10 +4,13 @@
  */
 package com.sap.ejb;
 
+import com.sap.entity.Encabezado;
 import com.sap.entity.Resultadoevaluacion;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -25,6 +28,11 @@ public class ResultadoevaluacionFacade extends AbstractFacade<Resultadoevaluacio
 
     public ResultadoevaluacionFacade() {
         super(Resultadoevaluacion.class);
+    }
+     public List findByEncabezado(Encabezado e) {
+        Query q = em.createNamedQuery("Resultadoevaluacion.findByEncabezado");
+        q.setParameter("encabezado", e);
+        return q.getResultList();
     }
     
 }

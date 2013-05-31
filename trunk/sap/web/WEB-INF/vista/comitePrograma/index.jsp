@@ -125,6 +125,8 @@
                                 <li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Factores</a></li>
                                 <li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Características</a></li>
                                 <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>
+                                <li class="nav-header">Estado del proceso</li>
+                                <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#estadoProceso"><i class="icon-bar-chart"></i> Estado del proceso</a></li>
                             </ul>
                         </div>
                     </c:when>

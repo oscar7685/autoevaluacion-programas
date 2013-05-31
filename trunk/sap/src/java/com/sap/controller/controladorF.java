@@ -64,7 +64,6 @@ public class controladorF extends HttpServlet {
                     Muestrapersona persona = (Muestrapersona) session.getAttribute("persona");
                     Fuente fuente = (Fuente) session.getAttribute("fuente");
                     Encuesta encuesta = (Encuesta) session.getAttribute("encuesta");
-                    List<Pregunta> preguntas = encuesta.getPreguntaList();
                     List<Encabezado> encabExistentes = encabezadoFacade.findByVars(p, encuesta, fuente, persona);
                     Encabezado enc = null;
                     if (encabExistentes != null && encabExistentes.size() > 0) {
@@ -73,8 +72,7 @@ public class controladorF extends HttpServlet {
                         }
                     }
                     if (enc != null) {
-                        System.out.println("jaja");
-                        session.setAttribute("respuestas", enc.getResultadoevaluacionList());
+                        session.setAttribute("respuestas", resultadoevaluacionFacade.findByEncabezado(enc));
                     }
                     RequestDispatcher rd = request.getRequestDispatcher(url);
                     rd.forward(request, response);
@@ -119,6 +117,8 @@ public class controladorF extends HttpServlet {
                                 re.setRespuesta((String) request.getParameter("pregunta" + preguntas.get(i).getId()));
                                 resultadoevaluacionFacade.create(re);
                             }
+                             recienCreado.setResultadoevaluacionList(resultadoevaluacionFacade.findByEncabezado(recienCreado));
+                             encabezadoFacade.edit(recienCreado);
                             if (request.getParameter("action").equals("responderE")) {
                                 session.setAttribute("encuesta", null);
                             }
@@ -127,7 +127,7 @@ public class controladorF extends HttpServlet {
                             enc.setEstado(estado);
                             enc.setFecha(new Date(new java.util.Date().getTime()));
                             encabezadoFacade.edit(enc);
-                            enc.getResultadoevaluacionList();
+                           
                             List<Resultadoevaluacion> listaRe = enc.getResultadoevaluacionList();
                             for (int i = 0; i < preguntas.size(); i++) {
                                 listaRe.get(i).setPreguntaId(preguntas.get(i));
