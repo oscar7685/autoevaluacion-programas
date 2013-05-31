@@ -79,42 +79,7 @@
         </div><!--South-->
 
         <div class="ui-layout-center">
-            <div  class="span10 offset2" style="text-align: justify">
-                <div class="span8">
-                    <br/>
-                    <h2>Listado de  Encuestas Disponibles</h2>
-                    <br/>
-                    <c:choose>
-                        <c:when test="${encuesta!=null}">
-                            <table class="table table-striped table-bordered table-condensed">
-                                <thead>
-                                <th>Encuesta</th>
-                                <th>Programa</th>
-                                <th></th>
-                                </thead>
-                                <tbody>
-                                    <tr>    
-                                        <td>   
-                                            <c:out value="${encuesta.nombre}"/>
-                                        </td>
-                                        <td>
-                                            <c:out value="${programa.nombre}"/>
-                                        </td>
-                                        <td> 
-                                            <a title="Responder Encuesta" href="#responderEncuesta&${encuesta.id}">Responder encuesta </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </c:when>
-                        <c:otherwise>
-                            No Existen Encuestas Disponibles.
-                        </c:otherwise>
-                    </c:choose>
-
-
-                </div>
-            </div> 
+            
         </div><!--/Center-->
 
 
