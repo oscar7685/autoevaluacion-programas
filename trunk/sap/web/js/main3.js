@@ -74,7 +74,7 @@ $(function() {
                     success: function(data)
                     {
                         $("#contenido").append(data);
-                        $("#contenido").show(200, function() {
+                        $("#contenido").show(400, function() {
                             $("#dancing-dots-text").hide();
                         });
                     } //fin success

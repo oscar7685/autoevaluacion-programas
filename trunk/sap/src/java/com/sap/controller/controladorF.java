@@ -73,6 +73,7 @@ public class controladorF extends HttpServlet {
                         }
                     }
                     if (enc != null) {
+                        System.out.println("jaja");
                         session.setAttribute("respuestas", enc.getResultadoevaluacionList());
                     }
                     RequestDispatcher rd = request.getRequestDispatcher(url);
