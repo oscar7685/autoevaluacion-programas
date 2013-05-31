@@ -139,6 +139,13 @@ public class controladorF extends HttpServlet {
                                 session.setAttribute("encuesta", null);
                             }
                         }
+                    } else {
+                        if (action.equals("inicioCC")) {
+                            String url = "/WEB-INF/vista/fuente/inicio.jsp";
+                            RequestDispatcher rd = request.getRequestDispatcher(url);
+                            rd.forward(request, response);
+
+                        }
                     }
                 }
             }

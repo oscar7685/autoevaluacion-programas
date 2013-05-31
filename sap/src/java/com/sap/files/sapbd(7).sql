@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 29-05-2013 a las 19:34:26
+-- Tiempo de generación: 31-05-2013 a las 14:27:47
 -- Versión del servidor: 5.5.16
 -- Versión de PHP: 5.3.8
 
@@ -69,7 +69,19 @@ CREATE TABLE IF NOT EXISTS `asignacionencuesta` (
   KEY `fk_asignacionencuesta_fuente1_idx` (`fuente_id`),
   KEY `fk_asignacionencuesta_encuesta1_idx` (`encuesta_id`),
   KEY `fk_asignacionencuesta_modelo1` (`modelo_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+--
+-- Volcado de datos para la tabla `asignacionencuesta`
+--
+
+INSERT INTO `asignacionencuesta` (`id`, `fuente_id`, `encuesta_id`, `modelo_id`) VALUES
+(1, 1, 1, 1),
+(2, 2, 2, 1),
+(3, 6, 3, 1),
+(4, 4, 4, 1),
+(5, 5, 5, 1),
+(6, 3, 7, 1);
 
 -- --------------------------------------------------------
 
@@ -241,17 +253,25 @@ CREATE TABLE IF NOT EXISTS `empleador` (
 CREATE TABLE IF NOT EXISTS `encabezado` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fecha` datetime NOT NULL,
-  `persona_id` varchar(25) NOT NULL,
+  `muestrapersona_id` int(11) NOT NULL,
   `proceso_id` int(11) NOT NULL,
   `encuesta_id` int(11) NOT NULL,
   `fuente_id` int(11) NOT NULL,
   `estado` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_encabezado_persona1_idx` (`persona_id`),
   KEY `fk_encabezado_proceso1_idx` (`proceso_id`),
   KEY `fk_encabezado_encuesta1_idx` (`encuesta_id`),
-  KEY `fk_encabezado_fuente1_idx` (`fuente_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `fk_encabezado_fuente1_idx` (`fuente_id`),
+  KEY `fk_encabezado_muestrapersona1` (`muestrapersona_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `encabezado`
+--
+
+INSERT INTO `encabezado` (`id`, `fecha`, `muestrapersona_id`, `proceso_id`, `encuesta_id`, `fuente_id`, `estado`) VALUES
+(1, '2013-05-30 16:11:40', 1, 1, 1, 1, 'terminado'),
+(2, '2013-05-31 09:06:00', 2, 1, 1, 1, 'terminado');
 
 -- --------------------------------------------------------
 
@@ -1797,7 +1817,14 @@ CREATE TABLE IF NOT EXISTS `muestra` (
   `proceso_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_muestra_proceso1_idx` (`proceso_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `muestra`
+--
+
+INSERT INTO `muestra` (`id`, `formula`, `proceso_id`) VALUES
+(1, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -1899,7 +1926,137 @@ CREATE TABLE IF NOT EXISTS `muestraestudiante` (
   PRIMARY KEY (`id`),
   KEY `fk_muestraestudiante_muestrapersona1` (`muestrapersona_id`),
   KEY `fk_muestraestudiante_programa1` (`programa_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=125 ;
+
+--
+-- Volcado de datos para la tabla `muestraestudiante`
+--
+
+INSERT INTO `muestraestudiante` (`id`, `codigo`, `semestre`, `periodo`, `anio`, `muestrapersona_id`, `programa_id`) VALUES
+(1, '0221010004', '03', '2', '2012', 1, 22),
+(2, '0221010026', '03', '2', '2012', 2, 22),
+(3, '0221010027', '03', '2', '2012', 3, 22),
+(4, '0221011001', '03', '2', '2012', 4, 22),
+(5, '0221020011', '03', '2', '2012', 5, 22),
+(6, '0221020035', '03', '2', '2012', 6, 22),
+(7, '0221020037', '03', '2', '2012', 7, 22),
+(8, '0221020038', '03', '2', '2012', 8, 22),
+(9, '0221020047', '03', '2', '2012', 9, 22),
+(10, '0221020048', '03', '2', '2012', 10, 22),
+(11, '0221021001', '03', '2', '2012', 11, 22),
+(12, '0221110001', '03', '2', '2012', 12, 22),
+(13, '0221110005', '03', '2', '2012', 13, 22),
+(14, '0221110009', '03', '2', '2012', 14, 22),
+(15, '0221110012', '03', '2', '2012', 15, 22),
+(16, '0221110013', '03', '2', '2012', 16, 22),
+(17, '0221110014', '03', '2', '2012', 17, 22),
+(18, '0221110020', '03', '2', '2012', 18, 22),
+(19, '0221110021', '03', '2', '2012', 19, 22),
+(20, '0221110022', '03', '2', '2012', 20, 22),
+(21, '0221110023', '03', '2', '2012', 21, 22),
+(22, '0221110027', '03', '2', '2012', 22, 22),
+(23, '0221110029', '03', '2', '2012', 23, 22),
+(24, '0221110031', '03', '2', '2012', 24, 22),
+(25, '0221110032', '03', '2', '2012', 25, 22),
+(26, '0221110033', '03', '2', '2012', 26, 22),
+(27, '0220920016', '04', '2', '2012', 27, 22),
+(28, '0220920019', '04', '2', '2012', 28, 22),
+(29, '0220920039', '04', '2', '2012', 29, 22),
+(30, '0220920044', '04', '2', '2012', 30, 22),
+(31, '0221010009', '04', '2', '2012', 31, 22),
+(32, '0221010010', '04', '2', '2012', 32, 22),
+(33, '0221010011', '04', '2', '2012', 33, 22),
+(34, '0221010023', '04', '2', '2012', 34, 22),
+(35, '0221010030', '04', '2', '2012', 35, 22),
+(36, '0221010033', '04', '2', '2012', 36, 22),
+(37, '0221010034', '04', '2', '2012', 37, 22),
+(38, '0221010035', '04', '2', '2012', 38, 22),
+(39, '0221010036', '04', '2', '2012', 39, 22),
+(40, '0221010037', '04', '2', '2012', 40, 22),
+(41, '0221010039', '04', '2', '2012', 41, 22),
+(42, '0221010042', '04', '2', '2012', 42, 22),
+(43, '0220820040', '05', '2', '2012', 43, 22),
+(44, '0220820042', '05', '2', '2012', 44, 22),
+(45, '0220820050', '05', '2', '2012', 45, 22),
+(46, '0220820052', '05', '2', '2012', 46, 22),
+(47, '0220910008', '05', '2', '2012', 47, 22),
+(48, '0220910022', '05', '2', '2012', 48, 22),
+(49, '0220910037', '05', '2', '2012', 49, 22),
+(50, '0220910041', '05', '2', '2012', 50, 22),
+(51, '0220910045', '05', '2', '2012', 51, 22),
+(52, '0220920001', '05', '2', '2012', 52, 22),
+(53, '0220920002', '05', '2', '2012', 53, 22),
+(54, '0220920004', '05', '2', '2012', 54, 22),
+(55, '0220920014', '05', '2', '2012', 55, 22),
+(56, '0220920021', '05', '2', '2012', 56, 22),
+(57, '0220920022', '05', '2', '2012', 57, 22),
+(58, '0220920037', '05', '2', '2012', 58, 22),
+(59, '0220920040', '05', '2', '2012', 59, 22),
+(60, '0221010001', '05', '2', '2012', 60, 22),
+(61, '0220810018', '06', '2', '2012', 61, 22),
+(62, '0220820031', '06', '2', '2012', 62, 22),
+(63, '0220910004', '06', '2', '2012', 63, 22),
+(64, '0220910024', '06', '2', '2012', 64, 22),
+(65, '0220910026', '06', '2', '2012', 65, 22),
+(66, '0220910030', '06', '2', '2012', 66, 22),
+(67, '0220910032', '06', '2', '2012', 67, 22),
+(68, '0220910038', '06', '2', '2012', 68, 22),
+(69, '0220920010', '06', '2', '2012', 69, 22),
+(70, '0220920011', '06', '2', '2012', 70, 22),
+(71, '0220920018', '06', '2', '2012', 71, 22),
+(72, '0220920023', '06', '2', '2012', 72, 22),
+(73, '0220920025', '06', '2', '2012', 73, 22),
+(74, '0220920027', '06', '2', '2012', 74, 22),
+(75, '0220920035', '06', '2', '2012', 75, 22),
+(76, '0220720042', '07', '2', '2012', 76, 22),
+(77, '0220810004', '07', '2', '2012', 77, 22),
+(78, '0220810009', '07', '2', '2012', 78, 22),
+(79, '0220810021', '07', '2', '2012', 79, 22),
+(80, '0220810023', '07', '2', '2012', 80, 22),
+(81, '0220810025', '07', '2', '2012', 81, 22),
+(82, '0220810041', '07', '2', '2012', 82, 22),
+(83, '0220820007', '07', '2', '2012', 83, 22),
+(84, '0220820014', '07', '2', '2012', 84, 22),
+(85, '0220820025', '07', '2', '2012', 85, 22),
+(86, '0220820035', '07', '2', '2012', 86, 22),
+(87, '0220910007', '07', '2', '2012', 87, 22),
+(88, '0220910010', '07', '2', '2012', 88, 22),
+(89, '0220910017', '07', '2', '2012', 89, 22),
+(90, '0220720018', '08', '2', '2012', 90, 22),
+(91, '0220720031', '08', '2', '2012', 91, 22),
+(92, '0220720045', '08', '2', '2012', 92, 22),
+(93, '0220810008', '08', '2', '2012', 93, 22),
+(94, '0220810022', '08', '2', '2012', 94, 22),
+(95, '0220810031', '08', '2', '2012', 95, 22),
+(96, '0220810032', '08', '2', '2012', 96, 22),
+(97, '0220810033', '08', '2', '2012', 97, 22),
+(98, '0220810038', '08', '2', '2012', 98, 22),
+(99, '0220810043', '08', '2', '2012', 99, 22),
+(100, '0220810044', '08', '2', '2012', 100, 22),
+(101, '0220820012', '08', '2', '2012', 101, 22),
+(102, '0220820021', '08', '2', '2012', 102, 22),
+(103, '0220820023', '08', '2', '2012', 103, 22),
+(104, '0220820030', '08', '2', '2012', 104, 22),
+(105, '0220820046', '08', '2', '2012', 105, 22),
+(106, '0220820049', '08', '2', '2012', 106, 22),
+(107, '0220910001', '08', '2', '2012', 107, 22),
+(108, '0220910002', '08', '2', '2012', 108, 22),
+(109, '0220910003', '08', '2', '2012', 109, 22),
+(110, '0220720010', '09', '2', '2012', 110, 22),
+(111, '0220720011', '09', '2', '2012', 111, 22),
+(112, '0220720023', '09', '2', '2012', 112, 22),
+(113, '0220720026', '09', '2', '2012', 113, 22),
+(114, '0220720030', '09', '2', '2012', 114, 22),
+(115, '0220720032', '09', '2', '2012', 115, 22),
+(116, '0220720039', '09', '2', '2012', 116, 22),
+(117, '0220720047', '09', '2', '2012', 117, 22),
+(118, '0220810003', '09', '2', '2012', 118, 22),
+(119, '0220810012', '09', '2', '2012', 119, 22),
+(120, '0220810017', '09', '2', '2012', 120, 22),
+(121, '0220810027', '09', '2', '2012', 121, 22),
+(122, '0220810028', '09', '2', '2012', 122, 22),
+(123, '0220810047', '09', '2', '2012', 123, 22),
+(124, '0220820003', '09', '2', '2012', 124, 22);
 
 -- --------------------------------------------------------
 
@@ -1917,7 +2074,137 @@ CREATE TABLE IF NOT EXISTS `muestrapersona` (
   `muestra_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_muestrapersona_muestra1_idx` (`muestra_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=125 ;
+
+--
+-- Volcado de datos para la tabla `muestrapersona`
+--
+
+INSERT INTO `muestrapersona` (`id`, `cedula`, `nombre`, `apellido`, `password`, `mail`, `muestra_id`) VALUES
+(1, '1047456336', 'DANNA VANESSA ', 'DOLUGAR MARRUGO ', '1047456336', 'theprincesslibra_21@hotmail.com ', 1),
+(2, '1050962068', 'ISMAEL', 'SAYAS ARRIETA ', '1050962068', 'ISAYASARRIETA1993@HOTMAIL.COM ', 1),
+(3, '1050944065', 'GERMAN EDUARDO', 'MESTRE RAMOS', '1050944065', 'gmestrer1@unicartagena.edu.co ', 1),
+(4, '1050921792', 'TEO MAYERLY ', 'LONDOÑO GUERRERO', '1050921792', 'teitolalinda@hotmail.com', 1),
+(5, '94032929421', 'LUIS PABLO', 'ROJAS HERRERA ', '94032929421', 'PEDROLUCHO09@HOTMAIL.COM', 1),
+(6, '1143361881', 'DANIEL ALBERTO', 'ARDILA CARRASQUILLA ', '1143361881', 'DNA_Elreyscorpion8-11@hotmail.com ', 1),
+(7, '1143361361', 'MARIO JOSE', 'BARRIOS PACHECO ', '1143361361', 'mariobp_321@hotmail.com ', 1),
+(8, '94070512747', 'LUIS ANTONIO', 'CERVANTES ORTEGA', '94070512747', 'cervants_tk@hotmail.com ', 1),
+(9, '1143359411', 'JUAN MANUEL ', 'JARAMILLO BELTRAN ', '1143359411', 'jmjb_jaramillo1992@hotmail.com', 1),
+(10, '1143360328', 'JHANIO ALFONSO', 'JIMENEZ CARMONA ', '1143360328', 'yankes@hotmail.es ', 1),
+(11, '1051742430', 'DUVAN ANTONIO ', 'CHAVEZ ROJAS', '1051742430', 'el_chicoleo_19@hotmail.com', 1),
+(12, '1143367742', 'FERNANDO DE JESUS ', 'CASTILLA OSPINA ', '1143367742', 'fer2593@hotmail.com ', 1),
+(13, '1047436661', 'JESUS DAVID ', 'PRASCA BUSTOS ', '1047436661', 'tatatan.91@hotmail.com', 1),
+(14, '1143340921', 'ANTONIO JOSE', 'ANGULO PADILLA', '1143340921', 'ajap.xd@hotmail.com ', 1),
+(15, '94030113149', 'JORGE LUIS', 'CARBAL YEPES', '94030113149', 'jorgeluiscarbal@hotmail.com ', 1),
+(16, '1143365170', 'CRISTIAM MANUEL JUNIOR', 'MERCADO JIMENEZ ', '1143365170', 'cristian0514@hotmail.com', 1),
+(17, '94110918946', 'JOSE JAVIER ', 'SERNA GRIMALDO', '94110918946', 'mac_baby2006@hotmail.com', 1),
+(18, '1143354714', 'JUAN FELIPE ', 'CERVANTES TOLOZA', '1143354714', 'tatoomsn@hotmail.com', 1),
+(19, '1007027719', 'RAFAEL EDUARDO', 'PEDROZA MANGA ', '1007027719', 'rafa-120993@hotmail.com ', 1),
+(20, '1143370194', 'PEDRO DAVID ', 'MANJARRES SERRANO ', '1143370194', 'pedro3manjarrez@hotmail.com ', 1),
+(21, '94050129521', 'DANIEL JOSE ', 'CARRILLO HERRERA', '94050129521', 'danieljose_ing@hotmail.com', 1),
+(22, '1047465063', 'CARLOS EDUARDO', 'PEREZ MEZA', '1047465063', 'CryT1c@hotmail.com', 1),
+(23, '1143360688', 'ALBERTO CARLOS', 'BARBOZA MERCADO ', '1143360688', 'alber-cbm@hotmail.com ', 1),
+(24, '1047450829', 'ERICK ELOY', 'WILCHES TRUJILLO', '1047450829', 'ericking12@hotmail.com', 1),
+(25, '1047464521', 'VICTOR FERNANDO ', 'DEL RIO PRENS ', '1047464521', 'victorprens@hotmail.com ', 1),
+(26, '94071412207', 'DANIEL EDUARDO', 'GALOFRE VARGAS', '94071412207', 'escorpion_d14@hotmail.com ', 1),
+(27, '1143359449', 'STEFANY DEL CARMEN', 'RAMOS CASTRO', '1143359449', 'tipuni@hotmail.com', 1),
+(28, '1047445429', 'CRISTOBAL ', 'ROMERO ROSSI', '1047445429', 'tobal_romossi@hotmail.es', 1),
+(29, '1044925822', 'IVAN DAVID', 'OSPINO VALENZUELA ', '1044925822', 'ivanovis_30@hotmail.com ', 1),
+(30, '1047435780', 'GUSTAVO JOSE', 'RODRIGUEZ ROMERO', '1047435780', 'phoenix2303@hotmail.com ', 1),
+(31, '94013126903', 'JORGE IVAN', 'MARTINEZ PUELLO ', '94013126903', 'jorkat_1212@hotmail.com ', 1),
+(32, '1050959364', 'YEIKARINA ', 'CORONELL RODRIGUEZ', '1050959364', 'yande_1907@hotmail.com', 1),
+(33, '1047453834', 'KEVIN JOSE', 'RIVERA MENDEZ ', '1047453834', 'kevinrivera23@hotmail.com ', 1),
+(34, '1143353501', 'EVER DANIEL ', 'GONZÁLEZ GUZMÁN ', '1143353501', 'edgg72@hotmail.com', 1),
+(35, '1047455664', 'GUSTAVO ENRIQUE ', 'PACHECO GOMEZ ', '1047455664', 'ryctabo@gmail.com ', 1),
+(36, '1047451636', 'NELSON DANIEL ', 'BARRIOS VALENCIA', '1047451636', 'nb_derek@hotmail.com', 1),
+(37, '1047455733', 'MARIA VICTORIA', 'DE AVILA MEJIA', '1047455733', 'mariadeavila@live.com ', 1),
+(38, '1051824073', 'PAULA ANDREA', 'PACHECO ESCALANTE ', '1051824073', 'panda12308@hotmail.com', 1),
+(39, '1047451234', 'HECTOR LUIS ', 'POSADA YEPEZ', '1047451234', 'crixus-0hlpy9@hotmail.com ', 1),
+(40, '1143338761', 'CARLOS ARTURO ', 'VASQUEZ REYES ', '1143338761', 'carlosdark29@hotmail.com', 1),
+(41, '1143342266', 'ROMARIO SENEN ', 'LOPEZ IBARRA', '1143342266', 'mafla1990@hotmail.com ', 1),
+(42, '1047436327', 'JUAN CARLOS ', 'BUSTAMANTE MONTES ', '1047436327', 'juancarlosbust@hotmail.com', 1),
+(43, '1143346271', 'ALEXANDER ', 'MORALES CANO', '1143346271', 'alex.morales04@hotmail.com', 1),
+(44, '1143353987', 'SAMUEL ALEJANDRO', 'PORTACIO APARICIO ', '1143353987', 'nekros8@hotmail.com ', 1),
+(45, '1047430379', 'LUIS ALEJANDRO', 'SIERRA SUAREZ ', '1047430379', 'luis_sierra_90@hotmail.com', 1),
+(46, '1049453283', 'IVAN JOSE ', 'VILLAMIL OCHOA', '1049453283', '8avilla@gmail.com ', 1),
+(47, '1143362129', 'EMMANUEL', 'GARCIA MAESTRE', '1143362129', 'ema16gm@hotmail.com ', 1),
+(48, '1143344548', 'JOSE LUIS ', 'PEREZ ALVARADO', '1143344548', 'josle_85@hotmail.com', 1),
+(49, '1047447311', 'JESUS EDUARDO ', 'BARRAZA PAVA', '1047447311', 'jeduardo_barraza@hotmail.com', 1),
+(50, '1143355967', 'MELISSA ANDREA', 'OROZCO ACEVEDO', '1143355967', 'melo_orozcoacevedo@hotmail.com', 1),
+(51, '1047442548', 'CARLOS ARTURO ', 'SALGADO MONROY', '1047442548', 'clase.103@hotmail.com ', 1),
+(52, '1143357644', 'RODRIGO ALFONSO ', 'MARTINEZ TORRES ', '1143357644', 'rockyramt610@hotmail.com', 1),
+(53, '1044917440', 'CARLOS ARTURO ', 'TATIS GORDON', '1044917440', 'tatisgordon@hotmail.com ', 1),
+(54, '1044919151', 'CRISTIAN RAFAEL ', 'PARDO CRESPO', '1044919151', 'crispy1020@hotmail.com', 1),
+(55, '1047449043', 'WALTER EDUARDO', 'MORALES CHARRASQUIEL', '1047449043', 'tukoski@hotmail.com ', 1),
+(56, '1143356821', 'LUIS EDUARDO MANUEL ', 'MENDOZA ANGULO', '1143356821', 'luis.eduardo.mendoza@live.com ', 1),
+(57, '1143366270', 'KEVIN RAMIRO', 'SOTO MORALES', '1143366270', 'kevineldelflow2009@hotmail.com', 1),
+(58, '1047425314', 'MARTHA PATRICIA ', 'IBAÑEZ CHAVERRA ', '1047425314', 'estrellita--007@hotmail.com ', 1),
+(59, '1047451812', 'FREDIS ANDRES ', 'ESCOBAR JIMENEZ ', '1047451812', 'fedex6587@hotmail.com ', 1),
+(60, '1047450650', 'ANDRES FELIPE ', 'SIPLE DE LA ESPRIELLA ', '1047450650', 'sipleandrew_1103@hotmail.com', 1),
+(61, '1143351357', 'CRISTIAN ANDRES ', 'LOPEZ FUENTES ', '1143351357', 'calf39_6@hotmail.com', 1),
+(62, '1047418683', 'PITER ALEJANDRO ', 'VELASQUEZ COTA', '1047418683', 'pealveco@yahoo.com', 1),
+(63, '1100546238', 'RUBEN DARIO ', 'IRIARTE LOPEZ ', '1100546238', 'ririartel@unicartagena.edu.co ', 1),
+(64, '1143362803', 'ORLANDO VICENTE ', 'BUSTAMANTE SANTANDER', '1143362803', 'orvibusa@hotmail.com', 1),
+(65, '1143354737', 'JAIME DAVID ', 'DIAZ ARROYO ', '1143354737', 'jaime-david-diaz@hotmail.com', 1),
+(66, '1047445791', 'MANUEL ADOLFO ', 'OCHOA DIAZ', '1047445791', 'skay8a@hotmail.com', 1),
+(67, '1051447716', 'EFRAIN JULIO', 'HERNANDEZ GONZALEZ', '1051447716', 'nicky1792@hotmail.com ', 1),
+(68, '1047448739', 'JUAN CARLOS ', 'MONSALVE GIRALDO', '1047448739', 'juan_kmg@live.com ', 1),
+(69, '1048289166', 'FERNANDO ANDRES ', 'BUITRAGO RODRIGUEZ', '1048289166', 'el.fer-22@hotmail.com ', 1),
+(70, '1047447298', 'KELVIN JOSE ', 'HERNANDEZ CABRERA ', '1047447298', 'keljohe@hotmail.com ', 1),
+(71, '1047428364', 'OSWALDO ANDRES', 'VEGA GALARZA', '1047428364', 'oavg15@hotmail.com', 1),
+(72, '1047447867', 'SKARLYS JINETH', 'COLON SAENZ ', '1047447867', 'saenz_921@hotmail.com ', 1),
+(73, '73160028', 'GABRIEL ', 'DIZZETT UTRIA ', '73160028', 'gdizzett_u@yahoo.com', 1),
+(74, '1047441644', 'WESLY DAVID ', 'ESCAMILLA HERNANDEZ ', '1047441644', 'skmilla-hw-07@hotmail.com ', 1),
+(75, '1047412894', 'LEONARDO', 'ORTEGA HERNANDEZ', '1047412894', 'leon9894@gmail.com', 1),
+(76, '1043652362', 'JHONNY RAFAEL ', 'CASTRO LOPEZ', '1043652362', 'CASTROMAN-99@HOTMAIL.COM', 1),
+(77, '1047441541', 'PEDRO ANDRES', 'ALVAREZ ROMERO', '1047441541', 'calipso1991@hotmail.com ', 1),
+(78, '1050037270', 'CARLOS YESID', 'HERNANDEZ HERRERA ', '1050037270', 'caryesher91@hotmail.com ', 1),
+(79, '1143355772', 'EDUARDO ALFONSO ', 'ROSALES MONTALBAN ', '1143355772', 'badboyer_22@hotmail.com ', 1),
+(80, '1143348639', 'CARLOS DAVID', 'MENCO GUARDO', '1143348639', 'carlosmenco@ingenieros.com', 1),
+(81, '1047441076', 'CARLOS MARIO', 'PATERNINA PEREZ ', '1047441076', 'cmario911@hotmail.com ', 1),
+(82, '1047425074', 'HERNAN', 'RIVERA CABEZA ', '1047425074', 'rivert08@HOTMAIL.COM', 1),
+(83, '1143339248', 'FERNANDO JOSE ', 'CASASBUENAS BARRIOS ', '1143339248', 'ferjo88@hotmail.com ', 1),
+(84, '1143347053', 'ARMANDO JOSE', 'GARCIA PEREZ', '1143347053', 'a-joe989@hotmail.com', 1),
+(85, '1047429276', 'HAROLD FABIAN ', 'SOLORZANO PEÑA', '1047429276', 'haspe90@hotmail.com ', 1),
+(86, '1143340657', 'JUAN ALBERTO', 'ACOSTA TORRES ', '1143340657', 'juanco57@hotmail.com', 1),
+(87, '1047436247', 'HAYDER JOSE ', 'RHENALS PEREZ ', '1047436247', 'hayderhj@hotmail.com', 1),
+(88, '1143361183', 'JEFFREY ALONSO', 'ESPINEL PEREZ ', '1143361183', 'jeffrey_espinel@hotmail.com ', 1),
+(89, '1047437863', 'LEONARD JAVIER', 'YEPES ROJAS ', '1047437863', 'lyepesr@hotmail.com ', 1),
+(90, '1047398260', 'JUAN RAFAEL                             ', 'MENDEZ MATOS                            ', '1047398260', 'juanrey_1010@yahoo.es                        ', 1),
+(91, '73006859', 'ONEL', 'ARRIETA ZUñIGA', '73006859', 'elbuho9@hotmail.com ', 1),
+(92, '1143347612', 'LUIS MIGUEL                             ', 'MORALES PÁJARO                          ', '1143347612', 'luismiguel.mopa@hotmail.com                  ', 1),
+(93, '1143353411', 'DIYINA CECILIA                          ', 'FERNANDEZ GOMEZ                         ', '1143353411', 'diyis5@hotmail.com                           ', 1),
+(94, '1103217271', 'LUIS ALFONSO                            ', 'VELEZ SANTOS                            ', '1103217271', 'lvelezsantos@hotmail.com                     ', 1),
+(95, '1143351885', 'FRANKLIN ANTONIO', 'ACUÑA PESTANA ', '1143351885', 'ciberfrank_20@hotmail.com ', 1),
+(96, '1047426346', 'OSCAR ALFONSO                           ', 'SALCEDO ROBLES                          ', '1047426346', 'oscarsalcedo10@hotmail.com                   ', 1),
+(97, '1143349281', 'JOSE LUIS                               ', 'VEGA SUAREZ                             ', '1143349281', 'vega1593@hotmail.com                         ', 1),
+(98, '1143354166', 'LUIS ALFREDO                            ', 'MONCARIS GONZALEZ                       ', '1143354166', 'luis_moncaris1991@hotmail.com                ', 1),
+(99, '1143346120', 'ANTONIO LUIS                            ', 'PONCE RONDON                            ', '1143346120', 'america_y_real@hotmail.com                   ', 1),
+(100, '1047426880', 'ISAMAR', 'BLANQUICET BERRIO ', '1047426880', 'isa-0110@hotmail.com', 1),
+(101, '1047433224', 'JULIAN MAURICIO                         ', 'MARTINEZ FERNANDEZ                      ', '1047433224', 'julian790_realmadrid@hotmail.com             ', 1),
+(102, '1047434781', 'DARWIN ALEXANDER                        ', 'ESCOBAR MIRANDA                         ', '1047434781', 'escobar7@hotmail.com                         ', 1),
+(103, '1047433267', 'LUIS FELIPE                             ', 'SERNA GOMEZ                             ', '1047433267', 'felo01234@hotmail.com                        ', 1),
+(104, '1020729179', 'CRISTIAN RAFAEL                         ', 'TRUJILLO ZULETA                         ', '1020729179', 'ctrujillozt@hotmail.com                      ', 1),
+(105, '1047426759', 'ALBEYS', 'CASTILLO RUIZ ', '1047426759', 'albeys1@hotmail.com ', 1),
+(106, '1143332414', 'RICARDO ', 'BARRIOS GUERRERO', '1143332414', 'akii_4@hotmail.com', 1),
+(107, '1143354403', 'KEVIN RAFAEL                            ', 'SARMIENTO MENDOZA                       ', '1143354403', 'krsarmiento@gmail.com                        ', 1),
+(108, '1099963388', 'ANDRES DAVID', 'BETIN RODRIGUEZ ', '1099963388', 'andre_14betin@hotmail.com ', 1),
+(109, '1143361777', 'MILTON ELIAS                            ', 'LIZCANO PEREZ                           ', '1143361777', 'melp1911@hotmail.com                         ', 1),
+(110, '1128060964', 'EDGARDO JAVIER                          ', 'DÍAZ PÉREZ                              ', '1128060964', 'edgarjdp@yahoo.es                            ', 1),
+(111, '1047422951', 'BENJAMIN JOSE                           ', 'TORRES CABARCAS                         ', '1047422951', 'benyo_blinblin@hotmail.com                   ', 1),
+(112, '1047408963', 'ROIME YECID                             ', 'OROZCO HENAO                            ', '1047408963', 'emior0814@hotmail.com                        ', 1),
+(113, '1143343643', 'CESAR ANDRES                            ', 'VELASQUEZ MARTINEZ                      ', '1143343643', 'cesarandresvelasquez@hotmail.com             ', 1),
+(114, '1128047055', 'DIEGO ARMANDO                           ', 'MAZA TAPIA                              ', '1128047055', 'dmata28@hotmail.com                          ', 1),
+(115, '1047415538', 'ORLANDO JOSE                            ', 'DEL RIO BUENDIA                         ', '1047415538', 'orla725@hotmail.com                          ', 1),
+(116, '1128057404', 'ALVARO LUIS                             ', 'PAYARES GUZMAN                          ', '1128057404', 'alpayares7@hotmail.com                       ', 1),
+(117, '1143334111', 'WILSON  STIVEN                          ', 'PEREIRA MELENDEZ                        ', '1143334111', 'shakab_nizi@hotmail.com                      ', 1),
+(118, '1143345556', 'JOSE CARLO                              ', 'OJEDA DE LA HOZ                         ', '1143345556', 'josecarlo_26@hotmail.com                     ', 1),
+(119, '1047426345', 'JOSE ESTEBAN                            ', 'BETIN DIAZ                              ', '1047426345', 'jose_betin@hotmail.com                       ', 1),
+(120, '1047434978', 'AMAURY DANIEL                           ', 'JIMENEZ ESCAMILLA                       ', '1047434978', 'amaury1047@hotmail.com                       ', 1),
+(121, '1047432850', 'LUIS MANUEL                             ', 'ORTIZ DIAZ                              ', '1047432850', 'luisma_od@hotmail.com                        ', 1),
+(122, '32937292', 'MARIA LILIANA                           ', 'CONEO CARABALLO                         ', '32937292', 'liliana.coneo@gmail.com                      ', 1),
+(123, '1047425119', 'MARIA YOLANDA                           ', 'GONZALEZ CASTELLANOS                    ', '1047425119', 'thica65@hotmail.com                          ', 1),
+(124, '1128062003', 'SAMIR ANDRES                            ', 'HINCAPIE CAMELO                         ', '1128062003', 'sahincapiec@gmail.com                        ', 1);
 
 -- --------------------------------------------------------
 
@@ -2322,7 +2609,53 @@ CREATE TABLE IF NOT EXISTS `ponderacioncaracteristica` (
   PRIMARY KEY (`id`),
   KEY `fk_ponderacioncaracteristica_proceso1_idx` (`proceso_id`),
   KEY `fk_ponderacioncaracteristica_caracteristica1_idx` (`caracteristica_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
+
+--
+-- Volcado de datos para la tabla `ponderacioncaracteristica`
+--
+
+INSERT INTO `ponderacioncaracteristica` (`id`, `nivelimportancia`, `ponderacion`, `justificacion`, `proceso_id`, `caracteristica_id`) VALUES
+(1, 9, 3.33, 'jk', 1, 1),
+(2, 9, 3.33, 'jk', 1, 2),
+(3, 9, 3.33, '9', 1, 3),
+(4, 9, 2.5, '9', 1, 4),
+(5, 9, 2.5, '9', 1, 5),
+(6, 9, 2.5, '9', 1, 6),
+(7, 9, 2.5, '9', 1, 7),
+(8, 9, 1.13, '9', 1, 8),
+(9, 9, 1.13, '9', 1, 9),
+(10, 9, 1.13, '9', 1, 10),
+(11, 9, 1.13, '9', 1, 11),
+(12, 9, 1.13, '9', 1, 12),
+(13, 9, 1.13, '9', 1, 13),
+(14, 9, 1.13, '9', 1, 14),
+(15, 9, 1.13, '9', 1, 15),
+(16, 9, 0.82, '9', 1, 16),
+(17, 9, 0.82, '9', 1, 17),
+(18, 9, 0.82, '9', 1, 18),
+(19, 9, 0.82, '9', 1, 19),
+(20, 9, 0.82, '9', 1, 20),
+(21, 9, 0.82, '9', 1, 21),
+(22, 9, 0.82, '9', 1, 22),
+(23, 9, 0.82, '9', 1, 23),
+(24, 9, 0.82, '9', 1, 24),
+(25, 9, 0.82, '9', 1, 25),
+(26, 9, 0.82, '9', 1, 26),
+(27, 9, 4.5, '9', 1, 27),
+(28, 9, 4.5, '9', 1, 28),
+(29, 9, 4.5, '9', 1, 29),
+(30, 9, 4.5, '9', 1, 30),
+(31, 9, 4.5, '9', 1, 31),
+(32, 9, 4.5, '9', 1, 32),
+(33, 9, 3, '9', 1, 33),
+(34, 9, 3, '9', 1, 34),
+(35, 9, 3, '9', 1, 35),
+(36, 9, 4.5, '9', 1, 36),
+(37, 9, 4.5, '9', 1, 37),
+(38, 9, 5.67, '9', 1, 38),
+(39, 9, 5.67, '9', 1, 39),
+(40, 9, 5.67, '9', 1, 40);
 
 -- --------------------------------------------------------
 
@@ -2339,7 +2672,23 @@ CREATE TABLE IF NOT EXISTS `ponderacionfactor` (
   PRIMARY KEY (`id`),
   KEY `fk_ponderacionfactor_proceso1_idx` (`proceso_id`),
   KEY `fk_ponderacionfactor_factor1_idx` (`factor_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+
+--
+-- Volcado de datos para la tabla `ponderacionfactor`
+--
+
+INSERT INTO `ponderacionfactor` (`id`, `ponderacion`, `justificacion`, `proceso_id`, `factor_id`) VALUES
+(1, 10, 'una justificacion', 1, 3),
+(2, 10, 'una justificacion', 1, 4),
+(3, 9, '9', 1, 5),
+(4, 9, '9', 1, 6),
+(5, 9, '99', 1, 7),
+(6, 9, '9', 1, 8),
+(7, 9, '9', 1, 9),
+(8, 9, '9', 1, 10),
+(9, 9, '9', 1, 11),
+(10, 17, '9', 1, 12);
 
 -- --------------------------------------------------------
 
@@ -2480,7 +2829,14 @@ CREATE TABLE IF NOT EXISTS `proceso` (
   PRIMARY KEY (`id`),
   KEY `fk_proceso_programa1_idx` (`programa_id`),
   KEY `fk_proceso_modelo1` (`modelo_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `proceso`
+--
+
+INSERT INTO `proceso` (`id`, `fechainicio`, `fechacierre`, `descripcion`, `programa_id`, `modelo_id`) VALUES
+(1, '30/05/2013', '--', 'Proceso de Autoevaluación del programa Ingeniería de Sistemas presencial de la Universidad de Cartagena', 22, 1);
 
 -- --------------------------------------------------------
 
@@ -2588,7 +2944,135 @@ CREATE TABLE IF NOT EXISTS `resultadoevaluacion` (
   PRIMARY KEY (`id`),
   KEY `fk_ResultadoEvaluacion_encabezado1_idx` (`encabezado_id`),
   KEY `fk_ResultadoEvaluacion_pregunta1_idx` (`pregunta_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=123 ;
+
+--
+-- Volcado de datos para la tabla `resultadoevaluacion`
+--
+
+INSERT INTO `resultadoevaluacion` (`id`, `respuesta`, `encabezado_id`, `pregunta_id`) VALUES
+(1, '5', 1, 1),
+(2, '5', 1, 2),
+(3, '3', 1, 3),
+(4, '5', 1, 4),
+(5, '4', 1, 5),
+(6, '5', 1, 6),
+(7, '5', 1, 7),
+(8, '5', 1, 10),
+(9, '4', 1, 11),
+(10, '4', 1, 14),
+(11, '3', 1, 15),
+(12, '3', 1, 16),
+(13, '3', 1, 17),
+(14, '3', 1, 18),
+(15, '3', 1, 23),
+(16, '3', 1, 26),
+(17, '3', 1, 27),
+(18, '3', 1, 28),
+(19, '3', 1, 33),
+(20, '3', 1, 34),
+(21, '4', 1, 35),
+(22, '4', 1, 36),
+(23, '4', 1, 38),
+(24, '4', 1, 39),
+(25, '4', 1, 40),
+(26, '4', 1, 42),
+(27, '4', 1, 44),
+(28, '4', 1, 45),
+(29, '4', 1, 46),
+(30, '4', 1, 47),
+(31, '4', 1, 48),
+(32, '4', 1, 49),
+(33, '4', 1, 50),
+(34, '5', 1, 51),
+(35, '4', 1, 52),
+(36, '5', 1, 53),
+(37, '5', 1, 54),
+(38, '4', 1, 55),
+(39, '5', 1, 56),
+(40, '5', 1, 57),
+(41, '5', 1, 58),
+(42, '5', 1, 59),
+(43, '5', 1, 60),
+(44, '5', 1, 61),
+(45, '5', 1, 62),
+(46, '5', 1, 64),
+(47, '4', 1, 65),
+(48, '5', 1, 66),
+(49, '5', 1, 72),
+(50, '5', 1, 73),
+(51, '4', 1, 74),
+(52, '4', 1, 75),
+(53, '5', 1, 76),
+(54, '5', 1, 77),
+(55, '5', 1, 78),
+(56, '5', 1, 79),
+(57, '5', 1, 80),
+(58, '5', 1, 81),
+(59, '3', 1, 82),
+(60, '3', 1, 83),
+(61, '2', 1, 84),
+(62, '4', 2, 1),
+(63, '4', 2, 2),
+(64, '4', 2, 3),
+(65, '4', 2, 4),
+(66, '4', 2, 5),
+(67, '4', 2, 6),
+(68, '4', 2, 7),
+(69, '4', 2, 10),
+(70, '4', 2, 11),
+(71, '4', 2, 14),
+(72, '4', 2, 15),
+(73, '4', 2, 16),
+(74, '4', 2, 17),
+(75, '5', 2, 18),
+(76, '5', 2, 23),
+(77, '5', 2, 26),
+(78, '5', 2, 27),
+(79, '5', 2, 28),
+(80, '5', 2, 33),
+(81, '4', 2, 34),
+(82, '2', 2, 35),
+(83, '3', 2, 36),
+(84, '3', 2, 38),
+(85, '3', 2, 39),
+(86, '3', 2, 40),
+(87, '3', 2, 42),
+(88, '4', 2, 44),
+(89, '3', 2, 45),
+(90, '5', 2, 46),
+(91, '3', 2, 47),
+(92, '3', 2, 48),
+(93, '3', 2, 49),
+(94, '3', 2, 50),
+(95, '3', 2, 51),
+(96, '5', 2, 52),
+(97, '3', 2, 53),
+(98, '3', 2, 54),
+(99, '3', 2, 55),
+(100, '5', 2, 56),
+(101, '3', 2, 57),
+(102, '3', 2, 58),
+(103, '3', 2, 59),
+(104, '5', 2, 60),
+(105, '5', 2, 61),
+(106, '3', 2, 62),
+(107, '3', 2, 64),
+(108, '3', 2, 65),
+(109, '5', 2, 66),
+(110, '3', 2, 72),
+(111, '5', 2, 73),
+(112, '5', 2, 74),
+(113, '3', 2, 75),
+(114, '3', 2, 76),
+(115, '3', 2, 77),
+(116, '3', 2, 78),
+(117, '3', 2, 79),
+(118, '2', 2, 80),
+(119, '3', 2, 81),
+(120, '3', 2, 82),
+(121, '4', 2, 83),
+(122, '4', 2, 84);
 
 --
 -- Restricciones para tablas volcadas
@@ -2659,10 +3143,10 @@ ALTER TABLE `empleador`
 -- Filtros para la tabla `encabezado`
 --
 ALTER TABLE `encabezado`
-  ADD CONSTRAINT `fk_encabezado_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_encabezado_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_encabezado_encuesta1` FOREIGN KEY (`encuesta_id`) REFERENCES `encuesta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_encabezado_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_encabezado_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_encabezado_muestrapersona1` FOREIGN KEY (`muestrapersona_id`) REFERENCES `muestrapersona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `encuesta`
