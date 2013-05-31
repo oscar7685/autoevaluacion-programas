@@ -122,9 +122,11 @@
                                 <button id="west-closer" class="close">&laquo;</button>
                                 <li class="nav-header">Proceso de Atoevaluación</li>
                                 <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
-                                <li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Factores</a></li>
-                                <li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Características</a></li>
+                                <li><a href="#listPonderacionFactor"><i class="icon-list"></i> Factores</a></li>
+                                <li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>
                                 <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>
+                                <li><a href="#preparedInfoNumerica"><i class="icon-list-ol"></i> Información Numérica</a></li>
+                                <li><a href="#preparedInfoDocumental"><i class="icon-file-alt"></i> Información Documental</a></li>
                                 <li class="nav-header">Estado del proceso</li>
                                 <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#estadoProceso"><i class="icon-bar-chart"></i> Estado del proceso</a></li>
                             </ul>

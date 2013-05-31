@@ -14,7 +14,6 @@
               border-color: #BCE8F1;
               color: #3A87AD; margin-bottom: 5px">Guardado</span>
     </div>
-    <br>
 </c:if>
 <form id="formEditarMuestra">
     <fieldset>
@@ -25,7 +24,7 @@
                     <c:if test="${item.personaId.id == item2.muestrapersonaId.cedula}">
                         <c:set var="varaux" value="0"/>
                         <c:forEach items="${listEncabezado}" var="item3" varStatus="iter2">
-                            <c:if test="${item.personaId.id == item3.muestrapersonaId.id}">
+                            <c:if test="${item.personaId.id == item3.muestrapersonaId.cedula}">
                                 <c:set var="varaux" value="1"/>
                                 <c:if test="${item3.estado == 'terminado'}">
                                     <li id="itemblockVerde">

@@ -156,16 +156,16 @@
         <div class="span10" style="margin-left: 0px;">
             <c:choose>
                 <c:when test="${fn:length(listMuestraSeleccionada)!= 0}">
-                    <c:if test="${EstadoProceso == 2}">
-                        <div class="btn-group" data-toggle="buttons-radio">
-                            <button type="button" class="btn btn-primary active">Todos</button>
-                            <button type="button" class="btn btn-danger">Pendiente</button>
-                            <button type="button" class="btn btn-success">Terminado</button>
-                            <button type="button" class="btn btn-info">Guardado</button>
-                        </div>
-                        <br><br>
-                    </c:if>
                     <div id="editM">
+                        <c:if test="${EstadoProceso == 2}">
+                            <div class="btn-group" data-toggle="buttons-radio">
+                                <button type="button" class="btn btn-primary active">Todos</button>
+                                <button type="button" class="btn btn-danger">Pendiente</button>
+                                <button type="button" class="btn btn-success">Terminado</button>
+                                <button type="button" class="btn btn-info">Guardado</button>
+                            </div>
+                            <br><br>
+                        </c:if>
                         <table class="table table-striped table-bordered table-condensed">
                             <thead>
                             <th>Cedula</th>    

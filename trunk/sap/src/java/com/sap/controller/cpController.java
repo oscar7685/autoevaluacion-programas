@@ -15,6 +15,8 @@ import com.sap.ejb.EncabezadoFacade;
 import com.sap.ejb.EstudianteFacade;
 import com.sap.ejb.FactorFacade;
 import com.sap.ejb.FuenteFacade;
+import com.sap.ejb.IndicadorFacade;
+import com.sap.ejb.InstrumentoFacade;
 import com.sap.ejb.ModeloFacade;
 import com.sap.ejb.MuestraFacade;
 import com.sap.ejb.MuestraadministrativoFacade;
@@ -25,6 +27,7 @@ import com.sap.ejb.MuestraegresadoFacade;
 import com.sap.ejb.MuestraempleadorFacade;
 import com.sap.ejb.MuestraestudianteFacade;
 import com.sap.ejb.MuestrapersonaFacade;
+import com.sap.ejb.NumericadocumentalFacade;
 import com.sap.ejb.PonderacioncaracteristicaFacade;
 import com.sap.ejb.PonderacionfactorFacade;
 import com.sap.ejb.ProcesoFacade;
@@ -38,6 +41,7 @@ import com.sap.entity.Empleador;
 import com.sap.entity.Estudiante;
 import com.sap.entity.Factor;
 import com.sap.entity.Indicador;
+import com.sap.entity.Instrumento;
 import com.sap.entity.Modelo;
 import com.sap.entity.Muestra;
 import com.sap.entity.Muestraadministrativo;
@@ -123,6 +127,12 @@ public class cpController extends HttpServlet {
     private EncabezadoFacade encabezadoFacade;
     @EJB
     private FuenteFacade fuenteFacade;
+    @EJB
+    private IndicadorFacade indicadorFacade;
+    @EJB
+    private NumericadocumentalFacade numericadocumentalFacade;
+    @EJB
+    private InstrumentoFacade instrumentoFacade;
 
     /**
      * Processes requests for both HTTP
@@ -149,6 +159,11 @@ public class cpController extends HttpServlet {
         try {
             if (action.equals("indexCP")) {
                 String url = "/WEB-INF/vista/comitePrograma/index.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+
+            } else if (action.equals("inicio")) {
+                String url = "/WEB-INF/vista/comitePrograma/inicio.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
 
@@ -1140,6 +1155,68 @@ public class cpController extends HttpServlet {
 
 
                 String url = "/WEB-INF/vista/comitePrograma/muestra/selectorListMuestra.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("preparedInfoNumerica")) {
+
+
+                Instrumento ins = instrumentoFacade.find(3);
+
+                List li = ins.getIndicadorList();
+                
+             
+                List<Indicador> linum = new ArrayList<Indicador>();
+
+                Iterator it = li.iterator();
+
+                while (it.hasNext()) {
+                    Indicador i = (Indicador) it.next();
+                    
+                    Modelo m1 = i.getModeloId();
+                    Modelo m2 = (Modelo) sesion.getAttribute("Modelo");
+                    
+                    if (m1.getId() == m2.getId()) {
+                        linum.add(i);
+                    }
+
+                }
+            
+                sesion.setAttribute("lisrInidicadorsDoc", linum);
+
+
+                String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoNumerica.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            }else if (action.equals("preparedInfoDocumental")) {
+
+
+                Instrumento ins = instrumentoFacade.find(2);
+
+                List li = ins.getIndicadorList();
+                
+              
+                List<Indicador> linum = new ArrayList<Indicador>();
+
+                Iterator it = li.iterator();
+
+                while (it.hasNext()) {
+                    Indicador i = (Indicador) it.next();
+                    
+                    Modelo m1 = i.getModeloId();
+                    Modelo m2 = (Modelo) sesion.getAttribute("Modelo");
+                    
+                     if (m1.getId() == m2.getId()) {
+                        linum.add(i);
+                    }
+
+                }
+                
+                System.out.println("Tamaño: " + linum.size());
+
+                sesion.setAttribute("lisrInidicadorsNum", linum);
+
+
+                String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoDocumental.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("estadoProceso")) {
