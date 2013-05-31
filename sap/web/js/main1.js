@@ -107,11 +107,16 @@ $(function() {
                 '<button id="west-closer" class="close">&laquo;</button>' +
                 '<li class="nav-header">Proceso de Atoevaluación</li>' +
                 '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
-                '<li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i>  Factores</a></li>' +
-                '<li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Características</a></li>' +
+                '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
+                '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>' +
                 ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
+                ' < li > < a href = "#listMuestra" > < i class = "icon-file-alt" > < /i> Información Numérica</a > < /li>' +
+                ' < li > < a href = "#listMuestra" > < i class = "icon-list-ol" > < /i> Información Documental</a > < /li>' +
+                ' < li class = "nav-header" > Estado del proceso < /li>' +
+                ' < li > < a  id = "informeEncuesta"  href = "<%=request.getContextPath()%>/#estadoProceso" > < i class = "icon-bar-chart" > < /i> Estado del proceso</a > < /li>' +
                 '</ul>' +
-                '</div>');
+                '</div>'
+        );
     };
 
 
@@ -124,7 +129,7 @@ $(function() {
             }); //fin post
 
 
-        } else if (hash === "#preparedCrearProceso" || hash === "#listarProceso" || hash === "#detalleProceso" || hash === "#detalleProceso" || hash === "#preparedPonderarFactor" || hash === "#ponderarFactor" || hash === "#listPonderacionFactor" || hash === "#preparedPonderarCara" || hash === "#listPonderacionCara" || hash === "#preparedAsignarMuestra" || hash === "#selectorListMuestra" || hash === "#listMuestra" || hash === "#preparedEvaluador" || hash === "#preparedEditPonderarFactor" || hash === "#preparedEditPonderarCara" || hash === "#generarMuestraAleatoria" || hash === "#preparedEditarMuestra" || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#estadoProceso" || hash==="#informeMatrizFactores") {
+        } else if (hash === "#inicio" || hash === "#preparedCrearProceso" || hash === "#listarProceso" || hash === "#detalleProceso" || hash === "#detalleProceso" || hash === "#preparedPonderarFactor" || hash === "#ponderarFactor" || hash === "#listPonderacionFactor" || hash === "#preparedPonderarCara" || hash === "#listPonderacionCara" || hash === "#preparedAsignarMuestra" || hash === "#selectorListMuestra" || hash === "#listMuestra" || hash === "#preparedEvaluador" || hash === "#preparedEditPonderarFactor" || hash === "#preparedEditPonderarCara" || hash === "#generarMuestraAleatoria" || hash === "#preparedEditarMuestra" || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental") {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
