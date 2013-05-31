@@ -80,6 +80,31 @@ $(function() {
                     } //fin success
                 }); //fin del $.ajax
 
+            } else {
+                if (hash === "#inicio") {
+                    var url3 = "/sap/" + hash;
+                    url3 = url3.replace('#', "controladorF?action=") + "CC";
+                    $("div.ui-layout-center").empty();
+                    $.ajax({
+                        type: "POST",
+                        url: url3,
+                        beforeSend: function() {
+                            $("div.ui-layout-center").append("<div id='contenido'></div>");
+                            $("#contenido").hide();
+                            $("div.ui-layout-center").append(""
+                                    + "<div id='dancing-dots-text'>"
+                                    + "Cargando <span><span>.</span><span>.</span><span>.</span><span>.</span><span>.</span></span> "
+                                    + "</div>");
+                        },
+                        success: function(data)
+                        {
+                            $("#contenido").append(data);
+                            $("#contenido").show(200, function() {
+                                $("#dancing-dots-text").hide();
+                            });
+                        } //fin success
+                    }); //fin del $.ajax
+                }
             }
         } //fin else
     });
