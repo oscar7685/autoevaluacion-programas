@@ -4,15 +4,15 @@
     <div class="row">
         <div id="conte" class="span10">
            
-            <h3>Listado de  Preguntas</h3>
+            <h3 style="margin: 0;">Listado de  Preguntas</h3>
             <c:choose>
                 <c:when test="${fn:length(listaP)!= 0}">
 
-                    <table class="table table-striped table-bordered table-condensed">
+                    <table id="tablaX" class="table table-striped table-bordered table-condensed">
                         <thead>
-                        <th>C&oacute;digo</th>    
-                        <th>Pregunta</th>
-                        <th>Acci&oacute;n</th>
+                        <th class="span1">C&oacute;digo</th>    
+                        <th class="span8">Pregunta</th>
+                        <th class="span1">Acci&oacute;n</th>
                         </thead>
                         <tbody>
                             <c:forEach items="${listaP}" var="row" varStatus="iter">
@@ -41,4 +41,4 @@
         </div>
     </div>
 </div>    
-
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>

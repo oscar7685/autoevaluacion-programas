@@ -1163,54 +1163,54 @@ public class cpController extends HttpServlet {
                 Instrumento ins = instrumentoFacade.find(3);
 
                 List li = ins.getIndicadorList();
-                
-             
+
+
                 List<Indicador> linum = new ArrayList<Indicador>();
 
                 Iterator it = li.iterator();
 
                 while (it.hasNext()) {
                     Indicador i = (Indicador) it.next();
-                    
+
                     Modelo m1 = i.getModeloId();
                     Modelo m2 = (Modelo) sesion.getAttribute("Modelo");
-                    
+
                     if (m1.getId() == m2.getId()) {
                         linum.add(i);
                     }
 
                 }
-            
+
                 sesion.setAttribute("lisrInidicadorsDoc", linum);
 
 
                 String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoNumerica.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
-            }else if (action.equals("preparedInfoDocumental")) {
+            } else if (action.equals("preparedInfoDocumental")) {
 
 
                 Instrumento ins = instrumentoFacade.find(2);
 
                 List li = ins.getIndicadorList();
-                
-              
+
+
                 List<Indicador> linum = new ArrayList<Indicador>();
 
                 Iterator it = li.iterator();
 
                 while (it.hasNext()) {
                     Indicador i = (Indicador) it.next();
-                    
+
                     Modelo m1 = i.getModeloId();
                     Modelo m2 = (Modelo) sesion.getAttribute("Modelo");
-                    
-                     if (m1.getId() == m2.getId()) {
+
+                    if (m1.getId() == m2.getId()) {
                         linum.add(i);
                     }
 
                 }
-                
+
                 System.out.println("Tamaño: " + linum.size());
 
                 sesion.setAttribute("lisrInidicadorsNum", linum);
@@ -1312,9 +1312,9 @@ public class cpController extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("informeMatrizFactores")) {
-                Proceso p = (Proceso)sesion.getAttribute("Proceso");
+                Proceso p = (Proceso) sesion.getAttribute("Proceso");
                 Modelo m = p.getModeloId();
-                int suma=0;
+                int suma = 0;
                 List<Factor> factores = m.getFactorList();
                 for (int i = 0; i < factores.size(); i++) {
                     List<Caracteristica> caracteristicas = factores.get(i).getCaracteristicaList();
@@ -1325,16 +1325,67 @@ public class cpController extends HttpServlet {
                             for (int l = 0; l < preguntas.size(); l++) {
                                 List<Resultadoevaluacion> resultados = preguntas.get(l).getResultadoevaluacionList();
                                 for (int n = 0; n < resultados.size(); n++) {
-                                    suma+=Integer.parseInt(resultados.get(n).getRespuesta());
+                                    suma += Integer.parseInt(resultados.get(n).getRespuesta());
                                 }
                             }
                         }
-                        
+
                     }
                 }
-                System.out.println("suma = "+suma);
-                
+                System.out.println("suma = " + suma);
+
                 String url = "/WEB-INF/vista/comitePrograma/proceso/informe/matrizFactores.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("informeMatrizCaracteristicas")) {
+                Proceso p = (Proceso) sesion.getAttribute("Proceso");
+                Modelo m = p.getModeloId();
+                int suma;
+                int numP;
+                float promedioPregunta;
+
+                List<Caracteristica> caracteristicas = m.getCaracteristicaList();
+                float cumplimiento[] = new float[caracteristicas.size()];
+                for (int j = 0; j < caracteristicas.size(); j++) {
+                    promedioPregunta = 0;
+                    List<Indicador> indicadores = caracteristicas.get(j).getIndicadorList();
+                    for (int k = 0; k < indicadores.size(); k++) {
+                        List<Instrumento> instr = indicadores.get(k).getInstrumentoList();
+                        for (int i = 0; i < instr.size(); i++) {
+                            Instrumento instrumento = instr.get(i);
+                            if (instrumento.getId() == 1) {
+                                suma = 0;
+                                numP = 0;
+                                List<Pregunta> preguntas = indicadores.get(k).getPreguntaList();
+                                for (int l = 0; l < preguntas.size(); l++) {
+                                    Pregunta pregunta = preguntas.get(l);
+                                    List<Resultadoevaluacion> respuestas = pregunta.getResultadoevaluacionList();
+                                    for (int n = 0; n < respuestas.size(); n++) {
+                                        if (respuestas.get(n).getRespuesta() != null && !respuestas.get(n).getRespuesta().equals("")) {
+                                            numP++;
+                                            suma += Integer.parseInt(respuestas.get(n).getRespuesta());
+                                        }
+
+                                    }
+                                }
+                                if (suma > 0) {
+                                    promedioPregunta = (float) suma / numP;
+                                }
+
+                            } else {
+                                if (instrumento.getId() == 2 || instrumento.getId() == 3) {
+                                }
+                            }
+                        }
+                    }
+                    cumplimiento[j] = promedioPregunta;
+                }
+
+
+                sesion.setAttribute("caracteristicas", caracteristicas);
+                sesion.setAttribute("cumplimiento", cumplimiento);
+                
+                String url = "/WEB-INF/vista/comitePrograma/proceso/informe/matrizCaracteristicas.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             }
