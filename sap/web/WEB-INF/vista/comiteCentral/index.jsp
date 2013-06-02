@@ -18,6 +18,12 @@
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/otro.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap-responsive.min.css">
+        <style type="text/css">
+            .table-condensed th,
+            .table-condensed td {
+                padding: 1px 5px;
+            }
+        </style>
         <script src="<%=request.getContextPath()%>/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
     </head>
@@ -131,6 +137,7 @@
         <script src="<%=request.getContextPath()%>/js/jquery.metadata.js"></script>
         <script src="<%=request.getContextPath()%>/js/vendor/bootstrap.min.js"></script>
         <script src="<%=request.getContextPath()%>/js/jquery.ba-hashchange.min.js"></script>
+        <script src="<%=request.getContextPath()%>/js/jquery.dataTables.min.js"></script>
         <script src="<%=request.getContextPath()%>/js/main2.js"></script>
 
     </body>

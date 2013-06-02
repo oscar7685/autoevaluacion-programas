@@ -3,15 +3,14 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <h3>Listado de  Factores</h3>
+            <h3 style="margin: 0;">Listado de  Factores</h3>
             <c:choose>
                 <c:when test="${fn:length(listaF)!= 0}">
-
-                    <table class="table table-striped table-bordered table-condensed">
+                    <table id="tablaX" class="table table-striped table-bordered table-condensed">
                         <thead>
-                        <th>C&oacute;digo</th>    
-                        <th>Factor</th>
-                        <th>Acci&oacute;n</th>
+                        <th class="span1">C&oacute;digo</th>    
+                        <th class="span8">Factor</th>
+                        <th class="span1">Acci&oacute;n</th>
                         </thead>
                         <tbody>
                             <c:forEach items="${listaF}" var="row" varStatus="iter">
@@ -35,9 +34,9 @@
                 </c:otherwise>
             </c:choose>
 
-             <a href="#crearFactor" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Crear factor</a>
-             
+            <a href="#crearFactor" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Crear factor</a>
+
         </div>
     </div>
 </div>    
-
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>

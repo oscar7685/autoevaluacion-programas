@@ -6,7 +6,7 @@
             <h3>Ponderación de  Factores</h3>
             <c:choose>
                 <c:when test="${fn:length(listPonderacionFactor)!= 0}">
-                    <table class="table table-striped table-bordered table-condensed">
+                    <table id="tablaX" class="table table-striped table-bordered table-condensed">
                         <thead>
                         <th>C&oacute;digo</th>    
                         <th>Factor</th>
@@ -44,4 +44,4 @@
         </div>
     </div>
 </div>    
-
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>
