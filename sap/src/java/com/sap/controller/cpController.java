@@ -79,6 +79,7 @@ import javax.servlet.http.HttpSession;
  * @author 2013
  */
 public class cpController extends HttpServlet {
+
     @EJB
     private PonderacioncaracteristicaFacade ponderacioncaracteristicaFacade;
     @EJB
@@ -1223,68 +1224,68 @@ public class cpController extends HttpServlet {
                 rd.forward(request, response);
             } else if (action.equals("registrarInfoNumerica")) {
 
-                
+
                 List<Indicador> linum = (List<Indicador>) sesion.getAttribute("lisrInidicadorsNum");
-                
+
                 for (Indicador i : linum) {
 
-                   String nombreDoc = request.getParameter("nombreDocumento" + i.getId());
-                   String responDoc = request.getParameter("responsableDocumento" + i.getId());
-                   String medioDoc = request.getParameter("medioDocumento" + i.getId());
-                   String lugarDoc = request.getParameter("lugarDocumento" + i.getId());
-                   int evaluDoc = Integer.parseInt(request.getParameter("evaluacionDoc" + i.getId()));
-                   String accionDoc = request.getParameter("accionDocumento" + i.getId());
-                   
-                   Numericadocumental nd = new Numericadocumental();
-                   nd.setAccion(accionDoc);
-                   nd.setDocumento(nombreDoc);
-                   nd.setEvaluacion(evaluDoc);
-                   nd.setLugar(lugarDoc);
-                   nd.setMedio(medioDoc);
-                   nd.setResponsable(responDoc);
-                   nd.setProcesoId(proceso);
-                   
-                   nd.setInstrumentohasindicadorId(String.valueOf(i.getId()));
-                   
-                   numericadocumentalFacade.create(nd);
-                                    
+                    String nombreDoc = request.getParameter("nombreDocumento" + i.getId());
+                    String responDoc = request.getParameter("responsableDocumento" + i.getId());
+                    String medioDoc = request.getParameter("medioDocumento" + i.getId());
+                    String lugarDoc = request.getParameter("lugarDocumento" + i.getId());
+                    int evaluDoc = Integer.parseInt(request.getParameter("evaluacionDoc" + i.getId()));
+                    String accionDoc = request.getParameter("accionDocumento" + i.getId());
+
+                    Numericadocumental nd = new Numericadocumental();
+                    nd.setAccion(accionDoc);
+                    nd.setDocumento(nombreDoc);
+                    nd.setEvaluacion(evaluDoc);
+                    nd.setLugar(lugarDoc);
+                    nd.setMedio(medioDoc);
+                    nd.setResponsable(responDoc);
+                    nd.setProcesoId(proceso);
+
+                    nd.setInstrumentohasindicadorId(String.valueOf(i.getId()));
+
+                    numericadocumentalFacade.create(nd);
+
                 }
 
-              /*  String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoDocumental.jsp";
-                RequestDispatcher rd = request.getRequestDispatcher(url);
-                rd.forward(request, response);*/
+                /*  String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoDocumental.jsp";
+                 RequestDispatcher rd = request.getRequestDispatcher(url);
+                 rd.forward(request, response);*/
             } else if (action.equals("registrarInfoDocumental")) {
 
-                
+
                 List<Indicador> lidoc = (List<Indicador>) sesion.getAttribute("lisrInidicadorsDoc");
-                
+
                 for (Indicador i : lidoc) {
 
-                   String nombreDoc = request.getParameter("nombreDocumento" + i.getId());
-                   String responDoc = request.getParameter("responsableDocumento" + i.getId());
-                   String medioDoc = request.getParameter("medioDocumento" + i.getId());
-                   String lugarDoc = request.getParameter("lugarDocumento" + i.getId());
-                   int evaluDoc = Integer.parseInt(request.getParameter("evaluacionDoc" + i.getId()));
-                   String accionDoc = request.getParameter("accionDocumento" + i.getId());
-                   
-                   Numericadocumental nd = new Numericadocumental();
-                   nd.setAccion(accionDoc);
-                   nd.setDocumento(nombreDoc);
-                   nd.setEvaluacion(evaluDoc);
-                   nd.setLugar(lugarDoc);
-                   nd.setMedio(medioDoc);
-                   nd.setResponsable(responDoc);
-                   nd.setProcesoId(proceso);
-                   
-                   nd.setInstrumentohasindicadorId(String.valueOf(i.getId()));
-                   
-                   numericadocumentalFacade.create(nd);
-                                    
+                    String nombreDoc = request.getParameter("nombreDocumento" + i.getId());
+                    String responDoc = request.getParameter("responsableDocumento" + i.getId());
+                    String medioDoc = request.getParameter("medioDocumento" + i.getId());
+                    String lugarDoc = request.getParameter("lugarDocumento" + i.getId());
+                    int evaluDoc = Integer.parseInt(request.getParameter("evaluacionDoc" + i.getId()));
+                    String accionDoc = request.getParameter("accionDocumento" + i.getId());
+
+                    Numericadocumental nd = new Numericadocumental();
+                    nd.setAccion(accionDoc);
+                    nd.setDocumento(nombreDoc);
+                    nd.setEvaluacion(evaluDoc);
+                    nd.setLugar(lugarDoc);
+                    nd.setMedio(medioDoc);
+                    nd.setResponsable(responDoc);
+                    nd.setProcesoId(proceso);
+
+                    nd.setInstrumentohasindicadorId(String.valueOf(i.getId()));
+
+                    numericadocumentalFacade.create(nd);
+
                 }
 
-              /*  String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoDocumental.jsp";
-                RequestDispatcher rd = request.getRequestDispatcher(url);
-                rd.forward(request, response);*/
+                /*  String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoDocumental.jsp";
+                 RequestDispatcher rd = request.getRequestDispatcher(url);
+                 rd.forward(request, response);*/
             } else if (action.equals("estadoProceso")) {
                 Proceso p = (Proceso) sesion.getAttribute("Proceso");
                 Muestra m = p.getMuestraList().get(0);
@@ -1380,25 +1381,73 @@ public class cpController extends HttpServlet {
             } else if (action.equals("informeMatrizFactores")) {
                 Proceso p = (Proceso) sesion.getAttribute("Proceso");
                 Modelo m = p.getModeloId();
-                int suma = 0;
+                int suma;
+                int numP;
+                float sumaPon;
+                float suma2;
+                float promedioPregunta;
+                List<Ponderacionfactor> ponderacionesF = new ArrayList<Ponderacionfactor>();
                 List<Factor> factores = m.getFactorList();
-                for (int i = 0; i < factores.size(); i++) {
-                    List<Caracteristica> caracteristicas = factores.get(i).getCaracteristicaList();
+                float cumplimientoF[] = new float[factores.size()];
+                for (int i2 = 0; i2 < factores.size(); i2++) {
+                    suma2 = 0;
+                    sumaPon = 0;
+                    List<Ponderacioncaracteristica> ponderacionesC = new ArrayList<Ponderacioncaracteristica>();
+                    List<Caracteristica> caracteristicas = factores.get(i2).getCaracteristicaList();
+                    float cumplimientoC[] = new float[caracteristicas.size()];
                     for (int j = 0; j < caracteristicas.size(); j++) {
+                        promedioPregunta = 0;
+                        suma = 0;
+                        numP = 0;
                         List<Indicador> indicadores = caracteristicas.get(j).getIndicadorList();
                         for (int k = 0; k < indicadores.size(); k++) {
-                            List<Pregunta> preguntas = indicadores.get(k).getPreguntaList();
-                            for (int l = 0; l < preguntas.size(); l++) {
-                                List<Resultadoevaluacion> resultados = preguntas.get(l).getResultadoevaluacionList();
-                                for (int n = 0; n < resultados.size(); n++) {
-                                    suma += Integer.parseInt(resultados.get(n).getRespuesta());
+                            List<Instrumento> instr = indicadores.get(k).getInstrumentoList();
+                            for (int i = 0; i < instr.size(); i++) {
+                                Instrumento instrumento = instr.get(i);
+                                if (instrumento.getId() == 1) {
+                                    List<Pregunta> preguntas = indicadores.get(k).getPreguntaList();
+                                    for (int l = 0; l < preguntas.size(); l++) {
+                                        Pregunta pregunta = preguntas.get(l);
+                                        List<Resultadoevaluacion> respuestas = pregunta.getResultadoevaluacionList();
+                                        for (int n = 0; n < respuestas.size(); n++) {
+                                            if (respuestas.get(n).getEncabezadoId().getEstado().equals("terminado") && respuestas.get(n).getEncabezadoId().getProcesoId().getId() == p.getId() && !respuestas.get(n).getRespuesta().equals("0")) {
+                                                numP++;
+                                                suma += Integer.parseInt(respuestas.get(n).getRespuesta());
+                                            }
+
+                                        }
+                                    }
+                                    if (suma > 0) {
+                                        promedioPregunta = (float) suma / numP;
+                                        ponderacionesC.add(ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(caracteristicas.get(j), p));
+                                    }
+
+                                } else {
+                                    if (instrumento.getId() == 2 || instrumento.getId() == 3) {
+                                    }
                                 }
                             }
                         }
+                        cumplimientoC[j] = promedioPregunta;
 
                     }
+                    for (int i = 0; i < factores.get(i2).getCaracteristicaList().size(); i++) {
+                        if (cumplimientoC[i] != 0) {
+                            Ponderacioncaracteristica pc = ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(factores.get(i2).getCaracteristicaList().get(i), p);
+                            sumaPon += pc.getPonderacion();
+                            suma2 += cumplimientoC[i] * pc.getPonderacion();
+                        }
+                    }
+                    if (sumaPon != 0) {
+                        ponderacionesF.add(ponderacionfactorFacade.findByFactorYProceso(factores.get(i2), p));
+                        cumplimientoF[i2] = suma2 / sumaPon;
+                        }
+                  
+
                 }
-                System.out.println("suma = " + suma);
+                sesion.setAttribute("factores", factores);
+                sesion.setAttribute("ponderacionesF", ponderacionesF);
+                sesion.setAttribute("cumplimientoF", cumplimientoF);
 
                 String url = "/WEB-INF/vista/comitePrograma/proceso/informe/matrizFactores.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
@@ -1446,7 +1495,7 @@ public class cpController extends HttpServlet {
                         }
                     }
                     cumplimiento[j] = promedioPregunta;
-                    
+
                 }
 
 

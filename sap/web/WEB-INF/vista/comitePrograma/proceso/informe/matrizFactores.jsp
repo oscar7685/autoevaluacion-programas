@@ -15,11 +15,11 @@
             <legend>Matriz de Calidad de Factores</legend>
             <ul class="breadcrumb">
                 <li class="active">Matriz de Calidad de Factores  <span class="divider">/</span></li>
-                <li><a href="<%=request.getContextPath()%>/#informeMatriz">Matriz de Calidad de Características</a></li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatrizCaracteristicas">Matriz de Calidad de Características</a></li>
             </ul>
             <br>
             <c:choose>
-                <c:when test="${matrizFactores1.getRowCount()!= 0}">
+                <c:when test="${factores.size()!= 0}">
 
                     <table class="table table-striped table-bordered table-condensed inicial">
                         <thead>
@@ -32,58 +32,39 @@
                         <th>Relacion con el logro ideal</th>
                         </thead>
                         <tbody>
-                            <c:set var="ponderacion" value="0" />
-                            <c:set var="cumplimiento" value="0" />
-                            <c:forEach items="${matrizFactores1.rowsByIndex}" var="row" varStatus="iter">
-                                <tr>
-                                    <td style="text-align: left">   
-                                        <c:out value="${row[0]}"/>
-                                    </td>
-                                    <td style="text-align: left">   
-                                        <a href="#detalleFactor&${row[0]}" data="${row[1]}">${row[1]}</a>
-                                    </td>
-                                    <td>   
-                                        <c:out value="${row[2]}"/>
-                                    </td>
-                                    <td>   
-                                        <c:out value="${row[3]}"/>
-                                    </td>
-                                    <td>   
-                                        <c:out value="${row[4]}"/>
-                                    </td>
-                                    <td>   
-                                        <c:out value="${row[5]}"/>
-                                    </td>
-                                    <td>   
-                                        <c:out value="${row[6]}%"/>
-                                    </td>
-                                </tr>
-                                <c:set var="ponderacion" value="${ponderacion + row[2]}" />
-                                <c:set var="cumplimiento" value="${(row[2] * row[3])+cumplimiento}" />
+                            <c:set var="indice2" value="0"></c:set>
+                            <c:forEach items="${factores}" var="factor" varStatus="iter2">
+                                <fmt:parseNumber var="cum2"  value="${cumplimientoF[iter2.index]}" />
+                                <c:choose>
+                                    <c:when test="${cum2>0}"> 
+                                        <tr>
+                                            <td style="text-align: left">   
+                                                ${factor.codigo}
+                                            </td>
+
+                                            <td style="text-align: left">   
+                                                <a href="#detalleFactor&${factor.getCodigo()}" data="${factor.nombre}">${factor.nombre}</a>
+                                            </td>
+                                            <td>   
+                                                <c:out value="${ponderacionesF.get(indice2).ponderacion}"/>
+                                            </td>
+                                            <td>   
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index]}"/>
+                                            </td>
+                                            <td>   
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index] * ponderacionesF.get(indice2).ponderacion}"/>
+                                            </td>
+                                            <td>   
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${5 * ponderacionesF.get(indice2).ponderacion}"/>
+                                            </td>
+                                            <td>   
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index] * 20}"/>%
+                                            </td>
+                                        </tr>
+                                        <c:set var="indice2" value="${indice2+1}"></c:set>
+                                    </c:when>
+                                </c:choose>       
                             </c:forEach>
-                            <tr>
-                                <td>   
-                                    Totales:
-                                </td>
-                                <td>   
-
-                                </td>
-                                <td>   
-
-                                </td>
-                                <td>   
-                                    <fmt:formatNumber type="number"   maxFractionDigits="1" value="${cumplimiento/ponderacion}" />
-                                </td>
-                                <td>   
-
-                                </td>
-                                <td>   
-
-                                </td>
-                                <td>   
-                                    <fmt:formatNumber type="number"   maxFractionDigits="1" value="${(cumplimiento/ponderacion)*20}" />%
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                     <br/>          
