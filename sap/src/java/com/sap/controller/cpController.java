@@ -78,7 +78,8 @@ import javax.servlet.http.HttpSession;
  * @author 2013
  */
 public class cpController extends HttpServlet {
-
+    @EJB
+    private PonderacioncaracteristicaFacade ponderacioncaracteristicaFacade;
     @EJB
     private ModeloFacade modeloFacade;
     @EJB
@@ -1343,25 +1344,25 @@ public class cpController extends HttpServlet {
                 int suma;
                 int numP;
                 float promedioPregunta;
-
+                List<Ponderacioncaracteristica> ponderacionesC = new ArrayList<Ponderacioncaracteristica>();
                 List<Caracteristica> caracteristicas = m.getCaracteristicaList();
                 float cumplimiento[] = new float[caracteristicas.size()];
                 for (int j = 0; j < caracteristicas.size(); j++) {
                     promedioPregunta = 0;
+                    suma = 0;
+                    numP = 0;
                     List<Indicador> indicadores = caracteristicas.get(j).getIndicadorList();
                     for (int k = 0; k < indicadores.size(); k++) {
                         List<Instrumento> instr = indicadores.get(k).getInstrumentoList();
                         for (int i = 0; i < instr.size(); i++) {
                             Instrumento instrumento = instr.get(i);
                             if (instrumento.getId() == 1) {
-                                suma = 0;
-                                numP = 0;
                                 List<Pregunta> preguntas = indicadores.get(k).getPreguntaList();
                                 for (int l = 0; l < preguntas.size(); l++) {
                                     Pregunta pregunta = preguntas.get(l);
                                     List<Resultadoevaluacion> respuestas = pregunta.getResultadoevaluacionList();
                                     for (int n = 0; n < respuestas.size(); n++) {
-                                        if (respuestas.get(n).getRespuesta() != null && !respuestas.get(n).getRespuesta().equals("")) {
+                                        if (respuestas.get(n).getEncabezadoId().getEstado().equals("terminado") && respuestas.get(n).getEncabezadoId().getProcesoId().getId() == p.getId() && !respuestas.get(n).getRespuesta().equals("0")) {
                                             numP++;
                                             suma += Integer.parseInt(respuestas.get(n).getRespuesta());
                                         }
@@ -1370,6 +1371,7 @@ public class cpController extends HttpServlet {
                                 }
                                 if (suma > 0) {
                                     promedioPregunta = (float) suma / numP;
+                                    ponderacionesC.add(ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(caracteristicas.get(j), p));
                                 }
 
                             } else {
@@ -1379,12 +1381,14 @@ public class cpController extends HttpServlet {
                         }
                     }
                     cumplimiento[j] = promedioPregunta;
+                    
                 }
 
 
                 sesion.setAttribute("caracteristicas", caracteristicas);
+                sesion.setAttribute("ponderacionesC", ponderacionesC);
                 sesion.setAttribute("cumplimiento", cumplimiento);
-                
+
                 String url = "/WEB-INF/vista/comitePrograma/proceso/informe/matrizCaracteristicas.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
