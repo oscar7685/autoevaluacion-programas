@@ -4,21 +4,17 @@
  */
 package com.sap.ejb;
 
-import com.sap.entity.Factor;
-import com.sap.entity.Modelo;
-import java.util.List;
+import com.sap.entity.Glosario;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
  * @author Ususario
  */
 @Stateless
-public class FactorFacade extends AbstractFacade<Factor> {
-
+public class GlosarioFacade extends AbstractFacade<Glosario> {
     @PersistenceContext(unitName = "sapPU")
     private EntityManager em;
 
@@ -27,14 +23,8 @@ public class FactorFacade extends AbstractFacade<Factor> {
         return em;
     }
 
-    public FactorFacade() {
-        super(Factor.class);
+    public GlosarioFacade() {
+        super(Glosario.class);
     }
-    
-    public List findByModelo(Modelo m) {
-        Query q = em.createNamedQuery("Factor.findByModelo");
-        q.setParameter("modelo", m);
-        return q.getResultList();
-}
     
 }

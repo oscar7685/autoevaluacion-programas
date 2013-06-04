@@ -35,5 +35,5 @@ public class PonderacionfactorFacade extends AbstractFacade<Ponderacionfactor> {
         q.setParameter("proceso", p);
         return (Ponderacionfactor) q.getSingleResult();
     }
-
+    
 }

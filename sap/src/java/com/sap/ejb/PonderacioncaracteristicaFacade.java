@@ -30,11 +30,11 @@ public class PonderacioncaracteristicaFacade extends AbstractFacade<Ponderacionc
     public PonderacioncaracteristicaFacade() {
         super(Ponderacioncaracteristica.class);
     }
-
+    
     public Ponderacioncaracteristica findByCaracteristicaYProceso(Caracteristica c, Proceso p) {
         Query q = em.createNamedQuery("Ponderacioncaracteristica.findByCaracteristicaYProceso");
         q.setParameter("caracteristica", c);
         q.setParameter("proceso", p);
         return (Ponderacioncaracteristica) q.getSingleResult();
-    }
+}
 }

@@ -57,6 +57,9 @@ public class Encabezado implements Serializable {
     @Size(max = 45)
     @Column(name = "estado")
     private String estado;
+    @Size(max = 1000)
+    @Column(name = "comentarios")
+    private String comentarios;
     @JoinColumn(name = "muestrapersona_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Muestrapersona muestrapersonaId;
@@ -106,6 +109,14 @@ public class Encabezado implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(String comentarios) {
+        this.comentarios = comentarios;
     }
 
     public Muestrapersona getMuestrapersonaId() {
@@ -173,4 +184,5 @@ public class Encabezado implements Serializable {
     public String toString() {
         return "com.sap.entity.Encabezado[ id=" + id + " ]";
     }
+    
 }

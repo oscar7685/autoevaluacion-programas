@@ -33,7 +33,7 @@ public class EncabezadoFacade extends AbstractFacade<Encabezado> {
     public EncabezadoFacade() {
         super(Encabezado.class);
     }
-
+    
     public List findByVars(Proceso p, Encuesta e, Fuente f, Muestrapersona persona) {
         Query q = em.createNamedQuery("Encabezado.findByVars");
         q.setParameter("proceso", p);
@@ -41,7 +41,7 @@ public class EncabezadoFacade extends AbstractFacade<Encabezado> {
         q.setParameter("fuente", f);
         q.setParameter("encuesta", e);
         return q.getResultList();
-    }
+}
     public Encabezado findByUltimo() {
         Query q = em.createNamedQuery("Encabezado.findByUltimo");
         q.setMaxResults(1);

@@ -1244,8 +1244,8 @@ public class cpController extends HttpServlet {
                     nd.setMedio(medioDoc);
                     nd.setResponsable(responDoc);
                     nd.setProcesoId(proceso);
-
-                    nd.setInstrumentohasindicadorId(String.valueOf(i.getId()));
+                    nd.setIndicadorId(i);
+                    //nd.setInstrumentohasindicadorId(String.valueOf(i.getId()));
 
                     numericadocumentalFacade.create(nd);
 
@@ -1276,8 +1276,8 @@ public class cpController extends HttpServlet {
                     nd.setMedio(medioDoc);
                     nd.setResponsable(responDoc);
                     nd.setProcesoId(proceso);
-
-                    nd.setInstrumentohasindicadorId(String.valueOf(i.getId()));
+                    nd.setIndicadorId(i);
+                    //nd.setInstrumentohasindicadorId(String.valueOf(i.getId()));
 
                     numericadocumentalFacade.create(nd);
 

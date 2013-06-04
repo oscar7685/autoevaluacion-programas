@@ -479,3 +479,8 @@ div.DTFC_LeftBodyWrapper tbody tr:first-child td {
 div.DTFC_LeftFootWrapper table {
     border-top: none;
 }
+.nav li + .nav-header{
+    margin-top: 0px;
+    padding-bottom: 1px;
+    padding-top: 1px;
+}
