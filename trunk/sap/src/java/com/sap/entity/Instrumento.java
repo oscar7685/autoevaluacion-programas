@@ -7,6 +7,7 @@ package com.sap.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -55,6 +57,8 @@ public class Instrumento implements Serializable {
         @JoinColumn(name = "indicador_id", referencedColumnName = "id")})
     @ManyToMany
     private List<Indicador> indicadorList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "instrumentoId")
+    private List<Numericadocumental> numericadocumentalList;
 
     public Instrumento() {
     }
@@ -99,6 +103,15 @@ public class Instrumento implements Serializable {
 
     public void setIndicadorList(List<Indicador> indicadorList) {
         this.indicadorList = indicadorList;
+    }
+
+    @XmlTransient
+    public List<Numericadocumental> getNumericadocumentalList() {
+        return numericadocumentalList;
+    }
+
+    public void setNumericadocumentalList(List<Numericadocumental> numericadocumentalList) {
+        this.numericadocumentalList = numericadocumentalList;
     }
 
     @Override

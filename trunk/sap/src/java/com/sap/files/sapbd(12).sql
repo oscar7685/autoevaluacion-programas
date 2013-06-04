@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 31-05-2013 a las 14:27:47
+-- Tiempo de generación: 04-06-2013 a las 05:26:39
 -- Versión del servidor: 5.5.16
 -- Versión de PHP: 5.3.8
 
@@ -258,20 +258,25 @@ CREATE TABLE IF NOT EXISTS `encabezado` (
   `encuesta_id` int(11) NOT NULL,
   `fuente_id` int(11) NOT NULL,
   `estado` varchar(45) DEFAULT NULL,
+  `comentarios` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_encabezado_proceso1_idx` (`proceso_id`),
   KEY `fk_encabezado_encuesta1_idx` (`encuesta_id`),
   KEY `fk_encabezado_fuente1_idx` (`fuente_id`),
   KEY `fk_encabezado_muestrapersona1` (`muestrapersona_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Volcado de datos para la tabla `encabezado`
 --
 
-INSERT INTO `encabezado` (`id`, `fecha`, `muestrapersona_id`, `proceso_id`, `encuesta_id`, `fuente_id`, `estado`) VALUES
-(1, '2013-05-30 16:11:40', 1, 1, 1, 1, 'terminado'),
-(2, '2013-05-31 09:06:00', 2, 1, 1, 1, 'terminado');
+INSERT INTO `encabezado` (`id`, `fecha`, `muestrapersona_id`, `proceso_id`, `encuesta_id`, `fuente_id`, `estado`, `comentarios`) VALUES
+(1, '2013-05-30 16:11:40', 1, 1, 1, 1, 'terminado', NULL),
+(2, '2013-05-31 09:06:00', 2, 1, 1, 1, 'terminado', NULL),
+(3, '2013-05-31 09:44:26', 3, 1, 1, 1, 'terminado', NULL),
+(4, '2013-05-31 09:58:28', 4, 1, 1, 1, 'terminado', NULL),
+(5, '2013-05-31 10:03:47', 5, 1, 1, 1, 'terminado', NULL),
+(6, '2013-05-31 10:05:07', 6, 1, 1, 1, 'guardada', NULL);
 
 -- --------------------------------------------------------
 
@@ -1016,6 +1021,19 @@ INSERT INTO `fuente` (`id`, `nombre`, `descripcion`) VALUES
 (4, 'Egresados', 'Egresados'),
 (5, 'Directores de programa', 'Directores de programa'),
 (6, 'Empleadores', 'Empleadores');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `glosario`
+--
+
+CREATE TABLE IF NOT EXISTS `glosario` (
+  `idglosario` int(11) NOT NULL AUTO_INCREMENT,
+  `palabra` varchar(50) DEFAULT NULL,
+  `significado` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`idglosario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1803,7 +1821,7 @@ CREATE TABLE IF NOT EXISTS `modelo` (
 
 INSERT INTO `modelo` (`id`, `nombre`, `descripcion`, `fechaactualizacion`, `fechacreacion`, `observaciones`) VALUES
 (1, 'Modelo de Autoevaluación de Programas', 'Modelo de Autoevaluación de Programas de pregrado de la Universidad de Cartagena', NULL, '2013-05-25', NULL),
-(2, 'Modelo de Autoevaluacion de Maestrias', 'Modelo de Autoevaluacion de Maestrias de la Universidad de Cartagena', NULL, '2013-05-27', NULL);
+(2, 'Modelo de Autoevaluacion de Maestrías y Doctorados', 'Modelo de Autoevaluacion de Maestrias y Doctorados de la Universidad de Cartagena', NULL, '2013-05-27', NULL);
 
 -- --------------------------------------------------------
 
@@ -2221,9 +2239,12 @@ CREATE TABLE IF NOT EXISTS `numericadocumental` (
   `evaluacion` int(11) NOT NULL,
   `accion` varchar(500) NOT NULL,
   `proceso_id` int(11) NOT NULL,
-  `instrumentohasindicador_id` varchar(45) NOT NULL,
+  `instrumento_id` int(11) NOT NULL,
+  `indicador_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_numericadocumental_proceso1_idx` (`proceso_id`)
+  KEY `fk_numericadocumental_proceso1_idx` (`proceso_id`),
+  KEY `fk_numericadocumental_instrumento1` (`instrumento_id`),
+  KEY `fk_numericadocumental_indicador1` (`indicador_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -2944,7 +2965,7 @@ CREATE TABLE IF NOT EXISTS `resultadoevaluacion` (
   PRIMARY KEY (`id`),
   KEY `fk_ResultadoEvaluacion_encabezado1_idx` (`encabezado_id`),
   KEY `fk_ResultadoEvaluacion_pregunta1_idx` (`pregunta_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=123 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=367 ;
 
 --
 -- Volcado de datos para la tabla `resultadoevaluacion`
@@ -3072,7 +3093,251 @@ INSERT INTO `resultadoevaluacion` (`id`, `respuesta`, `encabezado_id`, `pregunta
 (119, '3', 2, 81),
 (120, '3', 2, 82),
 (121, '4', 2, 83),
-(122, '4', 2, 84);
+(122, '4', 2, 84),
+(123, '5', 3, 1),
+(124, '5', 3, 2),
+(125, '5', 3, 3),
+(126, '5', 3, 4),
+(127, '5', 3, 5),
+(128, '5', 3, 6),
+(129, '5', 3, 7),
+(130, '5', 3, 10),
+(131, '3', 3, 11),
+(132, '3', 3, 14),
+(133, '5', 3, 15),
+(134, '5', 3, 16),
+(135, '5', 3, 17),
+(136, '5', 3, 18),
+(137, '5', 3, 23),
+(138, '5', 3, 26),
+(139, '4', 3, 27),
+(140, '5', 3, 28),
+(141, '5', 3, 33),
+(142, '5', 3, 34),
+(143, '4', 3, 35),
+(144, '4', 3, 36),
+(145, '4', 3, 38),
+(146, '4', 3, 39),
+(147, '3', 3, 40),
+(148, '3', 3, 42),
+(149, '3', 3, 44),
+(150, '2', 3, 45),
+(151, '2', 3, 46),
+(152, '2', 3, 47),
+(153, '2', 3, 48),
+(154, '2', 3, 49),
+(155, '3', 3, 50),
+(156, '3', 3, 51),
+(157, '3', 3, 52),
+(158, '3', 3, 53),
+(159, '3', 3, 54),
+(160, '3', 3, 55),
+(161, '3', 3, 56),
+(162, '3', 3, 57),
+(163, '3', 3, 58),
+(164, '3', 3, 59),
+(165, '3', 3, 60),
+(166, '3', 3, 61),
+(167, '3', 3, 62),
+(168, '3', 3, 64),
+(169, '3', 3, 65),
+(170, '3', 3, 66),
+(171, '3', 3, 72),
+(172, '3', 3, 73),
+(173, '2', 3, 74),
+(174, '3', 3, 75),
+(175, '3', 3, 76),
+(176, '3', 3, 77),
+(177, '3', 3, 78),
+(178, '3', 3, 79),
+(179, '3', 3, 80),
+(180, '3', 3, 81),
+(181, '3', 3, 82),
+(182, '3', 3, 83),
+(183, '5', 3, 84),
+(184, '5', 4, 1),
+(185, '5', 4, 2),
+(186, '5', 4, 3),
+(187, '5', 4, 4),
+(188, '4', 4, 5),
+(189, '5', 4, 6),
+(190, '5', 4, 7),
+(191, '1', 4, 10),
+(192, '1', 4, 11),
+(193, '1', 4, 14),
+(194, '1', 4, 15),
+(195, '1', 4, 16),
+(196, '1', 4, 17),
+(197, '1', 4, 18),
+(198, '1', 4, 23),
+(199, '1', 4, 26),
+(200, '1', 4, 27),
+(201, '1', 4, 28),
+(202, '2', 4, 33),
+(203, '2', 4, 34),
+(204, '3', 4, 35),
+(205, '3', 4, 36),
+(206, '3', 4, 38),
+(207, '3', 4, 39),
+(208, '3', 4, 40),
+(209, '2', 4, 42),
+(210, '2', 4, 44),
+(211, '2', 4, 45),
+(212, '3', 4, 46),
+(213, '2', 4, 47),
+(214, '1', 4, 48),
+(215, '3', 4, 49),
+(216, '2', 4, 50),
+(217, '1', 4, 51),
+(218, '3', 4, 52),
+(219, '3', 4, 53),
+(220, '3', 4, 54),
+(221, '3', 4, 55),
+(222, '3', 4, 56),
+(223, '3', 4, 57),
+(224, '3', 4, 58),
+(225, '1', 4, 59),
+(226, '3', 4, 60),
+(227, '3', 4, 61),
+(228, '4', 4, 62),
+(229, '3', 4, 64),
+(230, '3', 4, 65),
+(231, '3', 4, 66),
+(232, '4', 4, 72),
+(233, '3', 4, 73),
+(234, '2', 4, 74),
+(235, '2', 4, 75),
+(236, '3', 4, 76),
+(237, '4', 4, 77),
+(238, '4', 4, 78),
+(239, '5', 4, 79),
+(240, '3', 4, 80),
+(241, '2', 4, 81),
+(242, '2', 4, 82),
+(243, '5', 4, 83),
+(244, '3', 4, 84),
+(245, '4', 5, 1),
+(246, '5', 5, 2),
+(247, '2', 5, 3),
+(248, '3', 5, 4),
+(249, '1', 5, 5),
+(250, '0', 5, 6),
+(251, '5', 5, 7),
+(252, '5', 5, 10),
+(253, '5', 5, 11),
+(254, '5', 5, 14),
+(255, '5', 5, 15),
+(256, '5', 5, 16),
+(257, '5', 5, 17),
+(258, '5', 5, 18),
+(259, '5', 5, 23),
+(260, '5', 5, 26),
+(261, '5', 5, 27),
+(262, '4', 5, 28),
+(263, '4', 5, 33),
+(264, '5', 5, 34),
+(265, '4', 5, 35),
+(266, '5', 5, 36),
+(267, '5', 5, 38),
+(268, '5', 5, 39),
+(269, '5', 5, 40),
+(270, '5', 5, 42),
+(271, '4', 5, 44),
+(272, '5', 5, 45),
+(273, '4', 5, 46),
+(274, '4', 5, 47),
+(275, '5', 5, 48),
+(276, '5', 5, 49),
+(277, '4', 5, 50),
+(278, '5', 5, 51),
+(279, '5', 5, 52),
+(280, '5', 5, 53),
+(281, '4', 5, 54),
+(282, '5', 5, 55),
+(283, '5', 5, 56),
+(284, '5', 5, 57),
+(285, '5', 5, 58),
+(286, '5', 5, 59),
+(287, '4', 5, 60),
+(288, '4', 5, 61),
+(289, '5', 5, 62),
+(290, '4', 5, 64),
+(291, '5', 5, 65),
+(292, '4', 5, 66),
+(293, '3', 5, 72),
+(294, '5', 5, 73),
+(295, '5', 5, 74),
+(296, '4', 5, 75),
+(297, '5', 5, 76),
+(298, '4', 5, 77),
+(299, '5', 5, 78),
+(300, '4', 5, 79),
+(301, '5', 5, 80),
+(302, '4', 5, 81),
+(303, '5', 5, 82),
+(304, '3', 5, 83),
+(305, '5', 5, 84),
+(306, '5', 6, 1),
+(307, '4', 6, 2),
+(308, '0', 6, 3),
+(309, '1', 6, 4),
+(310, '2', 6, 5),
+(311, '3', 6, 6),
+(312, '', 6, 7),
+(313, '', 6, 10),
+(314, '', 6, 11),
+(315, '', 6, 14),
+(316, '', 6, 15),
+(317, '', 6, 16),
+(318, '', 6, 17),
+(319, '', 6, 18),
+(320, '', 6, 23),
+(321, '', 6, 26),
+(322, '', 6, 27),
+(323, '', 6, 28),
+(324, '', 6, 33),
+(325, '', 6, 34),
+(326, '', 6, 35),
+(327, '', 6, 36),
+(328, '', 6, 38),
+(329, '', 6, 39),
+(330, '', 6, 40),
+(331, '', 6, 42),
+(332, '', 6, 44),
+(333, '', 6, 45),
+(334, '', 6, 46),
+(335, '', 6, 47),
+(336, '', 6, 48),
+(337, '', 6, 49),
+(338, '', 6, 50),
+(339, '', 6, 51),
+(340, '', 6, 52),
+(341, '', 6, 53),
+(342, '', 6, 54),
+(343, '', 6, 55),
+(344, '', 6, 56),
+(345, '', 6, 57),
+(346, '', 6, 58),
+(347, '', 6, 59),
+(348, '', 6, 60),
+(349, '', 6, 61),
+(350, '', 6, 62),
+(351, '', 6, 64),
+(352, '', 6, 65),
+(353, '', 6, 66),
+(354, '', 6, 72),
+(355, '', 6, 73),
+(356, '', 6, 74),
+(357, '', 6, 75),
+(358, '', 6, 76),
+(359, '', 6, 77),
+(360, '', 6, 78),
+(361, '', 6, 79),
+(362, '', 6, 80),
+(363, '', 6, 81),
+(364, '', 6, 82),
+(365, '', 6, 83),
+(366, '', 6, 84);
 
 --
 -- Restricciones para tablas volcadas
@@ -3083,8 +3348,8 @@ INSERT INTO `resultadoevaluacion` (`id`, `respuesta`, `encabezado_id`, `pregunta
 --
 ALTER TABLE `administrativo`
   ADD CONSTRAINT `fk_administrativo_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_administrativo_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_administrativo_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_administrativo_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_administrativo_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `agenciagubernamental`
@@ -3097,8 +3362,8 @@ ALTER TABLE `agenciagubernamental`
 -- Filtros para la tabla `asignacionencuesta`
 --
 ALTER TABLE `asignacionencuesta`
-  ADD CONSTRAINT `fk_asignacionencuesta_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_asignacionencuesta_encuesta1` FOREIGN KEY (`encuesta_id`) REFERENCES `encuesta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_asignacionencuesta_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_asignacionencuesta_modelo1` FOREIGN KEY (`modelo_id`) REFERENCES `modelo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
@@ -3113,24 +3378,24 @@ ALTER TABLE `caracteristica`
 --
 ALTER TABLE `directorprograma`
   ADD CONSTRAINT `fk_directorprograma_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_directorprograma_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_directorprograma_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_directorprograma_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_directorprograma_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `docente`
 --
 ALTER TABLE `docente`
   ADD CONSTRAINT `fk_docente_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_docente_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_docente_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_docente_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_docente_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `egresado`
 --
 ALTER TABLE `egresado`
   ADD CONSTRAINT `fk_egresado_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_egresado_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_egresado_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_egresado_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_egresado_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `empleador`
@@ -3143,10 +3408,10 @@ ALTER TABLE `empleador`
 -- Filtros para la tabla `encabezado`
 --
 ALTER TABLE `encabezado`
-  ADD CONSTRAINT `fk_encabezado_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_encabezado_encuesta1` FOREIGN KEY (`encuesta_id`) REFERENCES `encuesta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_encabezado_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_encabezado_muestrapersona1` FOREIGN KEY (`muestrapersona_id`) REFERENCES `muestrapersona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_encabezado_muestrapersona1` FOREIGN KEY (`muestrapersona_id`) REFERENCES `muestrapersona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_encabezado_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `encuesta`
@@ -3166,8 +3431,8 @@ ALTER TABLE `encuestahaspregunta`
 --
 ALTER TABLE `estudiante`
   ADD CONSTRAINT `fk_estudiante_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_estudiante_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_estudiante_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_estudiante_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_estudiante_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `factor`
@@ -3186,8 +3451,8 @@ ALTER TABLE `indicador`
 -- Filtros para la tabla `instrumentohasindicador`
 --
 ALTER TABLE `instrumentohasindicador`
-  ADD CONSTRAINT `fk_instrumento_has_indicador_instrumento1` FOREIGN KEY (`instrumento_id`) REFERENCES `instrumento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_instrumento_has_indicador_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_instrumento_has_indicador_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_instrumento_has_indicador_instrumento1` FOREIGN KEY (`instrumento_id`) REFERENCES `instrumento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `muestra`
@@ -3248,21 +3513,23 @@ ALTER TABLE `muestrapersona`
 -- Filtros para la tabla `numericadocumental`
 --
 ALTER TABLE `numericadocumental`
+  ADD CONSTRAINT `fk_numericadocumental_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_numericadocumental_instrumento1` FOREIGN KEY (`instrumento_id`) REFERENCES `instrumento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_numericadocumental_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `ponderacioncaracteristica`
 --
 ALTER TABLE `ponderacioncaracteristica`
-  ADD CONSTRAINT `fk_ponderacioncaracteristica_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_ponderacioncaracteristica_caracteristica1` FOREIGN KEY (`caracteristica_id`) REFERENCES `caracteristica` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_ponderacioncaracteristica_caracteristica1` FOREIGN KEY (`caracteristica_id`) REFERENCES `caracteristica` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_ponderacioncaracteristica_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `ponderacionfactor`
 --
 ALTER TABLE `ponderacionfactor`
-  ADD CONSTRAINT `fk_ponderacionfactor_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_ponderacionfactor_factor1` FOREIGN KEY (`factor_id`) REFERENCES `factor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_ponderacionfactor_factor1` FOREIGN KEY (`factor_id`) REFERENCES `factor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_ponderacionfactor_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `pregunta`
@@ -3275,15 +3542,15 @@ ALTER TABLE `pregunta`
 -- Filtros para la tabla `proceso`
 --
 ALTER TABLE `proceso`
-  ADD CONSTRAINT `fk_proceso_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_proceso_modelo1` FOREIGN KEY (`modelo_id`) REFERENCES `modelo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_proceso_modelo1` FOREIGN KEY (`modelo_id`) REFERENCES `modelo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_proceso_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `procesohasindicador`
 --
 ALTER TABLE `procesohasindicador`
-  ADD CONSTRAINT `fk_proceso_has_indicador_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_proceso_has_indicador_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_proceso_has_indicador_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_proceso_has_indicador_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `programa`
@@ -3301,8 +3568,8 @@ ALTER TABLE `representante`
 -- Filtros para la tabla `representantehasprivilegio`
 --
 ALTER TABLE `representantehasprivilegio`
-  ADD CONSTRAINT `fk_representante_has_privilegio_representante1` FOREIGN KEY (`representante_id`) REFERENCES `representante` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_representante_has_privilegio_privilegio1` FOREIGN KEY (`privilegio_id`) REFERENCES `privilegio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_representante_has_privilegio_privilegio1` FOREIGN KEY (`privilegio_id`) REFERENCES `privilegio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_representante_has_privilegio_representante1` FOREIGN KEY (`representante_id`) REFERENCES `representante` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `resultadoevaluacion`

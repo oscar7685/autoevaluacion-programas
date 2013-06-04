@@ -20,6 +20,7 @@ import com.sap.entity.Proceso;
 import com.sap.entity.Representante;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
@@ -154,7 +155,7 @@ public class loginController extends HttpServlet {
                         m = proceso.getModeloId();
                         aux3 = encuestaFacade.findByModelo(m);
                         session.setAttribute("proceso", proceso);
-                        
+                
 
                     }
                     if (aux3 != null) {
@@ -164,11 +165,11 @@ public class loginController extends HttpServlet {
                             if (aux4 != null && aux4.size() > 0) {
                                 session.setAttribute("encuesta", aux4.get(i).getEncuestaId());
                             }
-
+                
                         }
                     }
 
-                } else {
+            } else {
                     out.println(1);
                 }
 

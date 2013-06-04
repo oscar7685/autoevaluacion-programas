@@ -7,6 +7,7 @@ package com.sap.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -60,6 +61,8 @@ public class Indicador implements Serializable {
     private List<Instrumento> instrumentoList;
     @ManyToMany(mappedBy = "indicadorList")
     private List<Proceso> procesoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "indicadorId")
+    private List<Numericadocumental> numericadocumentalList;
     @OneToMany(mappedBy = "indicadorId")
     private List<Pregunta> preguntaList;
     @JoinColumn(name = "modelo_id", referencedColumnName = "id")
@@ -122,6 +125,15 @@ public class Indicador implements Serializable {
 
     public void setProcesoList(List<Proceso> procesoList) {
         this.procesoList = procesoList;
+    }
+
+    @XmlTransient
+    public List<Numericadocumental> getNumericadocumentalList() {
+        return numericadocumentalList;
+    }
+
+    public void setNumericadocumentalList(List<Numericadocumental> numericadocumentalList) {
+        this.numericadocumentalList = numericadocumentalList;
     }
 
     @XmlTransient

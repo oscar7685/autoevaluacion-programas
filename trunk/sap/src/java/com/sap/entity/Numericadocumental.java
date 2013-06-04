@@ -35,8 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Numericadocumental.findByMedio", query = "SELECT n FROM Numericadocumental n WHERE n.medio = :medio"),
     @NamedQuery(name = "Numericadocumental.findByLugar", query = "SELECT n FROM Numericadocumental n WHERE n.lugar = :lugar"),
     @NamedQuery(name = "Numericadocumental.findByEvaluacion", query = "SELECT n FROM Numericadocumental n WHERE n.evaluacion = :evaluacion"),
-    @NamedQuery(name = "Numericadocumental.findByAccion", query = "SELECT n FROM Numericadocumental n WHERE n.accion = :accion"),
-    @NamedQuery(name = "Numericadocumental.findByInstrumentohasindicadorId", query = "SELECT n FROM Numericadocumental n WHERE n.instrumentohasindicadorId = :instrumentohasindicadorId")})
+    @NamedQuery(name = "Numericadocumental.findByAccion", query = "SELECT n FROM Numericadocumental n WHERE n.accion = :accion")})
+    //@NamedQuery(name = "Numericadocumental.findByInstrumentohasindicadorId", query = "SELECT n FROM Numericadocumental n WHERE n.instrumentohasindicadorId = :instrumentohasindicadorId")})
 public class Numericadocumental implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -73,11 +73,12 @@ public class Numericadocumental implements Serializable {
     @Size(min = 1, max = 500)
     @Column(name = "accion")
     private String accion;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "instrumentohasindicador_id")
-    private String instrumentohasindicadorId;
+    @JoinColumn(name = "indicador_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Indicador indicadorId;
+    @JoinColumn(name = "instrumento_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Instrumento instrumentoId;
     @JoinColumn(name = "proceso_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Proceso procesoId;
@@ -89,7 +90,7 @@ public class Numericadocumental implements Serializable {
         this.id = id;
     }
 
-    public Numericadocumental(Integer id, String documento, String responsable, String medio, String lugar, int evaluacion, String accion, String instrumentohasindicadorId) {
+    public Numericadocumental(Integer id, String documento, String responsable, String medio, String lugar, int evaluacion, String accion) {
         this.id = id;
         this.documento = documento;
         this.responsable = responsable;
@@ -97,7 +98,6 @@ public class Numericadocumental implements Serializable {
         this.lugar = lugar;
         this.evaluacion = evaluacion;
         this.accion = accion;
-        this.instrumentohasindicadorId = instrumentohasindicadorId;
     }
 
     public Integer getId() {
@@ -156,12 +156,20 @@ public class Numericadocumental implements Serializable {
         this.accion = accion;
     }
 
-    public String getInstrumentohasindicadorId() {
-        return instrumentohasindicadorId;
+    public Indicador getIndicadorId() {
+        return indicadorId;
     }
 
-    public void setInstrumentohasindicadorId(String instrumentohasindicadorId) {
-        this.instrumentohasindicadorId = instrumentohasindicadorId;
+    public void setIndicadorId(Indicador indicadorId) {
+        this.indicadorId = indicadorId;
+    }
+
+    public Instrumento getInstrumentoId() {
+        return instrumentoId;
+    }
+
+    public void setInstrumentoId(Instrumento instrumentoId) {
+        this.instrumentoId = instrumentoId;
     }
 
     public Proceso getProcesoId() {
