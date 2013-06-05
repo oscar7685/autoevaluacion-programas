@@ -38,7 +38,7 @@ public class Resultadoevaluacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 45)
+    @Size(max = 1000)
     @Column(name = "respuesta")
     private String respuesta;
     @JoinColumn(name = "pregunta_id", referencedColumnName = "id")

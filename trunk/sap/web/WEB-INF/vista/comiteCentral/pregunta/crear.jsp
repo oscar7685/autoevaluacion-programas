@@ -2,6 +2,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript">
     $(function() {
+        $("option[rel=popover]")
+        .popover({trigger: "hover", placement: 'top'})
+        .click(function(e) {
+            e.preventDefault();
+                    
+        });
+        
         $("#formCrearPregunta").validate({
             submitHandler: function() {
                 $.ajax({
@@ -38,8 +45,8 @@
                         <label for="tipo" class="control-label">Tipo de la Pregunta</label>
                         <div class="controls">
                             <select name="tipo" id="tipo">
-                                <option value="1">Elegir del 1 al 5</a></option>
-                                <option value="2">Si/No</option>
+                                <option value="1" rel="popover" data-content="Guarda la encuesta sin salir de ella, de esta manera usted podr&aacute; seguir contestando la encuesta cuando desee." data-original-title="Guardar encuesta" >Elegir del 1 al 5</a></option>
+                                <option value="2" rel="popover" data-content="Guarda la encuesta sin salir de ella, de esta manera usted podr&aacute; seguir contestando la encuesta cuando desee." data-original-title="Guardar encuesta">pregunta abierta</option>
                             </select>
                         </div>
                     </div>

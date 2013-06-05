@@ -5,10 +5,12 @@
 package com.sap.controller;
 
 import com.sap.ejb.EncabezadoFacade;
+import com.sap.ejb.GlosarioFacade;
 import com.sap.ejb.ResultadoevaluacionFacade;
 import com.sap.entity.Encabezado;
 import com.sap.entity.Encuesta;
 import com.sap.entity.Fuente;
+import com.sap.entity.Glosario;
 import com.sap.entity.Muestrapersona;
 import com.sap.entity.Pregunta;
 import com.sap.entity.Proceso;
@@ -31,6 +33,8 @@ import javax.servlet.http.HttpSession;
  */
 public class controladorF extends HttpServlet {
 
+    @EJB
+    private GlosarioFacade glosarioFacade;
     @EJB
     private ResultadoevaluacionFacade resultadoevaluacionFacade;
     @EJB
@@ -65,6 +69,7 @@ public class controladorF extends HttpServlet {
                     Fuente fuente = (Fuente) session.getAttribute("fuente");
                     Encuesta encuesta = (Encuesta) session.getAttribute("encuesta");
                     List<Encabezado> encabExistentes = encabezadoFacade.findByVars(p, encuesta, fuente, persona);
+                    List<Glosario> palabras = glosarioFacade.findAll();
                     Encabezado enc = null;
                     if (encabExistentes != null && encabExistentes.size() > 0) {
                         for (int i = 0; i < encabExistentes.size(); i++) {
@@ -73,7 +78,9 @@ public class controladorF extends HttpServlet {
                     }
                     if (enc != null) {
                         session.setAttribute("respuestas", resultadoevaluacionFacade.findByEncabezado(enc));
+                        session.setAttribute("encabezado", enc);
                     }
+                    session.setAttribute("palabras", palabras);
                     RequestDispatcher rd = request.getRequestDispatcher(url);
                     rd.forward(request, response);
                 } else {
@@ -81,7 +88,7 @@ public class controladorF extends HttpServlet {
 
                         Proceso p = (Proceso) session.getAttribute("proceso");
                         Muestrapersona persona = (Muestrapersona) session.getAttribute("persona");
-
+                        String observaciones = (String) request.getParameter("observaciones");
                         Fuente fuente = (Fuente) session.getAttribute("fuente");
                         Encuesta encuesta = (Encuesta) session.getAttribute("encuesta");
                         List<Pregunta> preguntas = encuesta.getPreguntaList();
@@ -105,6 +112,7 @@ public class controladorF extends HttpServlet {
                             enc.setEstado(estado);
                             enc.setFuenteId(fuente);
                             enc.setMuestrapersonaId(persona);
+                            enc.setComentarios(observaciones);
                             enc.setFecha(new Date(new java.util.Date().getTime()));
                             encabezadoFacade.create(enc);
 
@@ -117,17 +125,18 @@ public class controladorF extends HttpServlet {
                                 re.setRespuesta((String) request.getParameter("pregunta" + preguntas.get(i).getId()));
                                 resultadoevaluacionFacade.create(re);
                             }
-                             recienCreado.setResultadoevaluacionList(resultadoevaluacionFacade.findByEncabezado(recienCreado));
-                             encabezadoFacade.edit(recienCreado);
+                            recienCreado.setResultadoevaluacionList(resultadoevaluacionFacade.findByEncabezado(recienCreado));
+                            encabezadoFacade.edit(recienCreado);
                             if (request.getParameter("action").equals("responderE")) {
                                 session.setAttribute("encuesta", null);
                             }
 
                         } else {
                             enc.setEstado(estado);
+                            enc.setComentarios(observaciones);
                             enc.setFecha(new Date(new java.util.Date().getTime()));
                             encabezadoFacade.edit(enc);
-                           
+
                             List<Resultadoevaluacion> listaRe = enc.getResultadoevaluacionList();
                             for (int i = 0; i < preguntas.size(); i++) {
                                 listaRe.get(i).setPreguntaId(preguntas.get(i));

@@ -15,17 +15,21 @@
                     <tbody>
                         <tr>    
                             <td>   
-                    <c:out value="${encuesta.nombre}"/>
-                    </td>
-                    <td>
-                    <c:out value="${programa.nombre}"/>
-                    </td>
-                    <td> 
-                        <a title="Responder Encuesta" href="#responderEncuesta&${encuesta.id}">Responder encuesta </a>
-                    </td>
-                    </tr>
+                                <c:out value="${encuesta.nombre}"/>
+                            </td>
+                            <td>
+                                <c:out value="${programa.nombre}"/>
+                            </td>
+                            <td> 
+                                <a title="Responder Encuesta" href="#responderEncuesta&${encuesta.id}">Responder encuesta </a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
+                <br/>            
+                <h5 style="text-align: center;">Del programa ${programa.nombre} usted ha sido seleccionado al azar para diligenciar una sencilla encuesta de caracter an&oacute;nimo y voluntario, Recuerde que su participaci&oacute;n es fundamental en el proceso de autoevaluaci&oacute;n </h5>
+                <br/>
+                <p class="marketing-byline">Germ&aacute;n Sierra Anaya. Rector Universidad de Cartagena</p>              
             </c:when>
             <c:otherwise>
                 No Existen Encuestas Disponibles.
