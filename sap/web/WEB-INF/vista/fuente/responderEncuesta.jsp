@@ -70,7 +70,7 @@
                         $(".page_loading").hide();
                         $("#myModalGracias").modal();
                         $('#myModalGracias').on('hidden', function() {
-                            location = "<%=request.getContextPath()%>/#inicio"
+                            location = "<%=request.getContextPath()%>/#inicio";
                         });
 
                     } //fin success
@@ -288,6 +288,8 @@
 
             </tbody>
         </table>
+        <label>Observaciones y/o comentarios</label>
+        <textarea rows="4" class="input-block-level"  placeholder="Observaciones y/o comentarios" name="observaciones">${encabezado.comentarios}</textarea>
         <div class="row"> 
             <div class="span5">
                 <div class="pagination"></div>
@@ -309,3 +311,12 @@
         </div>
     </form>
 </div>
+<script type="text/javascript">
+    $(function() {
+    <c:forEach items="${palabras}" var="pregunta">
+            $('#preguntas').html($('#preguntas').html().replace(/(${pregunta.palabra})/g
+            ,'<a href="#" data-toggle="tooltip" title="${pregunta.significado}">$1</a>'));
+    </c:forEach> 
+    });
+    $('a[data-toggle="tooltip"]').tooltip();
+</script>

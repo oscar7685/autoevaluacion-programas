@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 04-06-2013 a las 05:26:39
+-- Tiempo de generación: 05-06-2013 a las 21:52:19
 -- Versión del servidor: 5.5.16
 -- Versión de PHP: 5.3.8
 
@@ -264,7 +264,7 @@ CREATE TABLE IF NOT EXISTS `encabezado` (
   KEY `fk_encabezado_encuesta1_idx` (`encuesta_id`),
   KEY `fk_encabezado_fuente1_idx` (`fuente_id`),
   KEY `fk_encabezado_muestrapersona1` (`muestrapersona_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- Volcado de datos para la tabla `encabezado`
@@ -276,7 +276,10 @@ INSERT INTO `encabezado` (`id`, `fecha`, `muestrapersona_id`, `proceso_id`, `enc
 (3, '2013-05-31 09:44:26', 3, 1, 1, 1, 'terminado', NULL),
 (4, '2013-05-31 09:58:28', 4, 1, 1, 1, 'terminado', NULL),
 (5, '2013-05-31 10:03:47', 5, 1, 1, 1, 'terminado', NULL),
-(6, '2013-05-31 10:05:07', 6, 1, 1, 1, 'guardada', NULL);
+(6, '2013-05-31 10:05:07', 6, 1, 1, 1, 'guardada', NULL),
+(7, '2013-06-04 06:51:51', 7, 1, 1, 1, 'guardada', 'Una observación'),
+(8, '2013-06-04 10:48:20', 117, 1, 1, 1, 'guardada', ''),
+(9, '2013-06-05 09:47:02', 9, 1, 1, 1, 'guardada', '');
 
 -- --------------------------------------------------------
 
@@ -1033,7 +1036,14 @@ CREATE TABLE IF NOT EXISTS `glosario` (
   `palabra` varchar(50) DEFAULT NULL,
   `significado` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`idglosario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `glosario`
+--
+
+INSERT INTO `glosario` (`idglosario`, `palabra`, `significado`) VALUES
+(1, 'proyecto educativo', 'Tiene la función de establecer un marco global de referencia para coordinar todas las actuaciones de la comunidad educativa. Integra la realidad del centro y de su entorno definiendo metas propias y señas de identidad para la consecución de los objetivos educativos del centro');
 
 -- --------------------------------------------------------
 
@@ -2850,14 +2860,16 @@ CREATE TABLE IF NOT EXISTS `proceso` (
   PRIMARY KEY (`id`),
   KEY `fk_proceso_programa1_idx` (`programa_id`),
   KEY `fk_proceso_modelo1` (`modelo_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `proceso`
 --
 
 INSERT INTO `proceso` (`id`, `fechainicio`, `fechacierre`, `descripcion`, `programa_id`, `modelo_id`) VALUES
-(1, '30/05/2013', '--', 'Proceso de Autoevaluación del programa Ingeniería de Sistemas presencial de la Universidad de Cartagena', 22, 1);
+(1, '04/06/2013', '--', 'Proceso de Autoevaluación del programa Ingeniería de Sistemas presencial de la Universidad de Cartagena', 22, 1),
+(2, 'En Configuración', '--', 'Proceso de autoevaluación con fines de reacreditacion del programa ingenieria civil 2013-2', 21, 1),
+(3, 'En Configuración', '--', 'proceso de autoevaluacion 2013-2', 148, 2);
 
 -- --------------------------------------------------------
 
@@ -2934,6 +2946,7 @@ INSERT INTO `representante` (`id`, `nombre`, `apellido`, `password`, `rol`, `mai
 (123456, 'Usuario', 'Prueba', '123456', 'Comite programa', NULL, 23),
 (212121, 'Juan', 'Perez', '123456', 'Comite programa', 'xx', 21),
 (222222, 'Jorge', 'Anaya', '123456', 'Comite programa', 'zz', 22),
+(333333, 'Pedro', 'Perez', '123456', 'Comite programa', 'xx', 148),
 (45470344, 'Edna', 'Gomez Bustamante', '123456', 'Comite central', 'acreditacion@unicartagena.edu.co', NULL),
 (1020757934, 'Arturo', 'González', '123456', 'Comite programa', NULL, 22);
 
@@ -2959,13 +2972,13 @@ CREATE TABLE IF NOT EXISTS `representantehasprivilegio` (
 
 CREATE TABLE IF NOT EXISTS `resultadoevaluacion` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `respuesta` varchar(45) DEFAULT NULL,
+  `respuesta` varchar(1000) DEFAULT NULL,
   `encabezado_id` int(11) NOT NULL,
   `pregunta_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_ResultadoEvaluacion_encabezado1_idx` (`encabezado_id`),
   KEY `fk_ResultadoEvaluacion_pregunta1_idx` (`pregunta_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=367 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=550 ;
 
 --
 -- Volcado de datos para la tabla `resultadoevaluacion`
@@ -3337,7 +3350,190 @@ INSERT INTO `resultadoevaluacion` (`id`, `respuesta`, `encabezado_id`, `pregunta
 (363, '', 6, 81),
 (364, '', 6, 82),
 (365, '', 6, 83),
-(366, '', 6, 84);
+(366, '', 6, 84),
+(367, '5', 7, 1),
+(368, '5', 7, 2),
+(369, '5', 7, 3),
+(370, '5', 7, 4),
+(371, '5', 7, 5),
+(372, '5', 7, 6),
+(373, '5', 7, 7),
+(374, '5', 7, 10),
+(375, '5', 7, 11),
+(376, '5', 7, 14),
+(377, '', 7, 15),
+(378, '', 7, 16),
+(379, '', 7, 17),
+(380, '', 7, 18),
+(381, '', 7, 23),
+(382, '', 7, 26),
+(383, '', 7, 27),
+(384, '', 7, 28),
+(385, '', 7, 33),
+(386, '', 7, 34),
+(387, '', 7, 35),
+(388, '', 7, 36),
+(389, '', 7, 38),
+(390, '', 7, 39),
+(391, '', 7, 40),
+(392, '', 7, 42),
+(393, '', 7, 44),
+(394, '', 7, 45),
+(395, '', 7, 46),
+(396, '', 7, 47),
+(397, '', 7, 48),
+(398, '', 7, 49),
+(399, '', 7, 50),
+(400, '', 7, 51),
+(401, '', 7, 52),
+(402, '', 7, 53),
+(403, '', 7, 54),
+(404, '', 7, 55),
+(405, '', 7, 56),
+(406, '', 7, 57),
+(407, '', 7, 58),
+(408, '', 7, 59),
+(409, '', 7, 60),
+(410, '', 7, 61),
+(411, '', 7, 62),
+(412, '', 7, 64),
+(413, '', 7, 65),
+(414, '', 7, 66),
+(415, '', 7, 72),
+(416, '', 7, 73),
+(417, '', 7, 74),
+(418, '', 7, 75),
+(419, '', 7, 76),
+(420, '', 7, 77),
+(421, '', 7, 78),
+(422, '', 7, 79),
+(423, '', 7, 80),
+(424, '', 7, 81),
+(425, '', 7, 82),
+(426, '', 7, 83),
+(427, '', 7, 84),
+(428, '3', 8, 1),
+(429, '5', 8, 2),
+(430, '4', 8, 3),
+(431, '4', 8, 4),
+(432, '5', 8, 5),
+(433, '3', 8, 6),
+(434, '', 8, 7),
+(435, '', 8, 10),
+(436, '', 8, 11),
+(437, '', 8, 14),
+(438, '', 8, 15),
+(439, '', 8, 16),
+(440, '', 8, 17),
+(441, '', 8, 18),
+(442, '', 8, 23),
+(443, '', 8, 26),
+(444, '', 8, 27),
+(445, '', 8, 28),
+(446, '', 8, 33),
+(447, '', 8, 34),
+(448, '', 8, 35),
+(449, '', 8, 36),
+(450, '', 8, 38),
+(451, '', 8, 39),
+(452, '', 8, 40),
+(453, '', 8, 42),
+(454, '', 8, 44),
+(455, '', 8, 45),
+(456, '', 8, 46),
+(457, '', 8, 47),
+(458, '', 8, 48),
+(459, '', 8, 49),
+(460, '', 8, 50),
+(461, '', 8, 51),
+(462, '', 8, 52),
+(463, '', 8, 53),
+(464, '', 8, 54),
+(465, '', 8, 55),
+(466, '', 8, 56),
+(467, '', 8, 57),
+(468, '', 8, 58),
+(469, '', 8, 59),
+(470, '', 8, 60),
+(471, '', 8, 61),
+(472, '', 8, 62),
+(473, '', 8, 64),
+(474, '', 8, 65),
+(475, '', 8, 66),
+(476, '', 8, 72),
+(477, '', 8, 73),
+(478, '', 8, 74),
+(479, '', 8, 75),
+(480, '', 8, 76),
+(481, '', 8, 77),
+(482, '', 8, 78),
+(483, '', 8, 79),
+(484, '', 8, 80),
+(485, '', 8, 81),
+(486, '', 8, 82),
+(487, '', 8, 83),
+(488, '', 8, 84),
+(489, '', 9, 1),
+(490, '', 9, 2),
+(491, '', 9, 3),
+(492, '', 9, 4),
+(493, '', 9, 5),
+(494, '', 9, 6),
+(495, '4', 9, 7),
+(496, '', 9, 10),
+(497, '', 9, 11),
+(498, '', 9, 14),
+(499, '', 9, 15),
+(500, '', 9, 16),
+(501, '', 9, 17),
+(502, '', 9, 18),
+(503, '', 9, 23),
+(504, '', 9, 26),
+(505, '', 9, 27),
+(506, '', 9, 28),
+(507, '', 9, 33),
+(508, '', 9, 34),
+(509, '', 9, 35),
+(510, '', 9, 36),
+(511, '', 9, 38),
+(512, '', 9, 39),
+(513, '', 9, 40),
+(514, '', 9, 42),
+(515, '', 9, 44),
+(516, '', 9, 45),
+(517, '', 9, 46),
+(518, '', 9, 47),
+(519, '', 9, 48),
+(520, '', 9, 49),
+(521, '', 9, 50),
+(522, '', 9, 51),
+(523, '', 9, 52),
+(524, '', 9, 53),
+(525, '', 9, 54),
+(526, '', 9, 55),
+(527, '', 9, 56),
+(528, '', 9, 57),
+(529, '', 9, 58),
+(530, '', 9, 59),
+(531, '', 9, 60),
+(532, '', 9, 61),
+(533, '', 9, 62),
+(534, '', 9, 64),
+(535, '', 9, 65),
+(536, '', 9, 66),
+(537, '', 9, 72),
+(538, '', 9, 73),
+(539, '', 9, 74),
+(540, '', 9, 75),
+(541, '', 9, 76),
+(542, '', 9, 77),
+(543, '', 9, 78),
+(544, '', 9, 79),
+(545, '', 9, 80),
+(546, '', 9, 81),
+(547, '', 9, 82),
+(548, '', 9, 83),
+(549, '', 9, 84);
 
 --
 -- Restricciones para tablas volcadas

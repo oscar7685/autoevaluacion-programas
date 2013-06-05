@@ -94,7 +94,7 @@
 
                             <ul class="nav nav-list">  
                                 <button id="west-closer" class="close">&laquo;</button>
-                                <li class="nav-header">Proceso de Atoevaluación</li>
+                                <li class="nav-header">Proceso de Autoevaluación</li>
                                 <li><a href="#preparedCrearProceso"><i class="icon-plus"></i> Crear Proceso</a></li>
                                 <li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>
                             </ul>
@@ -105,13 +105,13 @@
                         <div id="menu" style="padding: 8px 0pt;" class="well">
                             <ul class="nav nav-list">  
                                 <button id="west-closer" class="close">&laquo;</button>
-                                <li class="nav-header">Proceso de Atoevaluación</li>
+                                <li class="nav-header">Proceso de Autoevaluación</li>
                                 <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
                                 <li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Ponderar Factores</a></li>
                                 <li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Ponderar Características</a></li>
                                 <li><a href="#listMuestra"><i class="icon-group"></i> Asignar Muestra</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#iniciarProceso"><i class="icon-play-sign"></i> Iniciar proceso</a></li>
+                                <li><a href="#iniciarProceso"><i class="icon-play-sign"></i> Ejecutar proceso</a></li>
                             </ul>
                         </div>
                     </c:when>
@@ -120,7 +120,7 @@
                         <div id="menu" style="padding: 8px 0pt;" class="well">
                             <ul class="nav nav-list">  
                                 <button id="west-closer" class="close">&laquo;</button>
-                                <li class="nav-header">Proceso de Atoevaluación</li>
+                                <li class="nav-header">Proceso de Autoevaluación</li>
                                 <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
                                 <li><a href="#listPonderacionFactor"><i class="icon-list"></i> Factores</a></li>
                                 <li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>
@@ -163,13 +163,13 @@
                 <h3>Atención!</h3>
             </div>
             <div class="modal-body">
-                <h4>Iniciar Proceso de Autoevaluación.</h4>
+                <h4>Ejecutar Proceso de Autoevaluación.</h4>
                 <br>
                 <p style="text-align: justify">Esta seguro que desea ejecutar el Proceso?. Tenga en cuenta que sólo la asignación de muestra para la fuente estudiante será editable al ejecutar el proceso. Los demás parámetros no podrán ser modificados.</p>
             </div>
             <div class="modal-footer">
                 <a id="modalCpb2" class="btn btn-secundary" data-dismiss="modal" href="#">Cancelar</a>
-                <a id="modalCpb1" class="btn btn-primary" data-dismiss="modal" href="#">Iniciar Proceso</a>
+                <a id="modalCpb1" class="btn btn-primary" data-dismiss="modal" href="#">Ejecutar Proceso</a>
             </div>
         </div>
         <div class="modal hide fade" id="modalCp2">
@@ -178,7 +178,7 @@
                 <h3>Atención!</h3>
             </div>
             <div class="modal-body">
-                <h4>Iniciar Proceso de Autoevaluación Institucional.</h4>
+                <h4>Ejecutar Proceso de Autoevaluación Institucional.</h4>
                 <br>
                 <p>Debe configurar todo el proceso para continuar.</p>
             </div>
