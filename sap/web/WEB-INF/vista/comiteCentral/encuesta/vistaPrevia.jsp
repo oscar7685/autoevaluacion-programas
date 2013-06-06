@@ -64,12 +64,20 @@
 
                             <div class="span5">
                                 <p>${status.count} ${pregunta.getPregunta()}</p>
-                                <label class="radio"><input type="radio">5 Completamente deacuerdo</label>
-                                <label class="radio"><input type="radio">4 De acuerdo</label>
-                                <label class="radio"><input type="radio">3 Parcialmente de acuerdo</label>
-                                <label class="radio"><input type="radio">2 En desacuerdo</label>
-                                <label class="radio"><input type="radio">1 Completamente en desacuerdo</label>
-                                <label class="radio"><input type="radio">0 No sabe</label>
+                                <c:choose>
+                                    <c:when test="${pregunta.getTipo()=='1'}">
+                                        <label class="radio"><input type="radio">5 Completamente deacuerdo</label>
+                                        <label class="radio"><input type="radio">4 De acuerdo</label>
+                                        <label class="radio"><input type="radio">3 Parcialmente de acuerdo</label>
+                                        <label class="radio"><input type="radio">2 En desacuerdo</label>
+                                        <label class="radio"><input type="radio">1 Completamente en desacuerdo</label>
+                                        <label class="radio"><input type="radio">0 No sabe</label>
+                                        </c:when>
+                                        <c:when test="${pregunta.getTipo()=='2'}">
+                                        <textarea rows="3"></textarea>
+                                    </c:when>
+                                </c:choose>
+
                             </div>
 
 

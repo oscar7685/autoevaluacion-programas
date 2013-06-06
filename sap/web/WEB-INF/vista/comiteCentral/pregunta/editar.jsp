@@ -1,6 +1,41 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
     $(function() {
+        $("#tipo").on('mouseleave', function(e) {
+            $('#tipo').popover('destroy');
+        });
+        $("#indicador").on('mouseleave', function(e) {
+            $('#indicador').popover('destroy');
+        });
+
+        $("#tipo").on('mouseover', function(e) {
+            var $e = $(e.target);
+            if ($e.is('option')) {
+                $('#tipo').popover('destroy');
+                $("#tipo").popover({
+                    trigger: 'manual',
+                    placement: 'right',
+                    html: true,
+                    title: $e.attr("data-title"),
+                    content: function() {
+                        return '<img src="' + ($e).data('img') + '" />';
+                    }
+
+                }).popover('show');
+            }
+        });
+        $("#indicador").on('mouseover', function(e) {
+            var $e = $(e.target);
+            if ($e.is('option')) {
+                $('#indicador').popover('destroy');
+                $("#indicador").popover({
+                    trigger: 'manual',
+                    placement: 'right',
+                    title: $e.attr("data-original-title"),
+                    content: $e.attr("data-content")
+                }).popover('show');
+            }
+        });
         $("#formEditarPregunta").validate({
             submitHandler: function() {
                 $.ajax({
@@ -39,12 +74,12 @@
                             <select name="tipo" id="tipo">
                                 <c:choose>
                                     <c:when test="${pregunta.getTipo().equals('1')}">
-                                        <option selected="selected"  value="1">Elegir del 1 al 5</option>
-                                        <option value="2">Si/No</option>
+                                        <option data-img="<%=request.getContextPath()%>/img/1-5.png" rel="popover" data-title="Elegir del 1 al 5"  selected="selected"  value="1">Elegir del 1 al 5</option>
+                                        <option value="2" data-img="<%=request.getContextPath()%>/img/Si-No.png" rel="popover" data-title="Pregunta abierta">Pregunta abierta</option>
                                     </c:when>
                                     <c:otherwise>
-                                        <option  value="1">Elegir del 1 al 5</option>
-                                        <option selected="selected" value="2">Si/No</option>
+                                        <option  data-img="<%=request.getContextPath()%>/img/1-5.png" rel="popover" data-title="Elegir del 1 al 5"  value="1">Elegir del 1 al 5</option>
+                                        <option selected="selected" value="2" data-img="<%=request.getContextPath()%>/img/Si-No.png" rel="popover" data-title="Pregunta abierta">Pregunta abierta</option>
                                     </c:otherwise>   
                                 </c:choose>
                             </select>
@@ -59,10 +94,10 @@
                                 <c:forEach items="${listaI}" var="row" varStatus="iter">
                                     <c:choose>
                                         <c:when test="${pregunta.getIndicadorId()!= row}">
-                                            <option value="${row.id}">${row.codigo}</option>
+                                            <option value="${row.id}" data-content="${row.nombre}" rel="popover2" data-original-title="Indicador">${row.codigo}</option>
                                         </c:when>
                                         <c:otherwise>
-                                            <option selected="selected" value="${row.id}">${row.codigo}</option>
+                                            <option selected="selected" value="${row.id}" data-content="${row.nombre}" rel="popover2" data-original-title="Indicador">${row.codigo}</option>
                                         </c:otherwise>       
                                     </c:choose>    
 

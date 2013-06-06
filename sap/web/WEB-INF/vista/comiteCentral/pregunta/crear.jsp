@@ -2,11 +2,40 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript">
     $(function() {
-        $("option[rel=popover]")
-        .popover({trigger: "hover", placement: 'top'})
-        .click(function(e) {
-            e.preventDefault();
+        $("#tipo").on('mouseleave', function(e) {
+            $('#tipo').popover('destroy');
+        });
+        $("#indicador").on('mouseleave', function(e) {
+            $('#indicador').popover('destroy');
+        });
+
+        $("#tipo").on('mouseover', function(e) {
+            var $e = $(e.target);
+            if ($e.is('option')) {
+                $('#tipo').popover('destroy');
+                $("#tipo").popover({
+                    trigger: 'manual',
+                    placement: 'right',
+                    html:true,
+                    title: $e.attr("data-title"),
+                    content:function () {
+                    return '<img src="'+($e).data('img') + '" />';
+                    }
                     
+                }).popover('show');
+            }
+        });
+        $("#indicador").on('mouseover', function(e) {
+            var $e = $(e.target);
+            if ($e.is('option')) {
+                $('#indicador').popover('destroy');
+                $("#indicador").popover({
+                    trigger: 'manual',
+                    placement: 'right',
+                    title: $e.attr("data-original-title"),
+                    content:$e.attr("data-content")
+                }).popover('show');
+            }
         });
         
         $("#formCrearPregunta").validate({
@@ -45,8 +74,8 @@
                         <label for="tipo" class="control-label">Tipo de la Pregunta</label>
                         <div class="controls">
                             <select name="tipo" id="tipo">
-                                <option value="1" rel="popover" data-content="Guarda la encuesta sin salir de ella, de esta manera usted podr&aacute; seguir contestando la encuesta cuando desee." data-original-title="Guardar encuesta" >Elegir del 1 al 5</a></option>
-                                <option value="2" rel="popover" data-content="Guarda la encuesta sin salir de ella, de esta manera usted podr&aacute; seguir contestando la encuesta cuando desee." data-original-title="Guardar encuesta">pregunta abierta</option>
+                                <option value="1" data-img="<%=request.getContextPath()%>/img/1-5.png" rel="popover" data-title="Elegir del 1 al 5" >Elegir del 1 al 5</a></option>
+                                <option value="2" data-img="<%=request.getContextPath()%>/img/Si-No.png" rel="popover" data-title="Pregunta abierta">Pregunta abierta</option>
                             </select>
                         </div>
                     </div>
@@ -63,7 +92,7 @@
 
                         </div>
                     </div>
-                    
+
                     <div class="form-actions">
                         <button class="btn btn-primary" type="submit">Crear Pregunta</button>
                         <button class="btn" type="reset">Cancelar</button>
