@@ -150,7 +150,6 @@
                     <th>Fecha Inicio</th>
                     <th>Fecha Cierre</th>
                     <th>Programa</th>
-                    <th>Informes</th>
                     </thead>
                     <tbody>
 
@@ -159,17 +158,26 @@
                             <td>${Proceso.fechainicio}</td>
                             <td>${Proceso.fechacierre}</td>
                             <td>${Proceso.programaId.nombre}</td>
-                            <td>   
-                                <a  href="<%=request.getContextPath()%>/#informeMatrizCaracteristicas">Matriz de calidad por caracter&iacute;sticas</a><br/>
-                                <a  href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de calidad por factores</a><br/>
-                                <a  id="encuestaAleatoria"  href="<%=request.getContextPath()%>/#encuestaAleatoria">Ver encuesta aleatoria respondida</a>
-                            </td>
                         </tr>
 
                     </tbody>
                 </table> 
-                <p>Estado general del proceso:</p>
                 <br>
+                <p>Informes: </p>
+                <table class="table table-striped table-bordered table-condensed">
+                    <tbody>
+                        <tr>
+                            <td> <i class="icon-bar-chart">  </i><a  href="<%=request.getContextPath()%>/#informeMatrizCaracteristicas">Matriz de calidad por caracter&iacute;sticas</a><br/>
+                            </td>
+                            <td> <i class="icon-bar-chart">  </i><a  href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de calidad por factores</a><br/>
+                            </td>
+                            <td> <i class="icon-random">  </i><a  id="encuestaAleatoria"  href="<%=request.getContextPath()%>/#encuestaAleatoria">Ver encuesta aleatoria respondida</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <p>Estado general del proceso:</p>
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <th>Número total de muestra</th>
@@ -200,12 +208,9 @@
 
 
                     </tbody>
-                </table>
-
-
+                </table><br>
 
                 <p>Estado por fuente del proceso:</p>
-                <br>
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <th>Fuente</th>
