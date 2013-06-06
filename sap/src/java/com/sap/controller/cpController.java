@@ -310,7 +310,7 @@ public class cpController extends HttpServlet {
                 }
 
             } else if (action.equals("listPonderacionFactor")) {
-                sesion.setAttribute("listPonderacionFactor", ponderacionfactorFacade.findAll());
+                sesion.setAttribute("listPonderacionFactor", ponderacionfactorFacade.findByList("procesoId", proceso));
                 String url = "/WEB-INF/vista/comitePrograma/ponderacion/listarpf.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
@@ -465,7 +465,13 @@ public class cpController extends HttpServlet {
 
 
             } else if (action.equals("listPonderacionCara")) {
-                sesion.setAttribute("listPonderacionCara", PonderacioncaracteristicaFacade.findAll());
+                if (ponderacionfactorFacade.findByList("procesoId", proceso).isEmpty()) {
+                    out.print(0);
+                } else {
+                    sesion.setAttribute("listPonderacionCara", PonderacioncaracteristicaFacade.findByList("procesoId", proceso));
+                    out.print(1);
+                }
+            } else if (action.equals("listPonderacionCara2")) {
                 String url = "/WEB-INF/vista/comitePrograma/ponderacion/listarpc.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
@@ -1441,8 +1447,8 @@ public class cpController extends HttpServlet {
                     if (sumaPon != 0) {
                         ponderacionesF.add(ponderacionfactorFacade.findByFactorYProceso(factores.get(i2), p));
                         cumplimientoF[i2] = suma2 / sumaPon;
-                        }
-                  
+                    }
+
 
                 }
                 sesion.setAttribute("factores", factores);
