@@ -116,7 +116,7 @@ $(function() {
                 ' < li > < a  id = "informeEncuesta"  href = "<%=request.getContextPath()%>/#estadoProceso" > < i class = "icon-bar-chart" > < /i> Estado del proceso</a > < /li>' +
                 '</ul>' +
                 '</div>'
-        );
+                );
     };
 
 
@@ -129,7 +129,7 @@ $(function() {
             }); //fin post
 
 
-        } else if (hash === "#inicio" || hash === "#preparedCrearProceso" || hash === "#listarProceso" || hash === "#detalleProceso" || hash === "#detalleProceso" || hash === "#preparedPonderarFactor" || hash === "#ponderarFactor" || hash === "#listPonderacionFactor" || hash === "#preparedPonderarCara" || hash === "#listPonderacionCara" || hash === "#preparedAsignarMuestra" || hash === "#selectorListMuestra" || hash === "#listMuestra" || hash === "#preparedEvaluador" || hash === "#preparedEditPonderarFactor" || hash === "#preparedEditPonderarCara" || hash === "#generarMuestraAleatoria" || hash === "#preparedEditarMuestra" || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental" || hash === "#estadoProceso" || hash==="#informeMatrizFactores" || hash==="#informeMatrizCaracteristicas") {
+        } else if (hash === "#listPonderacionCara2" || hash === "#inicio" || hash === "#preparedCrearProceso" || hash === "#listarProceso" || hash === "#detalleProceso" || hash === "#detalleProceso" || hash === "#preparedPonderarFactor" || hash === "#ponderarFactor" || hash === "#listPonderacionFactor" || hash === "#preparedPonderarCara" || hash === "#preparedAsignarMuestra" || hash === "#selectorListMuestra" || hash === "#listMuestra" || hash === "#preparedEvaluador" || hash === "#preparedEditPonderarFactor" || hash === "#preparedEditPonderarCara" || hash === "#generarMuestraAleatoria" || hash === "#preparedEditarMuestra" || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental" || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas") {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
@@ -244,6 +244,24 @@ $(function() {
                     }, 500);
 
                     $("div.ui-layout-center").affix('refresh');
+                }
+                //fin success
+            }); //fin del $.ajax
+        } else if (hash === "#listPonderacionCara") {
+            var url3 = "/sap/" + hash;
+            url3 = url3.replace('#', "controladorCP?action=");
+            $("div.ui-layout-center").empty();
+            $.ajax({
+                type: "POST",
+                url: url3,
+                success: function(data)
+                {
+                    if (data == 1) {
+                        location = "/sap/#listPonderacionCara2";
+                    } else {
+                        $('#modalCp3').modal();
+                        location = "/sap/#listPonderacionFactor";
+                    }
                 }
                 //fin success
             }); //fin del $.ajax
