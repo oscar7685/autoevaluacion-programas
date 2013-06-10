@@ -11,6 +11,7 @@ import com.sap.ejb.MuestraadministrativoFacade;
 import com.sap.ejb.MuestradirectorFacade;
 import com.sap.ejb.MuestradocenteFacade;
 import com.sap.ejb.MuestraegresadoFacade;
+import com.sap.ejb.MuestraempleadorFacade;
 import com.sap.ejb.MuestraestudianteFacade;
 import com.sap.ejb.MuestrapersonaFacade;
 import com.sap.ejb.ProcesoFacade;
@@ -22,6 +23,7 @@ import com.sap.entity.Muestraadministrativo;
 import com.sap.entity.Muestradirector;
 import com.sap.entity.Muestradocente;
 import com.sap.entity.Muestraegresado;
+import com.sap.entity.Muestraempleador;
 import com.sap.entity.Muestraestudiante;
 import com.sap.entity.Muestrapersona;
 import com.sap.entity.Proceso;
@@ -43,6 +45,8 @@ import javax.servlet.http.HttpSession;
  * @author Ususario
  */
 public class loginController extends HttpServlet {
+    @EJB
+    private MuestraempleadorFacade muestraempleadorFacade;
     @EJB
     private MuestraadministrativoFacade muestraadministrativoFacade;
     @EJB
@@ -378,6 +382,56 @@ public class loginController extends HttpServlet {
                                     for (int i = 0; i < auxA3.size(); i++) {
                                         Encuesta en = auxA3.get(i);
                                         List<Asignacionencuesta> aux4 = asignacionencuestaFacade.findByEncuestayFuenteyModelo(en, fuenteFacade.find(3), proceso.getModeloId());
+                                        if (aux4 != null && aux4.size() > 0) {
+                                            session.setAttribute("encuesta", aux4.get(0).getEncuestaId());
+                                        }
+
+                                    }
+                                }
+
+                            } else {
+                                out.println(1);
+                            }
+
+                        } else if (tp != null && tp.equals("Empleadores")) {
+                            Muestrapersona persona = null;
+                            Muestraempleador empleador = null;
+                            List<Muestraempleador> auxEm2 = null;
+                            List<Encuesta> auxEm3 = null;
+                            Modelo m;
+                            Proceso proceso;
+                            List<Muestrapersona> aux = muestrapersonaFacade.findByCedula(un);
+                            if (aux != null && aux.size() > 0) {
+                                for (int i = 0; i < aux.size(); i++) {
+                                    persona = aux.get(i);
+                                }
+                            }
+                            if (persona != null && persona.getPassword().equals(pw)) {
+                                auxEm2 = muestraempleadorFacade.findByMuestraPersona(persona);
+                            }
+                            if (auxEm2 != null && auxEm2.size() > 0) {
+                                for (int i = 0; i < auxEm2.size(); i++) {
+                                    empleador = auxEm2.get(i);
+                                }
+                            }
+                            if (empleador != null) {
+                                out.println(0);
+                                session.setAttribute("tipoLogin", "Fuente");
+                                session.setAttribute("programa", empleador.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
+                                session.setAttribute("persona", persona);
+                                session.setAttribute("fuente", fuenteFacade.find(6));
+                                proceso = persona.getMuestraId().getProcesoId();
+                                if (!proceso.getFechainicio().equals("En Configuración") && proceso.getFechacierre().equals("--")) {
+                                    m = proceso.getModeloId();
+                                    auxEm3 = encuestaFacade.findByModelo(m);
+                                    session.setAttribute("proceso", proceso);
+
+
+                                }
+                                if (auxEm3 != null) {
+                                    for (int i = 0; i < auxEm3.size(); i++) {
+                                        Encuesta en = auxEm3.get(i);
+                                        List<Asignacionencuesta> aux4 = asignacionencuestaFacade.findByEncuestayFuenteyModelo(en, fuenteFacade.find(6), proceso.getModeloId());
                                         if (aux4 != null && aux4.size() > 0) {
                                             session.setAttribute("encuesta", aux4.get(0).getEncuestaId());
                                         }

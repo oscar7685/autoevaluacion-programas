@@ -5,9 +5,11 @@
 package com.sap.ejb;
 
 import com.sap.entity.Representante;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -15,6 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class RepresentanteFacade extends AbstractFacade<Representante> {
+
     @PersistenceContext(unitName = "sapPU")
     private EntityManager em;
 
@@ -26,5 +29,10 @@ public class RepresentanteFacade extends AbstractFacade<Representante> {
     public RepresentanteFacade() {
         super(Representante.class);
     }
-    
+
+    public List findByRol(String rol) {
+        Query q = em.createNamedQuery("Representante.findByRol");
+        q.setParameter("rol", rol);
+        return q.getResultList();
+    }
 }
