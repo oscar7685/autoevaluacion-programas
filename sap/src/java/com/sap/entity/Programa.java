@@ -77,6 +77,8 @@ public class Programa implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaId")
     private List<Proceso> procesoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaId")
+    private List<Empleador> empleadorList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaId")
     private List<Docente> docenteList;
 
     public Programa() {
@@ -200,6 +202,15 @@ public class Programa implements Serializable {
 
     public void setProcesoList(List<Proceso> procesoList) {
         this.procesoList = procesoList;
+    }
+
+    @XmlTransient
+    public List<Empleador> getEmpleadorList() {
+        return empleadorList;
+    }
+
+    public void setEmpleadorList(List<Empleador> empleadorList) {
+        this.empleadorList = empleadorList;
     }
 
     @XmlTransient

@@ -5,9 +5,12 @@
 package com.sap.ejb;
 
 import com.sap.entity.Empleador;
+import com.sap.entity.Programa;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,5 +29,10 @@ public class EmpleadorFacade extends AbstractFacade<Empleador> {
     public EmpleadorFacade() {
         super(Empleador.class);
     }
-    
+
+    public List findByPrograma(Programa p) {
+        Query q = em.createNamedQuery("Empleador.findByPrograma");
+        q.setParameter("programa", p);
+        return q.getResultList();
+    }
 }

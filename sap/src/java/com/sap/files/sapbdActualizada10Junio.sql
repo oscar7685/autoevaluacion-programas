@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 05-06-2013 a las 21:52:19
+-- Tiempo de generación: 10-06-2013 a las 23:21:32
 -- Versión del servidor: 5.5.16
 -- Versión de PHP: 5.3.8
 
@@ -36,7 +36,14 @@ CREATE TABLE IF NOT EXISTS `administrativo` (
   KEY `fk_administrativo_fuente1_idx` (`fuente_id`),
   KEY `fk_administrativo_programa1_idx` (`programa_id`),
   KEY `fk_administrativo_persona1_idx` (`persona_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `administrativo`
+--
+
+INSERT INTO `administrativo` (`id`, `cargo`, `persona_id`, `fuente_id`, `programa_id`) VALUES
+(1, 'Asistente', '73214806', 3, 22);
 
 -- --------------------------------------------------------
 
@@ -69,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `asignacionencuesta` (
   KEY `fk_asignacionencuesta_fuente1_idx` (`fuente_id`),
   KEY `fk_asignacionencuesta_encuesta1_idx` (`encuesta_id`),
   KEY `fk_asignacionencuesta_modelo1` (`modelo_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- Volcado de datos para la tabla `asignacionencuesta`
@@ -81,7 +88,13 @@ INSERT INTO `asignacionencuesta` (`id`, `fuente_id`, `encuesta_id`, `modelo_id`)
 (3, 6, 3, 1),
 (4, 4, 4, 1),
 (5, 5, 5, 1),
-(6, 3, 7, 1);
+(6, 3, 7, 1),
+(7, 1, 8, 2),
+(8, 2, 9, 2),
+(9, 4, 10, 2),
+(10, 6, 11, 2),
+(11, 3, 12, 2),
+(12, 5, 13, 2);
 
 -- --------------------------------------------------------
 
@@ -190,7 +203,14 @@ CREATE TABLE IF NOT EXISTS `directorprograma` (
   KEY `fk_directorprograma_fuente1_idx` (`fuente_id`),
   KEY `fk_directorprograma_programa1_idx` (`programa_id`),
   KEY `fk_directorprograma_persona1_idx` (`persona_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `directorprograma`
+--
+
+INSERT INTO `directorprograma` (`id`, `persona_id`, `fuente_id`, `programa_id`) VALUES
+(1, '73214805', 5, 22);
 
 -- --------------------------------------------------------
 
@@ -208,7 +228,14 @@ CREATE TABLE IF NOT EXISTS `docente` (
   KEY `fk_docente_fuente1_idx` (`fuente_id`),
   KEY `fk_docente_programa1_idx` (`programa_id`),
   KEY `fk_docente_persona1_idx` (`persona_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `docente`
+--
+
+INSERT INTO `docente` (`id`, `tipo`, `persona_id`, `fuente_id`, `programa_id`) VALUES
+(1, 'Planta', '73214804', 2, 22);
 
 -- --------------------------------------------------------
 
@@ -225,7 +252,14 @@ CREATE TABLE IF NOT EXISTS `egresado` (
   KEY `fk_egresado_fuente1_idx` (`fuente_id`),
   KEY `fk_egresado_programa1_idx` (`programa_id`),
   KEY `fk_egresado_persona1_idx` (`persona_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `egresado`
+--
+
+INSERT INTO `egresado` (`id`, `persona_id`, `fuente_id`, `programa_id`) VALUES
+(1, '73214803', 4, 22);
 
 -- --------------------------------------------------------
 
@@ -239,10 +273,19 @@ CREATE TABLE IF NOT EXISTS `empleador` (
   `cargo` varchar(255) DEFAULT NULL,
   `persona_id` varchar(25) NOT NULL,
   `fuente_id` int(11) NOT NULL,
+  `programa_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_empleador_fuente1_idx` (`fuente_id`),
-  KEY `fk_empleador_persona1_idx` (`persona_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `fk_empleador_persona1_idx` (`persona_id`),
+  KEY `fk_empleador_programa1` (`programa_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `empleador`
+--
+
+INSERT INTO `empleador` (`id`, `empresa`, `cargo`, `persona_id`, `fuente_id`, `programa_id`) VALUES
+(1, 'ecopetrol', 'Gerente', '73214809', 6, 22);
 
 -- --------------------------------------------------------
 
@@ -264,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `encabezado` (
   KEY `fk_encabezado_encuesta1_idx` (`encuesta_id`),
   KEY `fk_encabezado_fuente1_idx` (`fuente_id`),
   KEY `fk_encabezado_muestrapersona1` (`muestrapersona_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
 -- Volcado de datos para la tabla `encabezado`
@@ -279,7 +322,11 @@ INSERT INTO `encabezado` (`id`, `fecha`, `muestrapersona_id`, `proceso_id`, `enc
 (6, '2013-05-31 10:05:07', 6, 1, 1, 1, 'guardada', NULL),
 (7, '2013-06-04 06:51:51', 7, 1, 1, 1, 'guardada', 'Una observación'),
 (8, '2013-06-04 10:48:20', 117, 1, 1, 1, 'guardada', ''),
-(9, '2013-06-05 09:47:02', 9, 1, 1, 1, 'guardada', '');
+(9, '2013-06-05 09:47:02', 9, 1, 1, 1, 'guardada', ''),
+(10, '2013-06-10 09:53:40', 125, 1, 4, 4, 'terminado', ''),
+(11, '2013-06-10 11:47:49', 126, 1, 2, 2, 'guardada', 'la pregunta X no se entiende'),
+(12, '2013-06-10 14:34:03', 128, 1, 7, 3, 'terminado', ''),
+(13, '2013-06-10 17:49:34', 129, 1, 3, 6, 'terminado', '');
 
 -- --------------------------------------------------------
 
@@ -298,7 +345,7 @@ CREATE TABLE IF NOT EXISTS `encuesta` (
   `fecha` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_encuesta_modelo1` (`modelo_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
 -- Volcado de datos para la tabla `encuesta`
@@ -310,7 +357,13 @@ INSERT INTO `encuesta` (`id`, `codigo`, `nombre`, `objetivo`, `instrucciones`, `
 (3, 'FO-DO/AA-002', 'ENCUESTA PARA EMPLEADORES', 'Recolectar información sobre la percepción que la comunidad universitaria tiene de los procesos académicos y administrativos desarrollados por el programa para el logro de sus objetivos misionales, con el fin de adelantar el proceso de autoevaluación de programas.', 'A continuación encontrará una serie de afirmaciones, valórelas según su grado de acuerdo con la siguiente escala de calificación: \r\n5 - Completamente de acuerdo\r\n4 - De acuerdo\r\n3 - Parcialmente de acuerdo\r\n2 - En desacuerdo\r\n1 - Completamente en desacuerdo\r\n0 - No sabe', 1, '00', '18/04/2012'),
 (4, 'FO-DO/AA-002', 'ENCUESTA PARA EGRESADOS', 'Recolectar información sobre la percepción que la comunidad universitaria tiene de los procesos académicos y administrativos desarrollados por el programa para el logro de sus objetivos misionales, con el fin de adelantar el proceso de autoevaluación de programas.', 'A continuación encontrará una serie de afirmaciones, valórelas según su grado de acuerdo con la siguiente escala de calificación: \r\n5 - Completamente de acuerdo\r\n4 - De acuerdo\r\n3 - Parcialmente de acuerdo\r\n2 - En desacuerdo\r\n1 - Completamente en desacuerdo\r\n0 - No sabe', 1, '00', '18/04/2012'),
 (5, 'FO-DO/AA-002', 'ENCUESTA PARA DIRECTORES DE PROGRAMA', 'Recolectar información sobre la percepción que la comunidad universitaria tiene de los procesos académicos y administrativos desarrollados por el programa para el logro de sus objetivos misionales, con el fin de adelantar el proceso de autoevaluación de programas.', 'A continuación encontrará una serie de afirmaciones, valórelas según su grado de acuerdo con la siguiente escala de calificación: \r\n5 - Completamente de acuerdo\r\n4 - De acuerdo\r\n3 - Parcialmente de acuerdo\r\n2 - En desacuerdo\r\n1 - Completamente en desacuerdo\r\n0 - No sabe', 1, '00', '18/04/2012'),
-(7, 'FO-DO/AA-002', 'ENCUESTA PARA ADMINISTRATIVOS', 'Recolectar información sobre la percepción que la comunidad universitaria tiene de los procesos académicos y administrativos desarrollados por el programa para el logro de sus objetivos misionales, con el fin de adelantar el proceso de autoevaluación de programas.', 'A continuación encontrará una serie de afirmaciones, valórelas según su grado de acuerdo con la siguiente escala de calificación: \r\n5 - Completamente de acuerdo\r\n4 - De acuerdo\r\n3 - Parcialmente de acuerdo\r\n2 - En desacuerdo\r\n1 - Completamente en desacuerdo\r\n0 - No sabe', 1, '00', '18/04/2012');
+(7, 'FO-DO/AA-002', 'ENCUESTA PARA ADMINISTRATIVOS', 'Recolectar información sobre la percepción que la comunidad universitaria tiene de los procesos académicos y administrativos desarrollados por el programa para el logro de sus objetivos misionales, con el fin de adelantar el proceso de autoevaluación de programas.', 'A continuación encontrará una serie de afirmaciones, valórelas según su grado de acuerdo con la siguiente escala de calificación: \r\n5 - Completamente de acuerdo\r\n4 - De acuerdo\r\n3 - Parcialmente de acuerdo\r\n2 - En desacuerdo\r\n1 - Completamente en desacuerdo\r\n0 - No sabe', 1, '00', '18/04/2012'),
+(8, 'FO-DO/AA-002', 'ENCUESTA PARA ESTUDIANTES', 'Recolectar Información que permita evaluar la calidad del programa, con\r\nfundamento en los indicadores de las características contempladas en el modelo\r\nde autoevaluación con fines de acreditación de la Institución.', 'Las preguntas abiertas están orientadas a obtener información cualitativa y detallada con el fin de establecer la calidad del programa académico en sus distintos aspectos y, a la vez, establecer planes de mejoramiento para los mismos. \r\nLas preguntas cerradas deben ser evaluadas según el grado de cumplimiento del enunciado, de acuerdo con la siguiente escala de calificación así:\r\n5 - Muy Alto\r\n4 - Alto\r\n3 - Medio\r\n2 - Bajo\r\n1 - Muy Bajo\r\n0 - No sabe', 2, '00', '18/04/2012'),
+(9, 'FO-DO/AA-002', 'ENCUESTA PARA PROFESORES', 'Recolectar Información que permita evaluar la calidad del programa, con\r\nfundamento en los indicadores de las características contempladas en el modelo\r\nde autoevaluación con fines de acreditación de la Institución.', 'Las preguntas abiertas están orientadas a obtener información cualitativa y detallada con el fin de establecer la calidad del programa académico en sus distintos aspectos y, a la vez, establecer planes de mejoramiento para los mismos. \r\nLas preguntas cerradas deben ser evaluadas según el grado de cumplimiento del enunciado, de acuerdo con la siguiente escala de calificación así:\r\n5 - Muy Alto\r\n4 - Alto\r\n3 - Medio\r\n2 - Bajo\r\n1 - Muy Bajo\r\n0 - No sabe', 2, '00', '18/04/2012'),
+(10, 'FO-DO/AA-002', 'ENCUESTA PARA EGRESADOS', 'Recolectar Información que permita evaluar la calidad del programa, con\r\nfundamento en los indicadores de las características contempladas en el modelo\r\nde autoevaluación con fines de acreditación de la Institución.', 'Las preguntas cerradas deben ser evaluadas según el grado de cumplimiento del enunciado, de acuerdo con la siguiente escala de calificación así:\r\n5 - Muy Alto\r\n4 - Alto\r\n3 - Medio\r\n2 - Bajo\r\n1 - Muy Bajo\r\n0 - No sabe', 2, '00', '18/04/2012'),
+(11, 'FO-DO/AA-002', 'ENCUESTA PARA EMPLEADORES', 'Recolectar Información que permita evaluar la calidad del programa, con\r\nfundamento en los indicadores de las características contempladas en el modelo\r\nde autoevaluación con fines de acreditación de la Institución.', 'Las preguntas abiertas están orientadas a obtener información cualitativa y detallada con el fin de establecer la calidad del programa académico en sus distintos aspectos y, a la vez, establecer planes de mejoramiento para los mismos. ', 2, '00', '18/04/2012'),
+(12, 'FO-DO/AA-002', 'ENCUESTA PARA ADMINISTRATIVOS', 'Recolectar Información que permita evaluar la calidad del programa, con\r\nfundamento en los indicadores de las características contempladas en el modelo\r\nde autoevaluación con fines de acreditación de la Institución.', 'Las preguntas cerradas deben ser evaluadas según el grado de cumplimiento del enunciado, de acuerdo con la siguiente escala de calificación así:\r\n5 - Muy Alto\r\n4 - Alto\r\n3 - Medio\r\n2 - Bajo\r\n1 - Muy Bajo\r\n0 - No sabe', 2, '00', '18/04/2012'),
+(13, 'FO-DO/AA-002', 'ENCUESTA PARA DIRECTORES DE PROGRAMA', 'Recolectar Información que permita evaluar la calidad del programa, con\r\nfundamento en los indicadores de las características contempladas en el modelo\r\nde autoevaluación con fines de acreditación de la Institución.', 'Las preguntas abiertas están orientadas a obtener información cualitativa y detallada con el fin de establecer la calidad del programa académico en sus distintos aspectos y, a la vez, establecer planes de mejoramiento para los mismos. \r\nLas preguntas cerradas deben ser evaluadas según el grado de cumplimiento del enunciado, de acuerdo con la siguiente escala de calificación así:\r\n5 - Muy Alto\r\n4 - Alto\r\n3 - Medio\r\n2 - Bajo\r\n1 - Muy Bajo\r\n0 - No sabe', 2, '00', '18/04/2012');
 
 -- --------------------------------------------------------
 
@@ -557,7 +610,121 @@ INSERT INTO `encuestahaspregunta` (`encuesta_id`, `pregunta_id`) VALUES
 (2, 85),
 (5, 85),
 (2, 86),
-(5, 86);
+(5, 86),
+(8, 87),
+(9, 87),
+(13, 87),
+(9, 88),
+(8, 89),
+(9, 89),
+(11, 90),
+(11, 91),
+(11, 92),
+(8, 93),
+(8, 94),
+(9, 94),
+(13, 94),
+(9, 95),
+(13, 95),
+(8, 96),
+(9, 96),
+(13, 96),
+(8, 97),
+(9, 97),
+(12, 97),
+(13, 97),
+(8, 98),
+(9, 98),
+(12, 98),
+(8, 99),
+(8, 100),
+(9, 100),
+(13, 100),
+(9, 101),
+(9, 102),
+(9, 103),
+(8, 104),
+(8, 105),
+(9, 105),
+(9, 106),
+(9, 107),
+(9, 108),
+(9, 109),
+(8, 110),
+(8, 111),
+(9, 111),
+(8, 112),
+(9, 112),
+(8, 113),
+(9, 113),
+(8, 114),
+(8, 115),
+(8, 116),
+(8, 117),
+(9, 117),
+(8, 119),
+(9, 119),
+(10, 119),
+(12, 119),
+(8, 120),
+(9, 120),
+(12, 120),
+(8, 121),
+(9, 121),
+(12, 121),
+(8, 122),
+(9, 122),
+(8, 123),
+(8, 124),
+(8, 125),
+(9, 126),
+(8, 127),
+(9, 127),
+(8, 128),
+(8, 129),
+(9, 129),
+(8, 130),
+(8, 131),
+(8, 132),
+(10, 133),
+(10, 134),
+(10, 135),
+(10, 136),
+(8, 137),
+(9, 137),
+(12, 137),
+(8, 138),
+(9, 138),
+(12, 138),
+(13, 138),
+(8, 139),
+(9, 139),
+(12, 139),
+(13, 139),
+(8, 140),
+(9, 140),
+(12, 140),
+(13, 140),
+(8, 141),
+(9, 141),
+(8, 142),
+(9, 142),
+(13, 142),
+(8, 143),
+(13, 143),
+(8, 144),
+(9, 144),
+(13, 144),
+(8, 145),
+(9, 145),
+(13, 145),
+(9, 146),
+(8, 147),
+(9, 147),
+(8, 148),
+(9, 148),
+(12, 148),
+(13, 148);
 
 -- --------------------------------------------------------
 
@@ -1395,7 +1562,7 @@ INSERT INTO `indicador` (`id`, `codigo`, `nombre`, `caracteristica_id`, `modelo_
 (325, '4.9.6', 'Número de Tesis Doctorales premiados durante los últimos cinco años por jurados nacionales y extranjeros', 49, 2),
 (326, '4.10.1', 'Información verificable de la existencia de mecanismos sobre facilidad de acceso a cursos, seminarios o conferencias en la universidad sobre aspectos relacionados con cambios en la ciencia mundial y con aspectos relevantes del entorno social y económico d', 50, 2),
 (327, '4.11.1', 'Información verificable del programa que se cuenta con una oferta académica amplia que le suministre opciones al estudiante de temas o líneas de investigación en las que puede vincularse.', 51, 2),
-(328, '4.11.2', 'Información verificable del aprovechamiento de los estudiantes de seminarios y oferta académica de otros grupos de investigación y programas, de RUDECOLOMBIA o de otras universidades nacionales o extranjeras.', 51, 2),
+(328, '4.11.2', 'Información verificable del aprovechamiento de los estudiantes de seminarios y oferta académica de otros grupos de investigación y programas, de la Universidad de Cartagena o de otras universidades nacionales o extranjeras.', 51, 2),
 (329, '4.11.3', 'Información verificable de la existencia de convenios que faciliten, promuevan y garanticen la movilidad estudiantil y del profesorado en programas de otras universidades nacionales e internacionales.', 51, 2),
 (330, '4.12.1', 'Existencia de evidencia de los resultados de los procesos periódicos de autoevaluación, conducentes a mejoras en el programa en los últimos cinco años.', 52, 2),
 (331, '4.12.2', 'Existencia de Estrategias de seguimiento a los productos de los planes de mejora desarrolladas en los últimos cinco años', 52, 2),
@@ -1421,7 +1588,7 @@ INSERT INTO `indicador` (`id`, `codigo`, `nombre`, `caracteristica_id`, `modelo_
 (351, '5.15.5', 'Existencia de evidencia de los resultados de las investigaciones de los grupos de investigación y su aporte al campo de las ciencias de la educación.', 55, 2),
 (352, '6.16.1', 'Existencia de evidencia de la posibilidad de los estudiantes de tomar seminarios o cursos en campos complementarios a los del programa ya sea en las universidades de RUDECOLOMBIA o en otras universidades, vía alianzas estratégicas - convenios.', 56, 2),
 (353, '6.16.2', 'Existencia de evidencia de la posibilidad de los estudiantes de participar en las actividades de otros grupos de investigación relacionados con el programa o con programas complementarios.', 56, 2),
-(354, '6.16.3', 'Existencia de evidencia de la posibilidad de trabajar con Directores de Tesis que sean de otras universidades diferentes a RUDECOLOMBIA.', 56, 2),
+(354, '6.16.3', 'Existencia de evidencia de la posibilidad de trabajar con Directores de Tesis que sean de otras universidades.', 56, 2),
 (355, '6.17.1', 'Existencia de líneas de investigación relacionadas con problemas o temas de del campo de las ciencias de la educación de la comunidad nacional, regional o local, o con problemas del sector productivo o de otros campos del conocimiento.', 57, 2),
 (356, '6.17.2', 'Existencia de evidencias de innovaciones, cambios o mejoras introducidos en el entorno a partir de resultados de tesis doctorales de estudiantes, de proyectos de investigación realizados por el grupo de investigación, o de servicios de extensión ofrecidos', 57, 2),
 (357, '6.18.1', 'Investigaciones desarrolladas en el Doctorado sobre problemas o desafíos que se enfrentan a nivel nacional, regional o local.', 58, 2),
@@ -1807,7 +1974,188 @@ INSERT INTO `instrumentohasindicador` (`instrumento_id`, `indicador_id`) VALUES
 (3, 274),
 (1, 275),
 (3, 276),
-(3, 277);
+(3, 277),
+(1, 278),
+(1, 279),
+(3, 279),
+(1, 280),
+(3, 280),
+(3, 281),
+(2, 282),
+(2, 283),
+(2, 284),
+(2, 285),
+(2, 286),
+(2, 287),
+(2, 288),
+(2, 289),
+(2, 290),
+(2, 291),
+(3, 292),
+(2, 293),
+(3, 294),
+(3, 295),
+(3, 296),
+(3, 297),
+(2, 298),
+(1, 299),
+(2, 299),
+(2, 300),
+(3, 301),
+(1, 302),
+(3, 302),
+(3, 303),
+(2, 304),
+(2, 305),
+(2, 306),
+(2, 307),
+(2, 308),
+(1, 309),
+(3, 309),
+(2, 310),
+(1, 311),
+(3, 311),
+(1, 312),
+(2, 312),
+(2, 313),
+(1, 314),
+(3, 314),
+(1, 315),
+(3, 315),
+(1, 316),
+(3, 316),
+(2, 317),
+(1, 318),
+(3, 318),
+(3, 319),
+(1, 320),
+(3, 320),
+(1, 321),
+(3, 321),
+(1, 322),
+(3, 322),
+(1, 323),
+(3, 323),
+(3, 324),
+(2, 325),
+(1, 326),
+(3, 326),
+(1, 327),
+(3, 327),
+(1, 328),
+(3, 328),
+(1, 329),
+(3, 329),
+(1, 330),
+(3, 330),
+(1, 331),
+(3, 331),
+(3, 332),
+(1, 333),
+(3, 334),
+(3, 335),
+(1, 336),
+(3, 336),
+(2, 337),
+(3, 338),
+(2, 339),
+(2, 340),
+(2, 341),
+(2, 342),
+(2, 343),
+(3, 344),
+(3, 345),
+(3, 346),
+(2, 347),
+(2, 348),
+(2, 349),
+(2, 350),
+(3, 351),
+(1, 352),
+(3, 352),
+(1, 353),
+(3, 353),
+(1, 354),
+(3, 354),
+(1, 355),
+(3, 355),
+(1, 356),
+(3, 356),
+(3, 357),
+(2, 358),
+(3, 359),
+(1, 360),
+(3, 360),
+(3, 361),
+(3, 362),
+(1, 363),
+(3, 363),
+(3, 364),
+(3, 365),
+(3, 366),
+(2, 367),
+(2, 368),
+(2, 369),
+(2, 370),
+(2, 371),
+(2, 372),
+(3, 373),
+(3, 374),
+(3, 375),
+(1, 376),
+(1, 377),
+(3, 377),
+(1, 378),
+(3, 378),
+(2, 379),
+(3, 380),
+(2, 381),
+(1, 382),
+(3, 382),
+(3, 383),
+(2, 384),
+(2, 385),
+(2, 386),
+(2, 387),
+(2, 388),
+(1, 389),
+(3, 389),
+(2, 390),
+(1, 391),
+(3, 391),
+(1, 392),
+(3, 392),
+(2, 393),
+(2, 394),
+(1, 395),
+(1, 396),
+(1, 397),
+(1, 398),
+(3, 399),
+(1, 400),
+(3, 400),
+(2, 401),
+(2, 402),
+(1, 403),
+(1, 404),
+(3, 405),
+(3, 406),
+(2, 407),
+(3, 408),
+(3, 409),
+(1, 410),
+(1, 411),
+(2, 412),
+(3, 413),
+(3, 414),
+(1, 415),
+(2, 416),
+(3, 417),
+(3, 418),
+(1, 419),
+(1, 420),
+(3, 420),
+(1, 421);
 
 -- --------------------------------------------------------
 
@@ -1866,7 +2214,14 @@ CREATE TABLE IF NOT EXISTS `muestraadministrativo` (
   `muestrapersona_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_muestraadministrativo_muestrapersona1` (`muestrapersona_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `muestraadministrativo`
+--
+
+INSERT INTO `muestraadministrativo` (`id`, `cargo`, `muestrapersona_id`) VALUES
+(2, 'Asistente', 128);
 
 -- --------------------------------------------------------
 
@@ -1893,7 +2248,14 @@ CREATE TABLE IF NOT EXISTS `muestradirector` (
   `muestrapersona_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_muestradirector_muestrapersona1` (`muestrapersona_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `muestradirector`
+--
+
+INSERT INTO `muestradirector` (`id`, `muestrapersona_id`) VALUES
+(1, 127);
 
 -- --------------------------------------------------------
 
@@ -1907,7 +2269,14 @@ CREATE TABLE IF NOT EXISTS `muestradocente` (
   `muestrapersona_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_muestradocente_muestrapersona1` (`muestrapersona_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `muestradocente`
+--
+
+INSERT INTO `muestradocente` (`id`, `tipo`, `muestrapersona_id`) VALUES
+(1, 'Planta', 126);
 
 -- --------------------------------------------------------
 
@@ -1920,7 +2289,14 @@ CREATE TABLE IF NOT EXISTS `muestraegresado` (
   `muestrapersona_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_muestraegresado_muestrapersona1` (`muestrapersona_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `muestraegresado`
+--
+
+INSERT INTO `muestraegresado` (`id`, `muestrapersona_id`) VALUES
+(1, 125);
 
 -- --------------------------------------------------------
 
@@ -1935,7 +2311,14 @@ CREATE TABLE IF NOT EXISTS `muestraempleador` (
   `muestrapersona_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_muestraempleador_muestrapersona1` (`muestrapersona_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `muestraempleador`
+--
+
+INSERT INTO `muestraempleador` (`id`, `empresa`, `cargo`, `muestrapersona_id`) VALUES
+(1, 'ecopetrol', 'Gerente', 129);
 
 -- --------------------------------------------------------
 
@@ -2102,7 +2485,7 @@ CREATE TABLE IF NOT EXISTS `muestrapersona` (
   `muestra_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_muestrapersona_muestra1_idx` (`muestra_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=125 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=130 ;
 
 --
 -- Volcado de datos para la tabla `muestrapersona`
@@ -2232,7 +2615,12 @@ INSERT INTO `muestrapersona` (`id`, `cedula`, `nombre`, `apellido`, `password`, 
 (121, '1047432850', 'LUIS MANUEL                             ', 'ORTIZ DIAZ                              ', '1047432850', 'luisma_od@hotmail.com                        ', 1),
 (122, '32937292', 'MARIA LILIANA                           ', 'CONEO CARABALLO                         ', '32937292', 'liliana.coneo@gmail.com                      ', 1),
 (123, '1047425119', 'MARIA YOLANDA                           ', 'GONZALEZ CASTELLANOS                    ', '1047425119', 'thica65@hotmail.com                          ', 1),
-(124, '1128062003', 'SAMIR ANDRES                            ', 'HINCAPIE CAMELO                         ', '1128062003', 'sahincapiec@gmail.com                        ', 1);
+(124, '1128062003', 'SAMIR ANDRES                            ', 'HINCAPIE CAMELO                         ', '1128062003', 'sahincapiec@gmail.com                        ', 1),
+(125, '73214803', 'Pedro', 'Pereira', '73214803', 'xxx', 1),
+(126, '73214804', 'Juan', 'Martinez', '73214804', 'xx', 1),
+(127, '73214805', 'Miguel Angel', 'Garcia Bolaños', '73214805', 'xx', 1),
+(128, '73214806', 'Reynaldo', 'Rueda', '73214806', 'xx', 1),
+(129, '73214809', 'Oscar', 'Ballesteros', '73214809', 'xxx', 1);
 
 -- --------------------------------------------------------
 
@@ -2560,6 +2948,11 @@ INSERT INTO `persona` (`id`, `nombre`, `apellido`, `password`, `mail`) VALUES
 ('73006859', 'ONEL', 'ARRIETA ZUñIGA', '73006859', 'elbuho9@hotmail.com '),
 ('73160028', 'GABRIEL ', 'DIZZETT UTRIA ', '73160028', 'gdizzett_u@yahoo.com'),
 ('73209373', 'DAVID                                   ', 'MARTINEZ ESGUERRA                       ', '73209373', 'david.m.esguerra@hotmail.com                 '),
+('73214803', 'Pedro', 'Pereira', '73214803', 'xxx'),
+('73214804', 'Juan', 'Martinez', '73214804', 'xx'),
+('73214805', 'Miguel Angel', 'Garcia Bolaños', '73214805', 'xxx'),
+('73214806', 'Reynaldo', 'Rueda', '73214806', 'xxxx'),
+('73214809', 'Oscar', 'ballesteros', '73214809', 'xx'),
 ('7938826', 'PEDRO JOSE                              ', 'PAYARES GARCIA                          ', '7938826', 'payares_7@yahoo.es                           '),
 ('94011911522', 'SAIR JOSE ', 'MARTINEZ MEDINA ', '94011911522', 'marmed_1901@hotmail.com '),
 ('94013012827', 'ROBERTO CARLOS', 'AHUMADA VIANA ', '94013012827', 'rcav356@hotmail.com '),
@@ -2640,7 +3033,7 @@ CREATE TABLE IF NOT EXISTS `ponderacioncaracteristica` (
   PRIMARY KEY (`id`),
   KEY `fk_ponderacioncaracteristica_proceso1_idx` (`proceso_id`),
   KEY `fk_ponderacioncaracteristica_caracteristica1_idx` (`caracteristica_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=70 ;
 
 --
 -- Volcado de datos para la tabla `ponderacioncaracteristica`
@@ -2686,7 +3079,36 @@ INSERT INTO `ponderacioncaracteristica` (`id`, `nivelimportancia`, `ponderacion`
 (37, 9, 4.5, '9', 1, 37),
 (38, 9, 5.67, '9', 1, 38),
 (39, 9, 5.67, '9', 1, 39),
-(40, 9, 5.67, '9', 1, 40);
+(40, 9, 5.67, '9', 1, 40),
+(41, 8, 10, 'El cumplimento de los objetivos es el papel fundamental del programa que es tener profesionales integrales;  aunque desde la práctica diaria no se cumplen en su totalidad, es el deber ser de los conducimos los procesos educativos. ', 7, 41),
+(42, 8, 3.33, 'Consideramos el sistema de inscripción y selección de aspirantes así como su elección, uno de los pilares sólidos y una gran fortaleza del programa.', 7, 42),
+(43, 8, 3.33, 'Un programa como este pretende que su nivel de graduación de los estudiantes sea del 100%  y su permanecían lo mas ceñido al cronograma de actividades y al plan de estudios propuesto. ', 7, 43),
+(44, 8, 3.33, 'El objetivo principal de este programa es que la mayoría de sus graduados ejerzan la profesión con alta calidad en diferentes puntos de la geografía del país.', 7, 44),
+(45, 7, 2.41, 'Los docentes de este programa deben ser de alta calidad esto incluye la formación o profundización en las nuevas técnicas de imágenes diagnósticas. ', 7, 45),
+(46, 7, 2.41, ' La producción en al campo de los documentos escritos tipo artículos en revistas indexadas es un requerimiento de la comunidad científica actual  y de los indicadores de calidad que se aplican a los postgrados hoy día.', 7, 46),
+(47, 7, 2.41, 'Debe existir compromiso  de todos  los docentes en labores tutoriales.\r\n', 7, 47),
+(48, 8, 2.76, 'Consideramos  que  la Universidad  debe tener políticas claras en todo lo concerniente a salarios, puntos salariales, escalafón, ascensos, número de profesores de tiempo completo y de planta y del relevo generacional.  ', 7, 48),
+(49, 8, 2.58, 'La formación debe ser acorde con el entorno social. ', 7, 49),
+(50, 8, 2.58, 'La flexibilidad, del programa en cuanto permite diferentes opciones al estudiante tanto en profundización como en perfiles epidemiológicos. En el programa actual de 3 años, que consideramos  corto limita esta característica. Se propondrá en consecuencia la duración de 4 años.', 7, 50),
+(51, 7, 2.26, 'Consideramos que para que un programa mantenga la calidad debe tener  un propuesta continua y sistemática de mejoramiento.  Igualmente se debe entender que hay características que deben permanecer estables como un sello de identidad de cada programa.', 7, 51),
+(52, 8, 2.58, 'Es uno de los propósitos principales del programa.', 7, 52),
+(53, 7, 3.33, 'Los programas de especializaciones médico quirúrgicas deben tener líneas de investigación que les permitan dar repuestas a los problemas del entorno y soporten la extensión del programa de una manera racional. Sin embargo, a diferencia de las maestrías y doctorados,  no es el componente eje de la formación', 7, 53),
+(54, 7, 3.33, 'Consideramos que el programa debe tener un grupo reconocido por la Universidad de Cartagena y en lo posible por CONCIENCIAS y articulado con las áreas que lo son afines en sus problemas como patología y medicina interna.', 7, 54),
+(55, 7, 3.33, 'Los productos de investigación deben responder a los problemas del entorno pero mantenimiento una visión global y científica de los mimos.', 7, 55),
+(56, 8, 4, 'Es  quehacer que a nuestro juicio debe caracterizar a un especialista en radiología e imágenes diagnosticas: integrase con las otras especialidades para producir e intercambiar conocimiento.', 7, 56),
+(57, 6, 3, 'Consideramos que en primera instancia las líneas propuestas deben atender a nuestras necesidades inmediatas de conocimiento de problemas locales y que no demanden tecnologías complejas de las cuales no estamos dotados. ', 7, 57),
+(58, 6, 3, 'A diferencia de otras especialidades la radiología y las imágenes diagnósticas esta al servicio de las necesidades de otras especializaciones y áreas de la medicina y en esa mediad damos apoyo a la solución directa de problemas del entorno.', 7, 58),
+(59, 6, 4.29, 'Los indicadores de calidad actual demanda este tipo de actividades, sin embrago creemos que las tecnologías de información y comunicación suplen en buena medida este tipo de intercambios.', 7, 59),
+(60, 6, 4.29, 'Consideramos que debemos buscar estrategias novedosas que permitan el conocimiento global y el logro de estas metas. Para los profesores del programa la movilización por periodos largos (un mes o más) puede no ser costo-efectiva. ', 7, 60),
+(61, 2, 1.43, 'Consideramos en consecuencia con lo anterior que debemos fortalecer inicialmente la investigación de problemas propios con una visión global.', 7, 61),
+(62, 6, 10, 'El bienestar universitario de los estudiantes de las especialidades medico quirúrgicas esta referido a los ámbitos de la praxis médica. No hay la suficiente información.', 7, 62),
+(63, 6, 5, 'Este momento el desempeño de nuestros graduados es como médicos practicantes en ejerció y en Colombia aun no tenemos un eco-sistema de ciencias que permita la producción cotidiana en investigación científica. La autoevaluación ha sido de gran provecho para rescatar información de este ítem.', 7, 63),
+(64, 6, 5, 'No hay estudios serios que puedan ser utilizados como evidencia para analizar el impacto del programa.', 7, 64),
+(65, 6, 1.76, 'Consideramos   que la planta física es un recurso importante, pero no fundamental para el desarrollo del programa.', 7, 65),
+(66, 8, 2.35, 'Se considera que la información bibliográfica y los recursos de comunicación son de gran importancia en la calidad educativa de la comunidad académica.', 7, 66),
+(67, 6, 1.76, 'El apoyo a la docencia es fundamental en un programa de investigación, sin embargo la investigación, aunque cada día toma mas fuerza es el eje en la formación de maestrías y doctorados. En las especialidades un componente necesario pero en menor intensidad que los La razón es la dificultad en obtener recursos para todos los trabajos de investigación que se suceden en las diferentes especialidades.', 7, 67),
+(68, 7, 2.06, 'La inversión de la Institución de educación superior en los programas de postgrado especialmente en los médico quirúrgicos es importante dado el valor social de los mismos y los requerimientos de calidad tanto en los componentes teóricos como en la praxis, lo que demanda recursos adicionales. ', 7, 68),
+(69, 7, 2.06, 'Consideramos que es de gran importancia y por esa razón deberá ser modificado como se indicara en el plan de mejoramiento.', 7, 69);
 
 -- --------------------------------------------------------
 
@@ -2703,7 +3125,7 @@ CREATE TABLE IF NOT EXISTS `ponderacionfactor` (
   PRIMARY KEY (`id`),
   KEY `fk_ponderacionfactor_proceso1_idx` (`proceso_id`),
   KEY `fk_ponderacionfactor_factor1_idx` (`factor_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
 -- Volcado de datos para la tabla `ponderacionfactor`
@@ -2719,7 +3141,17 @@ INSERT INTO `ponderacionfactor` (`id`, `ponderacion`, `justificacion`, `proceso_
 (7, 9, '9', 1, 9),
 (8, 9, '9', 1, 10),
 (9, 9, '9', 1, 11),
-(10, 17, '9', 1, 12);
+(10, 17, '9', 1, 12),
+(11, 10, 'j', 7, 13),
+(12, 10, 'j', 7, 14),
+(13, 10, 'j', 7, 15),
+(14, 10, 'j', 7, 16),
+(15, 10, 'j', 7, 17),
+(16, 10, 'j', 7, 18),
+(17, 10, 'j', 7, 19),
+(18, 10, 'j', 7, 20),
+(19, 10, 'j', 7, 21),
+(20, 10, 'j', 7, 22);
 
 -- --------------------------------------------------------
 
@@ -2737,7 +3169,7 @@ CREATE TABLE IF NOT EXISTS `pregunta` (
   PRIMARY KEY (`id`),
   KEY `fk_pregunta_indicador1_idx` (`indicador_id`),
   KEY `fk_pregunta_modelo1` (`modelo_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=87 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=149 ;
 
 --
 -- Volcado de datos para la tabla `pregunta`
@@ -2829,7 +3261,69 @@ INSERT INTO `pregunta` (`id`, `codigo`, `pregunta`, `tipo`, `indicador_id`, `mod
 (83, '10.38.4.5', 'La ventilación de las bibliotecas, salas de lectura grupal e individual , y los espacios para la consulta es adecuada.', '1', 263, 1),
 (84, '10.38.4.6', 'La dotación de las bibliotecas, salas de lectura grupal e individual, y los espacios para la consulta es suficiente.', '1', 263, 1),
 (85, '10.39.4.1', 'Los recursos presupuestales de los que dispone el programa son suficientes.', '1', 269, 1),
-(86, '10.40.3.1', 'La asignación de recursos físicos y financieros para el programa se hace de manera equitativa.', '1', 275, 1);
+(86, '10.40.3.1', 'La asignación de recursos físicos y financieros para el programa se hace de manera equitativa.', '1', 275, 1),
+(87, '1.1.2.2', '¿Cuál es su apreciación con respecto a la capacidad que ha demostrado el programa a lo largo de su trayectoria para el logro de sus objetivos?', '2', 279, 2),
+(88, '3.5.5.2', '¿Qué clase de distinciones ha recibido en términos de docencia, investigación y extensión en los últimos cinco (5) años?', '2', 302, 2),
+(89, '6.17.1.2', '¿Cuál es su apreciación sobre las líneas de investigación relacionadas con problemas del campo de las ciencias de la educación de la comunidad nacional, regional o local, o con problemas del sector productivo o de otros campos del conocimiento?', '2', 355, 2),
+(90, '9.23.4.2', '¿Cuál es su apreciación sobre la calidad de los trabajos de colaboración científica entre los egresados del programa de Doctorado en Ciencias de la Educación, otros doctorados y maestrías, y los grupos de investigación del programa?', '2', 382, 2),
+(91, '9.23.11.2', '¿Cuál es su apreciación sobre el impacto de las publicaciones de los egresados?', '2', 389, 2),
+(92, '9.24.1.2', '¿Cuál es su apreciación sobre la productividad académica y aportes en el campo de las ciencias de la educación de los egresados del Doctorado en Ciencias de la Educación, otros doctorados y maestrías que tiene a su cargo?', '2', 392, 2),
+(93, '10.25.3.2', '¿Cuál es su apreciación con respecto a los espacios físicos?', '2', 395, 2),
+(94, '10.25.3.3', '¿Los diferentes espacios físicos son adecuados?', '2', 395, 2),
+(95, '10.27.4.1', '¿Cuál es su apreciación de la calidad del apoyo administrativo por parte de profesores y estudiantes?', '2', 415, 2),
+(96, '10.28.4.2', '¿Cuál es su apreciación sobre lo adecuado de los recursos presupuestales disponibles para el funcionamiento del programa?', '2', 419, 2),
+(97, '1.1.1.1', 'Valore claridad de los objetivos planteados para el programa', '1', 278, 2),
+(98, '1.1.2.1', 'El programa, a lo largo de sutrayectoria,  ha demostrado capacidad  para el logro de sus objetivos.', '1', 279, 2),
+(99, '2.2.1.1', 'Los criterios para el proceso de selección de estudiantes son adecuados.', '1', 280, 2),
+(100, '3.5.2.1', 'Teniendo en cuenta el número de profesores y de estudiantes en el programa, qué valor le daría a dicha relación.', '1', 299, 2),
+(101, '3.5.5.1', 'Los profesores han recibido distinciones en términos de docencia, investigación y extensión en los últimos cinco años.', '1', 302, 2),
+(102, '3.6.7.1', 'Valore el grado del impacto de las publicaciones de los profesores del programa medido en términos de indicadores de citas bibliográficas.', '1', 309, 2),
+(103, '3.6.9.1', 'Según su conocimiento el grado de participación de los profesores del programa en Comités Editoriales de revistas nacionales e internacionales es:', '1', 311, 2),
+(104, '3.7.1.1', 'La relación entre el número de tutores de tesis doctorales y el número de estudiantes en el programa es:', '1', 312, 2),
+(105, '3.7.3.1', 'Valore las políticas sobre asignación de profesores como directores o jurados de tesis doctorales.', '1', 314, 2),
+(106, '3.8.1.1', 'Valore los procesos de selección, renovación, contratación y permanencia de profesores.', '1', 315, 2),
+(107, '3.8.2.1', 'Valore las políticas sobre años sabáticos y Post-Doctorados para profesores del programa.', '1', 316, 2),
+(108, '3.8.4.1', 'Valore las políticas y mecanismos de evaluación de profesores.', '1', 318, 2),
+(109, '3.8.4.2', 'Valore la coherencia entre la remuneración y méritos académicos de los docentes.', '1', 318, 2),
+(110, '4.9.1.1', 'Valore las estrategias utilizadas por el programa orientadas a promover la capacidad de indagación.', '1', 320, 2),
+(111, '4.9.2.1', 'Valore las estrategias del programa para desarrollar capacidad de pensamiento autónomo y dominio de desarrollos teóricos, experimentales y técnicas de investigación propias.', '1', 321, 2),
+(112, '4.9.3.1', 'Valore las estrategias para construir estados del arte y tendencias en el campo de las ciencias de la educación mediante el uso crítico de las diversas fuentes de información.', '1', 322, 2),
+(113, '4.9.4.1', 'Valore los mecanismos de divulgación de avances y resultados de la investigación.', '1', 323, 2),
+(114, '4.10.1.1', 'Los mecanismosusados por el programa facilitan el acceso a cursos, seminarios y/o conferencias en la universidad sobre aspectos relacionados con cambios en la ciencia mundial y con aspectos relevantes del entorno social y económico del país.', '1', 326, 2),
+(115, '4.11.1.1', 'Existe una amplia oferta académica que le suministra opciones al estudiante de temas o líneas de investigación en las que puede trabajar.', '1', 327, 2),
+(116, '4.11.2.1', 'Existen seminarios y oferta académica de otros grupos de investigación y programas de maestrías y doctorados de la Universidad de Cartagena o de otras universidades nacionales o extranjeras.', '1', 328, 2),
+(117, '4.11.3.1', 'Existen convenios que faciliten, promuevan y garanticen la movilidad estudiantil del profesorado en programas de otras universidades nacionales e internacionales.', '1', 329, 2),
+(118, '4.11.3.2', 'Según su conocimiento, valore los convenios que faciliten, promuevan y garanticen la movilidad estudiantil y profesoral en programas de otras universidades nacionales e internacionales.', '1', 329, 2),
+(119, '4.12.1.1', 'Valore los resultados de los procesos periódicos de autoevaluación, conducentes a mejoras en el programa.', '1', 330, 2),
+(120, '4.12.2.1', 'Existen estrategias de seguimiento a los productos de los planes de mejora desarrolladas en los úlltimos cinco (5) años.', '1', 331, 2),
+(121, '4.12.4.1', 'Valore su participación en procesos de autoevaluación y seguimiento a los planes de mejoramiento del programa.', '1', 333, 2),
+(122, '5.13.3.1', 'Valore la política de apoyo a la investigación, y las estrategias que aseguran su implementación (reconocimiento de tiempo a profesores, financiación de proyectos, etc.).', '1', 336, 2),
+(123, '6.16.1.1', 'La Universidad ofrece la posibilidad de tomar seminarios o cursos en campos complementarios a los del programa ya sea en la Universidad de Cartagtena o en otras universidades, vía alianzas estratégicas y/o convenios.', '1', 352, 2),
+(124, '6.16.2.1', 'Es posible participar en las actividades de otros grupos de investigación relacionados con el programa o con programas complementarios.', '1', 353, 2),
+(125, '6.16.3.1', 'Es posible trabajar con Directores de Tesis pertenecientes a otras universidades diferentes a la Universidad de Cartagena.', '1', 354, 2),
+(126, '6.17.1.1', 'Existen líneas de investigación relacionadas con problemas o temas del campo de las ciencias de la educaciòn de la comunidad local, regional, nacional, con problemas del sector productivo o de otros campos del conocimiento.', '1', 355, 2),
+(127, '6.17.2.1', 'Valore las evidencias de innovaciones, cambios o mejoras introducidos en el entorno a partir de resultados de tesis doctorales de estudiantes y de proyectos de investigación realizados por el grupo de investigación.', '1', 356, 2),
+(128, '7.19.1.1', 'Valore la existencia de pasantías en grupos de investigación en el extranjero y/o en grupos de reconocida trayectoria.', '1', 360, 2),
+(129, '7.19.4.1', 'Su asistencia a cursos o seminarios ofrecidos en otras lenguas es:', '1', 363, 2),
+(130, '8.22.2.1', 'Valore la existencia de unidades médicas que ofrezcan servicios básicos y asistencia sicológica.', '1', 376, 2),
+(131, '8.22.3.1', 'Existen mecanismos que garantizan el bienestar de los estudiantes durante cortas estadías en el extranjero, como parte de la movilidad estudiantil y de la participación en congresos y eventos científicos.', '1', 377, 2),
+(132, '8.22.4.1', 'Existe apoyo a la consecución de vivienda para estudiantes casados, principalmente para los extranjeros y/o de otras regiones del país.', '1', 378, 2),
+(133, '9.23.4.1', 'Valore los trabajos de colaboración científica entre usted y los grupos de investigación del programa.', '1', 382, 2),
+(134, '9.23.11.1', 'Valore el impacto de las publicaciones de usted en términos de indicadores de citas bibliográficas.', '1', 389, 2),
+(135, '9.23.13.1', 'Valore su participación en Comités Editoriales de revistas nacionales e internacionales.', '1', 391, 2),
+(136, '9.24.1.1', 'Usted cuenta con suficiente productividad académica y aportes al campo de las ciencias de la educación.', '1', 392, 2),
+(137, '10.25.3.1', 'Los diferentes espacios físicos con los que cuenta el programa son adecuados.', '1', 395, 2),
+(138, '10.25.4.1', 'Valore el grado de satisfacción con respecto a la suficiencia de los espacios físicos con los que cuenta el programa.', '1', 396, 2),
+(139, '10.25.5.1', 'Valore el grado de satisfacción con respecto al acondicionamiento de los espacios físicos con que cuenta el programa.', '1', 397, 2),
+(140, '10.25.6.1', 'Valore el grado de conservación y mantenimiento de la planta física con el que cuenta el programa.', '1', 398, 2),
+(141, '10.26.2.1', 'Existe correspondencia entre las líneas de Investigación desarrolladas y la disponibilidad del material bibliográfico.', '1', 400, 2),
+(142, '10.26.5.1', 'Valore el grado de satisfacción con respecto a la cantidad de recursos bibliográficos disponibles para el programa.', '1', 403, 2),
+(143, '10.26.6.1', 'Valore el grado de satisfacción con respecto a la calidad de recursos bibliográficos disponibles para el programa.', '1', 404, 2),
+(144, '10.26.12.1', 'Valore el grado de satisfacción con respecto a la cantidad de recursos informáticos disponibles para el programa.', '1', 410, 2),
+(145, '10.26.13.1', 'Valore el grado de satisfacción con respecto a la calidad de recursos informáticos disponibles para el programa.', '1', 411, 2),
+(146, '10.28.4.1', ' Los recursos presupuestales disponibles en el programa son adecuados.', '1', 419, 2),
+(147, '10.29.1.1', 'Existe información verificable sobre las funciones del Comité Nacional Curricular y de Autoevaluación del Programa.', '1', 420, 2),
+(148, '10.29.2.1', 'Valore el grado de satisfacción con respecto a la calidad de los sistemas de información y comunicación para la gestión académica del programa.', '1', 421, 2);
 
 -- --------------------------------------------------------
 
@@ -2860,7 +3354,7 @@ CREATE TABLE IF NOT EXISTS `proceso` (
   PRIMARY KEY (`id`),
   KEY `fk_proceso_programa1_idx` (`programa_id`),
   KEY `fk_proceso_modelo1` (`modelo_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Volcado de datos para la tabla `proceso`
@@ -2869,7 +3363,11 @@ CREATE TABLE IF NOT EXISTS `proceso` (
 INSERT INTO `proceso` (`id`, `fechainicio`, `fechacierre`, `descripcion`, `programa_id`, `modelo_id`) VALUES
 (1, '04/06/2013', '--', 'Proceso de Autoevaluación del programa Ingeniería de Sistemas presencial de la Universidad de Cartagena', 22, 1),
 (2, 'En Configuración', '--', 'Proceso de autoevaluación con fines de reacreditacion del programa ingenieria civil 2013-2', 21, 1),
-(3, 'En Configuración', '--', 'proceso de autoevaluacion 2013-2', 148, 2);
+(3, 'En Configuración', '--', 'proceso de autoevaluacion 2013-2', 148, 2),
+(4, 'En Configuración', '--', 'Proceso de autoevaluación 2013', 157, 2),
+(5, 'En Configuración', '--', 'Proceso de autoevaluación 2013 urología', 160, 2),
+(6, 'En Configuración', '--', 'Proceso de autoevaluación 2013 Neurocirugía', 165, 2),
+(7, 'En Configuración', '--', 'Proceso de autoevaluación 2013 medicina interna', 154, 2);
 
 -- --------------------------------------------------------
 
@@ -2916,6 +3414,10 @@ INSERT INTO `programa` (`id`, `nombre`, `descripcion`, `modalidad`, `tipoformaci
 (136, 'ESPECIALIZACION EN INGENIERIA DE VIAS TERRESTRES', 'ESPECIALIZACION EN INGENIERIA DE VIAS TERRESTRES', 'Presencial', 'Postgrado', 5),
 (148, 'MAESTRIA EN  INGENIERIA AMBIENTAL', 'MAESTRIA EN  INGENIERIA AMBIENTAL', 'Presencial', 'Postgrado', 5),
 (149, 'ESPECIALIZACION EN PLANIFICACION EN TRANSITO Y TRANSPORTE', 'ESPECIALIZACION EN PLANIFICACION EN TRANSITO Y TRANSPORTE', 'Presencial', 'Postgrado', 5),
+(154, 'ESPECIALIZACION EN MEDICINA INTERNA', 'ESPECIALIZACION EN MEDICINA INTERNA', 'presencial', 'Postgrado', 3),
+(157, 'ESPECIALIZACION EN OTORRINOLARINGOLOGIA', 'ESPECIALIZACION EN OTORRINOLARINGOLOGIA', 'presencial', 'Postgrado', 3),
+(160, 'ESPECIALIZACION EN UROLOGIA', 'ESPECIALIZACION EN UROLOGIA', 'presencial', 'Postgrado', 3),
+(165, 'ESPECIALIZACION EN NEUROCIRUGIA', 'ESPECIALIZACION EN NEUROCIRUGIA', 'presencial', 'Postgrado', 3),
 (166, 'ESPECIALIZACION EN INGENIERIA SANITARIA', 'ESPECIALIZACION EN INGENIERIA SANITARIA', 'Presencial', 'Postgrado', 5),
 (174, 'ESPECIALIZACION EN ESTRUCTURAS', 'ESPECIALIZACION EN ESTRUCTURAS', 'Presencial', 'Postgrado', 5),
 (263, 'ESPECIALIZACION EN GERENCIA DE PROYECTOS DE CONSTRUCCION', 'ESPECIALIZACION EN GERENCIA DE PROYECTOS DE CONSTRUCCION', 'Presencial', 'Postgrado', 5);
@@ -2947,7 +3449,11 @@ INSERT INTO `representante` (`id`, `nombre`, `apellido`, `password`, `rol`, `mai
 (212121, 'Juan', 'Perez', '123456', 'Comite programa', 'xx', 21),
 (222222, 'Jorge', 'Anaya', '123456', 'Comite programa', 'zz', 22),
 (333333, 'Pedro', 'Perez', '123456', 'Comite programa', 'xx', 148),
+(9080577, 'Luis', 'alzamora', '9080577', 'Comite programa', 'xxx', 160),
+(9083115, 'Juan', 'Montes Farah', '9083115', 'Comite programa', 'xxx', 154),
+(33155611, 'Rosa', 'Milanes Perez', '33155611', 'Comite programa', 'xxx', 157),
 (45470344, 'Edna', 'Gomez Bustamante', '123456', 'Comite central', 'acreditacion@unicartagena.edu.co', NULL),
+(73094450, 'Leonardo', 'dominguez de la ossa', '73094450', 'Comite programa', 'xxx', 165),
 (1020757934, 'Arturo', 'González', '123456', 'Comite programa', NULL, 22);
 
 -- --------------------------------------------------------
@@ -2978,7 +3484,7 @@ CREATE TABLE IF NOT EXISTS `resultadoevaluacion` (
   PRIMARY KEY (`id`),
   KEY `fk_ResultadoEvaluacion_encabezado1_idx` (`encabezado_id`),
   KEY `fk_ResultadoEvaluacion_pregunta1_idx` (`pregunta_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=550 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=659 ;
 
 --
 -- Volcado de datos para la tabla `resultadoevaluacion`
@@ -3533,7 +4039,116 @@ INSERT INTO `resultadoevaluacion` (`id`, `respuesta`, `encabezado_id`, `pregunta
 (546, '', 9, 81),
 (547, '', 9, 82),
 (548, '', 9, 83),
-(549, '', 9, 84);
+(549, '', 9, 84),
+(550, '3', 10, 69),
+(551, '3', 10, 3),
+(552, '3', 10, 4),
+(553, '5', 10, 42),
+(554, '4', 10, 70),
+(555, '5', 10, 9),
+(556, '5', 11, 1),
+(557, '5', 11, 2),
+(558, '3', 11, 3),
+(559, '5', 11, 4),
+(560, '4', 11, 5),
+(561, '5', 11, 6),
+(562, '5', 11, 7),
+(563, '5', 11, 10),
+(564, '4', 11, 11),
+(565, '5', 11, 12),
+(566, '', 11, 13),
+(567, '', 11, 14),
+(568, '', 11, 15),
+(569, '', 11, 16),
+(570, '', 11, 17),
+(571, '', 11, 18),
+(572, '', 11, 19),
+(573, '', 11, 20),
+(574, '', 11, 21),
+(575, '', 11, 22),
+(576, '', 11, 23),
+(577, '', 11, 24),
+(578, '', 11, 25),
+(579, '', 11, 29),
+(580, '', 11, 30),
+(581, '', 11, 31),
+(582, '', 11, 32),
+(583, '', 11, 33),
+(584, '', 11, 34),
+(585, '', 11, 35),
+(586, '', 11, 37),
+(587, '', 11, 38),
+(588, '', 11, 39),
+(589, '', 11, 41),
+(590, '', 11, 42),
+(591, '', 11, 44),
+(592, '', 11, 45),
+(593, '', 11, 46),
+(594, '', 11, 47),
+(595, '', 11, 48),
+(596, '', 11, 49),
+(597, '', 11, 50),
+(598, '', 11, 51),
+(599, '', 11, 52),
+(600, '', 11, 53),
+(601, '', 11, 54),
+(602, '', 11, 55),
+(603, '', 11, 56),
+(604, '', 11, 57),
+(605, '', 11, 58),
+(606, '', 11, 59),
+(607, '', 11, 61),
+(608, '', 11, 62),
+(609, '', 11, 64),
+(610, '', 11, 65),
+(611, '', 11, 66),
+(612, '', 11, 67),
+(613, '', 11, 72),
+(614, '', 11, 73),
+(615, '', 11, 74),
+(616, '', 11, 75),
+(617, '', 11, 76),
+(618, '', 11, 77),
+(619, '', 11, 78),
+(620, '', 11, 79),
+(621, '', 11, 80),
+(622, '', 11, 81),
+(623, '', 11, 82),
+(624, '', 11, 83),
+(625, '', 11, 84),
+(626, '', 11, 85),
+(627, '', 11, 86),
+(628, '5', 12, 1),
+(629, '5', 12, 3),
+(630, '5', 12, 4),
+(631, '5', 12, 5),
+(632, '5', 12, 6),
+(633, '5', 12, 47),
+(634, '5', 12, 56),
+(635, '5', 12, 57),
+(636, '5', 12, 58),
+(637, '5', 12, 62),
+(638, '4', 12, 63),
+(639, '4', 12, 65),
+(640, '4', 12, 66),
+(641, '4', 12, 67),
+(642, '4', 12, 72),
+(643, '4', 12, 73),
+(644, '4', 12, 74),
+(645, '4', 12, 75),
+(646, '4', 12, 76),
+(647, '4', 12, 77),
+(648, '3', 12, 78),
+(649, '5', 12, 79),
+(650, '3', 12, 80),
+(651, '5', 12, 81),
+(652, '5', 12, 82),
+(653, '4', 12, 83),
+(654, '5', 12, 84),
+(655, '5', 13, 68),
+(656, '5', 13, 43),
+(657, '4', 13, 8),
+(658, '5', 13, 71);
 
 --
 -- Restricciones para tablas volcadas
@@ -3544,8 +4159,8 @@ INSERT INTO `resultadoevaluacion` (`id`, `respuesta`, `encabezado_id`, `pregunta
 --
 ALTER TABLE `administrativo`
   ADD CONSTRAINT `fk_administrativo_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_administrativo_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_administrativo_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_administrativo_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_administrativo_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `agenciagubernamental`
@@ -3558,8 +4173,8 @@ ALTER TABLE `agenciagubernamental`
 -- Filtros para la tabla `asignacionencuesta`
 --
 ALTER TABLE `asignacionencuesta`
-  ADD CONSTRAINT `fk_asignacionencuesta_encuesta1` FOREIGN KEY (`encuesta_id`) REFERENCES `encuesta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_asignacionencuesta_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_asignacionencuesta_encuesta1` FOREIGN KEY (`encuesta_id`) REFERENCES `encuesta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_asignacionencuesta_modelo1` FOREIGN KEY (`modelo_id`) REFERENCES `modelo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
@@ -3574,40 +4189,41 @@ ALTER TABLE `caracteristica`
 --
 ALTER TABLE `directorprograma`
   ADD CONSTRAINT `fk_directorprograma_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_directorprograma_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_directorprograma_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_directorprograma_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_directorprograma_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `docente`
 --
 ALTER TABLE `docente`
   ADD CONSTRAINT `fk_docente_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_docente_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_docente_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_docente_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_docente_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `egresado`
 --
 ALTER TABLE `egresado`
   ADD CONSTRAINT `fk_egresado_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_egresado_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_egresado_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_egresado_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_egresado_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `empleador`
 --
 ALTER TABLE `empleador`
   ADD CONSTRAINT `fk_empleador_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_empleador_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_empleador_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_empleador_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `encabezado`
 --
 ALTER TABLE `encabezado`
+  ADD CONSTRAINT `fk_encabezado_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_encabezado_encuesta1` FOREIGN KEY (`encuesta_id`) REFERENCES `encuesta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_encabezado_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_encabezado_muestrapersona1` FOREIGN KEY (`muestrapersona_id`) REFERENCES `muestrapersona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_encabezado_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_encabezado_muestrapersona1` FOREIGN KEY (`muestrapersona_id`) REFERENCES `muestrapersona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `encuesta`
@@ -3627,8 +4243,8 @@ ALTER TABLE `encuestahaspregunta`
 --
 ALTER TABLE `estudiante`
   ADD CONSTRAINT `fk_estudiante_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_estudiante_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_estudiante_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_estudiante_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_estudiante_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `factor`
@@ -3647,8 +4263,8 @@ ALTER TABLE `indicador`
 -- Filtros para la tabla `instrumentohasindicador`
 --
 ALTER TABLE `instrumentohasindicador`
-  ADD CONSTRAINT `fk_instrumento_has_indicador_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_instrumento_has_indicador_instrumento1` FOREIGN KEY (`instrumento_id`) REFERENCES `instrumento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_instrumento_has_indicador_instrumento1` FOREIGN KEY (`instrumento_id`) REFERENCES `instrumento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_instrumento_has_indicador_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `muestra`
@@ -3709,23 +4325,23 @@ ALTER TABLE `muestrapersona`
 -- Filtros para la tabla `numericadocumental`
 --
 ALTER TABLE `numericadocumental`
-  ADD CONSTRAINT `fk_numericadocumental_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_numericadocumental_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_numericadocumental_instrumento1` FOREIGN KEY (`instrumento_id`) REFERENCES `instrumento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_numericadocumental_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_numericadocumental_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `ponderacioncaracteristica`
 --
 ALTER TABLE `ponderacioncaracteristica`
-  ADD CONSTRAINT `fk_ponderacioncaracteristica_caracteristica1` FOREIGN KEY (`caracteristica_id`) REFERENCES `caracteristica` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_ponderacioncaracteristica_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_ponderacioncaracteristica_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_ponderacioncaracteristica_caracteristica1` FOREIGN KEY (`caracteristica_id`) REFERENCES `caracteristica` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `ponderacionfactor`
 --
 ALTER TABLE `ponderacionfactor`
-  ADD CONSTRAINT `fk_ponderacionfactor_factor1` FOREIGN KEY (`factor_id`) REFERENCES `factor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_ponderacionfactor_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_ponderacionfactor_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_ponderacionfactor_factor1` FOREIGN KEY (`factor_id`) REFERENCES `factor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `pregunta`
@@ -3738,15 +4354,15 @@ ALTER TABLE `pregunta`
 -- Filtros para la tabla `proceso`
 --
 ALTER TABLE `proceso`
-  ADD CONSTRAINT `fk_proceso_modelo1` FOREIGN KEY (`modelo_id`) REFERENCES `modelo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_proceso_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_proceso_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_proceso_modelo1` FOREIGN KEY (`modelo_id`) REFERENCES `modelo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `procesohasindicador`
 --
 ALTER TABLE `procesohasindicador`
-  ADD CONSTRAINT `fk_proceso_has_indicador_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_proceso_has_indicador_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_proceso_has_indicador_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_proceso_has_indicador_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `programa`
@@ -3764,8 +4380,8 @@ ALTER TABLE `representante`
 -- Filtros para la tabla `representantehasprivilegio`
 --
 ALTER TABLE `representantehasprivilegio`
-  ADD CONSTRAINT `fk_representante_has_privilegio_privilegio1` FOREIGN KEY (`privilegio_id`) REFERENCES `privilegio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_representante_has_privilegio_representante1` FOREIGN KEY (`representante_id`) REFERENCES `representante` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_representante_has_privilegio_representante1` FOREIGN KEY (`representante_id`) REFERENCES `representante` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_representante_has_privilegio_privilegio1` FOREIGN KEY (`privilegio_id`) REFERENCES `privilegio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `resultadoevaluacion`

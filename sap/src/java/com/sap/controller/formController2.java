@@ -13,6 +13,7 @@ import com.sap.ejb.IndicadorFacade;
 import com.sap.ejb.InstrumentoFacade;
 import com.sap.ejb.ModeloFacade;
 import com.sap.ejb.PreguntaFacade;
+import com.sap.ejb.RepresentanteFacade;
 import com.sap.entity.Asignacionencuesta;
 import com.sap.entity.Caracteristica;
 import com.sap.entity.Encuesta;
@@ -44,6 +45,8 @@ import javax.servlet.http.HttpSession;
  */
 public class formController2 extends HttpServlet {
 
+    @EJB
+    private RepresentanteFacade representanteFacade;
     @EJB
     private FuenteFacade fuenteFacade;
     @EJB
@@ -623,11 +626,57 @@ public class formController2 extends HttpServlet {
                                             }
                                         }
                                     } else {
-                                        if (action.equals("inicioCC")) {
-                                            String url = "/WEB-INF/vista/comiteCentral/inicio.jsp";
-                                            RequestDispatcher rd = request.getRequestDispatcher(url);
-                                            rd.forward(request, response);
+                                        if (action.toLowerCase().contains("coordinador")) {
+                                            if (action.equals("crearCoordinador")) {
+                                                /*Modelo m = new Modelo();
+                                                 m.setFechacreacion(fecha2);
+                                                 m.setDescripcion(descripcion);
+                                                 m.setNombre(nombre);
+                                                 modeloFacade.create(m);*/
+                                            } else {
+                                                if (action.equals("crearCoordinadorCC")) {
+                                                    String url = "/WEB-INF/vista/comiteCentral/coordinador/crear.jsp";
+                                                    RequestDispatcher rd = request.getRequestDispatcher(url);
+                                                    rd.forward(request, response);
+                                                } else {
+                                                    if (action.equals("listarCoordinadoresCC")) {
+                                                        String url = "/WEB-INF/vista/comiteCentral/coordinador/listar.jsp";
+                                                        RequestDispatcher rd = request.getRequestDispatcher(url);
+                                                        sesion.setAttribute("listaCoo", representanteFacade.findByRol("Comite programa"));
+                                                        rd.forward(request, response);
+
+                                                    } else {
+                                                        if (action.equals("editarCoordinadorCC")) {
+                                                            String id = request.getParameter("id");
+                                                            Modelo m = modeloFacade.find(Integer.parseInt(id));
+                                                            sesion.setAttribute("modelo", m);
+                                                            String url = "/WEB-INF/vista/comiteCentral/coordinador/editar.jsp";
+                                                            RequestDispatcher rd = request.getRequestDispatcher(url);
+                                                            rd.forward(request, response);
+
+                                                        } else {
+                                                            if (action.equals("editarCoordinador")) {
+                                                                Modelo m = (Modelo) sesion.getAttribute("modelo");
+                                                                String nombre = (String) request.getParameter("nombre");
+                                                                String descripcion = (String) request.getParameter("descripcion");
+                                                                m.setDescripcion(descripcion);
+                                                                m.setNombre(nombre);
+                                                                modeloFacade.edit(m);
+                                                            }
+                                                        }
+
+
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            if (action.equals("inicioCC")) {
+                                                String url = "/WEB-INF/vista/comiteCentral/inicio.jsp";
+                                                RequestDispatcher rd = request.getRequestDispatcher(url);
+                                                rd.forward(request, response);
+                                            }
                                         }
+
                                     }
 
                                 }

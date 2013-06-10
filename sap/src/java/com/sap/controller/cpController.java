@@ -81,6 +81,8 @@ import javax.servlet.http.HttpSession;
 public class cpController extends HttpServlet {
 
     @EJB
+    private DirectorprogramaFacade directorprogramaFacade;
+    @EJB
     private PonderacioncaracteristicaFacade ponderacioncaracteristicaFacade;
     @EJB
     private ModeloFacade modeloFacade;
@@ -120,8 +122,6 @@ public class cpController extends HttpServlet {
     private EgresadoFacade egresadoFacade;
     @EJB
     private AdministrativoFacade administrativoFacade;
-    @EJB
-    private DirectorprogramaFacade directorprogramaFacadeFacade;
     @EJB
     private EmpleadorFacade empleadorFacade;
     @EJB
@@ -667,7 +667,7 @@ public class cpController extends HttpServlet {
 
                 //********************************Director
 
-                aux = directorprogramaFacadeFacade.countByProperty("programaId", sesion.getAttribute("Programa"));
+                aux = directorprogramaFacade.countByProperty("programaId", sesion.getAttribute("Programa"));
 
                 N = aux;
 
@@ -677,7 +677,7 @@ public class cpController extends HttpServlet {
 
                 tamanioMuestra = (int) Math.floor(n);
 
-                List<Directorprograma> ldp = directorprogramaFacadeFacade.generarMuestra(programa, tamanioMuestra);
+                List<Directorprograma> ldp = directorprogramaFacade.generarMuestra(programa, tamanioMuestra);
 
                 it = ldp.iterator();
 
@@ -842,20 +842,14 @@ public class cpController extends HttpServlet {
                     sesion.setAttribute("listMuestraSeleccionada", muestraestudianteFacade.findByList("muestrapersonaId.muestraId", m));
                     sesion.setAttribute("Fuente", fuenteFacade.find(1));
                     sesion.setAttribute("Semestre", "--");
-                } 
-                
-                
-                else if (fuente.equals("Docente")) {
+                } else if (fuente.equals("Docente")) {
                     sesion.setAttribute("listMuestraSeleccionada", muestradocenteFacade.findByList("muestrapersonaId.muestraId", m));
                     sesion.setAttribute("Fuente", fuenteFacade.find(2));
                     List e = docenteFacade.findByPrograma((Programa) sesion.getAttribute("Programa"));
                     sesion.setAttribute("listPoblacion", e);
                     List le = encabezadoFacade.findByList2("procesoId", sesion.getAttribute("Proceso"), "fuenteId", sesion.getAttribute("Fuente"));
                     sesion.setAttribute("listEncabezado", le);
-                }
-                
-                
-                else if (fuente.equals("Egresado")) {
+                } else if (fuente.equals("Egresado")) {
                     sesion.setAttribute("listMuestraSeleccionada", muestraegresadoFacade.findByList("muestrapersonaId.muestraId", m));
                     sesion.setAttribute("Fuente", fuenteFacade.find(4));
                     List e = egresadoFacade.findByPrograma((Programa) sesion.getAttribute("Programa"));
@@ -863,35 +857,28 @@ public class cpController extends HttpServlet {
                     List le = encabezadoFacade.findByList2("procesoId", sesion.getAttribute("Proceso"), "fuenteId", sesion.getAttribute("Fuente"));
                     sesion.setAttribute("listEncabezado", le);
 
-                } 
-                
-                
-                else if (fuente.equals("Administrativo")) {
+                } else if (fuente.equals("Administrativo")) {
                     sesion.setAttribute("listMuestraSeleccionada", muestraadministrativoFacade.findByList("muestrapersonaId.muestraId", m));
                     sesion.setAttribute("Fuente", fuenteFacade.find(3));
                     List e = administrativoFacade.findByPrograma((Programa) sesion.getAttribute("Programa"));
                     sesion.setAttribute("listPoblacion", e);
                     List le = encabezadoFacade.findByList2("procesoId", sesion.getAttribute("Proceso"), "fuenteId", sesion.getAttribute("Fuente"));
                     sesion.setAttribute("listEncabezado", le);
-                } 
-                
-                
-                else if (fuente.equals("Directivo")) {
+                } else if (fuente.equals("Directivo")) {
                     sesion.setAttribute("listMuestraSeleccionada", muestradirectorFacade.findByList("muestrapersonaId.muestraId", m));
                     sesion.setAttribute("Fuente", fuenteFacade.find(5));
-                    List e = directorprogramaFacadeFacade.findByPrograma((Programa) sesion.getAttribute("Programa"));
+                    List e = directorprogramaFacade.findByPrograma((Programa) sesion.getAttribute("Programa"));
                     sesion.setAttribute("listPoblacion", e);
                     List le = encabezadoFacade.findByList2("procesoId", sesion.getAttribute("Proceso"), "fuenteId", sesion.getAttribute("Fuente"));
                     sesion.setAttribute("listEncabezado", le);
-                } 
-                
-                else if (fuente.equals("Empleador")) {
+                } else if (fuente.equals("Empleador")) {
                     sesion.setAttribute("listMuestraSeleccionada", muestraempleadorFacade.findByList("muestrapersonaId.muestraId", m));
                     sesion.setAttribute("Fuente", fuenteFacade.find(6));
-                } 
-                
-                
-                else if (fuente.equals("Agencia")) {
+                    List e = empleadorFacade.findByPrograma((Programa) sesion.getAttribute("Programa"));
+                    sesion.setAttribute("listPoblacion", e);
+                    List le = encabezadoFacade.findByList2("procesoId", sesion.getAttribute("Proceso"), "fuenteId", sesion.getAttribute("Fuente"));
+                    sesion.setAttribute("listEncabezado", le);
+                } else if (fuente.equals("Agencia")) {
                     sesion.setAttribute("listMuestraSeleccionada", muestraagenciaFacade.findByList("muestrapersonaId.muestraId", m));
                     sesion.setAttribute("Fuente", fuenteFacade.find(7));
                 }

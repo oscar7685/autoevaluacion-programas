@@ -119,6 +119,10 @@
                         <li class="nav-header">Modelo</li>
                         <li><a href="#crearModelo"><i class="icon-plus"></i> Crear Modelo</a></li>
                         <li><a href="#listarModelo"><i class="icon-reorder"></i> Listar Modelos</a></li>
+                        <li class="divider"></li>
+                        <li class="nav-header">Coordinadores</li>
+                        <li><a href="#crearCoordinador"><i class="icon-plus"></i> Crear Coordinador</a></li>
+                        <li><a href="#listarCoordinadores"><i class="icon-reorder"></i> Listar Coordinadores</a></li>
                     </ul>
                 </div>
             </div>

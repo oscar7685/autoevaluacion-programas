@@ -68,6 +68,10 @@ $(function() {
                 '<li class="nav-header">Modelo</li>' +
                 '<li><a href="#crearModelo"><i class="icon-plus"></i> Crear Modelo</a></li>' +
                 '<li><a href="#listarModelo"><i class="icon-reorder"></i> Listar Modelos</a></li>' +
+                '<li class="divider"></li>' +
+                '<li class="nav-header">Coordinadores</li>' +
+                '<li><a href="#crearCoordinador"><i class="icon-plus"></i> Crear Coordinador</a></li>' +
+                '<li><a href="#listarCoordinadores"><i class="icon-reorder"></i> Listar Coordinadores</a></li>' +
                 '</ul>');
     };
     var menuFactores = function() {
@@ -119,10 +123,10 @@ $(function() {
                     } //fin success
                 }); //fin del $.ajax
             } else {
-                if (hash.indexOf("#entrarModelo") !== -1 || hash.indexOf("#editarEncuesta") !== -1 
-                 || hash.indexOf("#vistaPreviaEncuesta") !== -1 || hash.indexOf("#editarFactor") !== -1
-                 || hash.indexOf("#editarCaracteristica") !== -1 || hash.indexOf("#editarIndicador") !== -1
-                 || hash.indexOf("#editarPregunta") !== -1 || hash.indexOf("#editarModelo") !== -1 ) {
+                if (hash.indexOf("#entrarModelo") !== -1 || hash.indexOf("#editarEncuesta") !== -1
+                        || hash.indexOf("#vistaPreviaEncuesta") !== -1 || hash.indexOf("#editarFactor") !== -1
+                        || hash.indexOf("#editarCaracteristica") !== -1 || hash.indexOf("#editarIndicador") !== -1
+                        || hash.indexOf("#editarPregunta") !== -1 || hash.indexOf("#editarModelo") !== -1) {
                     var cual = hash.split("&");
                     hash = cual[0];
                     var url3 = "/sap/controladorCC?action=";
@@ -150,7 +154,7 @@ $(function() {
                     }); //fin del $.ajax
 
                 } else {
-                    if (hash === "#crearModelo" || hash === "#listarModelo") {
+                    if (hash === "#crearModelo" || hash === "#listarModelo" || hash === "#listarCoordinadores") {
                         var url3 = "/sap/" + hash;
                         url3 = url3.replace('#', "controladorCC?action=") + "CC";
                         $("div.ui-layout-center").empty();
