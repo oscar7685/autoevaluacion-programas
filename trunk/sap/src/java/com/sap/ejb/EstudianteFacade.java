@@ -5,9 +5,11 @@
 package com.sap.ejb;
 
 import com.sap.entity.Estudiante;
+import com.sap.entity.Programa;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -25,6 +27,11 @@ public class EstudianteFacade extends AbstractFacade<Estudiante> {
 
     public EstudianteFacade() {
         super(Estudiante.class);
+    }
+    public int cantEstudiantesEntre3y9ByPrograma(Programa p) {
+        Query q = em.createNamedQuery("Estudiante.cantEstudiantesEntre3y9ByPrograma");
+        q.setParameter("programa", p);
+        return ((Long) q.getSingleResult()).intValue();
     }
     
 }

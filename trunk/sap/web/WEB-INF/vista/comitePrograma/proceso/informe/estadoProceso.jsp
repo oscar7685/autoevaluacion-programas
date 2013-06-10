@@ -78,7 +78,7 @@
                         'Estudiantes',
                         'Docentes',
                         'Administrativos',
-                        'Directivos',
+                        'Directores de programa',
                         'Egresados',
                         'Empleadores',
                     ]

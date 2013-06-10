@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Directorprograma.findAll", query = "SELECT d FROM Directorprograma d"),
+    @NamedQuery(name = "Directorprograma.findByPrograma", query = "SELECT d FROM Directorprograma d where d.programaId= :programa"),
     @NamedQuery(name = "Directorprograma.findById", query = "SELECT d FROM Directorprograma d WHERE d.id = :id")})
 public class Directorprograma implements Serializable {
     private static final long serialVersionUID = 1L;

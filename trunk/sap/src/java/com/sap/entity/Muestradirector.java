@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Muestradirector.findAll", query = "SELECT m FROM Muestradirector m"),
+    @NamedQuery(name = "Muestradirector.findByMuestraPersonaId", query = "SELECT m FROM Muestradirector m WHERE m.muestrapersonaId= :muestrapersona"),
     @NamedQuery(name = "Muestradirector.findById", query = "SELECT m FROM Muestradirector m WHERE m.id = :id")})
 public class Muestradirector implements Serializable {
     private static final long serialVersionUID = 1L;
