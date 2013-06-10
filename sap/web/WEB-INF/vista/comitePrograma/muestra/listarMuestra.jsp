@@ -73,9 +73,8 @@
                                         <option value="Docente">Docentes</option>
                                         <option value="Egresado">Egresados</option>
                                         <option value="Administrativo">Administrativos</option>
-                                        <option value="Directivo">Directivos</option>
+                                        <option value="Directivo">Directores de programa</option>
                                         <option value="Empleador">Empleadores</option>
-                                        <option value="Agencia">Agencias</option>
                                     </select>
                                 </div>
                             </div>   

@@ -7,6 +7,10 @@ package com.sap.controller;
 import com.sap.ejb.AsignacionencuestaFacade;
 import com.sap.ejb.EncuestaFacade;
 import com.sap.ejb.FuenteFacade;
+import com.sap.ejb.MuestraadministrativoFacade;
+import com.sap.ejb.MuestradirectorFacade;
+import com.sap.ejb.MuestradocenteFacade;
+import com.sap.ejb.MuestraegresadoFacade;
 import com.sap.ejb.MuestraestudianteFacade;
 import com.sap.ejb.MuestrapersonaFacade;
 import com.sap.ejb.ProcesoFacade;
@@ -14,6 +18,10 @@ import com.sap.ejb.RepresentanteFacade;
 import com.sap.entity.Asignacionencuesta;
 import com.sap.entity.Encuesta;
 import com.sap.entity.Modelo;
+import com.sap.entity.Muestraadministrativo;
+import com.sap.entity.Muestradirector;
+import com.sap.entity.Muestradocente;
+import com.sap.entity.Muestraegresado;
 import com.sap.entity.Muestraestudiante;
 import com.sap.entity.Muestrapersona;
 import com.sap.entity.Proceso;
@@ -35,7 +43,14 @@ import javax.servlet.http.HttpSession;
  * @author Ususario
  */
 public class loginController extends HttpServlet {
-
+    @EJB
+    private MuestraadministrativoFacade muestraadministrativoFacade;
+    @EJB
+    private MuestradirectorFacade muestradirectorFacade;
+    @EJB
+    private MuestradocenteFacade muestradocenteFacade;
+    @EJB
+    private MuestraegresadoFacade muestraegresadoFacade;
     @EJB
     private FuenteFacade fuenteFacade;
     @EJB
@@ -122,7 +137,6 @@ public class loginController extends HttpServlet {
             PrintWriter out = response.getWriter();
 
             if (tp != null && tp.equals("Estudiantes")) {
-                session.setAttribute("tipoLogin", "Fuente");
                 Muestrapersona persona = null;
                 Muestraestudiante estudiante = null;
                 List<Muestraestudiante> aux2 = null;
@@ -137,8 +151,6 @@ public class loginController extends HttpServlet {
                 }
                 if (persona != null && persona.getPassword().equals(pw)) {
                     aux2 = muestraestudianteFacade.findByMuestraPersona(persona);
-                } else {
-                    out.println(1);
                 }
                 if (aux2 != null && aux2.size() > 0) {
                     for (int i = 0; i < aux2.size(); i++) {
@@ -147,6 +159,7 @@ public class loginController extends HttpServlet {
                 }
                 if (estudiante != null) {
                     out.println(0);
+                    session.setAttribute("tipoLogin", "Fuente");
                     session.setAttribute("programa", estudiante.getProgramaId());
                     session.setAttribute("persona", persona);
                     session.setAttribute("fuente", fuenteFacade.find(1));
@@ -155,7 +168,7 @@ public class loginController extends HttpServlet {
                         m = proceso.getModeloId();
                         aux3 = encuestaFacade.findByModelo(m);
                         session.setAttribute("proceso", proceso);
-                
+
 
                     }
                     if (aux3 != null) {
@@ -163,64 +176,279 @@ public class loginController extends HttpServlet {
                             Encuesta en = aux3.get(i);
                             List<Asignacionencuesta> aux4 = asignacionencuestaFacade.findByEncuestayFuenteyModelo(en, fuenteFacade.find(1), proceso.getModeloId());
                             if (aux4 != null && aux4.size() > 0) {
-                                session.setAttribute("encuesta", aux4.get(i).getEncuestaId());
+                                session.setAttribute("encuesta", aux4.get(0).getEncuestaId());
                             }
-                
+
                         }
                     }
 
-            } else {
+                } else {
                     out.println(1);
                 }
 
             } else {
-                if (tp != null && tp.equals("Comite central")) {
-
-                    Representante r = representanteFacade.find(Integer.parseInt(un));
-                    if (r != null && r.getPassword().equals(pw) && r.getRol().equals("Comite central")) {
-                        session.setAttribute("tipoLogin", "Comite central");
-                        session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
+                if (tp != null && tp.equals("Egresados")) {
+                    Muestrapersona persona = null;
+                    Muestraegresado egresado = null;
+                    List<Muestraegresado> auxE2 = null;
+                    List<Encuesta> auxE3 = null;
+                    Modelo m;
+                    Proceso proceso;
+                    List<Muestrapersona> aux = muestrapersonaFacade.findByCedula(un);
+                    if (aux != null && aux.size() > 0) {
+                        for (int i = 0; i < aux.size(); i++) {
+                            persona = aux.get(i);
+                        }
+                    }
+                    if (persona != null && persona.getPassword().equals(pw)) {
+                        auxE2 = muestraegresadoFacade.findByMuestraPersona(persona);
+                    }
+                    if (auxE2 != null && auxE2.size() > 0) {
+                        for (int i = 0; i < auxE2.size(); i++) {
+                            egresado = auxE2.get(i);
+                        }
+                    }
+                    if (egresado != null) {
                         out.println(0);
+                        session.setAttribute("tipoLogin", "Fuente");
+                        session.setAttribute("programa", egresado.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
+                        session.setAttribute("persona", persona);
+                        session.setAttribute("fuente", fuenteFacade.find(4));
+                        proceso = persona.getMuestraId().getProcesoId();
+                        if (!proceso.getFechainicio().equals("En Configuración") && proceso.getFechacierre().equals("--")) {
+                            m = proceso.getModeloId();
+                            auxE3 = encuestaFacade.findByModelo(m);
+                            session.setAttribute("proceso", proceso);
+
+
+                        }
+                        if (auxE3 != null) {
+                            for (int i = 0; i < auxE3.size(); i++) {
+                                Encuesta en = auxE3.get(i);
+                                List<Asignacionencuesta> aux4 = asignacionencuestaFacade.findByEncuestayFuenteyModelo(en, fuenteFacade.find(4), proceso.getModeloId());
+                                if (aux4 != null && aux4.size() > 0) {
+                                    session.setAttribute("encuesta", aux4.get(0).getEncuestaId());
+                                }
+
+                            }
+                        }
+
                     } else {
                         out.println(1);
                     }
-                } else if (tp != null && tp.equals("Comite programa")) {
 
-                    Representante r = representanteFacade.find(Integer.parseInt(un));
-                    if (r != null && r.getPassword().equals(pw)) {
+                } else {
+                    if (tp != null && tp.equals("Docentes")) {
+                        Muestrapersona persona = null;
+                        Muestradocente docente = null;
+                        List<Muestradocente> auxD2 = null;
+                        List<Encuesta> auxD3 = null;
+                        Modelo m;
+                        Proceso proceso;
+                        List<Muestrapersona> aux = muestrapersonaFacade.findByCedula(un);
+                        if (aux != null && aux.size() > 0) {
+                            for (int i = 0; i < aux.size(); i++) {
+                                persona = aux.get(i);
+                            }
+                        }
+                        if (persona != null && persona.getPassword().equals(pw)) {
+                            auxD2 = muestradocenteFacade.findByMuestraPersona(persona);
+                        }
+                        if (auxD2 != null && auxD2.size() > 0) {
+                            for (int i = 0; i < auxD2.size(); i++) {
+                                docente = auxD2.get(i);
+                            }
+                        }
+                        if (docente != null) {
+                            out.println(0);
+                            session.setAttribute("tipoLogin", "Fuente");
+                            session.setAttribute("programa", docente.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
+                            session.setAttribute("persona", persona);
+                            session.setAttribute("fuente", fuenteFacade.find(2));
+                            proceso = persona.getMuestraId().getProcesoId();
+                            if (!proceso.getFechainicio().equals("En Configuración") && proceso.getFechacierre().equals("--")) {
+                                m = proceso.getModeloId();
+                                auxD3 = encuestaFacade.findByModelo(m);
+                                session.setAttribute("proceso", proceso);
 
-                        session.setAttribute("tipoLogin", "Comite programa");
-                        session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
-                        session.setAttribute("Programa", r.getProgramaId());
 
-                        List procesos = (List) procesoFacade.findByPrograma(r.getProgramaId());
-                        if (!procesos.isEmpty()) {
-                            Iterator iter = procesos.iterator();
-                            while (iter.hasNext()) {
-                                Proceso p = (Proceso) iter.next();
-                                System.out.println("Fecha: " + p.getFechainicio());
-                                if (p.getFechainicio().equals("En Configuración")) {
-                                    session.setAttribute("EstadoProceso", 1);
-                                    session.setAttribute("Proceso", p);
-                                    session.setAttribute("Modelo", p.getModeloId());
-                                } else if (p.getFechacierre().equals("--")) {
-                                    session.setAttribute("EstadoProceso", 2);
-                                    session.setAttribute("Proceso", p);
-                                    session.setAttribute("Modelo", p.getModeloId());
-                                } else {
-                                    session.setAttribute("EstadoProceso", 3);
-                                    session.setAttribute("Proceso", p);
-                                    session.setAttribute("Modelo", p.getModeloId());
+                            }
+                            if (auxD3 != null) {
+                                for (int i = 0; i < auxD3.size(); i++) {
+                                    Encuesta en = auxD3.get(i);
+                                    List<Asignacionencuesta> aux4 = asignacionencuestaFacade.findByEncuestayFuenteyModelo(en, fuenteFacade.find(2), proceso.getModeloId());
+                                    if (aux4 != null && aux4.size() > 0) {
+                                        session.setAttribute("encuesta", aux4.get(0).getEncuestaId());
+                                    }
+
                                 }
                             }
+
                         } else {
-                            session.setAttribute("EstadoProceso", 0);
+                            out.println(1);
+                        }
+
+                    } else {
+                        if (tp != null && tp.equals("Directores de programa")) {
+                            Muestrapersona persona = null;
+                            Muestradirector director = null;
+                            List<Muestradirector> auxDi2 = null;
+                            List<Encuesta> auxDi3 = null;
+                            Modelo m;
+                            Proceso proceso;
+                            List<Muestrapersona> aux = muestrapersonaFacade.findByCedula(un);
+                            if (aux != null && aux.size() > 0) {
+                                for (int i = 0; i < aux.size(); i++) {
+                                    persona = aux.get(i);
+                                }
+                            }
+                            if (persona != null && persona.getPassword().equals(pw)) {
+                                auxDi2 = muestradirectorFacade.findByMuestraPersona(persona);
+                            }
+                            if (auxDi2 != null && auxDi2.size() > 0) {
+                                for (int i = 0; i < auxDi2.size(); i++) {
+                                    director = auxDi2.get(i);
+                                }
+                            }
+                            if (director != null) {
+                                out.println(0);
+                                session.setAttribute("tipoLogin", "Fuente");
+                                session.setAttribute("programa", director.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
+                                session.setAttribute("persona", persona);
+                                session.setAttribute("fuente", fuenteFacade.find(5));
+                                proceso = persona.getMuestraId().getProcesoId();
+                                if (!proceso.getFechainicio().equals("En Configuración") && proceso.getFechacierre().equals("--")) {
+                                    m = proceso.getModeloId();
+                                    auxDi3 = encuestaFacade.findByModelo(m);
+                                    session.setAttribute("proceso", proceso);
+
+
+                                }
+                                if (auxDi3 != null) {
+                                    for (int i = 0; i < auxDi3.size(); i++) {
+                                        Encuesta en = auxDi3.get(i);
+                                        List<Asignacionencuesta> aux4 = asignacionencuestaFacade.findByEncuestayFuenteyModelo(en, fuenteFacade.find(5), proceso.getModeloId());
+                                        if (aux4 != null && aux4.size() > 0) {
+                                            session.setAttribute("encuesta", aux4.get(0).getEncuestaId());
+                                        }
+
+                                    }
+                                }
+
+                            } else {
+                                out.println(1);
+                            }
+
+                        } else if (tp != null && tp.equals("Administrativos")) {
+                            Muestrapersona persona = null;
+                            Muestraadministrativo administrativo = null;
+                            List<Muestraadministrativo> auxA2 = null;
+                            List<Encuesta> auxA3 = null;
+                            Modelo m;
+                            Proceso proceso;
+                            List<Muestrapersona> aux = muestrapersonaFacade.findByCedula(un);
+                            if (aux != null && aux.size() > 0) {
+                                for (int i = 0; i < aux.size(); i++) {
+                                    persona = aux.get(i);
+                                }
+                            }
+                            if (persona != null && persona.getPassword().equals(pw)) {
+                                auxA2 = muestraadministrativoFacade.findByMuestraPersona(persona);
+                            }
+                            if (auxA2 != null && auxA2.size() > 0) {
+                                for (int i = 0; i < auxA2.size(); i++) {
+                                    administrativo = auxA2.get(i);
+                                }
+                            }
+                            if (administrativo != null) {
+                                out.println(0);
+                                session.setAttribute("tipoLogin", "Fuente");
+                                session.setAttribute("programa", administrativo.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
+                                session.setAttribute("persona", persona);
+                                session.setAttribute("fuente", fuenteFacade.find(3));
+                                proceso = persona.getMuestraId().getProcesoId();
+                                if (!proceso.getFechainicio().equals("En Configuración") && proceso.getFechacierre().equals("--")) {
+                                    m = proceso.getModeloId();
+                                    auxA3 = encuestaFacade.findByModelo(m);
+                                    session.setAttribute("proceso", proceso);
+
+
+                                }
+                                if (auxA3 != null) {
+                                    for (int i = 0; i < auxA3.size(); i++) {
+                                        Encuesta en = auxA3.get(i);
+                                        List<Asignacionencuesta> aux4 = asignacionencuestaFacade.findByEncuestayFuenteyModelo(en, fuenteFacade.find(3), proceso.getModeloId());
+                                        if (aux4 != null && aux4.size() > 0) {
+                                            session.setAttribute("encuesta", aux4.get(0).getEncuestaId());
+                                        }
+
+                                    }
+                                }
+
+                            } else {
+                                out.println(1);
+                            }
+
+                        } else {
+                            if (tp != null && tp.equals("Comite central")) {
+
+                                Representante r = null;
+                                try {
+                                    r = representanteFacade.find(Integer.parseInt(un));
+                                } catch (Exception e) {
+                                }
+                                if (r != null && r.getPassword().equals(pw) && r.getRol().equals("Comite central")) {
+                                    session.setAttribute("tipoLogin", "Comite central");
+                                    session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
+                                    out.println(0);
+                                } else {
+                                    out.println(1);
+                                }
+                            } else if (tp != null && tp.equals("Comite programa")) {
+                                Representante r = null;
+                                try {
+                                    r = representanteFacade.find(Integer.parseInt(un));
+                                } catch (Exception e) {
+                                }
+                                if (r != null && r.getPassword().equals(pw) && r.getRol().equals("Comite programa")) {
+                                    out.println(0);
+                                    session.setAttribute("tipoLogin", "Comite programa");
+                                    session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
+                                    session.setAttribute("Programa", r.getProgramaId());
+
+                                    List procesos = (List) procesoFacade.findByPrograma(r.getProgramaId());
+                                    if (!procesos.isEmpty()) {
+                                        Iterator iter = procesos.iterator();
+                                        while (iter.hasNext()) {
+                                            Proceso p = (Proceso) iter.next();
+                                            System.out.println("Fecha: " + p.getFechainicio());
+                                            if (p.getFechainicio().equals("En Configuración")) {
+                                                session.setAttribute("EstadoProceso", 1);
+                                                session.setAttribute("Proceso", p);
+                                                session.setAttribute("Modelo", p.getModeloId());
+                                            } else if (p.getFechacierre().equals("--")) {
+                                                session.setAttribute("EstadoProceso", 2);
+                                                session.setAttribute("Proceso", p);
+                                                session.setAttribute("Modelo", p.getModeloId());
+                                            } else {
+                                                session.setAttribute("EstadoProceso", 3);
+                                                session.setAttribute("Proceso", p);
+                                                session.setAttribute("Modelo", p.getModeloId());
+                                            }
+                                        }
+                                    } else {
+                                        session.setAttribute("EstadoProceso", 0);
+                                    }
+                                } else {
+                                    out.println(1);
+                                }
+
+
+                            } else {
+                                out.println(1);
+                            }
                         }
                     }
-                    System.out.println("Estado del Proceso: " + session.getAttribute("EstadoProceso"));
-                    out.println(0);
-                } else {
-                    out.println(1);
                 }
             }
 

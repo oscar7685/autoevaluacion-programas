@@ -5,9 +5,12 @@
 package com.sap.ejb;
 
 import com.sap.entity.Egresado;
+import com.sap.entity.Programa;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -15,6 +18,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class EgresadoFacade extends AbstractFacade<Egresado> {
+
     @PersistenceContext(unitName = "sapPU")
     private EntityManager em;
 
@@ -26,5 +30,10 @@ public class EgresadoFacade extends AbstractFacade<Egresado> {
     public EgresadoFacade() {
         super(Egresado.class);
     }
-    
+
+    public List findByPrograma(Programa p) {
+        Query q = em.createNamedQuery("Egresado.findByPrograma");
+        q.setParameter("programa", p);
+        return q.getResultList();
+    }
 }

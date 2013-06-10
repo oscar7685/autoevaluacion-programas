@@ -5,9 +5,12 @@
 package com.sap.ejb;
 
 import com.sap.entity.Administrativo;
+import com.sap.entity.Programa;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -15,6 +18,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class AdministrativoFacade extends AbstractFacade<Administrativo> {
+
     @PersistenceContext(unitName = "sapPU")
     private EntityManager em;
 
@@ -26,5 +30,10 @@ public class AdministrativoFacade extends AbstractFacade<Administrativo> {
     public AdministrativoFacade() {
         super(Administrativo.class);
     }
-    
+
+    public List findByPrograma(Programa p) {
+        Query q = em.createNamedQuery("Administrativo.findByPrograma");
+        q.setParameter("programa", p);
+        return q.getResultList();
+    }
 }

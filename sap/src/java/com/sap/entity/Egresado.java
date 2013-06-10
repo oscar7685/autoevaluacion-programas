@@ -27,8 +27,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Egresado.findAll", query = "SELECT e FROM Egresado e"),
+    @NamedQuery(name = "Egresado.findByPrograma", query = "SELECT e FROM Egresado e where e.programaId =:programa"),
     @NamedQuery(name = "Egresado.findById", query = "SELECT e FROM Egresado e WHERE e.id = :id")})
 public class Egresado implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -108,5 +110,4 @@ public class Egresado implements Serializable {
     public String toString() {
         return "com.sap.entity.Egresado[ id=" + id + " ]";
     }
-    
 }

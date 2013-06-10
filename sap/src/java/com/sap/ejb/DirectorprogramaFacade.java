@@ -5,9 +5,12 @@
 package com.sap.ejb;
 
 import com.sap.entity.Directorprograma;
+import com.sap.entity.Programa;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,5 +29,9 @@ public class DirectorprogramaFacade extends AbstractFacade<Directorprograma> {
     public DirectorprogramaFacade() {
         super(Directorprograma.class);
     }
-    
+    public List findByPrograma(Programa p) {
+        Query q = em.createNamedQuery("Directorprograma.findByPrograma");
+        q.setParameter("programa", p);
+        return q.getResultList();
+    }
 }

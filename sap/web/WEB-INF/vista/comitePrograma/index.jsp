@@ -31,8 +31,9 @@
         <div class="ui-layout-north ui-widget-content">
             <div class="navbar navbar-inverse navbar-fixed-top">
                 <div class="navbar-inner">
-                    <div class="container">
+                    <div class="container-fluid">
                         <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
+                            <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>

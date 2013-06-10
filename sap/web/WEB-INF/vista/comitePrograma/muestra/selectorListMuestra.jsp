@@ -175,12 +175,16 @@
                             </thead>
                             <tbody>
                                 <c:if test="${EstadoProceso == 2}">
+                                    
                                     <c:forEach items="${listPoblacion}" var="item" varStatus="iter">
-                                        <c:set var="auxx" value="1"></c:set>
-                                        <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter2">
-                                            <c:if test="${item.personaId.id == row.muestrapersonaId.cedula}">
+                                        
+                                        <c:forEach items="${listMuestraSeleccionada}" var="row" >
+                                            
+                                         
+                                           <c:if test="${item.personaId.id == row.muestrapersonaId.cedula}">
+                                               
                                                 <c:set var="varaux" value="0"/>
-                                                <c:forEach items="${listEncabezado}" var="item3" varStatus="iter2">
+                                                <c:forEach items="${listEncabezado}" var="item3" >
                                                     <c:if test="${item.personaId.id == item3.muestrapersonaId.cedula}">
                                                         <c:set var="varaux" value="1"/>
                                                         <c:if test="${item3.estado.equals('terminado')}">

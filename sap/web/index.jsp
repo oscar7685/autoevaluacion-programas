@@ -52,7 +52,7 @@
         <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
-                <div class="container">
+                <div class="container-fluid">
                     <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -66,10 +66,10 @@
                             <li ><a href="#"><i class="icon-info-sign"></i> Acerca de</a></li>
                             <li><a href="#ingresar"><i class="icon-user"></i>Ingresar</a></li>
                         </ul>
-                    </div>
-                    <!--/.nav-collapse -->
                 </div>
+                    <!--/.nav-collapse -->
             </div>
+        </div>
         </div>
         <header class="inicio" style="padding-top: 60px;">
             <div class="header-content home">
@@ -100,8 +100,7 @@
                             <option>Docentes</option>
                             <option>Administrativos</option>
                             <option>Egresados</option>
-                            <option>Directivos</option>
-                            <option>Agencias Gubernamentales</option>
+                            <option>Directores de programa</option>
                             <option>Empleadores</option>
                         </optgroup>
                     </select>
