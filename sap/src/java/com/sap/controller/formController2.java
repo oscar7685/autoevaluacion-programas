@@ -13,6 +13,7 @@ import com.sap.ejb.IndicadorFacade;
 import com.sap.ejb.InstrumentoFacade;
 import com.sap.ejb.ModeloFacade;
 import com.sap.ejb.PreguntaFacade;
+import com.sap.ejb.ProgramaFacade;
 import com.sap.ejb.RepresentanteFacade;
 import com.sap.entity.Asignacionencuesta;
 import com.sap.entity.Caracteristica;
@@ -23,6 +24,8 @@ import com.sap.entity.Indicador;
 import com.sap.entity.Instrumento;
 import com.sap.entity.Modelo;
 import com.sap.entity.Pregunta;
+import com.sap.entity.Programa;
+import com.sap.entity.Representante;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -45,6 +48,8 @@ import javax.servlet.http.HttpSession;
  */
 public class formController2 extends HttpServlet {
 
+    @EJB
+    private ProgramaFacade programaFacade;
     @EJB
     private RepresentanteFacade representanteFacade;
     @EJB
@@ -628,14 +633,28 @@ public class formController2 extends HttpServlet {
                                     } else {
                                         if (action.toLowerCase().contains("coordinador")) {
                                             if (action.equals("crearCoordinador")) {
-                                                /*Modelo m = new Modelo();
-                                                 m.setFechacreacion(fecha2);
-                                                 m.setDescripcion(descripcion);
-                                                 m.setNombre(nombre);
-                                                 modeloFacade.create(m);*/
+                                                String id2 = request.getParameter("codigo");
+                                                String nombre = request.getParameter("nombre");
+                                                String apellidos = request.getParameter("apellidos");
+                                                String clave = request.getParameter("clave");
+                                                String correo = request.getParameter("correo");
+                                                String programa = request.getParameter("programa");
+                                                Programa p = programaFacade.find(Integer.parseInt(programa));
+                                                Representante r = new Representante();
+                                                r.setId(Integer.parseInt(id2));
+                                                r.setNombre(nombre);
+                                                r.setApellido(apellidos);
+                                                r.setPassword(clave);
+                                                r.setMail(correo);
+                                                r.setProgramaId(p);
+                                                r.setPrivilegioList(null);
+                                                r.setRol("Comite programa");
+                                                representanteFacade.create(r);
+
                                             } else {
                                                 if (action.equals("crearCoordinadorCC")) {
                                                     String url = "/WEB-INF/vista/comiteCentral/coordinador/crear.jsp";
+                                                    sesion.setAttribute("programas", programaFacade.findAll());
                                                     RequestDispatcher rd = request.getRequestDispatcher(url);
                                                     rd.forward(request, response);
                                                 } else {
@@ -648,8 +667,9 @@ public class formController2 extends HttpServlet {
                                                     } else {
                                                         if (action.equals("editarCoordinadorCC")) {
                                                             String id = request.getParameter("id");
-                                                            Modelo m = modeloFacade.find(Integer.parseInt(id));
-                                                            sesion.setAttribute("modelo", m);
+                                                            Representante r2 = representanteFacade.find(Integer.parseInt(id));
+                                                            sesion.setAttribute("representante", r2);
+                                                            sesion.setAttribute("programas", programaFacade.findAll());
                                                             String url = "/WEB-INF/vista/comiteCentral/coordinador/editar.jsp";
                                                             RequestDispatcher rd = request.getRequestDispatcher(url);
                                                             rd.forward(request, response);

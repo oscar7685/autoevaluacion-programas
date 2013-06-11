@@ -117,6 +117,7 @@ $(function() {
                         $("#contenido").append(data);
                         $("#contenido").show(200, function() {
                             menuModelo();
+                            myLayout.addCloseBtn("#west-closer", "west");
                             $("#dancing-dots-text").hide();
                         });
                         actualizaEnlaces(hash);
@@ -126,7 +127,7 @@ $(function() {
                 if (hash.indexOf("#entrarModelo") !== -1 || hash.indexOf("#editarEncuesta") !== -1
                         || hash.indexOf("#vistaPreviaEncuesta") !== -1 || hash.indexOf("#editarFactor") !== -1
                         || hash.indexOf("#editarCaracteristica") !== -1 || hash.indexOf("#editarIndicador") !== -1
-                        || hash.indexOf("#editarPregunta") !== -1 || hash.indexOf("#editarModelo") !== -1) {
+                        || hash.indexOf("#editarPregunta") !== -1) {
                     var cual = hash.split("&");
                     hash = cual[0];
                     var url3 = "/sap/controladorCC?action=";
@@ -154,7 +155,7 @@ $(function() {
                     }); //fin del $.ajax
 
                 } else {
-                    if (hash === "#crearModelo" || hash === "#listarModelo" || hash === "#listarCoordinadores") {
+                    if (hash === "#crearModelo" || hash === "#listarModelo" || hash === "#listarCoordinadores" || hash === "#crearCoordinador") {
                         var url3 = "/sap/" + hash;
                         url3 = url3.replace('#', "controladorCC?action=") + "CC";
                         $("div.ui-layout-center").empty();
@@ -201,6 +202,33 @@ $(function() {
                                     actualizaEnlaces(hash);
                                 } //fin success
                             }); //fin del $.ajax
+                        } else {
+                            if (hash.indexOf("#editarModelo") !== -1 || hash.indexOf("#editarCoordinador") !== -1) {
+                                var cual = hash.split("&");
+                                hash = cual[0];
+                                var url3 = "/sap/controladorCC?action=";
+                                url3 = url3.concat(cual[0].substring(1), "CC&id=", cual[1]);
+                                $("div.ui-layout-center").empty();
+                                $.ajax({
+                                    type: "POST",
+                                    url: url3,
+                                    success: function(data)
+                                    {
+                                        $("#contenido").append(data);
+                                        if ($("ul.nav-list li:eq(0)").html() !== "Modelo") {
+                                            menuModelo();
+                                            myLayout.addCloseBtn("#west-closer", "west");
+
+                                        }
+                                        $("#contenido").show(200, function() {
+                                            $("#dancing-dots-text").hide();
+                                        });
+                                        actualizaEnlaces(hash);
+                                    } //fin success
+                                }); //fin del $.ajax
+
+                            }
+
                         }
                     }
                 }
