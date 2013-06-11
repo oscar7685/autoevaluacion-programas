@@ -584,7 +584,7 @@ public class cpController extends HttpServlet {
 
                 //********************************Docente
 
-                aux = estudianteFacade.countByProperty("programaId", sesion.getAttribute("Programa"));
+                aux = docenteFacade.countByProperty("programaId", sesion.getAttribute("Programa"));
 
                 N = aux;
 
@@ -746,7 +746,7 @@ public class cpController extends HttpServlet {
 
                 //********************************EMpleador
 
-                aux = empleadorFacade.count();
+                aux = empleadorFacade.countByProperty("programaId", sesion.getAttribute("Programa"));
 
                 N = aux;
 
@@ -756,7 +756,7 @@ public class cpController extends HttpServlet {
 
                 tamanioMuestra = (int) Math.floor(n);
 
-                List<Empleador> lem = empleadorFacade.generarMuestraSinPrograma(tamanioMuestra);
+                List<Empleador> lem = empleadorFacade.generarMuestra(programa, tamanioMuestra);
 
                 it = lem.iterator();
 

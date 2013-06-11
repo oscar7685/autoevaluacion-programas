@@ -20,7 +20,7 @@
         <div id="conte" class="span10">
             <form id="formCrearProceso" class="form-horizontal" method="post">
                 <fieldset>
-                    <legend>Nuevo Proceso de Autoevaluación</legend>
+                    <legend>Nuevo Proceso de Autoevaluaci&oacute;n</legend>
                     <div class="control-group">
                         <label for="programa"  class="control-label">Programa</label>
                         <div class="controls">
@@ -36,7 +36,7 @@
                     <div class="control-group">
                         <label for="modelo" class="control-label">Modelo</label>
                         <div class="controls">
-                            <select id="modelo" name="modelo">
+                            <select id="modelo" name="modelo" class="input-xlarge">
                                 <c:forEach items="${listModelo}" var="item" >
                                     <option value="${item.id}">${item.nombre}</option>
                                 </c:forEach>
