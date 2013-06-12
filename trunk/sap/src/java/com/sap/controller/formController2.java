@@ -13,6 +13,9 @@ import com.sap.ejb.FuenteFacade;
 import com.sap.ejb.IndicadorFacade;
 import com.sap.ejb.InstrumentoFacade;
 import com.sap.ejb.ModeloFacade;
+import com.sap.ejb.MuestraFacade;
+import com.sap.ejb.PonderacioncaracteristicaFacade;
+import com.sap.ejb.PonderacionfactorFacade;
 import com.sap.ejb.PreguntaFacade;
 import com.sap.ejb.ProcesoFacade;
 import com.sap.ejb.ProgramaFacade;
@@ -26,6 +29,7 @@ import com.sap.entity.Indicador;
 import com.sap.entity.Instrumento;
 import com.sap.entity.Modelo;
 import com.sap.entity.Pregunta;
+import com.sap.entity.Proceso;
 import com.sap.entity.Programa;
 import com.sap.entity.Representante;
 import java.io.IOException;
@@ -76,6 +80,12 @@ public class formController2 extends HttpServlet {
     private FactorFacade factorFacade;
     @EJB
     private ModeloFacade modeloFacade;
+    @EJB
+    private PonderacionfactorFacade ponderacionfactorFacade;
+    @EJB
+    private PonderacioncaracteristicaFacade PonderacioncaracteristicaFacade;
+    @EJB
+    private MuestraFacade muestraFacade;
 
     /**
      * Processes requests for both HTTP
@@ -100,6 +110,23 @@ public class formController2 extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
 
+            } else if (action.equals("ejecutarProCC")) {
+
+                String idM = request.getParameter("id");
+
+                Proceso p = procesoFacade.find(Integer.parseInt(idM));
+
+                if (!ponderacionfactorFacade.findByList("procesoId", p).isEmpty() && !PonderacioncaracteristicaFacade.findByList("procesoId", p).isEmpty() && !muestraFacade.findByList("procesoId", p).isEmpty()) {
+                    java.util.Date date = new java.util.Date();
+                    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                    String fecha = sdf.format(date);
+                    p.setFechainicio(fecha);
+                    p.setFechacierre("--");
+                    procesoFacade.edit(p);
+                    out.println(1);
+                } else {
+                    out.println(0);
+                }
             } else if (action.equals("controlPanelCC")) {
 
                 sesion.setAttribute("listProcesos", procesoFacade.findByList("fechacierre", "--"));

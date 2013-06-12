@@ -8,15 +8,15 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <h3>Control de procesos de Autoevaluación!</h3>
+            <h3>Procesos de autoevaluación activos</h3>
             <c:choose>
                 <c:when test="${fn:length(listProcesos)!= 0}">
                     <table id="tablaX" class="table table-striped table-bordered table-condensed">
                         <thead>
                         <th>Facultad</th>    
                         <th>Programa</th>
-                        <th>Estado</th>
                         <th>Fecha de Inicio</th>
+                        <th>Estado</th>
                         <th>Operaciones</th>
                         </thead>
                         <tbody>
@@ -28,19 +28,25 @@
                                     <td>   
                                         <c:out value="${row.programaId.nombre}"/>
                                     </td>
+                                    <td>   
+                                        <c:out value="${row.fechainicio}"/>
+                                    </td>
                                     <c:if test="${row.fechainicio == 'En Configuración'}">
                                         <td>
                                             <c:out value="En Configuración"/>
+                                        </td>
+                                        <td>
+                                           <i class="icon-chevron-sign-right"></i><a href="#ejecutarPro&${row.id}"> Ejecutar Proceso</a>
                                         </td>
                                     </c:if>
                                     <c:if test="${row.fechainicio != 'En Configuración'}">
                                         <td>   
                                             <c:out value="En Ejecución"/>
                                         </td>
+                                        <td>
+                                            <i class="icon-flag-checkered"></i><a href=""> Finalizar Proceso</a>
+                                        </td>
                                     </c:if>
-                                    <td>   
-                                        <c:out value="${row.fechainicio}"/>
-                                    </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
