@@ -173,20 +173,7 @@
                 <a id="modalCpb1" class="btn btn-primary" data-dismiss="modal" href="#">Ejecutar Proceso</a>
             </div>
         </div>
-        <div class="modal hide fade" id="modalCp2">
-            <div class="modal-header">
-                <a data-dismiss="modal" class="close">×</a>
-                <h3>Atención!</h3>
-            </div>
-            <div class="modal-body">
-                <h4>Ejecutar Proceso de Autoevaluación Institucional.</h4>
-                <br>
-                <p>Debe configurar todo el proceso para continuar.</p>
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
-            </div>
-        </div>
+     
         <div class="modal hide fade" id="modalCp3">
             <div class="modal-header">
                 <a data-dismiss="modal" class="close">×</a>

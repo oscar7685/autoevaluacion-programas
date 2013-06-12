@@ -104,6 +104,26 @@ $(function() {
 
             });//fin post
 
+        } else if (hash.indexOf("#ejecutarPro") !== -1) {
+            var cual = hash.split("&");
+            hash = cual[0];
+            var url3 = "/sap/controladorCC?action=";
+            url3 = url3.concat(cual[0].substring(1), "CC&id=", cual[1]);
+            $("div.ui-layout-center").empty();
+            $.ajax({
+                type: "POST",
+                url: url3,
+                success: function(data)
+                {
+                    if (data == 1) {
+                        location = "#controlPanel";
+                    } else {
+                        $('#modalCp2').modal();
+                        location = "#controlPanel";
+                    }
+
+                } //fin success
+            }); //fin del $.ajax
         } else {
             if (hash === "#inicio") {
                 var url3 = "/sap/" + hash;
