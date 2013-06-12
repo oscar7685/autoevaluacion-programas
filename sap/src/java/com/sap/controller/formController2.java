@@ -94,6 +94,13 @@ public class formController2 extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
 
+            } else if (action.equals("controlPanelCC")) {
+                
+                
+                String url = "/WEB-INF/vista/comiteCentral/control/controlPanel.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+
             } else {
                 if (action.toLowerCase().contains("modelo")) {
                     if (action.equals("crearModelo")) {
