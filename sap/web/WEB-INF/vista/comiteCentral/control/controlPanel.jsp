@@ -21,33 +21,44 @@
                         </thead>
                         <tbody>
                             <c:forEach items="${listProcesos}" var="row" varStatus="iter">
-                                <tr>
-                                    <td>   
-                                        <c:out value="${row.programaId.facultadId.nombre}"/>
-                                    </td>
-                                    <td>   
-                                        <c:out value="${row.programaId.nombre}"/>
-                                    </td>
-                                    <td>   
-                                        <c:out value="${row.fechainicio}"/>
-                                    </td>
-                                    <c:if test="${row.fechainicio == 'En Configuración'}">
-                                        <td>
-                                            <c:out value="En Configuración"/>
-                                        </td>
-                                        <td>
-                                           <i class="icon-chevron-sign-right"></i><a href="#ejecutarPro&${row.id}"> Ejecutar Proceso</a>
-                                        </td>
-                                    </c:if>
-                                    <c:if test="${row.fechainicio != 'En Configuración'}">
+                                <c:if test="${row.fechainicio == 'En Configuración'}">
+                                    <tr  class="info">
                                         <td>   
-                                            <c:out value="En Ejecución"/>
+                                            <c:out value="${row.programaId.facultadId.nombre}"/>
+                                        </td>
+                                        <td>   
+                                            <c:out value="${row.programaId.nombre}"/>
+                                        </td>
+                                        <td>   
+                                            <c:out value="${row.fechainicio}"/>
+                                        </td>
+                                        <td>
+                                            <span class="label label-info"><i class="icon-cog"></i> En Configuración</span>
+                                        </td>
+                                        <td>
+                                            <i class="icon-chevron-sign-right"></i><a href="#ejecutarPro&${row.id}"> Ejecutar Proceso</a>
+                                        </td>
+                                    </tr>
+                                </c:if>
+                                <c:if test="${row.fechainicio != 'En Configuración'}">
+                                    <tr  class="success">
+                                        <td>   
+                                            <c:out value="${row.programaId.facultadId.nombre}"/>
+                                        </td>
+                                        <td>   
+                                            <c:out value="${row.programaId.nombre}"/>
+                                        </td>
+                                        <td>   
+                                            <c:out value="${row.fechainicio}"/>
+                                        </td>
+                                        <td>   
+                                            <span class="label label-success"><i class="icon-play-sign"></i> En Ejecución</span>
                                         </td>
                                         <td>
                                             <i class="icon-flag-checkered"></i><a href=""> Finalizar Proceso</a>
                                         </td>
-                                    </c:if>
-                                </tr>
+                                    </tr>
+                                </c:if>
                             </c:forEach>
                         </tbody>
                     </table>
