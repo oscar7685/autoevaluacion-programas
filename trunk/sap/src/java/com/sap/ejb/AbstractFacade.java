@@ -145,4 +145,11 @@ public abstract class AbstractFacade<T> {
         q.setParameter("name2", m2);
         return ((Long) q.getSingleResult()).intValue();
     }
+    
+     public List<T> findByDistinct(String property, Object m) {
+        System.out.println("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " <> :name");
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        return getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " <> :name", entityClass).setParameter("name", m).getResultList();
+    }
 }

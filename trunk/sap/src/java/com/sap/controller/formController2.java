@@ -8,11 +8,13 @@ import com.sap.ejb.AsignacionencuestaFacade;
 import com.sap.ejb.CaracteristicaFacade;
 import com.sap.ejb.EncuestaFacade;
 import com.sap.ejb.FactorFacade;
+import com.sap.ejb.FacultadFacade;
 import com.sap.ejb.FuenteFacade;
 import com.sap.ejb.IndicadorFacade;
 import com.sap.ejb.InstrumentoFacade;
 import com.sap.ejb.ModeloFacade;
 import com.sap.ejb.PreguntaFacade;
+import com.sap.ejb.ProcesoFacade;
 import com.sap.ejb.ProgramaFacade;
 import com.sap.ejb.RepresentanteFacade;
 import com.sap.entity.Asignacionencuesta;
@@ -48,6 +50,10 @@ import javax.servlet.http.HttpSession;
  */
 public class formController2 extends HttpServlet {
 
+    @EJB
+    private FacultadFacade facultadFacade;
+    @EJB
+    private ProcesoFacade procesoFacade;
     @EJB
     private ProgramaFacade programaFacade;
     @EJB
@@ -95,8 +101,9 @@ public class formController2 extends HttpServlet {
                 rd.forward(request, response);
 
             } else if (action.equals("controlPanelCC")) {
-                
-                
+
+                sesion.setAttribute("listProcesos", procesoFacade.findByList("fechacierre", "--"));
+
                 String url = "/WEB-INF/vista/comiteCentral/control/controlPanel.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);

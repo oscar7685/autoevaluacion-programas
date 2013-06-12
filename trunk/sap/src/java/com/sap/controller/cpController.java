@@ -1194,7 +1194,7 @@ public class cpController extends HttpServlet {
                 rd.forward(request, response);
             } else if (action.equals("preparedInfoNumerica")) {
 
-
+              
                 Instrumento ins = instrumentoFacade.find(3);
 
                 List li = ins.getIndicadorList();
@@ -1228,6 +1228,7 @@ public class cpController extends HttpServlet {
                 Instrumento ins = instrumentoFacade.find(2);
 
                 List li = ins.getIndicadorList();
+                System.out.println("Tamaño: " + li.size());
 
 
                 List<Indicador> linum = new ArrayList<Indicador>();
@@ -1277,6 +1278,7 @@ public class cpController extends HttpServlet {
                     nd.setResponsable(responDoc);
                     nd.setProcesoId(proceso);
                     nd.setIndicadorId(i);
+                    nd.setInstrumentoId(instrumentoFacade.find(3));
                     //nd.setInstrumentohasindicadorId(String.valueOf(i.getId()));
 
                     numericadocumentalFacade.create(nd);
@@ -1309,6 +1311,7 @@ public class cpController extends HttpServlet {
                     nd.setResponsable(responDoc);
                     nd.setProcesoId(proceso);
                     nd.setIndicadorId(i);
+                    nd.setInstrumentoId(instrumentoFacade.find(2));
                     //nd.setInstrumentohasindicadorId(String.valueOf(i.getId()));
 
                     numericadocumentalFacade.create(nd);

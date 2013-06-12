@@ -125,7 +125,6 @@
         });
     });
 </script>
-
 <div class="hero-unit">
     <a  class="span10 printEnlace" style="text-align: right; margin-left: 0px; text-align: right; cursor: pointer"><i class="icon-print"></i> Imprimir</a>  
     <div class="row">
@@ -152,14 +151,12 @@
                     <th>Programa</th>
                     </thead>
                     <tbody>
-
                         <tr> 
                             <td class="span4">${Proceso.descripcion}</td>
                             <td>${Proceso.fechainicio}</td>
                             <td>${Proceso.fechacierre}</td>
                             <td>${Proceso.programaId.nombre}</td>
                         </tr>
-
                     </tbody>
                 </table> 
                 <br>
