@@ -155,7 +155,7 @@ $(function() {
                     }); //fin del $.ajax
 
                 } else {
-                    if (hash === "#crearModelo" || hash === "#listarModelo" || hash === "#listarCoordinadores" || hash === "#crearCoordinador") {
+                    if (hash === "#crearModelo" || hash === "#listarModelo" || hash === "#listarCoordinadores" || hash === "#crearCoordinador" || hash === "#controlPanel") {
                         var url3 = "/sap/" + hash;
                         url3 = url3.replace('#', "controladorCC?action=") + "CC";
                         $("div.ui-layout-center").empty();

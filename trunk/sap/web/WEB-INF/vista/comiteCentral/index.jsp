@@ -123,14 +123,17 @@
                         <li class="nav-header">Coordinadores</li>
                         <li><a href="#crearCoordinador"><i class="icon-plus"></i> Crear Coordinador</a></li>
                         <li><a href="#listarCoordinadores"><i class="icon-reorder"></i> Listar Coordinadores</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#controlPanel"><i class="icon-th"></i> Panel de Control</a></li>
                     </ul>
                 </div>
             </div>
-
-
+            <div align="center" style="bottom: 10px; position: absolute; margin-left: 10px">
+                <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank">
+                    <img src="<%=request.getContextPath()%>/img/LogoU.png" style="width: 220px;"></img>
+                </a>
+            </div>
         </div><!--/West-->
-
-
 
 
 
