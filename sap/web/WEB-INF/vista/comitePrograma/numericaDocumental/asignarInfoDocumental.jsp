@@ -72,7 +72,7 @@
                     <div class="form-actions">
                         <button class="btn btn-primary" type="submit">Registrar información documental</button>
                         <button class="btn" type="reset">Cancelar</button>
-                    </div>F
+                    </div>
                 </fieldset>
             </form>
         </div>

@@ -9,32 +9,48 @@
     <div class="row">
         <div id="conte" class="span10">
             <h3>Control de procesos de Autoevaluación!</h3>
-            <div class="accordion" id="accordion2">
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                            Collapsible Group Item #1
-                        </a>
-                    </div>
-                    <div id="collapseOne" class="accordion-body collapse in">
-                        <div class="accordion-inner">
-                            Anim pariatur cliche...
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-                            Collapsible Group Item #2
-                        </a>
-                    </div>
-                    <div id="collapseTwo" class="accordion-body collapse">
-                        <div class="accordion-inner">
-                            Anim pariatur cliche...
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <c:choose>
+                <c:when test="${fn:length(listProcesos)!= 0}">
+                    <table id="tablaX" class="table table-striped table-bordered table-condensed">
+                        <thead>
+                        <th>Facultad</th>    
+                        <th>Programa</th>
+                        <th>Estado</th>
+                        <th>Fecha de Inicio</th>
+                        <th>Operaciones</th>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${listProcesos}" var="row" varStatus="iter">
+                                <tr>
+                                    <td>   
+                                        <c:out value="${row.programaId.facultadId.nombre}"/>
+                                    </td>
+                                    <td>   
+                                        <c:out value="${row.programaId.nombre}"/>
+                                    </td>
+                                    <c:if test="${row.fechainicio == 'En Configuración'}">
+                                        <td>
+                                            <c:out value="En Configuración"/>
+                                        </td>
+                                    </c:if>
+                                    <c:if test="${row.fechainicio != 'En Configuración'}">
+                                        <td>   
+                                            <c:out value="En Ejecución"/>
+                                        </td>
+                                    </c:if>
+                                    <td>   
+                                        <c:out value="${row.fechainicio}"/>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </c:when>
+                <c:otherwise>
+                    No  se han encontrado procesos activos.
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
 </div>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>
