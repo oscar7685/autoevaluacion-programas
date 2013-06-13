@@ -717,12 +717,21 @@ public class formController2 extends HttpServlet {
 
                                                         } else {
                                                             if (action.equals("editarCoordinador")) {
-                                                                Modelo m = (Modelo) sesion.getAttribute("modelo");
-                                                                String nombre = (String) request.getParameter("nombre");
-                                                                String descripcion = (String) request.getParameter("descripcion");
-                                                                m.setDescripcion(descripcion);
-                                                                m.setNombre(nombre);
-                                                                modeloFacade.edit(m);
+                                                                Representante r = (Representante) sesion.getAttribute("representante");
+                                                                String id2 = request.getParameter("codigo");
+                                                                String nombre = request.getParameter("nombre");
+                                                                String apellidos = request.getParameter("apellidos");
+                                                                String clave = request.getParameter("clave");
+                                                                String correo = request.getParameter("correo");
+                                                                String programa = request.getParameter("programa");
+                                                                Programa p = programaFacade.find(Integer.parseInt(programa));
+                                                                r.setId(Integer.parseInt(id2));
+                                                                r.setNombre(nombre);
+                                                                r.setApellido(apellidos);
+                                                                r.setPassword(clave);
+                                                                r.setMail(correo);
+                                                                r.setProgramaId(p);
+                                                                representanteFacade.edit(r);
                                                             }
                                                         }
 
