@@ -4,7 +4,9 @@
  */
 package com.sap.ejb;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -86,21 +88,57 @@ public abstract class AbstractFacade<T> {
     }
 
     public List<T> generarMuestra(Object m, int tamanio) {
-        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
-        cq.select(cq.from(entityClass));
-        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c.programaId = :name", entityClass);
-        q.setMaxResults(tamanio);
-        return q.setParameter("name", m).getResultList();
+        if (tamanio != 0) {
+            javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+            cq.select(cq.from(entityClass));
+            Long size = getEntityManager().createQuery("SELECT count(c) FROM " + entityClass.getSimpleName() + " c WHERE c.programaId = :name", Long.class).setParameter("name", m).getSingleResult();
+            int size2 = size.intValue();
+            Random random = new Random();
+            List<T> lista = new ArrayList<T>();
+            List<Integer> generated = new ArrayList<Integer>();
+            int i = 0;
+            while (i < tamanio) {
+                int aux = random.nextInt(size2);
+                Query q2 = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c.programaId = :name", entityClass).setParameter("name", m);
+                q2.setFirstResult(aux);
+                q2.setMaxResults(1);
+                if (!generated.contains(aux)) {
+                    generated.add(aux);
+                    lista.add((T) q2.getSingleResult());
+                    i++;
+                }
+
+            }
+            return lista;
+        } else {
+
+            return null;
+        }
+
     }
 
     public List<T> generarMuestraEst(Object m1, int tamanio, String property2, Object m2) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c.programaId = :name1 and c." + property2 + " = :name2", entityClass);
-        q.setMaxResults(tamanio);
-        q.setParameter("name1", m1);
-        q.setParameter("name2", m2);
-        return q.getResultList();
+        Long size = getEntityManager().createQuery("SELECT count(c) FROM " + entityClass.getSimpleName() + " c WHERE c.programaId = :name and c." + property2 + "= :name2", Long.class).setParameter("name", m1).setParameter("name2", m2).getSingleResult();
+        int size2 = size.intValue();
+        Random random = new Random();
+        List<T> lista = new ArrayList<T>();
+        List<Integer> generated = new ArrayList<Integer>();
+        int i = 0;
+        while (i < tamanio) {
+            int aux = random.nextInt(size2);
+            Query q2 = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c.programaId = :name and c." + property2 + "= :name2", entityClass).setParameter("name", m1).setParameter("name2", m2);
+            q2.setFirstResult(aux);
+            q2.setMaxResults(1);
+            if (!generated.contains(aux)) {
+                generated.add(aux);
+                lista.add((T) q2.getSingleResult());
+                i++;
+            }
+
+        }
+        return lista;
     }
 
     public List<T> generarMuestraSinPrograma(int tamanio) {
@@ -145,8 +183,8 @@ public abstract class AbstractFacade<T> {
         q.setParameter("name2", m2);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
-     public List<T> findByDistinct(String property, Object m) {
+
+    public List<T> findByDistinct(String property, Object m) {
         System.out.println("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " <> :name");
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));

@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Estudiante.findById", query = "SELECT e FROM Estudiante e WHERE e.id = :id"),
     @NamedQuery(name = "Estudiante.findBySemestre", query = "SELECT e FROM Estudiante e WHERE e.semestre = :semestre"),
     @NamedQuery(name = "Estudiante.findByPeriodo", query = "SELECT e FROM Estudiante e WHERE e.periodo = :periodo"),
-    @NamedQuery(name = "Estudiante.cantEstudiantesEntre3y9ByPrograma", query = "SELECT COUNT(e) FROM Estudiante e WHERE e.programaId = :programa AND  (e.semestre='3' OR e.semestre='4' OR e.semestre='5' OR e.semestre='6' OR e.semestre='7' OR e.semestre='8' OR e.semestre='9')"),
+    @NamedQuery(name = "Estudiante.cantEstudiantesEntre3y9ByPrograma", query = "SELECT COUNT(e) FROM Estudiante e WHERE e.programaId = :programa AND  (e.semestre='03' OR e.semestre='04' OR e.semestre='05' OR e.semestre='06' OR e.semestre='07' OR e.semestre='08' OR e.semestre='09')"),
     @NamedQuery(name = "Estudiante.findByAnio", query = "SELECT e FROM Estudiante e WHERE e.anio = :anio")})
 public class Estudiante implements Serializable {
     private static final long serialVersionUID = 1L;

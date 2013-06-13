@@ -530,7 +530,9 @@ public class cpController extends HttpServlet {
 
 
                 double cociente = n / N;
-
+                System.out.println("n: "+n);
+                System.out.println("N: "+N);
+                System.out.println("cociente: "+cociente);
 
                 for (int i = 3; i < 10; i++) {
 
@@ -541,11 +543,6 @@ public class cpController extends HttpServlet {
                     tamanioMuestra1 = (int) Math.round(tamaniosem * cociente);
 
                     List<Estudiante> le = estudianteFacade.generarMuestraEst(programa, tamanioMuestra1, "semestre", "0" + i);
-
-                    System.out.println("Tamaño: " + le.size());
-
-                    System.out.println("Tmañao smestre " + i + " : " + tamaniosem);
-                    System.out.println("Muestra smestre " + i + " : " + tamanioMuestra1);
 
                     Iterator it = le.iterator();
 
@@ -583,47 +580,46 @@ public class cpController extends HttpServlet {
 
 
                 //********************************Docente
-
+                int tamanioMuestra = 0;
+                Iterator it;
                 aux = docenteFacade.countByProperty("programaId", sesion.getAttribute("Programa"));
 
                 N = aux;
 
                 if (N != 0.0) {
                     n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
-                }
+
+                    tamanioMuestra = (int) Math.floor(n);
+
+                    List<Docente> ld = docenteFacade.generarMuestra(programa, tamanioMuestra);
 
 
-                int tamanioMuestra = 0;
+                     it = ld.iterator();
 
-                tamanioMuestra = (int) Math.floor(n);
+                    if (!ld.isEmpty()) {
+                        while (it.hasNext()) {
+                            Docente doc = (Docente) it.next();
+                            Persona per = doc.getPersonaId();
 
-                List<Docente> ld = docenteFacade.generarMuestra(programa, tamanioMuestra);
+                            Muestrapersona mp = new Muestrapersona();
 
+                            mp.setCedula(per.getId());
+                            mp.setNombre(per.getNombre());
+                            mp.setApellido(per.getApellido());
+                            mp.setPassword(per.getPassword());
+                            mp.setMail(per.getMail());
+                            mp.setMuestraId(m);
 
-                Iterator it = ld.iterator();
+                            muestrapersonaFacade.create(mp);
 
-                if (!ld.isEmpty()) {
-                    while (it.hasNext()) {
-                        Docente doc = (Docente) it.next();
-                        Persona per = doc.getPersonaId();
+                            Muestradocente md = new Muestradocente();
+                            md.setTipo(doc.getTipo());
+                            md.setMuestrapersonaId(mp);
 
-                        Muestrapersona mp = new Muestrapersona();
-
-                        mp.setCedula(per.getId());
-                        mp.setNombre(per.getNombre());
-                        mp.setApellido(per.getApellido());
-                        mp.setPassword(per.getPassword());
-                        mp.setMail(per.getMail());
-                        mp.setMuestraId(m);
-
-                        muestrapersonaFacade.create(mp);
-
-                        Muestradocente md = new Muestradocente();
-                        md.setTipo(doc.getTipo());
-                        md.setMuestrapersonaId(mp);
-
-                        muestradocenteFacade.create(md);
+                            muestradocenteFacade.create(md);
+                        }
                     }
+
                 }
 
                 //********************************Egresado
@@ -634,36 +630,38 @@ public class cpController extends HttpServlet {
 
                 if (N != 0.0) {
                     n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
-                }
 
-                tamanioMuestra = (int) Math.floor(n);
+                    tamanioMuestra = (int) Math.floor(n);
 
-                List<Egresado> leg = egresadoFacade.generarMuestra(programa, tamanioMuestra);
+                    List<Egresado> leg = egresadoFacade.generarMuestra(programa, tamanioMuestra);
 
-                it = leg.iterator();
+                    it = leg.iterator();
 
-                if (!leg.isEmpty()) {
-                    while (it.hasNext()) {
-                        Egresado eg = (Egresado) it.next();
-                        Persona per = eg.getPersonaId();
+                    if (!leg.isEmpty()) {
+                        while (it.hasNext()) {
+                            Egresado eg = (Egresado) it.next();
+                            Persona per = eg.getPersonaId();
 
-                        Muestrapersona mp = new Muestrapersona();
+                            Muestrapersona mp = new Muestrapersona();
 
-                        mp.setCedula(per.getId());
-                        mp.setNombre(per.getNombre());
-                        mp.setApellido(per.getApellido());
-                        mp.setPassword(per.getPassword());
-                        mp.setMail(per.getMail());
-                        mp.setMuestraId(m);
+                            mp.setCedula(per.getId());
+                            mp.setNombre(per.getNombre());
+                            mp.setApellido(per.getApellido());
+                            mp.setPassword(per.getPassword());
+                            mp.setMail(per.getMail());
+                            mp.setMuestraId(m);
 
-                        muestrapersonaFacade.create(mp);
+                            muestrapersonaFacade.create(mp);
 
-                        Muestraegresado meg = new Muestraegresado();
-                        meg.setMuestrapersonaId(mp);
+                            Muestraegresado meg = new Muestraegresado();
+                            meg.setMuestrapersonaId(mp);
 
-                        muestraegresadoFacade.create(meg);
+                            muestraegresadoFacade.create(meg);
+                        }
                     }
                 }
+
+
 
                 //********************************Director
 
@@ -673,36 +671,39 @@ public class cpController extends HttpServlet {
 
                 if (N != 0.0) {
                     n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
-                }
 
-                tamanioMuestra = (int) Math.floor(n);
+                    tamanioMuestra = (int) Math.floor(n);
 
-                List<Directorprograma> ldp = directorprogramaFacade.generarMuestra(programa, tamanioMuestra);
+                    List<Directorprograma> ldp = directorprogramaFacade.generarMuestra(programa, tamanioMuestra);
 
-                it = ldp.iterator();
+                    it = ldp.iterator();
 
-                if (!ldp.isEmpty()) {
-                    while (it.hasNext()) {
-                        Directorprograma dp = (Directorprograma) it.next();
-                        Persona per = dp.getPersonaId();
+                    if (!ldp.isEmpty()) {
+                        while (it.hasNext()) {
+                            Directorprograma dp = (Directorprograma) it.next();
+                            Persona per = dp.getPersonaId();
 
-                        Muestrapersona mp = new Muestrapersona();
+                            Muestrapersona mp = new Muestrapersona();
 
-                        mp.setCedula(per.getId());
-                        mp.setNombre(per.getNombre());
-                        mp.setApellido(per.getApellido());
-                        mp.setPassword(per.getPassword());
-                        mp.setMail(per.getMail());
-                        mp.setMuestraId(m);
+                            mp.setCedula(per.getId());
+                            mp.setNombre(per.getNombre());
+                            mp.setApellido(per.getApellido());
+                            mp.setPassword(per.getPassword());
+                            mp.setMail(per.getMail());
+                            mp.setMuestraId(m);
 
-                        muestrapersonaFacade.create(mp);
+                            muestrapersonaFacade.create(mp);
 
-                        Muestradirector mdp = new Muestradirector();
-                        mdp.setMuestrapersonaId(mp);
+                            Muestradirector mdp = new Muestradirector();
+                            mdp.setMuestrapersonaId(mp);
 
-                        muestradirectorFacade.create(mdp);
+                            muestradirectorFacade.create(mdp);
+                        }
                     }
+
                 }
+
+
 
                 //********************************Administrativo
 
@@ -712,37 +713,40 @@ public class cpController extends HttpServlet {
 
                 if (N != 0.0) {
                     n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
-                }
 
-                tamanioMuestra = (int) Math.floor(n);
+                    tamanioMuestra = (int) Math.floor(n);
 
-                List<Administrativo> lad = administrativoFacade.generarMuestra(programa, tamanioMuestra);
+                    List<Administrativo> lad = administrativoFacade.generarMuestra(programa, tamanioMuestra);
 
-                it = lad.iterator();
+                    it = lad.iterator();
 
-                if (!lad.isEmpty()) {
-                    while (it.hasNext()) {
-                        Administrativo ad = (Administrativo) it.next();
-                        Persona per = ad.getPersonaId();
+                    if (!lad.isEmpty()) {
+                        while (it.hasNext()) {
+                            Administrativo ad = (Administrativo) it.next();
+                            Persona per = ad.getPersonaId();
 
-                        Muestrapersona mp = new Muestrapersona();
+                            Muestrapersona mp = new Muestrapersona();
 
-                        mp.setCedula(per.getId());
-                        mp.setNombre(per.getNombre());
-                        mp.setApellido(per.getApellido());
-                        mp.setPassword(per.getPassword());
-                        mp.setMail(per.getMail());
-                        mp.setMuestraId(m);
+                            mp.setCedula(per.getId());
+                            mp.setNombre(per.getNombre());
+                            mp.setApellido(per.getApellido());
+                            mp.setPassword(per.getPassword());
+                            mp.setMail(per.getMail());
+                            mp.setMuestraId(m);
 
-                        muestrapersonaFacade.create(mp);
+                            muestrapersonaFacade.create(mp);
 
-                        Muestraadministrativo mad = new Muestraadministrativo();
-                        mad.setCargo(ad.getCargo());
-                        mad.setMuestrapersonaId(mp);
+                            Muestraadministrativo mad = new Muestraadministrativo();
+                            mad.setCargo(ad.getCargo());
+                            mad.setMuestrapersonaId(mp);
 
-                        muestraadministrativoFacade.create(mad);
+                            muestraadministrativoFacade.create(mad);
+                        }
                     }
+
                 }
+
+
 
                 //********************************EMpleador
 
@@ -752,38 +756,40 @@ public class cpController extends HttpServlet {
 
                 if (N != 0.0) {
                     n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
-                }
 
-                tamanioMuestra = (int) Math.floor(n);
+                    tamanioMuestra = (int) Math.floor(n);
 
-                List<Empleador> lem = empleadorFacade.generarMuestra(programa, tamanioMuestra);
+                    List<Empleador> lem = empleadorFacade.generarMuestra(programa, tamanioMuestra);
 
-                it = lem.iterator();
+                    it = lem.iterator();
 
-                if (!lem.isEmpty()) {
-                    while (it.hasNext()) {
-                        Empleador em = (Empleador) it.next();
-                        Persona per = em.getPersonaId();
+                    if (!lem.isEmpty()) {
+                        while (it.hasNext()) {
+                            Empleador em = (Empleador) it.next();
+                            Persona per = em.getPersonaId();
 
-                        Muestrapersona mp = new Muestrapersona();
+                            Muestrapersona mp = new Muestrapersona();
 
-                        mp.setCedula(per.getId());
-                        mp.setNombre(per.getNombre());
-                        mp.setApellido(per.getApellido());
-                        mp.setPassword(per.getPassword());
-                        mp.setMail(per.getMail());
-                        mp.setMuestraId(m);
+                            mp.setCedula(per.getId());
+                            mp.setNombre(per.getNombre());
+                            mp.setApellido(per.getApellido());
+                            mp.setPassword(per.getPassword());
+                            mp.setMail(per.getMail());
+                            mp.setMuestraId(m);
 
-                        muestrapersonaFacade.create(mp);
+                            muestrapersonaFacade.create(mp);
 
-                        Muestraempleador mem = new Muestraempleador();
-                        mem.setEmpresa(em.getEmpresa());
-                        mem.setCargo(em.getCargo());
-                        mem.setMuestrapersonaId(mp);
+                            Muestraempleador mem = new Muestraempleador();
+                            mem.setEmpresa(em.getEmpresa());
+                            mem.setCargo(em.getCargo());
+                            mem.setMuestrapersonaId(mp);
 
-                        muestraempleadorFacade.create(mem);
+                            muestraempleadorFacade.create(mem);
+                        }
                     }
                 }
+
+
 
                 //********************************Agencia
 
@@ -793,37 +799,39 @@ public class cpController extends HttpServlet {
 
                 if (N != 0.0) {
                     n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
-                }
 
-                tamanioMuestra = (int) Math.floor(n);
+                    tamanioMuestra = (int) Math.floor(n);
 
-                List<Agenciagubernamental> lag = agenciagubernamentalFacade.generarMuestraSinPrograma(tamanioMuestra);
+                    List<Agenciagubernamental> lag = agenciagubernamentalFacade.generarMuestraSinPrograma(tamanioMuestra);
 
-                it = lag.iterator();
+                    it = lag.iterator();
 
-                if (!lag.isEmpty()) {
-                    while (it.hasNext()) {
-                        Agenciagubernamental ag = (Agenciagubernamental) it.next();
-                        Persona per = ag.getPersonaId();
+                    if (!lag.isEmpty()) {
+                        while (it.hasNext()) {
+                            Agenciagubernamental ag = (Agenciagubernamental) it.next();
+                            Persona per = ag.getPersonaId();
 
-                        Muestrapersona mp = new Muestrapersona();
+                            Muestrapersona mp = new Muestrapersona();
 
-                        mp.setCedula(per.getId());
-                        mp.setNombre(per.getNombre());
-                        mp.setApellido(per.getApellido());
-                        mp.setPassword(per.getPassword());
-                        mp.setMail(per.getMail());
-                        mp.setMuestraId(m);
+                            mp.setCedula(per.getId());
+                            mp.setNombre(per.getNombre());
+                            mp.setApellido(per.getApellido());
+                            mp.setPassword(per.getPassword());
+                            mp.setMail(per.getMail());
+                            mp.setMuestraId(m);
 
-                        muestrapersonaFacade.create(mp);
+                            muestrapersonaFacade.create(mp);
 
-                        Muestraagencia mag = new Muestraagencia();
-                        mag.setDescripcion(ag.getDescripcion());
-                        mag.setMuestrapersonaId(mp);
+                            Muestraagencia mag = new Muestraagencia();
+                            mag.setDescripcion(ag.getDescripcion());
+                            mag.setMuestrapersonaId(mp);
 
-                        muestraagenciaFacade.create(mag);
+                            muestraagenciaFacade.create(mag);
+                        }
                     }
                 }
+
+
 
             } else if (action.equals("selectorListMuestra")) {
                 String fuente = "";
@@ -1193,7 +1201,7 @@ public class cpController extends HttpServlet {
                 rd.forward(request, response);
             } else if (action.equals("preparedInfoNumerica")) {
 
-              
+
                 Instrumento ins = instrumentoFacade.find(3);
 
                 List li = ins.getIndicadorList();

@@ -29,7 +29,7 @@
                     <div class="control-group">
                         <label for="codigo"  class="control-label">C&oacute;digo</label>
                         <div class="controls">
-                            <input type="text" name="codigo" id="codigo" class="input-xlarge {required:true, positiveNumber:true}" value="${representante.id}"/>
+                            <input disabled="" type="text" name="codigo" id="codigo" class="input-xlarge uneditable-input {required:true, positiveNumber:true}" value="${representante.id}"/>
                         </div>
                     </div>
                     <div class="control-group">
