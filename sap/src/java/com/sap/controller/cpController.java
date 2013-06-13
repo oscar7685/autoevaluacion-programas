@@ -530,10 +530,7 @@ public class cpController extends HttpServlet {
 
 
                 double cociente = n / N;
-                System.out.println("n: "+n);
-                System.out.println("N: "+N);
-                System.out.println("cociente: "+cociente);
-
+                
                 for (int i = 3; i < 10; i++) {
 
                     int tamanioMuestra1 = 0;

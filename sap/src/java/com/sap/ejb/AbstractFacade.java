@@ -64,14 +64,12 @@ public abstract class AbstractFacade<T> {
     }
 
     public T findBySingle(String property, Object m) {
-        System.out.println("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name");
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name", entityClass).setParameter("name", m).getSingleResult();
     }
 
     public T findBySingle2(String property1, Object m1, String property2, Object m2) {
-        System.out.println("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property1 + " = :" + m1 + " and c." + property2 + " = :" + m2 + "");
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property1 + " = :name1 and c." + property2 + " = :name2", entityClass);
@@ -81,7 +79,6 @@ public abstract class AbstractFacade<T> {
     }
 
     public List<T> findByList(String property, Object m) {
-        System.out.println("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name");
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name", entityClass).setParameter("name", m).getResultList();
@@ -158,7 +155,6 @@ public abstract class AbstractFacade<T> {
     }
 
     public List<T> findByList2(String property1, Object m1, String property2, Object m2) {
-        System.out.println("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property1 + " = :" + m1 + " and c." + property2 + " = :" + m2 + "");
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property1 + " = :name1 and c." + property2 + " = :name2", entityClass);
@@ -185,7 +181,6 @@ public abstract class AbstractFacade<T> {
     }
 
     public List<T> findByDistinct(String property, Object m) {
-        System.out.println("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " <> :name");
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " <> :name", entityClass).setParameter("name", m).getResultList();

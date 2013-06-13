@@ -475,7 +475,6 @@ public class loginController extends HttpServlet {
                                         Iterator iter = procesos.iterator();
                                         while (iter.hasNext()) {
                                             Proceso p = (Proceso) iter.next();
-                                            System.out.println("Fecha: " + p.getFechainicio());
                                             if (p.getFechainicio().equals("En Configuración")) {
                                                 session.setAttribute("EstadoProceso", 1);
                                                 session.setAttribute("Proceso", p);
