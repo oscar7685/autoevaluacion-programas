@@ -34,8 +34,7 @@
                                         <c:out value="${item.modeloId.nombre}"/>
                                     </td>
                                     <td class="action span2">
-                                        <a href="#editarModelo" title="Editar"><i class="icon-edit"></i></a>
-                                        <a href="#entrarModelo" title="Entrar"><i class="icon-signin"></i></a>
+                                        <a href="#verProceso&${item.id}" title="Entrar"><i class="icon-signin"></i></a>
                                     </td>
                                 </tr>
                             </c:forEach>

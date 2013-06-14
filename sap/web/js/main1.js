@@ -52,7 +52,7 @@ $(function() {
     // setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
     // save selector strings to vars so we don't have to repeat it
     // must prefix paneClass with "body > " to target ONLY the outerLayout panes
-    myLayout.addCloseBtn("#west-closer", "west");
+    // myLayout.addCloseBtn("#west-closer", "west");
 
 
 
@@ -80,7 +80,7 @@ $(function() {
                 '<ul class="nav nav-list">  ' +
                 '<button id="west-closer" class="close">&laquo;</button>' +
                 '<li class="nav-header">Proceso de Autoevaluación</li>' +
-                '<li><a href="#preparedCrearProceso"><i class="icon-plus"></i> Crear Proceso</a></li>' +
+                // '<li><a href="#preparedCrearProceso"><i class="icon-plus"></i> Crear Proceso</a></li>' +
                 '<li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>' +
                 '</ul>' +
                 '</div>');
@@ -95,8 +95,8 @@ $(function() {
                 '<li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Ponderar Factores</a></li>' +
                 '<li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Ponderar Características</a></li>' +
                 '<li><a href="#listMuestra"><i class="icon-group"></i> Asignar Muestra</a></li>' +
-                '<li class="divider"></li>' +
-                '<li><a href="#iniciarProceso"><i class="icon-play-sign"></i> Ejecutar proceso</a></li>' +
+                //  '<li class="divider"></li>' +
+                //'<li><a href="#iniciarProceso"><i class="icon-play-sign"></i> Ejecutar proceso</a></li>' +
                 '</ul>' +
                 '</div>');
     };
@@ -110,14 +110,35 @@ $(function() {
                 '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
                 '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>' +
                 ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
-                ' < li > < a href = "#listMuestra" > < i class = "icon-file-alt" > < /i> Información Numérica</a > < /li>' +
-                ' < li > < a href = "#listMuestra" > < i class = "icon-list-ol" > < /i> Información Documental</a > < /li>' +
-                ' < li class = "nav-header" > Estado del proceso < /li>' +
-                ' < li > < a  id = "informeEncuesta"  href = "<%=request.getContextPath()%>/#estadoProceso" > < i class = "icon-bar-chart" > < /i> Estado del proceso</a > < /li>' +
+                ' <li><a href = "#listMuestra"><i class = "icon-file-alt"></i> Información Numérica</a></li>' +
+                ' <li><a href = "#listMuestra"><i class = "icon-list-ol"></i> Información Documental</a></li>' +
+                ' <li class = "nav-header"> Estado del proceso </li>' +
+                ' <li><a  id = "informeEncuesta"  href = "<%=request.getContextPath()%>/#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
                 '</ul>' +
                 '</div>'
                 );
     };
+    var menuProceso3 = function() {
+        $("#menu0").html('<div align="center" class="alert alert-error"><i class="icon-play-sign"></i> Proceso finalizado</div>' +
+                '<div id="menu" style="padding: 8px 0pt;" class="well">' +
+                '<ul class="nav nav-list">' +
+                '<button id="west-closer" class="close">&laquo;</button>' +
+                '<li class="nav-header">Proceso de Autoevaluación</li>' +
+                '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
+                '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
+                '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>' +
+                ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
+                ' <li><a href = "#listMuestra"><i class = "icon-file-alt"></i> Información Numérica</a></li>' +
+                ' <li><a href = "#listMuestra"><i class = "icon-list-ol"></i> Información Documental</a></li>' +
+                ' <li><a  id = "informeEncuesta"  href = "<%=request.getContextPath()%>/#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
+                ' <li class="divider"></li>' +
+                '<li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>' +
+                '</ul>' +
+                '</div>'
+                );
+    };
+
+
 
 
     $(window).hashchange(function() {
@@ -145,9 +166,37 @@ $(function() {
                     );
                 } //fin success
             }); //fin del $.ajax
-        } else if (hash === "#crearProceso") {
-            var url3 = "/sap/" + hash;
-            url3 = url3.replace('#', "controladorCP?action=crearProceso") + "CC";
+        } else if (hash.indexOf("#finalizarPro") !== -1) {
+            $('#modalCc2').modal();
+
+            var cual = hash.split("&");
+            hash = cual[0];
+            var url3 = "/sap/controladorCC?action=";
+            url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
+
+            $("div.ui-layout-center").empty();
+            $.ajax({
+                type: "POST",
+                url: url3,
+                success: function(data)
+                {
+
+                    menuProceso2();
+                    myLayout.addCloseBtn("#west-closer", "west");
+                    actualizaEnlaces();
+                    $("#contenido").show(200, function() {
+                        $(".page_loading").hide();
+                    });
+
+                } //fin success
+            }); //fin del $.ajax
+
+            /* */
+        } else if (hash.indexOf("#verProceso") !== -1) {
+            var cual = hash.split("&");
+            hash = cual[0];
+            var url3 = "/sap/controladorCP?action=";
+            url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
             $("div.ui-layout-center").empty();
             $.ajax({
                 type: "POST",
@@ -155,12 +204,13 @@ $(function() {
                 success: function(data)
                 {
                     $("#contenido").append(data);
-                    menuProceso1();
+                    menuProceso3();
                     myLayout.addCloseBtn("#west-closer", "west");
                     actualizaEnlaces();
                     $("#contenido").show(200, function() {
                         $(".page_loading").hide();
                     });
+                    location = "/sap/#inicio";
 
                 } //fin success
             }); //fin del $.ajax

@@ -484,9 +484,9 @@ public class loginController extends HttpServlet {
                                                 session.setAttribute("Proceso", p);
                                                 session.setAttribute("Modelo", p.getModeloId());
                                             } else {
-                                                session.setAttribute("EstadoProceso", 3);
-                                                session.setAttribute("Proceso", p);
-                                                session.setAttribute("Modelo", p.getModeloId());
+                                                session.setAttribute("EstadoProceso", 0);
+                                              //  session.setAttribute("Proceso", p);
+                                                //session.setAttribute("Modelo", p.getModeloId());
                                             }
                                         }
                                     } else {

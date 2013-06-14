@@ -175,14 +175,14 @@
                             </thead>
                             <tbody>
                                 <c:if test="${EstadoProceso == 2}">
-                                    
+
                                     <c:forEach items="${listPoblacion}" var="item" varStatus="iter">
-                                        
+
                                         <c:forEach items="${listMuestraSeleccionada}" var="row" >
-                                            
-                                         
-                                           <c:if test="${item.personaId.id == row.muestrapersonaId.cedula}">
-                                               
+
+
+                                            <c:if test="${item.personaId.id == row.muestrapersonaId.cedula}">
+
                                                 <c:set var="varaux" value="0"/>
                                                 <c:forEach items="${listEncabezado}" var="item3" >
                                                     <c:if test="${item.personaId.id == item3.muestrapersonaId.cedula}">
@@ -269,16 +269,20 @@
                         <c:if test="${selectorFuente != 'Docente' && selectorFuente != 'Estudiante' }">
                             <a href="#preparedEvaluador" class="btn btn-large btn-primary llamador"><i class="icon-plus"> </i><i class="icon-user"></i> Registrar Evaluador</a>
                         </c:if>
-                        <c:if test="${selectorFuente == 'Estudiante' && Semestre != '--'}">
-                            <a id="bpreparedEditarMuestra" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
+                        <c:if test="${EstadoProceso == 2}">
+                            <c:if test="${selectorFuente == 'Estudiante' && Semestre != '--'}">
+                                <a id="bpreparedEditarMuestra" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
+                            </c:if>
                         </c:if>
                     </div>
                 </c:when>
                 <c:otherwise>
                     No  se ha generado la muestra para la fuente seleccionada.
                     <br><br>
-                    <c:if test="${selectorFuente != 'Docente' && selectorFuente != 'Estudiante' }">
-                        <a href="#preparedEvaluador" class="btn btn-large btn-primary llamador"><i class="icon-plus"> </i><i class="icon-user"></i> Registrar Evaluador</a>
+                    <c:if test="${EstadoProceso == 2}">
+                        <c:if test="${selectorFuente != 'Docente' && selectorFuente != 'Estudiante' }">
+                            <a href="#preparedEvaluador" class="btn btn-large btn-primary llamador"><i class="icon-plus"> </i><i class="icon-user"></i> Registrar Evaluador</a>
+                        </c:if>
                     </c:if>
                 </c:otherwise>
             </c:choose>
