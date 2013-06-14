@@ -110,7 +110,23 @@ public class formController2 extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
 
+            } else if (action.equals("finalizarProCC")) {
+
+                String idM = request.getParameter("id");
+
+                Proceso p = procesoFacade.find(Integer.parseInt(idM));
+
+
+                java.util.Date date = new java.util.Date();
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                String fecha = sdf.format(date);
+                p.setFechacierre(fecha);
+                procesoFacade.edit(p);
+
+
             } else if (action.equals("ejecutarProCC")) {
+                
+                System.out.println("ejecutando");
 
                 String idM = request.getParameter("id");
 

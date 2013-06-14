@@ -7,8 +7,15 @@
                     type: 'POST',
                     url: "/sap/controladorCP?action=crearProceso",
                     data: $("#formCrearProceso").serialize(),
-                    success: function() {
-                        location = "/sap/#crearProceso";
+                    success: function(data) {
+                        $("#dancing-dots-text").hide();
+                        if (data == 1) {
+                            location = "/sap/#controlPanel";
+                        }
+                        if (data == 0) {
+                            $('#modalCc3').modal();
+                              location = "/sap/#controlPanel";
+                        }
                     } //fin success
                 }); //fin $.ajax    
             }
@@ -24,7 +31,11 @@
                     <div class="control-group">
                         <label for="programa"  class="control-label">Programa</label>
                         <div class="controls">
-                            <input type="text" disabled="disable" name="programa" id="programa" class="input-xlarge {required:true}" value="${Programa.getNombre()}"/>
+                            <select id="programa" name="programa" class="input-xlarge">
+                                <c:forEach items="${listPrograma}" var="item" >
+                                    <option value="${item.id}">${item.nombre}</option>
+                                </c:forEach>
+                            </select>   
                         </div>
                     </div>
                     <div class="control-group">

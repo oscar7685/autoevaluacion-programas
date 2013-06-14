@@ -31,6 +31,7 @@ import com.sap.ejb.NumericadocumentalFacade;
 import com.sap.ejb.PonderacioncaracteristicaFacade;
 import com.sap.ejb.PonderacionfactorFacade;
 import com.sap.ejb.ProcesoFacade;
+import com.sap.ejb.ProgramaFacade;
 import com.sap.entity.Administrativo;
 import com.sap.entity.Agenciagubernamental;
 import com.sap.entity.Caracteristica;
@@ -80,6 +81,8 @@ import javax.servlet.http.HttpSession;
  */
 public class cpController extends HttpServlet {
 
+    @EJB
+    private ProgramaFacade programaFacade;
     @EJB
     private DirectorprogramaFacade directorprogramaFacade;
     @EJB
@@ -170,11 +173,22 @@ public class cpController extends HttpServlet {
                 rd.forward(request, response);
 
             } else if (action.equals("listarProceso")) {
-                sesion.setAttribute("listProceso", procesoFacade.findAll());
+                sesion.setAttribute("listProceso", procesoFacade.findByList("programaId", sesion.getAttribute("Programa")));
                 String url = "/WEB-INF/vista/comitePrograma/proceso/listar.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
 
+            } else if (action.equals("verProceso")) {
+               
+                int id = Integer.parseInt(request.getParameter("id"));
+                
+                Proceso p = procesoFacade.find(id);
+                
+                System.out.println("proceso: " + p);
+                sesion.setAttribute("Proceso", p);
+                sesion.setAttribute("Modelo", p.getModeloId());
+                sesion.setAttribute("EstadoProceso", 3);
+                
             } else if (action.equals("detalleProceso")) {
                 Proceso p = (Proceso) sesion.getAttribute("Proceso");
                 System.out.println("Proceso: " + proceso);
@@ -187,29 +201,53 @@ public class cpController extends HttpServlet {
 
             } else if (action.equals("preparedCrearProceso")) {
                 sesion.setAttribute("listModelo", modeloFacade.findAll());
+                sesion.setAttribute("listPrograma", programaFacade.findAll());
                 String url = "/WEB-INF/vista/comitePrograma/proceso/crear.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("crearProceso")) {
+
+
                 Proceso p = new Proceso();
 
                 String descripcion = (String) request.getParameter("descripcion");
 
+                Integer id1 = Integer.valueOf(request.getParameter("programa"));
+                Programa p0 = programaFacade.find(id1);
 
                 Integer id = Integer.valueOf(request.getParameter("modelo"));
                 Modelo m = modeloFacade.find(id);
 
-                p.setProgramaId(programa);
-                p.setDescripcion(descripcion);
-                p.setFechainicio("En Configuración");
-                p.setModeloId(m);
-                p.setFechacierre("--");
+                List l = procesoFacade.findByList("programaId", p0);
+                Iterator i = l.iterator();
 
-                sesion.setAttribute("EstadoProceso", 1);
-                sesion.setAttribute("Proceso", p);
-                sesion.setAttribute("Modelo", m);
+                int aux = 0;
 
-                procesoFacade.create(p);
+                while (i.hasNext()) {
+                    Proceso pro = (Proceso) i.next();
+                    if (pro.getFechacierre().equals("--")) {
+                        aux = 1;
+                    }
+                }
+
+                if (aux == 0) {
+
+                    p.setProgramaId(p0);
+                    p.setDescripcion(descripcion);
+                    p.setFechainicio("En Configuración");
+                    p.setModeloId(m);
+                    p.setFechacierre("--");
+
+                    sesion.setAttribute("EstadoProceso", 1);
+                    sesion.setAttribute("Proceso", p);
+                    sesion.setAttribute("Modelo", m);
+
+                    procesoFacade.create(p);
+
+                    out.println(1);
+                } else {
+                    out.println(0);
+                }
             } else if (action.equals("preparedPonderarFactor")) {
                 sesion.setAttribute("listFactor", factorFacade.findByModelo((Modelo) sesion.getAttribute("Modelo")));
                 String url = "/WEB-INF/vista/comitePrograma/ponderacion/ponderarFactor.jsp";
@@ -530,7 +568,7 @@ public class cpController extends HttpServlet {
 
 
                 double cociente = n / N;
-                
+
                 for (int i = 3; i < 10; i++) {
 
                     int tamanioMuestra1 = 0;
@@ -591,7 +629,7 @@ public class cpController extends HttpServlet {
                     List<Docente> ld = docenteFacade.generarMuestra(programa, tamanioMuestra);
 
 
-                     it = ld.iterator();
+                    it = ld.iterator();
 
                     if (!ld.isEmpty()) {
                         while (it.hasNext()) {

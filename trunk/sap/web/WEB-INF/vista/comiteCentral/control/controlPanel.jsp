@@ -55,7 +55,7 @@
                                             <span class="label label-success"><i class="icon-play-sign"></i> En Ejecución</span>
                                         </td>
                                         <td>
-                                            <i class="icon-flag-checkered"></i><a href=""> Finalizar Proceso</a>
+                                            <i class="icon-flag-checkered"></i><a href="#finalizarPro&${row.id}"> Finalizar Proceso</a>
                                         </td>
                                     </tr>
                                 </c:if>
@@ -67,6 +67,8 @@
                     No  se han encontrado procesos activos.
                 </c:otherwise>
             </c:choose>
+            <br>
+            <a href="#preparedCrearProceso" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Crear nuevo proceso</a>
         </div>
     </div>
 </div>

@@ -1,4 +1,7 @@
 $(function() {
+    var urlx;
+
+
     location = "/sap/#inicio";
     $(document).ajaxStart(function() {
         $("div.ui-layout-center").append("<div id='contenido'></div>");
@@ -72,6 +75,8 @@ $(function() {
                 '<li class="nav-header">Coordinadores</li>' +
                 '<li><a href="#crearCoordinador"><i class="icon-plus"></i> Crear Coordinador</a></li>' +
                 '<li><a href="#listarCoordinadores"><i class="icon-reorder"></i> Listar Coordinadores</a></li>' +
+                '<li class="divider"></li>' +
+                '<li><a href="#controlPanel"><i class="icon-th"></i> Panel de Control</a></li>' +
                 '</ul>');
     };
     var menuFactores = function() {
@@ -105,22 +110,39 @@ $(function() {
             });//fin post
 
         } else if (hash.indexOf("#ejecutarPro") !== -1) {
+            $('#modalCc1').modal();
+
             var cual = hash.split("&");
             hash = cual[0];
             var url3 = "/sap/controladorCC?action=";
             url3 = url3.concat(cual[0].substring(1), "CC&id=", cual[1]);
+
+            urlx = url3;
+
+        } else if (hash.indexOf("#finalizarPro") !== -1) {
+            $('#modalCc2').modal();
+
+            var cual = hash.split("&");
+            hash = cual[0];
+            var url3 = "/sap/controladorCC?action=";
+            url3 = url3.concat(cual[0].substring(1), "CC&id=", cual[1]);
+
+            urlx = url3;
+
+            /* */
+        } else if (hash === "#preparedCrearProceso") {
+            var url3 = "/sap/" + hash;
+            url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
             $.ajax({
                 type: "POST",
                 url: url3,
                 success: function(data)
                 {
-                    if (data == 1) {
-                        location = "#controlPanel";
-                    } else {
-                        $('#modalCp2').modal();
-                        location = "#controlPanel";
-                    }
+                    $("#contenido").append(data);
+                    $("#contenido").show(200, function() {
+                        $("#dancing-dots-text").hide();
+                    });
 
                 } //fin success
             }); //fin del $.ajax
@@ -257,5 +279,37 @@ $(function() {
 
         }
     });
+    $('#modalCc1b1').click(function() {
 
+        $("div.ui-layout-center").empty();
+        $.ajax({
+            type: "POST",
+            url: urlx,
+            success: function(data)
+            {
+                if (data == 1) {
+                    location = "#controlPanel";
+                } else {
+                    $('#modalCp2').modal();
+                    location = "#controlPanel";
+                }
+
+            } //fin success
+        }); //fin del $.ajax
+    });
+
+    $('#modalCcb1').click(function() {
+
+        $("div.ui-layout-center").empty();
+        $.ajax({
+            type: "POST",
+            url: urlx,
+            success: function(data)
+            {
+
+                location = "#controlPanel";
+
+            } //fin success
+        }); //fin del $.ajax
+    });
 });

@@ -164,3 +164,48 @@
         <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
     </div>
 </div>
+
+<div class="modal hide fade" id="modalCc1">
+    <div class="modal-header">
+        <a data-dismiss="modal" class="close">×</a>
+        <h3>Atención!</h3>
+    </div>
+    <div class="modal-body">
+        <h4>Ejecutar Proceso de Autoevaluación.</h4>
+        <br>
+        <p style="text-align: justify">Esta seguro que desea ejecutar el Proceso?.</p>
+    </div>
+    <div class="modal-footer">
+        <a id="modalCc1b2" class="btn btn-secundary" data-dismiss="modal" href="#">Cancelar</a>
+        <a id="modalCc1b1" class="btn btn-primary" data-dismiss="modal" href="#">Ejecutar Proceso</a>
+    </div>
+</div>
+<div class="modal hide fade" id="modalCc2">
+    <div class="modal-header">
+        <a data-dismiss="modal" class="close">×</a>
+        <h3>Atención!</h3>
+    </div>
+    <div class="modal-body">
+        <h4>Finalizar Proceso de Autoevaluación.</h4>
+        <br>
+        <p style="text-align: justify">Esta seguro que desea finalizar el Proceso?.</p>
+    </div>
+    <div class="modal-footer">
+        <a id="modalCcb2" class="btn btn-secundary" data-dismiss="modal" href="#">Cancelar</a>
+        <a id="modalCcb1" class="btn btn-primary" data-dismiss="modal" href="#">Finalizar Proceso</a>
+    </div>
+</div>
+<div class="modal hide fade" id="modalCc3">
+    <div class="modal-header">
+        <a data-dismiss="modal" class="close">×</a>
+        <h3>Atención!</h3>
+    </div>
+    <div class="modal-body">
+        <h4>Crear Proceso de Autoevaluación.</h4>
+        <br>
+        <p style="text-align: justify">El programa seleccionado ya tiene un proceso activo.</p>
+    </div>
+    <div class="modal-footer">
+        <a id="modalCb2" class="btn btn-secundary" data-dismiss="modal" href="#">Cerrar</a>
+    </div>
+</div>
