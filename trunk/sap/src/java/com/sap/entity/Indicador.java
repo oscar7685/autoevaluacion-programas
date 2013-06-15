@@ -54,7 +54,7 @@ public class Indicador implements Serializable {
     private String codigo;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 500)
     @Column(name = "nombre")
     private String nombre;
     @ManyToMany(mappedBy = "indicadorList")
