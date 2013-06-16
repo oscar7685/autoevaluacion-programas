@@ -1583,6 +1583,12 @@ public class cpController extends HttpServlet {
                 String url = "/WEB-INF/vista/comitePrograma/proceso/informe/matrizCaracteristicas.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
+            } else {
+                if (action.equals("contrasena")) {
+                    String url = "/WEB-INF/vista/comitePrograma/contrasena.jsp";
+                    RequestDispatcher rd = request.getRequestDispatcher(url);
+                    rd.forward(request, response);
+                }
             }
         } finally {
             out.close();
