@@ -56,21 +56,12 @@ $(function() {
 
 
 
-    $(".nav-collapse ul.nav li a").click(function() {
-        $(".nav li").removeClass("active");
-        $(this).parent().siblings().removeClass("active");
-        $(this).parent().addClass("active");
-        location = $(this).attr("href");
-    });
 
-    var actualizaEnlaces = function() {
-        $("ul.nav-list li a").click(function() {
-            $(".nav li").removeClass("active");
-            $(this).parent().addClass("active");
-            location = $(this).attr("href");
-        });
+    var actualizaEnlaces = function(hash) {
+        $("li").removeClass("active");
+        $("a[href='" + hash + "']").parent().addClass("active");
     };
-    actualizaEnlaces();
+
 
     var menuProceso0 = function() {
         $("#menu0").html('<div  align="center" class="alert alert-block">' +
@@ -113,7 +104,7 @@ $(function() {
                 ' <li><a href = "#listMuestra"><i class = "icon-file-alt"></i> Información Numérica</a></li>' +
                 ' <li><a href = "#listMuestra"><i class = "icon-list-ol"></i> Información Documental</a></li>' +
                 ' <li class = "nav-header"> Estado del proceso </li>' +
-                ' <li><a  id = "informeEncuesta"  href = "<%=request.getContextPath()%>/#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
+                ' <li><a  id = "informeEncuesta"  href = "#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
                 '</ul>' +
                 '</div>'
                 );
@@ -164,6 +155,7 @@ $(function() {
                         $(".page_loading").hide();
                     }
                     );
+                    actualizaEnlaces(hash);
                 } //fin success
             }); //fin del $.ajax
         } else if (hash.indexOf("#finalizarPro") !== -1) {
@@ -255,7 +247,7 @@ $(function() {
                     $("#contenido").show(200, function() {
                         $(".page_loading").hide();
                     });
-
+                    actualizaEnlaces(hash);
                 } //fin success
             }); //fin del $.ajax
         } else if (hash === "#preparedEvaluador") {
@@ -273,6 +265,7 @@ $(function() {
 
                 } //fin success
             }); //fin del $.ajax
+            actualizaEnlaces(hash);
         }
         else if (hash === "#preparedPonderarFactor") {
             var url3 = "/sap/" + hash;
@@ -294,6 +287,7 @@ $(function() {
                     }, 500);
 
                     $("div.ui-layout-center").affix('refresh');
+                    actualizaEnlaces(hash);
                 }
                 //fin success
             }); //fin del $.ajax
@@ -312,9 +306,28 @@ $(function() {
                         $('#modalCp3').modal();
                         location = "/sap/#listPonderacionFactor";
                     }
+                    actualizaEnlaces(hash);
                 }
                 //fin success
             }); //fin del $.ajax
+        } else {
+            if (hash === "#contrasena") {
+                var url3 = "/sap/" + hash;
+                url3 = url3.replace('#', "controladorCP?action=");
+                $("div.ui-layout-center").empty();
+                $.ajax({
+                    type: "POST",
+                    url: url3,
+                    success: function(data)
+                    {
+                        $("#contenido").append(data);
+                        setTimeout(function() {
+                            $(".page_loading").hide();
+                        }, 200);
+                        actualizaEnlaces(hash);
+                    } //fin success
+                }); //fin del $.ajax
+            }
         }
     });
 

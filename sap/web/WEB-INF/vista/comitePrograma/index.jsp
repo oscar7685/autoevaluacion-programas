@@ -51,7 +51,7 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a href="#">Perfil</a></li>
-                                        <li><a href="#">Cambiar Contrase&ntilde;a</a></li>
+                                        <li><a href="#contrasena">Cambiar Contrase&ntilde;a</a></li>
                                         <li class="divider"></li>
                                         <li><a href="<%=request.getContextPath()%>/#CerrarSesion">Cerrar Sesion</a></li>
                                     </ul>
@@ -129,7 +129,7 @@
                                 <li><a href="#preparedInfoNumerica"><i class="icon-list-ol"></i> Información Numérica</a></li>
                                 <li><a href="#preparedInfoDocumental"><i class="icon-file-alt"></i> Información Documental</a></li>
                                 <li class="nav-header">Estado del proceso</li>
-                                <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#estadoProceso"><i class="icon-bar-chart"></i> Estado del proceso</a></li>
+                                <li><a  id="informeEncuesta"  href="#estadoProceso"><i class="icon-bar-chart"></i> Estado del proceso</a></li>
                             </ul>
                         </div>
                     </c:when>
