@@ -1,7 +1,6 @@
 hacer editar muestra para cada una de las fuentes
 terminar la parte de guardar informacion numerica y documental
 terminar los informes
-poner limitacion a internet explorer 7
-hacer el cambiar contraseña
+hacer el cambiar contraseï¿½a
 crear y finalizar proceso desde el perfil comite central
 poner limitaciones a los diferentes pasos de un proceso

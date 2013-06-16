@@ -45,11 +45,8 @@
 
     </head>
     <body style="padding-top: 0px;">
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
 
-        <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
+
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container-fluid">
@@ -66,10 +63,10 @@
                             <li ><a href="#"><i class="icon-info-sign"></i> Acerca de</a></li>
                             <li><a href="#ingresar"><i class="icon-user"></i>Ingresar</a></li>
                         </ul>
-                </div>
+                    </div>
                     <!--/.nav-collapse -->
+                </div>
             </div>
-        </div>
         </div>
         <header class="inicio" style="padding-top: 60px;">
             <div class="header-content home">
@@ -113,32 +110,6 @@
 
             <!-- Example row of columns -->
             <div class="row inicio" style="vertical-align: middle">
-                <%-- <div class="span4">
-                     <h2>SAP-UdeC 1.0</h2>
-                     <p>La Universidad de Cartagena cuenta con el Sistema de Autoevaluación de Programas SAP-UdeC, el cual apoya los procesos de autoevaluación con fines de acreditación, renovaci&oacute;n de registro calificado y m&aacute;s.</p>
-                     <p><a class="btn" href="#">Ver m&aacute;s</a></p>
-                 </div>
-                 <div class="span4">
-                     <br/>
-                     <p><a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/LogoU.png"></a></p>
-
-                </div>
-                <div class="span4">
-                    <br/>
-                    <p><a title="Oficina de autoevaluaci&oacute;n" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/selloAcreditacion.png"></a></p>
-                    
-                </div>
-                <div class="span1"></div>
-                <div class="span4">
-                    <br/>
-                    <p><a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img  src="<%=request.getContextPath()%>/img/LOGOUNICARTAGENACOLOR.png"></a></p>
-                </div>
-                <div class="span2"></div>
-                <div class="span4">
-                    <br/>
-                    <p><a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/sello2.png"></a></p>
-                </div>
-                <div class="span1"></div>--%>
                 <div class="span2"></div>
                 <div class="span5" style="margin-left: 0px">
                     <br/>
@@ -162,7 +133,7 @@
         <script src="js/jquery.metadata.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/jquery.ba-hashchange.min.js"></script>
-        <script src="js/main.js"></script>
         <script type='text/javascript' src='js/slider.js'></script>
+        <script src="js/main.js"></script>
     </body>
 </html>
