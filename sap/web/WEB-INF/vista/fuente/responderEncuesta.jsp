@@ -158,20 +158,16 @@
                     <c:when test="${respuestas == null}">
                         <c:forEach items="${encuesta.preguntaList}" var="pregunta" varStatus="status">
                             <c:choose>
-                                <c:when test="${pregunta.getTipo() != '1'}">
+                                <c:when test="${pregunta.getTipo() == '2'}">
                                     <tr>
                                         <td>${status.count}</td>   
-                                        <td><p>${pregunta[1]}</p></td>
+                                        <td><p>${pregunta.pregunta}</p></td>
                                         <td>
-                                            <select id="pregunta${pregunta[0]}" name="pregunta${pregunta[0]}" class="span1 {required:true}">
-                                                <option></option>  
-                                                <option value="Si">Si</option>  
-                                                <option value="No">No</option>  
-                                            </select>
+                                            <textarea name="pregunta${pregunta.getId()}" id="pregunta${pregunta.getId()}" cols="8" rows="2" class="required"></textarea>
                                         </td>
                                     </tr>
                                 </c:when>
-                                <c:otherwise>
+                                <c:when test="${pregunta.getTipo() == '1'}">
                                     <tr>
                                         <td>${status.count}</td>   
                                         <td><p>${pregunta.getPregunta()}</p></td>
@@ -187,7 +183,7 @@
                                             </select>
                                         </td>
                                     </tr>
-                                </c:otherwise>    
+                                </c:when>    
                             </c:choose>
                         </c:forEach>                   
                     </c:when>
@@ -199,25 +195,7 @@
                                         <td>${status.count}</td>   
                                         <td><p>${resultado.preguntaId.pregunta}</p></td>
                                         <td>
-                                            <select id="pregunta${resultado.preguntaId.id}" name="pregunta${resultado.preguntaId.id}" class="span1 {required:true}">
-                                                <option></option>  
-                                                <c:choose>
-                                                    <c:when test="${resultado.respuesta == 'Si'}">
-                                                        <option selected="selected" value="Si">Si</option>      
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="Si">Si</option>      
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${resultado.respuesta == 'No'}">
-                                                        <option selected="selected" value="No">No</option>      
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="No">No</option>      
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </select>
+                                          <textarea name="pregunta${pregunta.getId()}" id="pregunta${pregunta.getId()}" cols="8" rows="2">${resultado.getRespuestaAbierta()}</textarea>
                                         </td>
                                     </tr>
                                 </c:when>

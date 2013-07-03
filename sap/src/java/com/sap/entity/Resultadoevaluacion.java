@@ -38,9 +38,12 @@ public class Resultadoevaluacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 1000)
+    @Size(max = 45)
     @Column(name = "respuesta")
     private String respuesta;
+    @Size(max = 1000)
+    @Column(name = "respuestaAbierta")
+    private String respuestaAbierta;
     @JoinColumn(name = "pregunta_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Pregunta preguntaId;
@@ -79,6 +82,14 @@ public class Resultadoevaluacion implements Serializable {
         this.preguntaId = preguntaId;
     }
 
+    public String getRespuestaAbierta() {
+        return respuestaAbierta;
+    }
+
+    public void setRespuestaAbierta(String respuestaAbierta) {
+        this.respuestaAbierta = respuestaAbierta;
+    }
+    
     public Encabezado getEncabezadoId() {
         return encabezadoId;
     }

@@ -17,6 +17,30 @@
             $("li a#total").html("<strong>Total Ponderacion: " + suma + "</strong>");
 
         });
+        $('a[href^=#PonderacionFactores]').click(function() {
+
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
+                    && location.hostname == this.hostname) {
+
+                var $target2 = $(this.hash);
+
+                $target2 = $target2.length && $target2 || $('[name=' + this.hash.slice(1) + ']');
+                if ($target2.length) {
+                    var targetOffset = $target2.offset().top;
+                    var actual = $('div.ui-layout-center').scrollTop();
+                    if (actual != 0) {
+                        $('div.ui-layout-center').animate({scrollTop: actual + targetOffset - 120}, 500);
+                    } else {
+                        $('div.ui-layout-center').animate({scrollTop: targetOffset - 118}, 500);
+                    }
+
+
+                    return false;
+                }
+
+            }
+        });
+        
         $("#formPonderarFactor").validate({
             errorElement: "em"
                     ,
@@ -70,7 +94,7 @@
 <div class="subnav span10" style="position: fixed;">
     <ul class="nav nav-pills">
         <li><a href="#PonderacionFactores"><strong>Ponderación de Factores</strong></a></li>
-            <c:forEach items="${factores.rowsByIndex}" var="row" varStatus="iter">
+            <c:forEach items="${listFactor}" var="row" varStatus="iter">
                 <c:choose>
                     <c:when test="${((iter.index) % 5 == 0) || (iter.index == 0)}">
                         <c:choose>

@@ -178,7 +178,7 @@
 
                                     <c:forEach items="${listPoblacion}" var="item" varStatus="iter">
 
-                                        <c:forEach items="${listMuestraSeleccionada}" var="row" >
+                                        <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter55">
 
 
                                             <c:if test="${item.personaId.id == row.muestrapersonaId.cedula}">
@@ -202,7 +202,6 @@
                                                                     <c:out value="${row.muestrapersonaId.password}"/>
                                                                 </td>
                                                             </tr>
-                                                            <c:set var="contador" value="${iter.index}"></c:set>
                                                         </c:if>
                                                         <c:if test="${item3.estado.equals('guardada')}">
                                                             <tr class="guardadoC">
@@ -219,7 +218,6 @@
                                                                     <c:out value="${row.muestrapersonaId.password}"/>
                                                                 </td>
                                                             </tr>
-                                                            <c:set var="contador" value="${iter.index}"></c:set>
                                                         </c:if>                   
                                                     </c:if>
                                                 </c:forEach>
@@ -238,14 +236,15 @@
                                                             <c:out value="${row.muestrapersonaId.password}"/>
                                                         </td>
                                                     </tr>
-                                                    <c:set var="contador" value="${iter.index}"></c:set>
+
                                                 </c:if>
                                             </c:if>
+                                            <c:set var="contador" value="${iter55.index}"></c:set>
                                         </c:forEach>
                                     </c:forEach> 
                                 </c:if>
                                 <c:if test="${EstadoProceso != 2}">
-                                    <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter">
+                                    <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter44">
                                         <tr>
                                             <td>   
                                                 <c:out value="${row.muestrapersonaId.cedula}"/>
@@ -260,7 +259,7 @@
                                                 <c:out value="${row.muestrapersonaId.password}"/>
                                             </td>
                                         </tr>
-                                        <c:set var="contador" value="${iter.index}"></c:set>
+                                        <c:set var="contador" value="${iter44.index}"></c:set>
                                     </c:forEach>
                                 </c:if>
                             </tbody>

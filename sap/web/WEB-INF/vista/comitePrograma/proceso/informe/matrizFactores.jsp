@@ -190,7 +190,6 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <br/>
             <legend>Matriz de Calidad de Factores</legend>
             <ul class="breadcrumb">
                 <li class="active">Matriz de Calidad de Factores  <span class="divider">/</span></li>
@@ -222,7 +221,7 @@
                                             </td>
 
                                             <td style="text-align: left">   
-                                                <a href="#detalleFactor&${factor.getCodigo()}" data="${factor.nombre}">${factor.nombre}</a>
+                                                <a href="#detalleFactor&${factor.getId()}" data="${factor.nombre}">${factor.nombre}</a>
                                             </td>
                                             <td>   
                                                 <c:out value="${ponderacionesF.get(indice2).ponderacion}"/>

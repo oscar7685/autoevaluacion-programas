@@ -46,7 +46,7 @@
                                 <li ><a href="#"><i class="icon-info-sign"></i> Acerca de</a></li>
                                 <li class="dropdown loggining"> 
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <i class="icon-user"></i> ${nombre}
+                                        <i class="icon-user"></i> ${representante.nombre}
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu">
@@ -111,8 +111,6 @@
                                 <li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Ponderar Factores</a></li>
                                 <li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Ponderar Características</a></li>
                                 <li><a href="#listMuestra"><i class="icon-group"></i> Asignar Muestra</a></li>
-                                    <%--   <li class="divider"></li>
-                                       <li><a href="#iniciarProceso"><i class="icon-play-sign"></i> Ejecutar proceso</a></li>--%>
                             </ul>
                         </div>
                     </c:when>
