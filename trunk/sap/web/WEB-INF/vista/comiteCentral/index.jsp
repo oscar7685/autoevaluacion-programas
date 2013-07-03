@@ -128,11 +128,6 @@
                     </ul>
                 </div>
             </div>
-            <div align="center" style="bottom: 10px; position: absolute; margin-left: 10px">
-                <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank">
-                    <img src="<%=request.getContextPath()%>/img/LogoU.png" style="width: 220px;"></img>
-                </a>
-            </div>
         </div><!--/West-->
 
 

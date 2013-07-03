@@ -46,7 +46,7 @@ public class Ponderacionfactor implements Serializable {
     private double ponderacion;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 500)
+    @Size(min = 1, max = 1000)
     @Column(name = "justificacion")
     private String justificacion;
     @JoinColumn(name = "factor_id", referencedColumnName = "id")

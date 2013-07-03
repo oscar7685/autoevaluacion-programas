@@ -467,7 +467,7 @@ public class loginController extends HttpServlet {
                                 if (r != null && r.getPassword().equals(pw) && r.getRol().equals("Comite programa")) {
                                     out.println(0);
                                     session.setAttribute("tipoLogin", "Comite programa");
-                                    session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
+                                    session.setAttribute("representante", r);
                                     session.setAttribute("Programa", r.getProgramaId());
 
                                     List procesos = (List) procesoFacade.findByPrograma(r.getProgramaId());

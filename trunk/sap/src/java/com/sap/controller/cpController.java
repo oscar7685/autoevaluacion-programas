@@ -30,8 +30,10 @@ import com.sap.ejb.MuestrapersonaFacade;
 import com.sap.ejb.NumericadocumentalFacade;
 import com.sap.ejb.PonderacioncaracteristicaFacade;
 import com.sap.ejb.PonderacionfactorFacade;
+import com.sap.ejb.PreguntaFacade;
 import com.sap.ejb.ProcesoFacade;
 import com.sap.ejb.ProgramaFacade;
+import com.sap.ejb.RepresentanteFacade;
 import com.sap.entity.Administrativo;
 import com.sap.entity.Agenciagubernamental;
 import com.sap.entity.Caracteristica;
@@ -39,6 +41,7 @@ import com.sap.entity.Directorprograma;
 import com.sap.entity.Docente;
 import com.sap.entity.Egresado;
 import com.sap.entity.Empleador;
+import com.sap.entity.Encuesta;
 import com.sap.entity.Estudiante;
 import com.sap.entity.Factor;
 import com.sap.entity.Indicador;
@@ -60,6 +63,7 @@ import com.sap.entity.Ponderacionfactor;
 import com.sap.entity.Pregunta;
 import com.sap.entity.Proceso;
 import com.sap.entity.Programa;
+import com.sap.entity.Representante;
 import com.sap.entity.Resultadoevaluacion;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -81,6 +85,10 @@ import javax.servlet.http.HttpSession;
  */
 public class cpController extends HttpServlet {
 
+    @EJB
+    private PreguntaFacade preguntaFacade;
+    @EJB
+    private RepresentanteFacade representanteFacade;
     @EJB
     private ProgramaFacade programaFacade;
     @EJB
@@ -179,19 +187,19 @@ public class cpController extends HttpServlet {
                 rd.forward(request, response);
 
             } else if (action.equals("verProceso")) {
-               
+
                 int id = Integer.parseInt(request.getParameter("id"));
-                
+
                 Proceso p = procesoFacade.find(id);
-                
-                System.out.println("proceso: " + p);
+
+
                 sesion.setAttribute("Proceso", p);
                 sesion.setAttribute("Modelo", p.getModeloId());
                 sesion.setAttribute("EstadoProceso", 3);
-                
+
             } else if (action.equals("detalleProceso")) {
                 Proceso p = (Proceso) sesion.getAttribute("Proceso");
-                System.out.println("Proceso: " + proceso);
+
                 ArrayList<Proceso> l = new ArrayList<Proceso>();
                 l.add(procesoFacade.find(p.getId()));
                 sesion.setAttribute("listProceso", l);
@@ -294,8 +302,6 @@ public class cpController extends HttpServlet {
 
                     pf.setJustificacion(justificacion);
                     pf.setPonderacion(ponderacion);
-
-
                     ponderacionfactorFacade.edit(pf);
 
                     Factor f = pf.getFactorId();
@@ -305,41 +311,41 @@ public class cpController extends HttpServlet {
                     Iterator i1 = suma0.iterator();
 
                     double suma = 0;
+                    List<Ponderacioncaracteristica> listpondC = (List<Ponderacioncaracteristica>) sesion.getAttribute("listPonderacionCara");
+                    if (listpondC != null && listpondC.size() > 0) {
+                        while (i1.hasNext()) {
+                            Caracteristica c = (Caracteristica) i1.next();
+                            Ponderacioncaracteristica pc1 = PonderacioncaracteristicaFacade.findBySingle2("caracteristicaId", c, "procesoId", sesion.getAttribute("Proceso"));
+                            suma += pc1.getNivelimportancia();
+                        }
 
-                    while (i1.hasNext()) {
-                        Caracteristica c = (Caracteristica) i1.next();
-                        Ponderacioncaracteristica pc1 = PonderacioncaracteristicaFacade.findBySingle2("caracteristicaId", c, "procesoId", sesion.getAttribute("Proceso"));
-                        suma += pc1.getNivelimportancia();
-                        System.out.println("Factor Id: " + f.getCodigo());
-                        System.out.println("Caracteristica Id: " + c.getCodigo());
-                    }
+                        Iterator i2 = suma0.iterator();
 
-                    System.out.println("Suma: " + suma);
-                    Iterator i2 = suma0.iterator();;
+                        while (i2.hasNext()) {
+                            Caracteristica c = (Caracteristica) i2.next();
+                            Ponderacioncaracteristica pc1 = PonderacioncaracteristicaFacade.findBySingle2("caracteristicaId", c, "procesoId", sesion.getAttribute("Proceso"));
 
-                    while (i2.hasNext()) {
-                        Caracteristica c = (Caracteristica) i2.next();
-                        Ponderacioncaracteristica pc1 = PonderacioncaracteristicaFacade.findBySingle2("caracteristicaId", c, "procesoId", sesion.getAttribute("Proceso"));
+                            double vi = pc1.getNivelimportancia();
 
-                        double vi = pc1.getNivelimportancia();
+                            //System.out.println("Ponderacion FActor: " + pf.getPonderacion());
 
-                        System.out.println("Ponderacion FActor: " + pf.getPonderacion());
+                            double a = (100 * vi) / suma;
+                            double b = ((pf.getPonderacion() * a) / 100);
 
-                        double a = (100 * vi) / suma;
-                        double b = ((pf.getPonderacion() * a) / 100);
+                            double r;
 
-                        double r;
-
-                        int decimalPlaces = 2;
-                        BigDecimal bde = new BigDecimal(b);
+                            int decimalPlaces = 2;
+                            BigDecimal bde = new BigDecimal(b);
 
 // setScale is immutable
-                        bde = bde.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
-                        r = bde.doubleValue();
+                            bde = bde.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
+                            r = bde.doubleValue();
 
-                        pc1.setPonderacion(r);
-                        PonderacioncaracteristicaFacade.edit(pc1);
+                            pc1.setPonderacion(r);
+                            PonderacioncaracteristicaFacade.edit(pc1);
+                        }
                     }
+
 
 
 
@@ -403,11 +409,11 @@ public class cpController extends HttpServlet {
                         Caracteristica c = (Caracteristica) i1.next();
                         Ponderacioncaracteristica pc1 = PonderacioncaracteristicaFacade.findBySingle2("caracteristicaId", c, "procesoId", sesion.getAttribute("Proceso"));
                         suma += pc1.getNivelimportancia();
-                        System.out.println("Factor Id: " + f.getCodigo());
-                        System.out.println("Caracteristica Id: " + c.getCodigo());
+                        // System.out.println("Factor Id: " + f.getCodigo());
+                        // System.out.println("Caracteristica Id: " + c.getCodigo());
                     }
 
-                    System.out.println("Suma: " + suma);
+                    //  System.out.println("Suma: " + suma);
 
                     double a = (100 * vi) / suma;
                     double b = ((pf.getPonderacion() * a) / 100);
@@ -476,11 +482,11 @@ public class cpController extends HttpServlet {
                         Caracteristica c = (Caracteristica) i1.next();
                         Ponderacioncaracteristica pc1 = PonderacioncaracteristicaFacade.findBySingle2("caracteristicaId", c, "procesoId", sesion.getAttribute("Proceso"));
                         suma += pc1.getNivelimportancia();
-                        System.out.println("Factor Id: " + f.getCodigo());
-                        System.out.println("Caracteristica Id: " + c.getCodigo());
+                        //  System.out.println("Factor Id: " + f.getCodigo());
+                        //  System.out.println("Caracteristica Id: " + c.getCodigo());
                     }
 
-                    System.out.println("Suma: " + suma);
+                    //System.out.println("Suma: " + suma);
 
                     double a = (100 * vi) / suma;
                     double b = ((pf.getPonderacion() * a) / 100);
@@ -1165,7 +1171,7 @@ public class cpController extends HttpServlet {
 
                 while (it.hasNext()) {
                     Estudiante est = (Estudiante) it.next();
-                    System.out.println("Variable   " + request.getParameter(String.valueOf(est.getPersonaId().getId())));
+                    // System.out.println("Variable   " + request.getParameter(String.valueOf(est.getPersonaId().getId())));
                     if ("1".equals(request.getParameter(String.valueOf(est.getPersonaId().getId())))) {
 
 
@@ -1235,9 +1241,10 @@ public class cpController extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("preparedInfoNumerica")) {
+                Proceso p = (Proceso) sesion.getAttribute("Proceso");
+                List<Numericadocumental> listaNum = numericadocumentalFacade.findByList("procesoId", p);
 
-
-                Instrumento ins = instrumentoFacade.find(3);
+                Instrumento ins = instrumentoFacade.find(2);
 
                 List li = ins.getIndicadorList();
 
@@ -1259,18 +1266,18 @@ public class cpController extends HttpServlet {
                 }
 
                 sesion.setAttribute("lisrInidicadorsNum", linum);
+                sesion.setAttribute("listaNumDoc", listaNum);
 
 
                 String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoNumerica.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("preparedInfoDocumental")) {
-
-
-                Instrumento ins = instrumentoFacade.find(2);
+                Proceso p = (Proceso) sesion.getAttribute("Proceso");
+                List<Numericadocumental> listaNum = numericadocumentalFacade.findByList("procesoId", p);
+                Instrumento ins = instrumentoFacade.find(3);
 
                 List li = ins.getIndicadorList();
-                System.out.println("Tamaño: " + li.size());
 
 
                 List<Indicador> linum = new ArrayList<Indicador>();
@@ -1289,17 +1296,15 @@ public class cpController extends HttpServlet {
 
                 }
 
-                System.out.println("Tamaño: " + linum.size());
+
 
                 sesion.setAttribute("lisrInidicadorsDoc", linum);
-
+                sesion.setAttribute("listaNumDoc", listaNum);
 
                 String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoDocumental.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("registrarInfoNumerica")) {
-
-
                 List<Indicador> linum = (List<Indicador>) sesion.getAttribute("lisrInidicadorsNum");
 
                 for (Indicador i : linum) {
@@ -1320,8 +1325,8 @@ public class cpController extends HttpServlet {
                     nd.setResponsable(responDoc);
                     nd.setProcesoId(proceso);
                     nd.setIndicadorId(i);
-                    nd.setInstrumentoId(instrumentoFacade.find(3));
-                    //nd.setInstrumentohasindicadorId(String.valueOf(i.getId()));
+                    nd.setInstrumentoId(instrumentoFacade.find(2));
+
 
                     numericadocumentalFacade.create(nd);
 
@@ -1353,8 +1358,7 @@ public class cpController extends HttpServlet {
                     nd.setResponsable(responDoc);
                     nd.setProcesoId(proceso);
                     nd.setIndicadorId(i);
-                    nd.setInstrumentoId(instrumentoFacade.find(2));
-                    //nd.setInstrumentohasindicadorId(String.valueOf(i.getId()));
+                    nd.setInstrumentoId(instrumentoFacade.find(3));
 
                     numericadocumentalFacade.create(nd);
 
@@ -1463,6 +1467,9 @@ public class cpController extends HttpServlet {
                 float sumaPon;
                 float suma2;
                 float promedioPregunta;
+                float calificacionNum;
+                float calificacionDoc;
+
                 List<Ponderacionfactor> ponderacionesF = new ArrayList<Ponderacionfactor>();
                 List<Factor> factores = m.getFactorList();
                 float cumplimientoF[] = new float[factores.size()];
@@ -1471,13 +1478,16 @@ public class cpController extends HttpServlet {
                     sumaPon = 0;
                     List<Ponderacioncaracteristica> ponderacionesC = new ArrayList<Ponderacioncaracteristica>();
                     List<Caracteristica> caracteristicas = factores.get(i2).getCaracteristicaList();
-                    float cumplimientoC[] = new float[caracteristicas.size()];
+                    float cumplimientoC2[] = new float[caracteristicas.size()];
                     for (int j = 0; j < caracteristicas.size(); j++) {
-                        promedioPregunta = 0;
-                        suma = 0;
-                        numP = 0;
                         List<Indicador> indicadores = caracteristicas.get(j).getIndicadorList();
+                        float cumplimientoC[] = new float[indicadores.size()];
                         for (int k = 0; k < indicadores.size(); k++) {
+                            promedioPregunta = 0;
+                            suma = 0;
+                            numP = 0;
+                            calificacionNum = 0;
+                            calificacionDoc = 0;
                             List<Instrumento> instr = indicadores.get(k).getInstrumentoList();
                             for (int i = 0; i < instr.size(); i++) {
                                 Instrumento instrumento = instr.get(i);
@@ -1487,7 +1497,7 @@ public class cpController extends HttpServlet {
                                         Pregunta pregunta = preguntas.get(l);
                                         List<Resultadoevaluacion> respuestas = pregunta.getResultadoevaluacionList();
                                         for (int n = 0; n < respuestas.size(); n++) {
-                                            if (respuestas.get(n).getEncabezadoId().getEstado().equals("terminado") && respuestas.get(n).getEncabezadoId().getProcesoId().getId() == p.getId() && !respuestas.get(n).getRespuesta().equals("0")) {
+                                            if (respuestas.get(n).getEncabezadoId().getEstado().equals("terminado") && respuestas.get(n).getEncabezadoId().getProcesoId().getId() == p.getId() && respuestas.get(n).getRespuesta() != null && (respuestas.get(n).getRespuesta().equals("1") || respuestas.get(n).getRespuesta().equals("2") || respuestas.get(n).getRespuesta().equals("3") || respuestas.get(n).getRespuesta().equals("4") || respuestas.get(n).getRespuesta().equals("5"))) {
                                                 numP++;
                                                 suma += Integer.parseInt(respuestas.get(n).getRespuesta());
                                             }
@@ -1496,28 +1506,71 @@ public class cpController extends HttpServlet {
                                     }
                                     if (suma > 0) {
                                         promedioPregunta = (float) suma / numP;
-                                        ponderacionesC.add(ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(caracteristicas.get(j), p));
                                     }
 
                                 } else {
-                                    if (instrumento.getId() == 2 || instrumento.getId() == 3) {
+                                    if (instrumento.getId() == 2) {
+                                        //System.out.println("indicadorId:"+indicadores.get(k).getId()+ " procesoId "+ p.getId()+ "instrumentoId: "+ instrumento.getId());
+                                        Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
+                                        calificacionNum = (float) numDoc.getEvaluacion();
+                                    } else {
+                                        if (instrumento.getId() == 3) {
+                                            Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
+                                            calificacionDoc = (float) numDoc.getEvaluacion();
+                                        }
+                                    }
+                                }
+                            }
+                            if (calificacionNum != 0 && calificacionDoc != 0 && promedioPregunta != 0) {
+                                cumplimientoC[k] = (promedioPregunta + calificacionNum + calificacionDoc) / 3;
+                            } else {
+                                if (calificacionNum != 0 && promedioPregunta != 0) {
+                                    cumplimientoC[k] = (calificacionNum + promedioPregunta) / 2;
+                                } else {
+                                    if (calificacionDoc != 0 && promedioPregunta != 0) {
+                                        cumplimientoC[k] = (promedioPregunta + calificacionDoc) / 2;
+                                    } else {
+                                        if (calificacionDoc != 0 && calificacionNum != 0) {
+                                            cumplimientoC[k] = (calificacionNum + calificacionDoc) / 2;
+                                        } else {
+                                            if (calificacionDoc != 0) {
+                                                cumplimientoC[k] = calificacionDoc;
+                                            } else {
+                                                if (calificacionNum != 0) {
+                                                    cumplimientoC[k] = calificacionNum;
+                                                } else {
+                                                    if (promedioPregunta != 0) {
+                                                        cumplimientoC[k] = promedioPregunta;
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
-                        cumplimientoC[j] = promedioPregunta;
+                        float sumaCumplimientoIndicadores = 0;
+                        for (int i = 0; i < cumplimientoC.length; i++) {
+                            sumaCumplimientoIndicadores += cumplimientoC[i];
+                        }
+                        if (sumaCumplimientoIndicadores > 0) {
+                            cumplimientoC2[j] = (float) sumaCumplimientoIndicadores / cumplimientoC.length;
+                        }
 
+
+                        ponderacionesC.add(ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(caracteristicas.get(j), p));
                     }
                     for (int i = 0; i < factores.get(i2).getCaracteristicaList().size(); i++) {
-                        if (cumplimientoC[i] != 0) {
+                        if (cumplimientoC2[i] != 0) {
                             Ponderacioncaracteristica pc = ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(factores.get(i2).getCaracteristicaList().get(i), p);
                             sumaPon += pc.getPonderacion();
-                            suma2 += cumplimientoC[i] * pc.getPonderacion();
+                            suma2 += cumplimientoC2[i] * pc.getPonderacion();
                         }
                     }
                     if (sumaPon != 0) {
                         ponderacionesF.add(ponderacionfactorFacade.findByFactorYProceso(factores.get(i2), p));
                         cumplimientoF[i2] = suma2 / sumaPon;
+                        cumplimientoF[i2] = (float) (Math.rint(cumplimientoF[i2]*10)/10);
                     }
 
 
@@ -1529,21 +1582,27 @@ public class cpController extends HttpServlet {
                 String url = "/WEB-INF/vista/comitePrograma/proceso/informe/matrizFactores.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
-            } else if (action.equals("informeMatrizCaracteristicas")) {
+            } else if (action.equals(
+                    "informeMatrizCaracteristicas")) {
                 Proceso p = (Proceso) sesion.getAttribute("Proceso");
                 Modelo m = p.getModeloId();
                 int suma;
                 int numP;
+                float calificacionNum;
+                float calificacionDoc;
                 float promedioPregunta;
                 List<Ponderacioncaracteristica> ponderacionesC = new ArrayList<Ponderacioncaracteristica>();
                 List<Caracteristica> caracteristicas = m.getCaracteristicaList();
-                float cumplimiento[] = new float[caracteristicas.size()];
+                float cumplimiento2[] = new float[caracteristicas.size()];
                 for (int j = 0; j < caracteristicas.size(); j++) {
-                    promedioPregunta = 0;
-                    suma = 0;
-                    numP = 0;
                     List<Indicador> indicadores = caracteristicas.get(j).getIndicadorList();
+                    float cumplimiento[] = new float[indicadores.size()];
                     for (int k = 0; k < indicadores.size(); k++) {
+                        promedioPregunta = 0;
+                        suma = 0;
+                        numP = 0;
+                        calificacionNum = 0;
+                        calificacionDoc = 0;
                         List<Instrumento> instr = indicadores.get(k).getInstrumentoList();
                         for (int i = 0; i < instr.size(); i++) {
                             Instrumento instrumento = instr.get(i);
@@ -1553,7 +1612,7 @@ public class cpController extends HttpServlet {
                                     Pregunta pregunta = preguntas.get(l);
                                     List<Resultadoevaluacion> respuestas = pregunta.getResultadoevaluacionList();
                                     for (int n = 0; n < respuestas.size(); n++) {
-                                        if (respuestas.get(n).getEncabezadoId().getEstado().equals("terminado") && respuestas.get(n).getEncabezadoId().getProcesoId().getId() == p.getId() && !respuestas.get(n).getRespuesta().equals("0")) {
+                                        if (respuestas.get(n).getEncabezadoId().getEstado().equals("terminado") && respuestas.get(n).getEncabezadoId().getProcesoId().getId() == p.getId() && respuestas.get(n).getRespuesta() != null && (respuestas.get(n).getRespuesta().equals("1") || respuestas.get(n).getRespuesta().equals("2") || respuestas.get(n).getRespuesta().equals("3") || respuestas.get(n).getRespuesta().equals("4") || respuestas.get(n).getRespuesta().equals("5"))) {
                                             numP++;
                                             suma += Integer.parseInt(respuestas.get(n).getRespuesta());
                                         }
@@ -1562,32 +1621,452 @@ public class cpController extends HttpServlet {
                                 }
                                 if (suma > 0) {
                                     promedioPregunta = (float) suma / numP;
-                                    ponderacionesC.add(ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(caracteristicas.get(j), p));
+
                                 }
 
                             } else {
-                                if (instrumento.getId() == 2 || instrumento.getId() == 3) {
+                                if (instrumento.getId() == 2) {
+                                    Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
+                                    calificacionNum = (float) numDoc.getEvaluacion();
+                                } else {
+                                    if (instrumento.getId() == 3) {
+                                        Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
+                                        calificacionDoc = (float) numDoc.getEvaluacion();
+                                    }
+                                }
+                            }
+                        }
+                        if (calificacionNum != 0 && calificacionDoc != 0 && promedioPregunta != 0) {
+                            cumplimiento[k] = (promedioPregunta + calificacionNum + calificacionDoc) / 3;
+                        } else {
+                            if (calificacionNum != 0 && promedioPregunta != 0) {
+                                cumplimiento[k] = (calificacionNum + promedioPregunta) / 2;
+                            } else {
+                                if (calificacionDoc != 0 && promedioPregunta != 0) {
+                                    cumplimiento[k] = (promedioPregunta + calificacionDoc) / 2;
+                                } else {
+                                    if (calificacionDoc != 0 && calificacionNum != 0) {
+                                        cumplimiento[k] = (calificacionNum + calificacionDoc) / 2;
+                                    } else {
+                                        if (calificacionDoc != 0) {
+                                            cumplimiento[k] = calificacionDoc;
+                                        } else {
+                                            if (calificacionNum != 0) {
+                                                cumplimiento[k] = calificacionNum;
+                                            } else {
+                                                if (promedioPregunta != 0) {
+                                                    cumplimiento[k] = promedioPregunta;
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                    cumplimiento[j] = promedioPregunta;
+                    float sumaCumplimientoIndicadores = 0;
+                    for (int i = 0; i < cumplimiento.length; i++) {
+                        sumaCumplimientoIndicadores += cumplimiento[i];
+                    }
+                    if (sumaCumplimientoIndicadores > 0) {
+                        cumplimiento2[j] = sumaCumplimientoIndicadores / cumplimiento.length;
+                        cumplimiento2[j] = (float) (Math.rint(cumplimiento2[j]*10)/10);
+                        
+                    }
+
+
+                    ponderacionesC.add(ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(caracteristicas.get(j), p));
 
                 }
 
 
                 sesion.setAttribute("caracteristicas", caracteristicas);
                 sesion.setAttribute("ponderacionesC", ponderacionesC);
-                sesion.setAttribute("cumplimiento", cumplimiento);
+                sesion.setAttribute("cumplimiento", cumplimiento2);
 
                 String url = "/WEB-INF/vista/comitePrograma/proceso/informe/matrizCaracteristicas.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
+            } else if (action.equals(
+                    "detalleFactor")) {
+                Proceso p = (Proceso) sesion.getAttribute("Proceso");
+                String idFactor = request.getParameter("id");
+                Modelo m = p.getModeloId();
+                int suma;
+                int numP;
+                float promedioPregunta;
+                float calificacionNum;
+                float calificacionDoc;
+                Factor f = factorFacade.find(Integer.parseInt(idFactor));
+
+                List<Ponderacioncaracteristica> ponderacionesC = new ArrayList<Ponderacioncaracteristica>();
+                List<Caracteristica> caracteristicas = f.getCaracteristicaList();
+                float cumplimiento2[] = new float[caracteristicas.size()];
+                for (int j = 0; j < caracteristicas.size(); j++) {
+                    List<Indicador> indicadores = caracteristicas.get(j).getIndicadorList();
+                    float cumplimiento[] = new float[indicadores.size()];
+                    for (int k = 0; k < indicadores.size(); k++) {
+                        promedioPregunta = 0;
+                        suma = 0;
+                        numP = 0;
+                        calificacionNum = 0;
+                        calificacionDoc = 0;
+                        List<Instrumento> instr = indicadores.get(k).getInstrumentoList();
+                        for (int i = 0; i < instr.size(); i++) {
+                            Instrumento instrumento = instr.get(i);
+                            if (instrumento.getId() == 1) {
+                                List<Pregunta> preguntas = indicadores.get(k).getPreguntaList();
+                                for (int l = 0; l < preguntas.size(); l++) {
+                                    Pregunta pregunta = preguntas.get(l);
+                                    List<Resultadoevaluacion> respuestas = pregunta.getResultadoevaluacionList();
+                                    for (int n = 0; n < respuestas.size(); n++) {
+                                        if (respuestas.get(n).getEncabezadoId().getEstado().equals("terminado") && respuestas.get(n).getEncabezadoId().getProcesoId().getId() == p.getId() && respuestas.get(n).getRespuesta() != null && (respuestas.get(n).getRespuesta().equals("1") || respuestas.get(n).getRespuesta().equals("2") || respuestas.get(n).getRespuesta().equals("3") || respuestas.get(n).getRespuesta().equals("4") || respuestas.get(n).getRespuesta().equals("5"))) {
+                                            numP++;
+                                            suma += Integer.parseInt(respuestas.get(n).getRespuesta());
+                                        }
+
+                                    }
+                                }
+                                if (suma > 0) {
+                                    promedioPregunta = (float) suma / numP;
+                                }
+
+                            } else {
+                                if (instrumento.getId() == 2) {
+                                    Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
+                                    calificacionNum = (float) numDoc.getEvaluacion();
+                                } else {
+                                    if (instrumento.getId() == 3) {
+                                        Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
+                                        calificacionDoc = (float) numDoc.getEvaluacion();
+                                    }
+                                }
+                            }
+                        }
+                        if (calificacionNum != 0 && calificacionDoc != 0 && promedioPregunta != 0) {
+                            cumplimiento[k] = (promedioPregunta + calificacionNum + calificacionDoc) / 3;
+                        } else {
+                            if (calificacionNum != 0 && promedioPregunta != 0) {
+                                cumplimiento[k] = (calificacionNum + promedioPregunta) / 2;
+                            } else {
+                                if (calificacionDoc != 0 && promedioPregunta != 0) {
+                                    cumplimiento[k] = (promedioPregunta + calificacionDoc) / 2;
+                                } else {
+                                    if (calificacionDoc != 0 && calificacionNum != 0) {
+                                        cumplimiento[k] = (calificacionNum + calificacionDoc) / 2;
+                                    } else {
+                                        if (calificacionDoc != 0) {
+                                            cumplimiento[k] = calificacionDoc;
+                                        } else {
+                                            if (calificacionNum != 0) {
+                                                cumplimiento[k] = calificacionNum;
+                                            } else {
+                                                if (promedioPregunta != 0) {
+                                                    cumplimiento[k] = promedioPregunta;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    float sumaCumplimientoIndicadores = 0;
+                    for (int i = 0; i < cumplimiento.length; i++) {
+                        sumaCumplimientoIndicadores += cumplimiento[i];
+                    }
+                    if (sumaCumplimientoIndicadores > 0) {
+                        cumplimiento2[j] = (float) sumaCumplimientoIndicadores / cumplimiento.length;
+                        cumplimiento2[j] = (float) (Math.rint(cumplimiento2[j]*10)/10);
+                    }
+
+                    ponderacionesC.add(ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(caracteristicas.get(j), p));
+                }
+
+
+                sesion.setAttribute("factor", f);
+                sesion.setAttribute("caracteristicasDF", caracteristicas);
+                sesion.setAttribute("ponderacionesCDF", ponderacionesC);
+                sesion.setAttribute("cumplimientoDF", cumplimiento2);
+
+                String url = "/WEB-INF/vista/comitePrograma/proceso/informe/detalleFactor.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals(
+                    "detalleCaracteristica")) {
+                Proceso p = (Proceso) sesion.getAttribute("Proceso");
+                String idCaracteristica = request.getParameter("id");
+                Modelo m = p.getModeloId();
+                int suma;
+                int numP;
+                float promedioPregunta;
+                float calificacionNum;
+                float calificacionDoc;
+                Caracteristica c = caracteristicaFacade.find(Integer.parseInt(idCaracteristica));
+                List<Indicador> indicadores = c.getIndicadorList();
+                float cumplimiento[] = new float[indicadores.size()];
+                for (int j = 0; j < indicadores.size(); j++) {
+                    promedioPregunta = 0;
+                    suma = 0;
+                    numP = 0;
+                    calificacionNum = 0;
+                    calificacionDoc = 0;
+                    List<Instrumento> instr = indicadores.get(j).getInstrumentoList();
+                    for (int i = 0; i < instr.size(); i++) {
+                        Instrumento instrumento = instr.get(i);
+                        if (instrumento.getId() == 1) {
+                            List<Pregunta> preguntas = indicadores.get(j).getPreguntaList();
+                            for (int l = 0; l < preguntas.size(); l++) {
+                                Pregunta pregunta = preguntas.get(l);
+                                List<Resultadoevaluacion> respuestas = pregunta.getResultadoevaluacionList();
+                                for (int n = 0; n < respuestas.size(); n++) {
+                                    if (respuestas.get(n).getEncabezadoId().getEstado().equals("terminado") && respuestas.get(n).getEncabezadoId().getProcesoId().getId() == p.getId() && respuestas.get(n).getRespuesta() != null && (respuestas.get(n).getRespuesta().equals("1") || respuestas.get(n).getRespuesta().equals("2") || respuestas.get(n).getRespuesta().equals("3") || respuestas.get(n).getRespuesta().equals("4") || respuestas.get(n).getRespuesta().equals("5"))) {
+                                        numP++;
+                                        suma += Integer.parseInt(respuestas.get(n).getRespuesta());
+                                    }
+
+                                }
+                            }
+                            if (suma > 0) {
+                                promedioPregunta = (float) suma / numP;
+                            }
+
+                        } else {
+                            if (instrumento.getId() == 2) {
+                                Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(j), "procesoId", p, "instrumentoId", instrumento);
+                                calificacionNum = (float) numDoc.getEvaluacion();
+                            } else {
+                                if (instrumento.getId() == 3) {
+                                    Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(j), "procesoId", p, "instrumentoId", instrumento);
+                                    calificacionDoc = (float) numDoc.getEvaluacion();
+                                }
+                            }
+                        }
+                        if (calificacionNum != 0 && calificacionDoc != 0 && promedioPregunta != 0) {
+                            cumplimiento[j] = (promedioPregunta + calificacionNum + calificacionDoc) / 3;
+                        } else {
+                            if (calificacionNum != 0 && promedioPregunta != 0) {
+                                cumplimiento[j] = (calificacionNum + promedioPregunta) / 2;
+                            } else {
+                                if (calificacionDoc != 0 && promedioPregunta != 0) {
+                                    cumplimiento[j] = (promedioPregunta + calificacionDoc) / 2;
+                                } else {
+                                    if (calificacionDoc != 0 && calificacionNum != 0) {
+                                        cumplimiento[j] = (calificacionNum + calificacionDoc) / 2;
+                                    } else {
+                                        if (calificacionDoc != 0) {
+                                            cumplimiento[j] = calificacionDoc;
+                                        } else {
+                                            if (calificacionNum != 0) {
+                                                cumplimiento[j] = calificacionNum;
+                                            } else {
+                                                if (promedioPregunta != 0) {
+                                                    cumplimiento[j] = promedioPregunta;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+
+                     cumplimiento[j] =   (float) (Math.rint(cumplimiento[j]*10)/10);
+
+                }
+
+                
+                sesion.setAttribute("indicadores", indicadores);
+                sesion.setAttribute("cumplimientoIN", cumplimiento);
+                sesion.setAttribute("caracteristica", c);
+                String url = "/WEB-INF/vista/comitePrograma/proceso/informe/detalleCaracteristica.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("detalleIndicador")) {
+                sesion.setAttribute("numerico", null);
+                sesion.setAttribute("documental", null);
+                float promedioPregunta;
+                float suma;
+                float numP;
+                Proceso p = (Proceso) sesion.getAttribute("Proceso");
+                String idIndicador = request.getParameter("id");
+                Indicador in = indicadorFacade.find(Integer.parseInt(idIndicador));
+                List<Instrumento> instr = in.getInstrumentoList();
+                for (int i = 0; i < instr.size(); i++) {
+                    Instrumento instrumento = instr.get(i);
+                    if (instrumento.getId() == 1) {
+                        List<Pregunta> preguntas = in.getPreguntaList();
+                        float promediorespuestas[] = new float[preguntas.size()];
+                        int ceros[] = new int[preguntas.size()];
+                        int unos[] = new int[preguntas.size()];
+                        int dos[] = new int[preguntas.size()];
+                        int tres[] = new int[preguntas.size()];
+                        int cuatros[] = new int[preguntas.size()];
+                        int cincos[] = new int[preguntas.size()];
+
+                        for (int l = 0; l < preguntas.size(); l++) {
+                            Pregunta pregunta = preguntas.get(l);
+                            promedioPregunta = 0;
+                            suma = 0;
+                            numP = 0;
+                            List<Resultadoevaluacion> respuestas = pregunta.getResultadoevaluacionList();
+                            for (int n = 0; n < respuestas.size(); n++) {
+                                if (respuestas.get(n).getEncabezadoId().getEstado().equals("terminado") && respuestas.get(n).getEncabezadoId().getProcesoId().getId() == p.getId() && respuestas.get(n).getRespuesta() != null && (respuestas.get(n).getRespuesta().equals("1") || respuestas.get(n).getRespuesta().equals("2") || respuestas.get(n).getRespuesta().equals("3") || respuestas.get(n).getRespuesta().equals("4") || respuestas.get(n).getRespuesta().equals("5"))) {
+                                    if (respuestas.get(n).getRespuesta().equals("1")) {
+                                        unos[l]++;
+                                    }
+                                    if (respuestas.get(n).getRespuesta().equals("2")) {
+                                        dos[l]++;
+                                    }
+                                    if (respuestas.get(n).getRespuesta().equals("3")) {
+                                        tres[l]++;
+                                    }
+                                    if (respuestas.get(n).getRespuesta().equals("4")) {
+                                        cuatros[l]++;
+                                    }
+                                    if (respuestas.get(n).getRespuesta().equals("5")) {
+                                        cincos[l]++;
+                                    }
+                                    suma += Integer.parseInt(respuestas.get(n).getRespuesta());
+                                    numP++;
+                                } else {
+                                    if (respuestas.get(n).getEncabezadoId().getEstado().equals("terminado") && respuestas.get(n).getEncabezadoId().getProcesoId().getId() == p.getId() && respuestas.get(n).getRespuesta() != null && respuestas.get(n).getRespuesta().equals("0")) {
+                                        ceros[l]++;
+                                    }
+
+                                }
+                                if (suma > 0) {
+                                    promedioPregunta = (float) suma / numP;
+                                    promediorespuestas[l] = promedioPregunta;
+
+                                }
+                            }
+                        }
+                        sesion.setAttribute("promediorepuestas", promediorespuestas);
+                        sesion.setAttribute("ceros", ceros);
+                        sesion.setAttribute("unos", unos);
+                        sesion.setAttribute("dos", dos);
+                        sesion.setAttribute("tres", tres);
+                        sesion.setAttribute("cuatros", cuatros);
+                        sesion.setAttribute("cincos", cincos);
+                    } else {
+                        if (instrumento.getId() == 2) {
+                            Numericadocumental numDoc1 = numericadocumentalFacade.findBySingle3("indicadorId", in, "procesoId", p, "instrumentoId", instrumento);
+                            sesion.setAttribute("numerico", numDoc1);
+
+                        } else {
+                            if (instrumento.getId() == 3) {
+                                Numericadocumental numDoc2 = numericadocumentalFacade.findBySingle3("indicadorId", in, "procesoId", p, "instrumentoId", instrumento);
+                                sesion.setAttribute("documental", numDoc2);
+
+                            }
+                        }
+                    }
+                }
+                sesion.setAttribute("indicador", in);
+
+                String url = "/WEB-INF/vista/comitePrograma/proceso/informe/detalleIndicador.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+
+            } else if (action.equals("detallePregunta")) {
+                sesion.setAttribute("numerico", null);
+                sesion.setAttribute("documental", null);
+                float promedioPregunta;
+                float suma;
+                float numP;
+                Proceso p = (Proceso) sesion.getAttribute("Proceso");
+                String idPregunta = request.getParameter("id");
+                Pregunta pre = preguntaFacade.find(Integer.parseInt(idPregunta));
+
+                List<Encuesta> encuestas = pre.getEncuestaList();
+                float promediorespuestas[] = new float[encuestas.size()];
+
+                int ceros[] = new int[encuestas.size()];
+                int unos[] = new int[encuestas.size()];
+                int dos[] = new int[encuestas.size()];
+                int tres[] = new int[encuestas.size()];
+                int cuatros[] = new int[encuestas.size()];
+                int cincos[] = new int[encuestas.size()];
+
+                for (int l = 0; l < encuestas.size(); l++) {
+                    promedioPregunta = 0;
+                    suma = 0;
+                    numP = 0;
+                    List<Resultadoevaluacion> respuestas = pre.getResultadoevaluacionList();
+                    for (int n = 0; n < respuestas.size(); n++) {
+                        if (respuestas.get(n).getEncabezadoId().getEstado().equals("terminado")
+                                && respuestas.get(n).getEncabezadoId().getProcesoId().getId() == p.getId()
+                                && respuestas.get(n).getRespuesta() != null
+                                && (respuestas.get(n).getRespuesta().equals("1") || respuestas.get(n).getRespuesta().equals("2") || respuestas.get(n).getRespuesta().equals("3") || respuestas.get(n).getRespuesta().equals("4") || respuestas.get(n).getRespuesta().equals("5"))
+                                && respuestas.get(n).getEncabezadoId().getEncuestaId().getId() == encuestas.get(l).getId()) {
+                            if (respuestas.get(n).getRespuesta().equals("1")) {
+                                unos[l]++;
+                            }
+                            if (respuestas.get(n).getRespuesta().equals("2")) {
+                                dos[l]++;
+                            }
+                            if (respuestas.get(n).getRespuesta().equals("3")) {
+                                tres[l]++;
+                            }
+                            if (respuestas.get(n).getRespuesta().equals("4")) {
+                                cuatros[l]++;
+                            }
+                            if (respuestas.get(n).getRespuesta().equals("5")) {
+                                cincos[l]++;
+                            }
+                            suma += Integer.parseInt(respuestas.get(n).getRespuesta());
+                            numP++;
+                        } else {
+                            if (respuestas.get(n).getEncabezadoId().getEstado().equals("terminado") && respuestas.get(n).getEncabezadoId().getProcesoId().getId() == p.getId() && respuestas.get(n).getRespuesta() != null && respuestas.get(n).getRespuesta().equals("0")) {
+                                ceros[l]++;
+                            }
+
+                        }
+                        if (suma > 0) {
+                            promedioPregunta = (float) suma / numP;
+                            promediorespuestas[l] = promedioPregunta;
+
+                        }
+                    }
+                }
+                sesion.setAttribute("promediorepuestasE", promediorespuestas);
+                sesion.setAttribute("cerosE", ceros);
+                sesion.setAttribute("unosE", unos);
+                sesion.setAttribute("dosE", dos);
+                sesion.setAttribute("tresE", tres);
+                sesion.setAttribute("cuatrosE", cuatros);
+                sesion.setAttribute("cincosE", cincos);
+                sesion.setAttribute("pregunta", pre);
+                sesion.setAttribute("encuestas", encuestas);
+
+                String url = "/WEB-INF/vista/comitePrograma/proceso/informe/detallePregunta.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+
             } else {
                 if (action.equals("contrasena")) {
                     String url = "/WEB-INF/vista/comitePrograma/contrasena.jsp";
                     RequestDispatcher rd = request.getRequestDispatcher(url);
                     rd.forward(request, response);
+                } else {
+                    if (action.equals("cambiarClave")) {
+                        Representante r = (Representante) sesion.getAttribute("representante");
+                        String actual = request.getParameter("actual");
+                        String nueva1 = request.getParameter("nueva1");
+                        String nueva2 = request.getParameter("nueva2");
+
+                        if (r.getPassword().equals(actual)) {
+                            if (nueva1.equals(nueva2)) {
+                                r.setPassword(nueva1);
+                                representanteFacade.edit(r);
+                                out.print(0);
+                            }
+                        } else {
+                            out.print(1);
+                        }
+                    }
                 }
             }
         } finally {

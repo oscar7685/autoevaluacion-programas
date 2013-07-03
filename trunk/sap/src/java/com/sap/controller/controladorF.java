@@ -122,7 +122,14 @@ public class controladorF extends HttpServlet {
                                 Resultadoevaluacion re = new Resultadoevaluacion();
                                 re.setEncabezadoId(recienCreado);
                                 re.setPreguntaId(preguntas.get(i));
-                                re.setRespuesta((String) request.getParameter("pregunta" + preguntas.get(i).getId()));
+                                String respuesta1 = (String) request.getParameter("pregunta" + preguntas.get(i).getId());
+                                if (preguntas.get(i).getTipo().equals("1")) {
+                                    re.setRespuesta(respuesta1);
+                                } else {
+                                    if (preguntas.get(i).getTipo().equals("2")) {
+                                        re.setRespuestaAbierta(respuesta1);
+                                    }
+                                }
                                 resultadoevaluacionFacade.create(re);
                             }
                             recienCreado.setResultadoevaluacionList(resultadoevaluacionFacade.findByEncabezado(recienCreado));
@@ -139,8 +146,16 @@ public class controladorF extends HttpServlet {
 
                             List<Resultadoevaluacion> listaRe = enc.getResultadoevaluacionList();
                             for (int i = 0; i < preguntas.size(); i++) {
+                                String respuesta = (String) request.getParameter("pregunta" + preguntas.get(i).getId());
+                                if (preguntas.get(i).getTipo().equals("1")) {
+                                    listaRe.get(i).setRespuesta(respuesta);
+                                } else {
+                                    if (preguntas.get(i).getTipo().equals("2")) {
+                                        listaRe.get(i).setRespuestaAbierta(respuesta);
+                                    }
+                                }
                                 listaRe.get(i).setPreguntaId(preguntas.get(i));
-                                listaRe.get(i).setRespuesta((String) request.getParameter("pregunta" + preguntas.get(i).getId()));
+
                                 resultadoevaluacionFacade.edit(listaRe.get(i));
                             }
 

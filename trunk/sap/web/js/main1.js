@@ -13,7 +13,7 @@ $(function() {
     var myLayout;
     myLayout = $('body').layout({
         //	enable showOverflow on west-pane so CSS popups will overlap north pane
-        west__size: 270
+        west__size: 280
                 , center__paneSelector: ".ui-layout-center"
                 , north__paneClass: "ui-layout-pane2"
                 //	reference only - these options are NOT required because 'true' is the default
@@ -52,7 +52,7 @@ $(function() {
     // setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
     // save selector strings to vars so we don't have to repeat it
     // must prefix paneClass with "body > " to target ONLY the outerLayout panes
-    // myLayout.addCloseBtn("#west-closer", "west");
+    myLayout.addCloseBtn("#west-closer", "west");
 
 
 
@@ -309,6 +309,25 @@ $(function() {
                     actualizaEnlaces(hash);
                 }
                 //fin success
+            }); //fin del $.ajax
+        } else if (hash.indexOf("#detalleFactor") !== -1 || hash.indexOf("#detalleCaracteristica") !== -1 || hash.indexOf("#detalleIndicador") !== -1 || hash.indexOf("#detallePregunta") !== -1) {
+            var cual = hash.split("&");
+            hash = cual[0];
+            var url3 = "/sap/controladorCP?action=";
+            url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
+            $("div.ui-layout-center").empty();
+            $.ajax({
+                type: "POST",
+                url: url3,
+                success: function(data)
+                {
+                    $("#contenido").append(data);
+                    myLayout.addCloseBtn("#west-closer", "west");
+                    actualizaEnlaces();
+                    $("#contenido").show(200, function() {
+                        $(".page_loading").hide();
+                    });
+                } //fin success
             }); //fin del $.ajax
         } else {
             if (hash === "#contrasena") {
