@@ -190,6 +190,34 @@
                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
             </div>
         </div>
+        <div class="modal hide fade" id="myModalID">
+            <div class="modal-header">
+                <a data-dismiss="modal" class="close">×</a>
+                <h3>Atenci&oacute;n!</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Evaluaci&oacute;n informaci&oacute;n documental.</h4>
+                <br>
+                <p>La informaci&oacute;n documental se ha evaluado satisfactoriamente.</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+            </div>
+        </div>
+        <div class="modal hide fade" id="myModalIN">
+            <div class="modal-header">
+                <a data-dismiss="modal" class="close">×</a>
+                <h3>Atenci&oacute;n!</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Evaluaci&oacute;n informaci&oacute;n num&eacute;rica.</h4>
+                <br>
+                <p>La información numérica se ha evaluado satisfactoriamente .</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+            </div>
+        </div>
     </body>
 </html>
 
