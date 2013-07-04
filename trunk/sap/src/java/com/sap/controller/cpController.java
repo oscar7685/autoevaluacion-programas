@@ -1240,107 +1240,106 @@ public class cpController extends HttpServlet {
                 String url = "/WEB-INF/vista/comitePrograma/muestra/selectorListMuestra.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
+
             } else if (action.equals("preparedInfoNumerica")) {
                 Proceso p = (Proceso) sesion.getAttribute("Proceso");
-                List<Numericadocumental> listaNum = numericadocumentalFacade.findByList("procesoId", p);
-
                 Instrumento ins = instrumentoFacade.find(2);
+                List<Numericadocumental> listaNum = numericadocumentalFacade.findByList2("procesoId", p, "instrumentoId", ins);
+                Modelo m2 = (Modelo) sesion.getAttribute("Modelo");
+                List<Indicador> listInXmodelo = indicadorFacade.findByList("modeloId", m2);
+                List<Indicador> indicadoresNum = new ArrayList<Indicador>();
 
-                List li = ins.getIndicadorList();
-
-
-                List<Indicador> linum = new ArrayList<Indicador>();
-
-                Iterator it = li.iterator();
-
-                while (it.hasNext()) {
-                    Indicador i = (Indicador) it.next();
-
-                    Modelo m1 = i.getModeloId();
-                    Modelo m2 = (Modelo) sesion.getAttribute("Modelo");
-
-                    if (m1.getId() == m2.getId()) {
-                        linum.add(i);
+                for (Indicador indicador : listInXmodelo) {
+                    if (indicador.getInstrumentoList().contains(ins)) {
+                        indicadoresNum.add(indicador);
                     }
-
                 }
-
-                sesion.setAttribute("lisrInidicadorsNum", linum);
-                sesion.setAttribute("listaNumDoc", listaNum);
-
-
+                sesion.setAttribute("lisrInidicadorsNum", indicadoresNum); // son todos los que son numericos
+                sesion.setAttribute("listaNum", listaNum);//son la numerica documental que ya estan en la tabla calificados
                 String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoNumerica.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
+
             } else if (action.equals("preparedInfoDocumental")) {
                 Proceso p = (Proceso) sesion.getAttribute("Proceso");
-                List<Numericadocumental> listaNum = numericadocumentalFacade.findByList("procesoId", p);
                 Instrumento ins = instrumentoFacade.find(3);
+                List<Numericadocumental> listaDoc = numericadocumentalFacade.findByList2("procesoId", p, "instrumentoId", ins);
+                Modelo m2 = (Modelo) sesion.getAttribute("Modelo");
+                List<Indicador> listInXmodelo = indicadorFacade.findByList("modeloId", m2);
+                List<Indicador> indicadoresDoc = new ArrayList<Indicador>();
 
-                List li = ins.getIndicadorList();
-
-
-                List<Indicador> linum = new ArrayList<Indicador>();
-
-                Iterator it = li.iterator();
-
-                while (it.hasNext()) {
-                    Indicador i = (Indicador) it.next();
-
-                    Modelo m1 = i.getModeloId();
-                    Modelo m2 = (Modelo) sesion.getAttribute("Modelo");
-
-                    if (m1.getId() == m2.getId()) {
-                        linum.add(i);
+                for (Indicador indicador : listInXmodelo) {
+                    if (indicador.getInstrumentoList().contains(ins)) {
+                        indicadoresDoc.add(indicador);
                     }
-
                 }
-
-
-
-                sesion.setAttribute("lisrInidicadorsDoc", linum);
-                sesion.setAttribute("listaNumDoc", listaNum);
-
+                sesion.setAttribute("lisrInidicadorsDoc", indicadoresDoc); // son todos los que son documentales
+                sesion.setAttribute("listaDoc", listaDoc);//son los que ya estan en la tabla calificados
                 String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoDocumental.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
+
             } else if (action.equals("registrarInfoNumerica")) {
-                List<Indicador> linum = (List<Indicador>) sesion.getAttribute("lisrInidicadorsNum");
+                Proceso p = (Proceso) sesion.getAttribute("Proceso");
+                List<Indicador> indicadoresNumericos = (List<Indicador>) sesion.getAttribute("lisrInidicadorsNum");
 
-                for (Indicador i : linum) {
+                for (Indicador i : indicadoresNumericos) {
 
                     String nombreDoc = request.getParameter("nombreDocumento" + i.getId());
                     String responDoc = request.getParameter("responsableDocumento" + i.getId());
                     String medioDoc = request.getParameter("medioDocumento" + i.getId());
                     String lugarDoc = request.getParameter("lugarDocumento" + i.getId());
-                    int evaluDoc = Integer.parseInt(request.getParameter("evaluacionDoc" + i.getId()));
+                    int evaluDoc = Integer.parseInt(request.getParameter("evaluacionNum" + i.getId()));
                     String accionDoc = request.getParameter("accionDocumento" + i.getId());
+                    String cambio = request.getParameter("InfoCambio" + i.getId());
+                    String idNumDoc = request.getParameter("idNumDoc" + i.getId());
 
-                    Numericadocumental nd = new Numericadocumental();
-                    nd.setAccion(accionDoc);
-                    nd.setDocumento(nombreDoc);
-                    nd.setEvaluacion(evaluDoc);
-                    nd.setLugar(lugarDoc);
-                    nd.setMedio(medioDoc);
-                    nd.setResponsable(responDoc);
-                    nd.setProcesoId(proceso);
-                    nd.setIndicadorId(i);
-                    nd.setInstrumentoId(instrumentoFacade.find(2));
+                    if (idNumDoc != null && !idNumDoc.equals("")) {//si existia
+                        if (!nombreDoc.equals("") && !responDoc.equals("") && !medioDoc.equals("")
+                                && !lugarDoc.equals("") && !accionDoc.equals("") && cambio.equals("1")) {
+
+                            Numericadocumental infonumerica = numericadocumentalFacade.find(Integer.parseInt(idNumDoc));
+                            infonumerica.setDocumento(nombreDoc);
+                            infonumerica.setResponsable(responDoc);
+                            infonumerica.setMedio(medioDoc);
+                            infonumerica.setMedio(medioDoc);
+                            infonumerica.setLugar(lugarDoc);
+                            infonumerica.setEvaluacion(evaluDoc);
+                            infonumerica.setAccion(accionDoc);
+                            numericadocumentalFacade.edit(infonumerica);
 
 
-                    numericadocumentalFacade.create(nd);
 
+                        } else {
+                            if (cambio.equals("1")) {
+                                Numericadocumental infonumerica2 = numericadocumentalFacade.find(Integer.parseInt(idNumDoc));
+                                numericadocumentalFacade.remove(infonumerica2);
+                            }
+                        }
+                    } else {
+                        if (!nombreDoc.equals("") && !responDoc.equals("") && !medioDoc.equals("")
+                                && !lugarDoc.equals("") && !accionDoc.equals("") && cambio.equals("1")) {
+                            Numericadocumental infonumerica3 = new Numericadocumental();
+                            infonumerica3.setDocumento(nombreDoc);
+                            infonumerica3.setResponsable(responDoc);
+                            infonumerica3.setMedio(medioDoc);
+                            infonumerica3.setMedio(medioDoc);
+                            infonumerica3.setLugar(lugarDoc);
+                            infonumerica3.setEvaluacion(evaluDoc);
+                            infonumerica3.setAccion(accionDoc);
+                            infonumerica3.setProcesoId(p);
+                            infonumerica3.setIndicadorId(i);
+                            infonumerica3.setInstrumentoId(instrumentoFacade.find(2));
+                            numericadocumentalFacade.create(infonumerica3);
+                        }
+
+                    }
                 }
-
-                /*  String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoDocumental.jsp";
-                 RequestDispatcher rd = request.getRequestDispatcher(url);
-                 rd.forward(request, response);*/
             } else if (action.equals("registrarInfoDocumental")) {
+                Proceso p = (Proceso) sesion.getAttribute("Proceso");
+                List<Indicador> indicadoresDocumentales = (List<Indicador>) sesion.getAttribute("lisrInidicadorsDoc");
 
-
-                List<Indicador> lidoc = (List<Indicador>) sesion.getAttribute("lisrInidicadorsDoc");
-
-                for (Indicador i : lidoc) {
+                for (Indicador i : indicadoresDocumentales) {
 
                     String nombreDoc = request.getParameter("nombreDocumento" + i.getId());
                     String responDoc = request.getParameter("responsableDocumento" + i.getId());
@@ -1348,25 +1347,52 @@ public class cpController extends HttpServlet {
                     String lugarDoc = request.getParameter("lugarDocumento" + i.getId());
                     int evaluDoc = Integer.parseInt(request.getParameter("evaluacionDoc" + i.getId()));
                     String accionDoc = request.getParameter("accionDocumento" + i.getId());
+                    String cambio = request.getParameter("InfoCambio" + i.getId());
+                    String idNumDoc = request.getParameter("idNumDoc" + i.getId());
 
-                    Numericadocumental nd = new Numericadocumental();
-                    nd.setAccion(accionDoc);
-                    nd.setDocumento(nombreDoc);
-                    nd.setEvaluacion(evaluDoc);
-                    nd.setLugar(lugarDoc);
-                    nd.setMedio(medioDoc);
-                    nd.setResponsable(responDoc);
-                    nd.setProcesoId(proceso);
-                    nd.setIndicadorId(i);
-                    nd.setInstrumentoId(instrumentoFacade.find(3));
+                    if (idNumDoc != null && !idNumDoc.equals("")) {//si existia
+                        if (!nombreDoc.equals("") && !responDoc.equals("") && !medioDoc.equals("")
+                                && !lugarDoc.equals("") && !accionDoc.equals("") && cambio.equals("1")) {
 
-                    numericadocumentalFacade.create(nd);
+                            Numericadocumental infonumerica = numericadocumentalFacade.find(Integer.parseInt(idNumDoc));
+                            infonumerica.setDocumento(nombreDoc);
+                            infonumerica.setResponsable(responDoc);
+                            infonumerica.setMedio(medioDoc);
+                            infonumerica.setMedio(medioDoc);
+                            infonumerica.setLugar(lugarDoc);
+                            infonumerica.setEvaluacion(evaluDoc);
+                            infonumerica.setAccion(accionDoc);
+                            numericadocumentalFacade.edit(infonumerica);
 
+
+
+                        } else {
+                            if (cambio.equals("1")) {
+                                Numericadocumental infonumerica2 = numericadocumentalFacade.find(Integer.parseInt(idNumDoc));
+                                numericadocumentalFacade.remove(infonumerica2);
+                            }
+
+
+                        }
+                    } else {
+                        if (!nombreDoc.equals("") && !responDoc.equals("") && !medioDoc.equals("")
+                                && !lugarDoc.equals("") && !accionDoc.equals("") && cambio.equals("1")) {
+                            Numericadocumental infonumerica3 = new Numericadocumental();
+                            infonumerica3.setDocumento(nombreDoc);
+                            infonumerica3.setResponsable(responDoc);
+                            infonumerica3.setMedio(medioDoc);
+                            infonumerica3.setMedio(medioDoc);
+                            infonumerica3.setLugar(lugarDoc);
+                            infonumerica3.setEvaluacion(evaluDoc);
+                            infonumerica3.setAccion(accionDoc);
+                            infonumerica3.setProcesoId(p);
+                            infonumerica3.setIndicadorId(i);
+                            infonumerica3.setInstrumentoId(instrumentoFacade.find(3));
+                            numericadocumentalFacade.create(infonumerica3);
+                        }
+
+                    }
                 }
-
-                /*  String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoDocumental.jsp";
-                 RequestDispatcher rd = request.getRequestDispatcher(url);
-                 rd.forward(request, response);*/
             } else if (action.equals("estadoProceso")) {
                 Proceso p = (Proceso) sesion.getAttribute("Proceso");
                 Muestra m = p.getMuestraList().get(0);
@@ -1570,7 +1596,7 @@ public class cpController extends HttpServlet {
                     if (sumaPon != 0) {
                         ponderacionesF.add(ponderacionfactorFacade.findByFactorYProceso(factores.get(i2), p));
                         cumplimientoF[i2] = suma2 / sumaPon;
-                        cumplimientoF[i2] = (float) (Math.rint(cumplimientoF[i2]*10)/10);
+                        cumplimientoF[i2] = (float) (Math.rint(cumplimientoF[i2] * 10) / 10);
                     }
 
 
@@ -1670,8 +1696,8 @@ public class cpController extends HttpServlet {
                     }
                     if (sumaCumplimientoIndicadores > 0) {
                         cumplimiento2[j] = sumaCumplimientoIndicadores / cumplimiento.length;
-                        cumplimiento2[j] = (float) (Math.rint(cumplimiento2[j]*10)/10);
-                        
+                        cumplimiento2[j] = (float) (Math.rint(cumplimiento2[j] * 10) / 10);
+
                     }
 
 
@@ -1777,7 +1803,7 @@ public class cpController extends HttpServlet {
                     }
                     if (sumaCumplimientoIndicadores > 0) {
                         cumplimiento2[j] = (float) sumaCumplimientoIndicadores / cumplimiento.length;
-                        cumplimiento2[j] = (float) (Math.rint(cumplimiento2[j]*10)/10);
+                        cumplimiento2[j] = (float) (Math.rint(cumplimiento2[j] * 10) / 10);
                     }
 
                     ponderacionesC.add(ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(caracteristicas.get(j), p));
@@ -1869,14 +1895,14 @@ public class cpController extends HttpServlet {
                                 }
                             }
                         }
-                        
+
                     }
 
-                     cumplimiento[j] =   (float) (Math.rint(cumplimiento[j]*10)/10);
+                    cumplimiento[j] = (float) (Math.rint(cumplimiento[j] * 10) / 10);
 
                 }
 
-                
+
                 sesion.setAttribute("indicadores", indicadores);
                 sesion.setAttribute("cumplimientoIN", cumplimiento);
                 sesion.setAttribute("caracteristica", c);
@@ -2042,6 +2068,21 @@ public class cpController extends HttpServlet {
                 sesion.setAttribute("encuestas", encuestas);
 
                 String url = "/WEB-INF/vista/comitePrograma/proceso/informe/detallePregunta.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+
+            } else if (action.equals("listarEvaluarDoc")) {
+                Proceso pro = (Proceso) sesion.getAttribute("Proceso");
+                List<Numericadocumental> listaDoc = numericadocumentalFacade.findByList2("procesoId", pro, "instrumentoId", instrumentoFacade.find(3));
+                sesion.setAttribute("listaDoc", listaDoc);
+                String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/listarInfoDocumental.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("listarEvaluarNum")) {
+                Proceso pro = (Proceso) sesion.getAttribute("Proceso");
+                List<Numericadocumental> listaNum = numericadocumentalFacade.findByList2("procesoId", pro, "instrumentoId", instrumentoFacade.find(2));
+                sesion.setAttribute("listaNum", listaNum);
+                String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/listarInfoNumerica.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
 
