@@ -6,7 +6,7 @@ $(function() {
 
     var myLayout;
     myLayout = $('body').layout({
-//	enable showOverflow on west-pane so CSS popups will overlap north pane
+        //	enable showOverflow on west-pane so CSS popups will overlap north pane
 
         center__paneSelector: ".ui-layout-center"
                 , north__paneClass: "ui-layout-pane2"
@@ -26,11 +26,6 @@ $(function() {
 
 
                 , south__paneClass: "ui-layout-pane"
-                , west__togglerContent_open: ""
-                , west__minSize: 200
-                , west__maxSize: 350
-
-
     });
     myLayout.allowOverflow('north');
     // setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */

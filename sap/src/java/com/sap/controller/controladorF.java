@@ -143,7 +143,7 @@ public class controladorF extends HttpServlet {
                             enc.setComentarios(observaciones);
                             enc.setFecha(new Date(new java.util.Date().getTime()));
                             encabezadoFacade.edit(enc);
-
+                           
                             List<Resultadoevaluacion> listaRe = enc.getResultadoevaluacionList();
                             for (int i = 0; i < preguntas.size(); i++) {
                                 String respuesta = (String) request.getParameter("pregunta" + preguntas.get(i).getId());
@@ -155,7 +155,7 @@ public class controladorF extends HttpServlet {
                                     }
                                 }
                                 listaRe.get(i).setPreguntaId(preguntas.get(i));
-
+                               
                                 resultadoevaluacionFacade.edit(listaRe.get(i));
                             }
 
@@ -169,6 +169,29 @@ public class controladorF extends HttpServlet {
                             RequestDispatcher rd = request.getRequestDispatcher(url);
                             rd.forward(request, response);
 
+                        } else {
+                            if (action.equals("contrasena")) {
+                                String url = "/WEB-INF/vista/comitePrograma/contrasena.jsp";
+                                RequestDispatcher rd = request.getRequestDispatcher(url);
+                                rd.forward(request, response);
+                            } else {
+                                if (action.equals("cambiarClave")) {
+                                   /* Representante r = (Representante) sesion.getAttribute("representante");
+                                    String actual = request.getParameter("actual");
+                                    String nueva1 = request.getParameter("nueva1");
+                                    String nueva2 = request.getParameter("nueva2");
+
+                                    if (r.getPassword().equals(actual)) {
+                                        if (nueva1.equals(nueva2)) {
+                                            r.setPassword(nueva1);
+                                            //representanteFacade.edit(r);
+                                            //out.print(0);
+                                        }
+                                    } else {
+                                        // out.print(1);
+                                    }*/
+                                }
+                            }
                         }
                     }
                 }

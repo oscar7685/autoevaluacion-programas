@@ -207,7 +207,6 @@
 
                     <table class="table table-striped table-bordered table-condensed inicial">
                         <thead>
-                        <th>Id Factor</th>
                         <th>Id</th>
                         <th>Caracteristica</th>
                         <th>Nivel de importacia</th>
@@ -224,9 +223,6 @@
                                 <c:choose>
                                     <c:when test="${cum>0}"> 
                                         <tr>
-                                            <td style="text-align: left">   
-                                                ${caracteristica.factorId.codigo}
-                                            </td>
                                             <td style="text-align: left">   
                                                 ${caracteristica.codigo}
                                             </td>

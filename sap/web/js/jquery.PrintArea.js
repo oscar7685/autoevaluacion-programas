@@ -39,7 +39,7 @@
     $.fn.printArea = function( options )
         {
             $.extend( settings, defaults, options );
-
+            
             counter++;
             var idPrefix = "printArea_";
             $( "[id^=" + idPrefix + "]" ).remove();
@@ -71,7 +71,7 @@
 
             if ( settings.mode == modes.popup && settings.popClose )
                 printWindow.close();
-        }
+            }
 
     function docType()
     {

@@ -195,7 +195,7 @@
                                         <td>${status.count}</td>   
                                         <td><p>${resultado.preguntaId.pregunta}</p></td>
                                         <td>
-                                          <textarea name="pregunta${pregunta.getId()}" id="pregunta${pregunta.getId()}" cols="8" rows="2">${resultado.getRespuestaAbierta()}</textarea>
+                                          <textarea name="pregunta${resultado.preguntaId.getId()}" id="pregunta${resultado.preguntaId.getId()}" cols="8" rows="2">${resultado.getRespuestaAbierta()}</textarea>
                                         </td>
                                     </tr>
                                 </c:when>
