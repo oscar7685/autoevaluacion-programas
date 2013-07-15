@@ -214,7 +214,7 @@
                             <c:set var="indice" value="0"></c:set>
                             <c:forEach items="${indicadores}" var="indicador" varStatus="iter">
                                 <fmt:parseNumber var="cum"  value="${cumplimientoIN[iter.index]}" />
-                                <c:choose>
+                                    <c:choose>
                                     <c:when test="${cum>0}"> 
                                         <tr>
                                             <td style="text-align: left">   

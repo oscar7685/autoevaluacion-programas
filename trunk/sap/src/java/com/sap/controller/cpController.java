@@ -12,6 +12,7 @@ import com.sap.ejb.DocenteFacade;
 import com.sap.ejb.EgresadoFacade;
 import com.sap.ejb.EmpleadorFacade;
 import com.sap.ejb.EncabezadoFacade;
+import com.sap.ejb.EncuestaFacade;
 import com.sap.ejb.EstudianteFacade;
 import com.sap.ejb.FactorFacade;
 import com.sap.ejb.FuenteFacade;
@@ -85,6 +86,8 @@ import javax.servlet.http.HttpSession;
  */
 public class cpController extends HttpServlet {
 
+    @EJB
+    private EncuestaFacade encuestaFacade;
     @EJB
     private PreguntaFacade preguntaFacade;
     @EJB
@@ -516,6 +519,18 @@ public class cpController extends HttpServlet {
                 }
             } else if (action.equals("listPonderacionCara2")) {
                 String url = "/WEB-INF/vista/comitePrograma/ponderacion/listarpc.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("listEncuestas")) {
+                String url = "/WEB-INF/vista/comitePrograma/encuesta/listar.jsp";
+                sesion.setAttribute("listaE2", encuestaFacade.findByModelo(modelo));
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("vistaPreviaEncuesta")) {
+                String idE = request.getParameter("id");
+                Encuesta e = encuestaFacade.find(Integer.parseInt(idE));
+                sesion.setAttribute("encuesta", e);
+                String url = "/WEB-INF/vista/comitePrograma/encuesta/vistaPrevia.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("listMuestra")) {
@@ -1536,13 +1551,18 @@ public class cpController extends HttpServlet {
 
                                 } else {
                                     if (instrumento.getId() == 2) {
-                                        //System.out.println("indicadorId:"+indicadores.get(k).getId()+ " procesoId "+ p.getId()+ "instrumentoId: "+ instrumento.getId());
                                         Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
-                                        calificacionNum = (float) numDoc.getEvaluacion();
+                                        if (numDoc != null) {
+                                            calificacionNum = (float) numDoc.getEvaluacion();
+                                        }
+
                                     } else {
                                         if (instrumento.getId() == 3) {
                                             Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
-                                            calificacionDoc = (float) numDoc.getEvaluacion();
+                                            if (numDoc != null) {
+                                                calificacionDoc = (float) numDoc.getEvaluacion();
+                                            }
+
                                         }
                                     }
                                 }
@@ -1576,11 +1596,16 @@ public class cpController extends HttpServlet {
                             }
                         }
                         float sumaCumplimientoIndicadores = 0;
+                        int califica2 = 0;
                         for (int i = 0; i < cumplimientoC.length; i++) {
-                            sumaCumplimientoIndicadores += cumplimientoC[i];
+                            if (cumplimientoC[i] > 0.0) {
+                                sumaCumplimientoIndicadores += cumplimientoC[i];
+                                califica2++;
+                            }
+
                         }
                         if (sumaCumplimientoIndicadores > 0) {
-                            cumplimientoC2[j] = (float) sumaCumplimientoIndicadores / cumplimientoC.length;
+                            cumplimientoC2[j] = (float) sumaCumplimientoIndicadores / califica2;
                         }
 
 
@@ -1653,11 +1678,17 @@ public class cpController extends HttpServlet {
                             } else {
                                 if (instrumento.getId() == 2) {
                                     Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
-                                    calificacionNum = (float) numDoc.getEvaluacion();
+                                    if (numDoc != null) {
+                                        calificacionNum = (float) numDoc.getEvaluacion();
+                                    }
+
                                 } else {
                                     if (instrumento.getId() == 3) {
                                         Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
-                                        calificacionDoc = (float) numDoc.getEvaluacion();
+                                        if (numDoc != null) {
+                                            calificacionDoc = (float) numDoc.getEvaluacion();
+                                        }
+
                                     }
                                 }
                             }
@@ -1691,11 +1722,15 @@ public class cpController extends HttpServlet {
                         }
                     }
                     float sumaCumplimientoIndicadores = 0;
+                    int califica2 = 0;
                     for (int i = 0; i < cumplimiento.length; i++) {
-                        sumaCumplimientoIndicadores += cumplimiento[i];
+                        if (cumplimiento[i] > 0.0) {
+                            sumaCumplimientoIndicadores += cumplimiento[i];
+                            califica2++;
+                        }
                     }
                     if (sumaCumplimientoIndicadores > 0) {
-                        cumplimiento2[j] = sumaCumplimientoIndicadores / cumplimiento.length;
+                        cumplimiento2[j] = sumaCumplimientoIndicadores / califica2;
                         cumplimiento2[j] = (float) (Math.rint(cumplimiento2[j] * 10) / 10);
 
                     }
@@ -1717,7 +1752,7 @@ public class cpController extends HttpServlet {
                     "detalleFactor")) {
                 Proceso p = (Proceso) sesion.getAttribute("Proceso");
                 String idFactor = request.getParameter("id");
-                Modelo m = p.getModeloId();
+                //Modelo m = p.getModeloId();
                 int suma;
                 int numP;
                 float promedioPregunta;
@@ -1760,11 +1795,16 @@ public class cpController extends HttpServlet {
                             } else {
                                 if (instrumento.getId() == 2) {
                                     Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
-                                    calificacionNum = (float) numDoc.getEvaluacion();
+                                    if (numDoc != null) {
+                                        calificacionNum = (float) numDoc.getEvaluacion();
+                                    }
+
                                 } else {
                                     if (instrumento.getId() == 3) {
                                         Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
-                                        calificacionDoc = (float) numDoc.getEvaluacion();
+                                        if (numDoc != null) {
+                                            calificacionDoc = (float) numDoc.getEvaluacion();
+                                        }
                                     }
                                 }
                             }
@@ -1798,11 +1838,15 @@ public class cpController extends HttpServlet {
                         }
                     }
                     float sumaCumplimientoIndicadores = 0;
+                    int calificados = 0;
                     for (int i = 0; i < cumplimiento.length; i++) {
-                        sumaCumplimientoIndicadores += cumplimiento[i];
+                        if (cumplimiento[i] > 0.0) {
+                            sumaCumplimientoIndicadores += cumplimiento[i];
+                            calificados++;
+                        }
                     }
                     if (sumaCumplimientoIndicadores > 0) {
-                        cumplimiento2[j] = (float) sumaCumplimientoIndicadores / cumplimiento.length;
+                        cumplimiento2[j] = (float) sumaCumplimientoIndicadores / calificados;
                         cumplimiento2[j] = (float) (Math.rint(cumplimiento2[j] * 10) / 10);
                     }
 
@@ -1822,7 +1866,7 @@ public class cpController extends HttpServlet {
                     "detalleCaracteristica")) {
                 Proceso p = (Proceso) sesion.getAttribute("Proceso");
                 String idCaracteristica = request.getParameter("id");
-                Modelo m = p.getModeloId();
+                //Modelo m = p.getModeloId();
                 int suma;
                 int numP;
                 float promedioPregunta;
@@ -1860,11 +1904,15 @@ public class cpController extends HttpServlet {
                         } else {
                             if (instrumento.getId() == 2) {
                                 Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(j), "procesoId", p, "instrumentoId", instrumento);
-                                calificacionNum = (float) numDoc.getEvaluacion();
+                                if (numDoc != null) {
+                                    calificacionNum = (float) numDoc.getEvaluacion();
+                                }
                             } else {
                                 if (instrumento.getId() == 3) {
                                     Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(j), "procesoId", p, "instrumentoId", instrumento);
-                                    calificacionDoc = (float) numDoc.getEvaluacion();
+                                    if (numDoc != null) {
+                                        calificacionDoc = (float) numDoc.getEvaluacion();
+                                    }
                                 }
                             }
                         }
@@ -1964,11 +2012,12 @@ public class cpController extends HttpServlet {
                                 }
                                 if (suma > 0) {
                                     promedioPregunta = (float) suma / numP;
-                                    promediorespuestas[l] = promedioPregunta;
+                                    promediorespuestas[l] = (float) (Math.rint(promedioPregunta * 10) / 10);
 
                                 }
                             }
                         }
+
                         sesion.setAttribute("promediorepuestas", promediorespuestas);
                         sesion.setAttribute("ceros", ceros);
                         sesion.setAttribute("unos", unos);
@@ -2052,7 +2101,7 @@ public class cpController extends HttpServlet {
                         }
                         if (suma > 0) {
                             promedioPregunta = (float) suma / numP;
-                            promediorespuestas[l] = promedioPregunta;
+                            promediorespuestas[l] = (float) (Math.rint(promedioPregunta * 10) / 10);
 
                         }
                     }

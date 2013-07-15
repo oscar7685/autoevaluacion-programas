@@ -1,6 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <script type="text/javascript">
     $(function() {
+        $("a[data-dismiss='alert']").click(function(e) {
+            $(this).parent("div").hide();
+            e.preventDefault();
+            e.stopPropagation();
+        });
         var sum = 0;
         $("input[name^='ponderacion']").each(function() {
             sum += Number($(this).val());
@@ -17,6 +22,7 @@
             $("li a#total").html("<strong>Total Ponderacion: " + suma + "</strong>");
 
         });
+
         $('a[href^=#PonderacionFactores]').click(function() {
 
             if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
@@ -40,7 +46,7 @@
 
             }
         });
-        
+
         $("#formPonderarFactor").validate({
             errorElement: "em"
                     ,
@@ -51,6 +57,15 @@
             unhighlight: function(element, errorClass, validClass) {
                 $(element).parent("td").children("div").removeClass("in");
                 $(element).parent("td").children("div").hide();
+                if ($('#PonderacionFactores').is(':visible')) {
+                    var suma2 = 0;
+                    $("input[name^='ponderacion']").each(function() {
+                        suma2 += Number($(this).val());
+                    });
+                    if (suma2 === 100) {
+                        $('#PonderacionFactores').hide();
+                    }
+                }
             },
             errorPlacement: function(error, element) {
                 error.appendTo($(element).parent("td").children("div"));
@@ -144,6 +159,10 @@
                                         </td>
                                         <td>
                                             <input name="ponderacion${row.id}" class="span1 {required:true,number:true}" type="text">
+                                            <div class='alert alert-error fade' style="display: none">
+                                                <a data-dismiss='alert' class='close'>×</a>  
+                                                <strong>Error!</strong>
+                                            </div>
                                             <input type="hidden"  value="${row.id}" name="id${row.id}">
                                         </td>
                                         <td>

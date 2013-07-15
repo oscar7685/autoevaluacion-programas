@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link media="print" href="<%=request.getContextPath()%>/css/print.css" rel="stylesheet"/>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.PrintArea.js"></script>
 <script type="text/javascript">
     $(function() {
         var inst = $("#ins").val();
@@ -23,8 +22,10 @@
 
 
 </style>
+<div class="span10">
+    <a id="printEnlace" style="float: right;"><i class="icon-print"></i> Imprimir</a>      
+</div>
 
-<a class="span10" style="text-align: right;  margin-left: 60px" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
 <br>
 <div class="hero-unit">
     <div style="margin-left: -30px;">
@@ -127,13 +128,12 @@
 
         }, 1000);
 
-        setTimeout(function() {
-            $("#printEnlace").click(function() {
-                $('.hero-unit').printArea();
-                return false;
-            });
-        }, 1000);
+
+        $("#printEnlace").click(function() {
+            $(".hero-unit").printArea();
+            //    return false;
+        });
 
 
-    })
+    });
 </script>

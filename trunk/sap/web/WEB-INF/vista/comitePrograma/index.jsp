@@ -123,6 +123,7 @@
                                 <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
                                 <li><a href="#listPonderacionFactor"><i class="icon-list"></i> Factores</a></li>
                                 <li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>
+                                <li><a href="#listEncuestas"><i class="icon-check"></i> Encuestas</a></li>
                                 <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>
                                 <li><a href="#preparedInfoNumerica"><i class="icon-list-ol"></i> Información Numérica</a></li>
                                 <li><a href="#preparedInfoDocumental"><i class="icon-file-alt"></i> Información Documental</a></li>
@@ -155,7 +156,7 @@
             </div>
             <div align="center" style="bottom: 10px; position: absolute; margin-left: 10px">
                 <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank">
-                    <img src="<%=request.getContextPath()%>/img/LogoU.png" style="width: 220px;"></img>
+                    <img src="<%=request.getContextPath()%>/img/LogoU.png" style="width: 180px;"></img>
                 </a>
             </div>
         </div><!--/West-->

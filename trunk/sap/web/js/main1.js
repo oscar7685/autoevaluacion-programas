@@ -1,4 +1,7 @@
 $(function() {
+    if ($(".brand").text().length > 65) {
+        $(".brand").css("font-size", "22px");
+    }
     location = "/sap/#inicio";
     $(document).ajaxStart(function() {
         $("div.ui-layout-center").append("<div id='contenido'></div>");
@@ -35,6 +38,7 @@ $(function() {
                 , west__togglerContent_closed: "<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
                 , west__togglerTip_closed: "Mostrar menú"
                 , west__togglerTip_open: "Ocultar menú"
+                , west__enableCursorHotkey: false
                 , west__onclose_end: function() {
             //$("#conte").removeClass("span10").addClass("span12")
         }
@@ -100,6 +104,7 @@ $(function() {
                 '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
                 '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
                 '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>' +
+                '<li><a href="#listEncuestas"><i class="icon-check"></i> Encuestas</a></li>' +
                 ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
                 ' <li><a href = "#listMuestra"><i class = "icon-file-alt"></i> Información Numérica</a></li>' +
                 ' <li><a href = "#listMuestra"><i class = "icon-list-ol"></i> Información Documental</a></li>' +
@@ -141,13 +146,14 @@ $(function() {
             }); //fin post
 
 
-        } else if (hash === "#listPonderacionCara2" || hash === "#inicio" || hash === "#preparedCrearProceso" || hash === "#listarProceso" 
-                || hash === "#detalleProceso" || hash === "#detalleProceso" || hash === "#preparedPonderarFactor" || hash === "#ponderarFactor" 
-                || hash === "#listPonderacionFactor" || hash === "#preparedPonderarCara" || hash === "#preparedAsignarMuestra" 
-                || hash === "#selectorListMuestra" || hash === "#listMuestra" || hash === "#preparedEvaluador" || hash === "#preparedEditPonderarFactor" 
-                || hash === "#preparedEditPonderarCara" || hash === "#generarMuestraAleatoria" || hash === "#preparedEditarMuestra" 
-                || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental" 
-                || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum") {
+        } else if (hash === "#listPonderacionCara2" || hash === "#inicio" || hash === "#preparedCrearProceso" || hash === "#listarProceso"
+                || hash === "#detalleProceso" || hash === "#detalleProceso" || hash === "#preparedPonderarFactor" || hash === "#ponderarFactor"
+                || hash === "#listPonderacionFactor" || hash === "#preparedPonderarCara" || hash === "#preparedAsignarMuestra"
+                || hash === "#selectorListMuestra" || hash === "#listMuestra" || hash === "#preparedEvaluador" || hash === "#preparedEditPonderarFactor"
+                || hash === "#preparedEditPonderarCara" || hash === "#generarMuestraAleatoria" || hash === "#preparedEditarMuestra"
+                || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
+                || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
+                || hash === "#listEncuestas") {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
@@ -161,6 +167,9 @@ $(function() {
                         $(".page_loading").hide();
                     }
                     );
+                    if (hash === "#listPonderacionCara2") {
+                        hash = "#listPonderacionCara";
+                    }
                     actualizaEnlaces(hash);
                 } //fin success
             }); //fin del $.ajax
@@ -316,8 +325,8 @@ $(function() {
                 }
                 //fin success
             }); //fin del $.ajax
-        } else if (hash.indexOf("#detalleFactor") !== -1 || hash.indexOf("#detalleCaracteristica") !== -1 || hash.indexOf("#detalleIndicador") !== -1 
-                || hash.indexOf("#detallePregunta") !== -1) {
+        } else if (hash.indexOf("#detalleFactor") !== -1 || hash.indexOf("#detalleCaracteristica") !== -1 || hash.indexOf("#detalleIndicador") !== -1
+                || hash.indexOf("#detallePregunta") !== -1 || hash.indexOf("#vistaPreviaEncuesta") !== -1) {
             var cual = hash.split("&");
             hash = cual[0];
             var url3 = "/sap/controladorCP?action=";

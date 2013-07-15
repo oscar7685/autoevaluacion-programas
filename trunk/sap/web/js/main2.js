@@ -37,6 +37,7 @@ $(function() {
                 , west__togglerContent_closed: "<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
                 , west__togglerTip_closed: "Mostrar menú"
                 , west__togglerTip_open: "Ocultar menú"
+                , west__enableCursorHotkey: false
                 , west__onclose_end: function() {
             $("#conte").removeClass("span10").addClass("span12");
         }
