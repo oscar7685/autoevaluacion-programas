@@ -61,13 +61,13 @@
                     url: "<%=request.getContextPath()%>/controladorF?action=responderE",
                     data: $("#formResponderE").serialize(),
                     beforeSend: function() {
-                        $("div.ui-layout-center").append("<div class='page_loading'>"
-                                + "<span>Enviando</span>"
-                                + "<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                        $("div.ui-layout-center").append(""
+                                + "<div id='dancing-dots-text'>"
+                                + "Enviando <span><span>.</span><span>.</span><span>.</span><span>.</span><span>.</span></span> "
                                 + "</div>");
                     },
                     success: function() {
-                        $(".page_loading").hide();
+                        $("#dancing-dots-text").remove();
                         $("#myModalGracias").modal();
                         $('#myModalGracias').on('hidden', function() {
                             location = "<%=request.getContextPath()%>/#inicio";
@@ -195,7 +195,7 @@
                                         <td>${status.count}</td>   
                                         <td><p>${resultado.preguntaId.pregunta}</p></td>
                                         <td>
-                                          <textarea name="pregunta${resultado.preguntaId.getId()}" id="pregunta${resultado.preguntaId.getId()}" cols="8" rows="2">${resultado.getRespuestaAbierta()}</textarea>
+                                            <textarea name="pregunta${resultado.preguntaId.getId()}" id="pregunta${resultado.preguntaId.getId()}" cols="8" rows="2">${resultado.getRespuestaAbierta()}</textarea>
                                         </td>
                                     </tr>
                                 </c:when>
@@ -292,8 +292,8 @@
 <script type="text/javascript">
     $(function() {
     <c:forEach items="${palabras}" var="pregunta">
-            $('#preguntas').html($('#preguntas').html().replace(/(${pregunta.palabra})/g
-            ,'<a href="#" data-toggle="tooltip" title="${pregunta.significado}">$1</a>'));
+        $('#preguntas').html($('#preguntas').html().replace(/(${pregunta.palabra})/g
+                , '<a href="#" data-toggle="tooltip" title="${pregunta.significado}">$1</a>'));
     </c:forEach> 
     });
     $('a[data-toggle="tooltip"]').tooltip();

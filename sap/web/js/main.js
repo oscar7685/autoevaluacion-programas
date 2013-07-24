@@ -4,6 +4,10 @@ $(function() {
         $(this).parent().hide();
     });
 
+    $("#perfilIngreso").change(function() {
+        $("#formulario_login").valid();
+    });
+
     $("#formulario_login").validate({
         errorLabelContainer: ".alert-error",
         submitHandler: function() {

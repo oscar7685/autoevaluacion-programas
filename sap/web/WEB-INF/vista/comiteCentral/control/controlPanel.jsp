@@ -27,7 +27,7 @@
                                             <c:out value="${row.programaId.facultadId.nombre}"/>
                                         </td>
                                         <td>   
-                                            <c:out value="${row.programaId.nombre}"/>
+                                            <a href="#verProceso">${row.programaId.nombre}</a>
                                         </td>
                                         <td>   
                                             <c:out value="${row.fechainicio}"/>
@@ -46,7 +46,7 @@
                                             <c:out value="${row.programaId.facultadId.nombre}"/>
                                         </td>
                                         <td>   
-                                            <c:out value="${row.programaId.nombre}"/>
+                                            <a href="#verProceso">${row.programaId.nombre}</a>
                                         </td>
                                         <td>   
                                             <c:out value="${row.fechainicio}"/>

@@ -5,10 +5,10 @@ $(function() {
     location = "/sap/#inicio";
     $(document).ajaxStart(function() {
         $("div.ui-layout-center").append("<div id='contenido'></div>");
-        // $("#contenido").hide();
-        $("div.ui-layout-center").append("<div class='page_loading'>"
-                + "<span>Cargando</span>"
-                + "<img src='css/images/loading.gif' style='margin-left:6px;'>"
+        //$("#contenido").hide();
+        $("div.ui-layout-center").append(""
+                + "<div id='dancing-dots-text'>"
+                + "Cargando <span><span>.</span><span>.</span><span>.</span><span>.</span><span>.</span></span> "
                 + "</div>");
 
     });
@@ -126,7 +126,7 @@ $(function() {
                 ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
                 ' <li><a href = "#listMuestra"><i class = "icon-file-alt"></i> Información Numérica</a></li>' +
                 ' <li><a href = "#listMuestra"><i class = "icon-list-ol"></i> Información Documental</a></li>' +
-                ' <li><a  id = "informeEncuesta"  href = "<%=request.getContextPath()%>/#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
+                ' <li><a  id = "informeEncuesta"  href = "#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
                 ' <li class="divider"></li>' +
                 '<li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>' +
                 '</ul>' +
@@ -153,7 +153,7 @@ $(function() {
                 || hash === "#preparedEditPonderarCara" || hash === "#generarMuestraAleatoria" || hash === "#preparedEditarMuestra"
                 || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
                 || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
-                || hash === "#listEncuestas") {
+                || hash === "#listEncuestas" || hash === "#cerrarPreguntas") {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
@@ -164,7 +164,7 @@ $(function() {
                 {
                     $("#contenido").append(data);
                     $("#contenido").show(400, function() {
-                        $(".page_loading").hide();
+                        $("#dancing-dots-text").remove();
                     }
                     );
                     if (hash === "#listPonderacionCara2") {
@@ -192,7 +192,7 @@ $(function() {
                     myLayout.addCloseBtn("#west-closer", "west");
                     actualizaEnlaces();
                     $("#contenido").show(200, function() {
-                        $(".page_loading").hide();
+                        $("#dancing-dots-text").remove();
                     });
 
                 } //fin success
@@ -215,7 +215,7 @@ $(function() {
                     myLayout.addCloseBtn("#west-closer", "west");
                     actualizaEnlaces();
                     $("#contenido").show(200, function() {
-                        $(".page_loading").hide();
+                        $("#dancing-dots-text").remove();
                     });
                     location = "/sap/#inicio";
 
@@ -260,7 +260,7 @@ $(function() {
                         actualizaEnlaces();
                     }
                     $("#contenido").show(200, function() {
-                        $(".page_loading").hide();
+                        $("#dancing-dots-text").remove();
                     });
                     actualizaEnlaces(hash);
                 } //fin success
@@ -275,7 +275,7 @@ $(function() {
                 success: function(data)
                 {
                     $("#contenido").after(data);
-                    $(".page_loading").hide();
+                    $("#dancing-dots-text").remove();
 
 
                 } //fin success
@@ -294,7 +294,7 @@ $(function() {
                     $("#contenido").append(data);
 
                     setTimeout(function() {
-                        $(".page_loading").hide();
+                        $("#dancing-dots-text").remove();
                     }, 200);
 
                     setTimeout(function() {
@@ -341,7 +341,7 @@ $(function() {
                     myLayout.addCloseBtn("#west-closer", "west");
                     actualizaEnlaces();
                     $("#contenido").show(200, function() {
-                        $(".page_loading").hide();
+                        $("#dancing-dots-text").remove();
                     });
                 } //fin success
             }); //fin del $.ajax
@@ -357,7 +357,7 @@ $(function() {
                     {
                         $("#contenido").append(data);
                         setTimeout(function() {
-                            $(".page_loading").hide();
+                            $("#dancing-dots-text").remove();
                         }, 200);
                         actualizaEnlaces(hash);
                     } //fin success
@@ -386,7 +386,7 @@ $(function() {
                     myLayout.addCloseBtn("#west-closer", "west");
                     actualizaEnlaces();
                     $("#contenido").show(200, function() {
-                        $(".page_loading").hide();
+                        $("#dancing-dots-text").remove();
                     });
                 } else {
                     $('#modalCp2').modal();

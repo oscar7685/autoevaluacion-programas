@@ -178,7 +178,7 @@
                 rotation: - 90,
                 color: '#FFFFFF',
                 align: 'right',
-                x: - 3,
+                x: 4,
                 y: 10,
                 formatter: function() {
         return this.y;

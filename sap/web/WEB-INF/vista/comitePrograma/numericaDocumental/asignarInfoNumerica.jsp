@@ -8,14 +8,14 @@
             $(this).data('oldVal', $(this).val());
 
             // Look for changes in the value
-            $(this).bind("change", function(event) {
+            $(this).change(function() {
                 // If value has changed...
                 if ($(this).data('oldVal') != $(this).val()) {
-                    $(this).parents('tr').children('input[name^=InfoCambio]').attr("value", "1");
+                    $(this).parents('tr').find('input[name^=InfoCambio]').attr("value", "1");
                 }
             });
         });
-
+        $("i").popover({trigger: "hover", placement: 'bottom',html: true});
         $("#actualiza").click(function() {
             $(this).button('loading');
             $("#formInfoNum").submit();
@@ -51,10 +51,13 @@
                         <th>Responsable</th>
                         <th>Medio</th>
                         <th>Lugar</th>
-                        <th>Estado</th>
+                        <th>Estado <i style="font-size: 25px; vertical-align: -2px;" class="icon-info-sign" data-content="<p style='font-weight:normal'>5: La información requerida en el indicador está completa y actualizada.<br/>
+                                      4: La información requerida en el indicador está completa y en proceso de actualización.<br/>
+                                      3: La información requerida en el indicador está en proceso de elaboración.<br/>
+                                      2: Se detectó la inexistencia de la información requerida en el indicador. Ya se previó su elaboración.<br/>
+                                      1: La información requerida en el indicador no existe y no se ha previsto su elaboración.</p>" data-original-title="Escala de gradación"></i></th>
                         <th>Acci&oacute;n a implementar u observaci&oacute;n</th>
                         </thead>
-                        <tbody>
                         <tbody>
                             <c:forEach items="${lisrInidicadorsNum}" var="item" varStatus="iter">
                                 <c:set var="encontrado" value="false"></c:set>

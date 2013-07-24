@@ -23,7 +23,7 @@
         if (${aux_index2 == 2}) {
             /*$.ajax({
              type: 'POST',
-             url: "<%=request.getContextPath()%>/ControllerAI?action=recargarEstado",
+             url: "sap/ControllerAI?action=recargarEstado",
              success: function(data){
              $("#estado").empty();
              $("#estado").html(data);
@@ -31,27 +31,27 @@
              });*/
         }
         $("#actEnlaceEstado").click(function() {
-            $("div.ui-layout-center").empty();
-            $.ajax({
-                type: 'POST',
-                url: "<%=request.getContextPath()%>/ControllerAI?action=estadoProcesoAI",
-                success: function(data) {
-                    $(".contenido").html(data);
-                    setTimeout(function() {
-                        $(".page_loading").hide();
-                    }, 200)
-                } //fin success
-            }); //fin $.ajaxF          
-
-            $.ajax({
-                type: 'POST',
-                url: "<%=request.getContextPath()%>/ControllerAI?action=recargarEstado",
-                success: function(data) {
-                    $("#estado").empty();
-                    $("#estado").html(data);
-                }
-            });
-
+            /*   $("div.ui-layout-center").empty();
+             $.ajax({
+             type: 'POST',
+             url: "sap/ControllerAI?action=estadoProcesoAI",
+             success: function(data) {
+             $(".contenido").html(data);
+             setTimeout(function() {
+             $("#dancing-dots-text").remove();
+             }, 200)
+             } //fin success
+             }); //fin $.ajaxF          
+             
+             $.ajax({
+             type: 'POST',
+             url: "sap/ControllerAI?action=recargarEstado",
+             success: function(data) {
+             $("#estado").empty();
+             $("#estado").html(data);
+             }
+             });
+             */
         }); //fin eventoClick #actEnlaceEstado
 
         $(".printEnlace").click(function() {

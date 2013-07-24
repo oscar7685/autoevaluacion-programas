@@ -89,7 +89,7 @@
                     <input type="text" placeholder="Usuario" name="codigo" id="codigo" class="input-block-level {required:true}">
                     <input type="password" placeholder="Contraseña" name="clave" id="pass" class="input-block-level {required:true}" >
                     <label>Perfil de ingreso</label>
-                    <select id="perfilIngreso" name="perfilIngreso" class="input-block-level">
+                    <select id="perfilIngreso" name="perfilIngreso" class="input-block-level {required:true}">
                         <option>Comite central</option>
                         <option>Comite programa</option>
                         <optgroup label="Fuente">
@@ -102,7 +102,7 @@
                         </optgroup>
                     </select>
                     <label class="checkbox">
-                        <input type="checkbox" value="remember-me"> Recordar
+                        <input type="checkbox" name="recordar" value="remember-me"> Recordar
                     </label>
                     <button id="btnIniciar" type="submit" class="btn btn-large btn-primary">Iniciar sesi&oacute;n</button>
                 </form>
@@ -113,11 +113,11 @@
                 <div class="span2"></div>
                 <div class="span5" style="margin-left: 0px">
                     <br/>
-                    <p><a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img  src="<%=request.getContextPath()%>/img/logooficial.png" style="margin-top: 20px; margin-left: 0px;"></a></p>
+                    <p><a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img  src="/sap/img/logooficial2.png" style="margin-top: 12px; margin-left: 0px;"></a></p>
                 </div>
                 <div class="span3">
                     <br/>
-                    <p><a title="Universidad de Cartagena" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/img/sello2.png"></a></p>
+                    <p><a title="Universidad de Cartagena" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="/sap/img/selloAcreditacion.png"></a></p>
                 </div>
                 <div class="span2"></div>
             </div>
@@ -128,7 +128,6 @@
         </div> <!-- /container -->
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
         <script src="js/jquery.validate.js"></script>
         <script src="js/jquery.metadata.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>

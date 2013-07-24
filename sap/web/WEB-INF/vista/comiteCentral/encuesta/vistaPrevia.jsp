@@ -63,7 +63,7 @@
 
 
                             <div class="span5">
-                                <p>${status.count} ${pregunta.getPregunta()}</p>
+                                <p>${pregunta.getCodigo()} ${pregunta.getPregunta()}</p>
                                 <c:choose>
                                     <c:when test="${pregunta.getTipo()=='1'}">
                                         <label class="radio"><input type="radio">5 Completamente deacuerdo</label>
@@ -85,7 +85,7 @@
 
                         <c:otherwise>
                             <div class="span5">
-                                <p>${status.count} ${pregunta.getPregunta()}</p>
+                                <p>${pregunta.getCodigo()} ${pregunta.getPregunta()}</p>
                                 <label class="radio"><input type="radio">5 Completamente deacuerdo</label>
                                 <label class="radio"><input type="radio">4 De acuerdo</label>
                                 <label class="radio"><input type="radio">3 Parcialmente de acuerdo</label>

@@ -11,7 +11,7 @@
                     url: "/sap/controladorCP?action=cambiarClave",
                     data: $("#formularioContrasena").serialize(),
                     success: function(data) {
-                        $(".page_loading").hide();
+                        $("#dancing-dots-text").remove();
                         if (data == "0") {
                             $("#modalClaveOK").modal();
                             location = "/sap/#inicio";

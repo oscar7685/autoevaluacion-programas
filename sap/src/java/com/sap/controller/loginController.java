@@ -28,6 +28,7 @@ import com.sap.entity.Muestraegresado;
 import com.sap.entity.Muestraempleador;
 import com.sap.entity.Muestraestudiante;
 import com.sap.entity.Muestrapersona;
+import com.sap.entity.Pregunta;
 import com.sap.entity.Proceso;
 import com.sap.entity.Representante;
 import java.io.IOException;
@@ -537,6 +538,24 @@ public class loginController extends HttpServlet {
                                                 session.setAttribute("EstadoProceso", 2);
                                                 session.setAttribute("Proceso", p);
                                                 session.setAttribute("Modelo", p.getModeloId());
+                                                
+                                                /////Comienza para saber si el modelo en cuestion tiene preguntas abiertas
+                                                boolean tienePreguntasAbiertas = false;
+                                                List<Pregunta> preguntasModelo = p.getModeloId().getPreguntaList();
+                                                for (Pregunta pregunta : preguntasModelo) {
+                                                    if (pregunta.getTipo().equals("2")) {
+                                                        tienePreguntasAbiertas = true;
+                                                        break;
+                                                    }
+                                                }
+                                                if (tienePreguntasAbiertas) {
+                                                    session.setAttribute("abiertas", "true");
+                                                } else {
+                                                    session.setAttribute("abiertas", "false");
+                                                }
+                                                /////////Termina 
+
+
                                             } else {
                                                 session.setAttribute("EstadoProceso", 0);
                                                 //  session.setAttribute("Proceso", p);
