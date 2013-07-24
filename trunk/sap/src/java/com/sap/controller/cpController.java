@@ -35,6 +35,7 @@ import com.sap.ejb.PreguntaFacade;
 import com.sap.ejb.ProcesoFacade;
 import com.sap.ejb.ProgramaFacade;
 import com.sap.ejb.RepresentanteFacade;
+import com.sap.ejb.ResultadoevaluacionFacade;
 import com.sap.entity.Administrativo;
 import com.sap.entity.Agenciagubernamental;
 import com.sap.entity.Caracteristica;
@@ -42,6 +43,7 @@ import com.sap.entity.Directorprograma;
 import com.sap.entity.Docente;
 import com.sap.entity.Egresado;
 import com.sap.entity.Empleador;
+import com.sap.entity.Encabezado;
 import com.sap.entity.Encuesta;
 import com.sap.entity.Estudiante;
 import com.sap.entity.Factor;
@@ -86,6 +88,8 @@ import javax.servlet.http.HttpSession;
  */
 public class cpController extends HttpServlet {
 
+    @EJB
+    private ResultadoevaluacionFacade resultadoevaluacionFacade;
     @EJB
     private EncuestaFacade encuestaFacade;
     @EJB
@@ -2135,6 +2139,33 @@ public class cpController extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
 
+            } else if (action.equals("cerrarPreguntas")) {
+                List<Resultadoevaluacion> acerrar = new ArrayList<Resultadoevaluacion>();
+                Proceso pro = (Proceso) sesion.getAttribute("Proceso");
+                List<Encabezado> encabezados = encabezadoFacade.findByList2("estado", "terminado", "procesoId", pro);
+                for (Encabezado encabezado : encabezados) {
+                    List<Resultadoevaluacion> resultados = resultadoevaluacionFacade.findByList("encabezadoId", encabezado);
+                    for (Resultadoevaluacion resultadoevaluacion : resultados) {
+                        if (resultadoevaluacion.getPreguntaId().getTipo().equals("2")) {
+                            acerrar.add(resultadoevaluacion);
+                        }
+                    }
+                }
+                sesion.setAttribute("acerrar", acerrar);
+                String url = "/WEB-INF/vista/comitePrograma/proceso/cerrarPregunta.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+
+            } else if (action.equals("cerrarP")) {
+                List<Resultadoevaluacion> acerrar = (List<Resultadoevaluacion>) sesion.getAttribute("acerrar");
+                for (Resultadoevaluacion resultadoevaluacion : acerrar) {
+                    String cambio = request.getParameter("InfoCambio" + resultadoevaluacion.getId());
+                    if (cambio.equals("1")) {
+                        String calificacion = request.getParameter("resultado" + resultadoevaluacion.getId());
+                        resultadoevaluacion.setRespuesta(calificacion);
+                        resultadoevaluacionFacade.edit(resultadoevaluacion);
+                    }
+                }
             } else {
                 if (action.equals("contrasena")) {
                     String url = "/WEB-INF/vista/comitePrograma/contrasena.jsp";

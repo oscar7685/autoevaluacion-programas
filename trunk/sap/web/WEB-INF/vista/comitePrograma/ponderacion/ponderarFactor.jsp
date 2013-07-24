@@ -51,12 +51,12 @@
             errorElement: "em"
                     ,
             highlight: function(element, errorClass) {
-                $(element).parent("td").children("div").addClass("in");
-                $(element).parent("td").children("div").show();
+                $(element).parent("td").find("div").addClass("in");
+                $(element).parent("td").find("div").show();
             },
             unhighlight: function(element, errorClass, validClass) {
-                $(element).parent("td").children("div").removeClass("in");
-                $(element).parent("td").children("div").hide();
+                $(element).parent("td").find("div").removeClass("in");
+                $(element).parent("td").find("div").hide();
                 if ($('#PonderacionFactores').is(':visible')) {
                     var suma2 = 0;
                     $("input[name^='ponderacion']").each(function() {
@@ -68,7 +68,7 @@
                 }
             },
             errorPlacement: function(error, element) {
-                error.appendTo($(element).parent("td").children("div"));
+                error.appendTo($(element).parent("td").find("div"));
             },
             rules: {
                 field: {

@@ -127,6 +127,11 @@
                                 <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>
                                 <li><a href="#preparedInfoNumerica"><i class="icon-list-ol"></i> Información Numérica</a></li>
                                 <li><a href="#preparedInfoDocumental"><i class="icon-file-alt"></i> Información Documental</a></li>
+                                    <c:choose>
+                                        <c:when test="${abiertas == 'true'}">
+                                        <li><a href="#cerrarPreguntas"><i class="icon-lock"></i> Cerrar preguntas</a></li>
+                                        </c:when>
+                                    </c:choose>
                                 <li class="nav-header">Estado del proceso</li>
                                 <li><a  id="informeEncuesta"  href="#estadoProceso"><i class="icon-bar-chart"></i> Estado del proceso</a></li>
                             </ul>
@@ -154,11 +159,6 @@
                     </c:otherwise>
                 </c:choose>
             </div>
-            <div align="center" style="bottom: 10px; position: absolute; margin-left: 10px">
-                <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank">
-                    <img src="<%=request.getContextPath()%>/img/LogoU.png" style="width: 180px;"></img>
-                </a>
-            </div>
         </div><!--/West-->
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -171,6 +171,7 @@
         <script src="<%=request.getContextPath()%>/js/jquery.ba-hashchange.min.js"></script>
         <script src="<%=request.getContextPath()%>/js/highcharts.js"></script>
         <script src="<%=request.getContextPath()%>/js/highcharts-more.js"></script>
+        <script src="<%=request.getContextPath()%>/js/exporting.js"></script>
         <script src="<%=request.getContextPath()%>/js/jquery.dataTables.min.js"></script>
         <script src="<%=request.getContextPath()%>/js/main1.js"></script>
 
@@ -200,6 +201,20 @@
                 <h4>Evaluaci&oacute;n informaci&oacute;n documental.</h4>
                 <br>
                 <p>La informaci&oacute;n documental se ha evaluado satisfactoriamente.</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+            </div>
+        </div>
+        <div class="modal hide fade" id="myModalCP">
+            <div class="modal-header">
+                <a data-dismiss="modal" class="close">×</a>
+                <h3>Atenci&oacute;n!</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Cerrar preguntas.</h4>
+                <br>
+                <p>Las preguntas se ha cerrado satisfactoriamente.</p>
             </div>
             <div class="modal-footer">
                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>

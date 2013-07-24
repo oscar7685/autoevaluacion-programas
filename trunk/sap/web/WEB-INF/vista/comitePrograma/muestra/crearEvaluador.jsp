@@ -17,7 +17,7 @@
                                 $(".divEvaluador").remove();
                                 $("#listM").append(datos);
                                 $("#contenido").show(200, function() {
-                                    $(".page_loading").hide();
+                                    $("#dancing-dots-text").remove();
                                 });
                             } //fin success
                         }); //fin $.ajax 

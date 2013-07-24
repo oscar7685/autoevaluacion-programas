@@ -67,7 +67,7 @@
                         success: function(datos) {
                             $("#listM").append(datos);
                             $("#contenido").show(200, function() {
-                                $(".page_loading").hide();
+                                $("#dancing-dots-text").remove();
                             });
                         } //fin success
                     }); //fin $.ajax    
@@ -84,7 +84,7 @@
                     $("#editM").empty();
                     $("#editM").append(datos);
                     $("#contenido").show(200, function() {
-                        $(".page_loading").hide();
+                        $("#dancing-dots-text").remove();
                     });
                 } //fin success
             }); //fin $.ajax    
@@ -122,7 +122,7 @@
                     $("#listM").empty();
                     $("#listM").append(datos);
                     $("#contenido").show(200, function() {
-                        $(".page_loading").hide();
+                        $("#dancing-dots-text").remove();
                     });
                 } //fin success
             }); //fin $.ajax   

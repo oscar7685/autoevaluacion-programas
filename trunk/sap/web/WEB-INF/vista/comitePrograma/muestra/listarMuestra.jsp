@@ -25,9 +25,9 @@
                     data: $("#formListarMuestra").serialize(),
                     success: function(datos) {
                         $("#listM").append(datos);
-                        $("#contenido").show(200, function() {
-                            $(".page_loading").hide();
-                        });
+                        setTimeout(function() {
+                            $("#dancing-dots-text").remove();
+                        }, 200);
                     } //fin success
                 }); //fin $.ajax    
             }
@@ -47,9 +47,10 @@
                     success: function(datos) {
                         $("#listM").empty();
                         $("#listM").append(datos);
-                        $("#contenido").show(200, function() {
-                            $(".page_loading").hide();
-                        });
+                        setTimeout(function() {
+                            $("#dancing-dots-text").remove();
+                        }, 200);
+
                     } //fin success
                 }); //fin $.ajax    
             }

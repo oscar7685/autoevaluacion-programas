@@ -8,7 +8,7 @@
                     url: "/sap/controladorCP?action=crearProceso",
                     data: $("#formCrearProceso").serialize(),
                     success: function(data) {
-                        $("#dancing-dots-text").hide();
+                        $("#dancing-dots-text").remove();
                         if (data == 1) {
                             location = "/sap/#controlPanel";
                         }

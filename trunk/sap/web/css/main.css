@@ -98,10 +98,7 @@ body {
 .nav-list li a >i, .nav-list li a:hover >i{
     color: #222222;
 }
-.page_loading {
 
-
-}
 
 .action a:hover [class^="icon-"]:before, .action a:hover [class*=" icon-"]:before {
     font-size: 28px;

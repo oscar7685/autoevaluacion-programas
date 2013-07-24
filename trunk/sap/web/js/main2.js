@@ -142,7 +142,7 @@ $(function() {
                 {
                     $("#contenido").append(data);
                     $("#contenido").show(200, function() {
-                        $("#dancing-dots-text").hide();
+                        $("#dancing-dots-text").remove();
                     });
 
                 } //fin success
@@ -161,7 +161,7 @@ $(function() {
                         $("#contenido").show(200, function() {
                             menuModelo();
                             myLayout.addCloseBtn("#west-closer", "west");
-                            $("#dancing-dots-text").hide();
+                            $("#dancing-dots-text").remove();
                         });
                         actualizaEnlaces(hash);
                     } //fin success
@@ -188,7 +188,7 @@ $(function() {
                                 myLayout.addCloseBtn("#west-closer", "west");
                             }
                             $("#contenido").show(200, function() {
-                                $("#dancing-dots-text").hide();
+                                $("#dancing-dots-text").remove();
                             });
 
 
@@ -214,7 +214,7 @@ $(function() {
 
                                 }
                                 $("#contenido").show(200, function() {
-                                    $("#dancing-dots-text").hide();
+                                    $("#dancing-dots-text").remove();
                                 });
                                 actualizaEnlaces(hash);
                             }
@@ -240,7 +240,7 @@ $(function() {
                                         myLayout.addCloseBtn("#west-closer", "west");
                                     }
                                     $("#contenido").show(200, function() {
-                                        $("#dancing-dots-text").hide();
+                                        $("#dancing-dots-text").remove();
                                     });
                                     actualizaEnlaces(hash);
                                 } //fin success
@@ -264,7 +264,7 @@ $(function() {
 
                                         }
                                         $("#contenido").show(200, function() {
-                                            $("#dancing-dots-text").hide();
+                                            $("#dancing-dots-text").remove();
                                         });
                                         actualizaEnlaces(hash);
                                     } //fin success

@@ -70,7 +70,7 @@ $(function() {
                     {
                         $("#contenido").append(data);
                         $("#contenido").show(400, function() {
-                            $("#dancing-dots-text").hide();
+                            $("#dancing-dots-text").remove();
                         });
                     } //fin success
                 }); //fin del $.ajax
@@ -95,7 +95,7 @@ $(function() {
                         {
                             $("#contenido").append(data);
                             $("#contenido").show(200, function() {
-                                $("#dancing-dots-text").hide();
+                                $("#dancing-dots-text").remove();
                             });
                         } //fin success
                     }); //fin del $.ajax
