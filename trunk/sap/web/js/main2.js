@@ -5,7 +5,7 @@ $(function() {
     location = "/sap/#inicio";
     $(document).ajaxStart(function() {
         $("div.ui-layout-center").append("<div id='contenido'></div>");
-        $("#contenido").hide();
+        //$("#contenido").hide();
         $("div.ui-layout-center").append(""
                 + "<div id='dancing-dots-text'>"
                 + "Cargando <span><span>.</span><span>.</span><span>.</span><span>.</span><span>.</span></span> "
@@ -67,6 +67,7 @@ $(function() {
 
 
     var menuModelo = function() {
+        $(".ui-layout-content > .alert").remove();
         $("#menu").html('<ul class="nav nav-list"> ' +
                 '<button id="west-closer" class="close">&laquo;</button>' +
                 '<li class="nav-header">Modelo</li>' +
@@ -81,6 +82,7 @@ $(function() {
                 '</ul>');
     };
     var menuFactores = function() {
+        $(".ui-layout-content > .alert").remove();
         $("#menu").html('<ul class="nav nav-list">' +
                 '<button id="west-closer" class="close">&laquo;</button>' +
                 '<li><a href="#listarModelo"><i class="icon-level-up"></i>Men&uacute; modelo</a></li>' +
@@ -270,16 +272,193 @@ $(function() {
                                     } //fin success
                                 }); //fin del $.ajax
 
+                            } else {
+                                if (hash.indexOf("#verProcesos") !== -1) {
+                                    var cual = hash.split("&");
+                                    hash = cual[0];
+                                    var url3 = "/sap/controladorCC?action=";
+                                    url3 = url3.concat(cual[0].substring(1), "CC&id=", cual[1]);
+                                    $("div.ui-layout-center").empty();
+                                    $("div.ui-layout-west").empty();
+                                    $.ajax({
+                                        type: "POST",
+                                        url: url3,
+                                        success: function(data)
+                                        {
+                                            $("div.ui-layout-west").append(data);
+                                            setTimeout(function() {
+                                                $("#dancing-dots-text").remove();
+                                                myLayout.addCloseBtn("#west-closer", "west");
+                                            }, 200);
+
+                                        } //fin success
+                                    }); //fin del $.ajax
+
+
+                                } else if (hash === "#listPonderacionCara2" || hash === "#listarProceso"
+                                        || hash === "#detalleProceso" || hash === "#ponderarFactor"
+                                        || hash === "#listPonderacionFactor" || hash === "#preparedPonderarCara" || hash === "#preparedAsignarMuestra"
+                                        || hash === "#selectorListMuestra" || hash === "#listMuestra" || hash === "#preparedEditPonderarFactor"
+                                        || hash === "#preparedEditPonderarCara" || hash === "#generarMuestraAleatoria" || hash === "#preparedEditarMuestra"
+                                        || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
+                                        || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
+                                        || hash === "#listEncuestas" || hash === "#cerrarPreguntas") {
+                                    var url3 = "/sap/" + hash;
+                                    url3 = url3.replace('#', "controladorCP?action=");
+                                    $("div.ui-layout-center").empty();
+                                    $.ajax({
+                                        type: "POST",
+                                        url: url3,
+                                        success: function(data)
+                                        {
+                                            $("#contenido").append(data);
+                                            $("#contenido").show(400, function() {
+                                                $("#dancing-dots-text").remove();
+                                            }
+                                            );
+                                            if (hash === "#listPonderacionCara2") {
+                                                hash = "#listPonderacionCara";
+                                            }
+                                            actualizaEnlaces(hash);
+                                        } //fin success
+                                    }); //fin del $.ajax
+                                }  else if (hash.indexOf("#verProceso") !== -1) {
+                                    var cual = hash.split("&");
+                                    hash = cual[0];
+                                    var url3 = "/sap/controladorCP?action=";
+                                    url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
+                                    $("div.ui-layout-center").empty();
+                                    $.ajax({
+                                        type: "POST",
+                                        url: url3,
+                                        success: function(data)
+                                        {
+                                            $("#contenido").append(data);
+                                            menuProceso3();
+                                            myLayout.addCloseBtn("#west-closer", "west");
+                                            actualizaEnlaces();
+                                            $("#contenido").show(200, function() {
+                                                $("#dancing-dots-text").remove();
+                                            });
+                                            location = "/sap/#inicio";
+
+                                        } //fin success
+                                    }); //fin del $.ajax
+                                }  else if (hash === "#preparedEvaluador") {
+                                    var url3 = "/sap/" + hash;
+                                    url3 = url3.replace('#', "controladorCP?action=");
+                                    //$("div.ui-layout-center").empty();
+                                    $.ajax({
+                                        type: "POST",
+                                        url: url3,
+                                        success: function(data)
+                                        {
+                                            $("#contenido").after(data);
+                                            $("#dancing-dots-text").remove();
+
+
+                                        } //fin success
+                                    }); //fin del $.ajax
+                                    actualizaEnlaces(hash);
+                                }
+                                else if (hash === "#preparedPonderarFactor") {
+                                    var url3 = "/sap/" + hash;
+                                    url3 = url3.replace('#', "controladorCP?action=");
+                                    $("div.ui-layout-center").empty();
+                                    $.ajax({
+                                        type: "POST",
+                                        url: url3,
+                                        success: function(data)
+                                        {
+                                            $("#contenido").append(data);
+
+                                            setTimeout(function() {
+                                                $("#dancing-dots-text").remove();
+                                            }, 200);
+
+                                            setTimeout(function() {
+                                                $("div.ui-layout-center").affix();
+                                            }, 500);
+
+                                            $("div.ui-layout-center").affix('refresh');
+                                            actualizaEnlaces(hash);
+                                        }
+                                        //fin success
+                                    }); //fin del $.ajax
+                                } else if (hash === "#listPonderacionCara") {
+                                    var url3 = "/sap/" + hash;
+                                    url3 = url3.replace('#', "controladorCP?action=");
+                                    $("div.ui-layout-center").empty();
+                                    $.ajax({
+                                        type: "POST",
+                                        url: url3,
+                                        success: function(data)
+                                        {
+                                            if (data == 1) {
+                                                location = "/sap/#listPonderacionCara2";
+                                            } else {
+                                                $('#modalCp3').modal();
+                                                location = "/sap/#listPonderacionFactor";
+                                            }
+                                            actualizaEnlaces(hash);
+                                        }
+                                        //fin success
+                                    }); //fin del $.ajax
+                                } else if (hash.indexOf("#detalleFactor") !== -1 || hash.indexOf("#detalleCaracteristica") !== -1 || hash.indexOf("#detalleIndicador") !== -1
+                                        || hash.indexOf("#detallePregunta") !== -1 ) {
+                                    var cual = hash.split("&");
+                                    hash = cual[0];
+                                    var url3 = "/sap/controladorCP?action=";
+                                    url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
+                                    $("div.ui-layout-center").empty();
+                                    $.ajax({
+                                        type: "POST",
+                                        url: url3,
+                                        success: function(data)
+                                        {
+                                            $("#contenido").append(data);
+                                            myLayout.addCloseBtn("#west-closer", "west");
+                                            actualizaEnlaces();
+                                            $("#contenido").show(200, function() {
+                                                $("#dancing-dots-text").remove();
+                                            });
+                                        } //fin success
+                                    }); //fin del $.ajax
+                                } else {
+                                    if (hash === "#contrasena") {
+                                        var url3 = "/sap/" + hash;
+                                        url3 = url3.replace('#', "controladorCP?action=");
+                                        $("div.ui-layout-center").empty();
+                                        $.ajax({
+                                            type: "POST",
+                                            url: url3,
+                                            success: function(data)
+                                            {
+                                                $("#contenido").append(data);
+                                                setTimeout(function() {
+                                                    $("#dancing-dots-text").remove();
+                                                }, 200);
+                                                actualizaEnlaces(hash);
+                                            } //fin success
+                                        }); //fin del $.ajax
+                                    }
+                                }
                             }
 
+
+
                         }
+
                     }
                 }
-
             }
 
         }
+
     });
+
+
+
     $('#modalCc1b1').click(function() {
 
         $("div.ui-layout-center").empty();
@@ -313,4 +492,35 @@ $(function() {
             } //fin success
         }); //fin del $.ajax
     });
+
+    $('#modalCpb2').click(function() {
+        location = "#detalleProceso";
+    });
+
+    $('#modalCpb1').click(function() {
+        var url3 = "/sap/" + "controladorCP?action=iniciarProceso";
+        url3 = url3.replace('#', "controladorCP?action=");
+        $("div.ui-layout-center").empty();
+        $.ajax({
+            type: "POST",
+            url: url3,
+            success: function(data)
+            {
+                if (data == 1) {
+                    // $("#contenido").append(data);
+                    menuProceso2();
+                    myLayout.addCloseBtn("#west-closer", "west");
+                    actualizaEnlaces();
+                    $("#contenido").show(200, function() {
+                        $("#dancing-dots-text").remove();
+                    });
+                } else {
+                    $('#modalCp2').modal();
+                    location = "#detalleProceso";
+                }
+
+            } //fin success
+        }); //fin del $.ajax
+    });
+
 });

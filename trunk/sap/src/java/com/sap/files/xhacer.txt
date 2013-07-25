@@ -14,6 +14,7 @@ hacer q se expanda al entrar a llenar la info numerica y documental automaticame
 hacer que el recordar contraseña funcione
 hacer que la validacion en la ponderación funcione en internet explorer
 hacer el actualizar y el mostrar el porcentaje
+mostrar navegacion con breadcrumbs
 Optimize JPA for performance.
 
 

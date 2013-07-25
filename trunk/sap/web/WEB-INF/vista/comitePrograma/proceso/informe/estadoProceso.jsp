@@ -441,7 +441,7 @@
                         </tr>
 
 
-                    <div id="container" style="min-width: 400px; height: 500px; margin: 0 auto"></div>             
+                    <div id="container" style="height: 500px; margin: 0 auto" class="span10"></div>             
                     <br>
                     </tbody>
                 </table>

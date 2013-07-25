@@ -39,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -125,7 +126,7 @@ public class formController2 extends HttpServlet {
 
 
             } else if (action.equals("ejecutarProCC")) {
-                
+
                 System.out.println("ejecutando");
 
                 String idM = request.getParameter("id");
@@ -755,7 +756,55 @@ public class formController2 extends HttpServlet {
                                                     }
                                                 }
                                             }
+                                        } else if (action.equals("verProcesosCC")) {
+                                            String idProg = request.getParameter("id");
+                                            Programa pro = programaFacade.find(Integer.parseInt(idProg));
+                                            sesion.setAttribute("Programa", pro);
+                                            List procesos = (List) procesoFacade.findByPrograma(pro);
+                                            if (!procesos.isEmpty()) {
+                                                Iterator iter = procesos.iterator();
+                                                while (iter.hasNext()) {
+                                                    Proceso p = (Proceso) iter.next();
+                                                    if (p.getFechainicio().equals("En Configuración")) {
+                                                        sesion.setAttribute("EstadoProceso", 1);
+                                                        sesion.setAttribute("Proceso", p);
+                                                        sesion.setAttribute("Modelo", p.getModeloId());
+                                                    } else if (p.getFechacierre().equals("--")) {
+                                                        sesion.setAttribute("EstadoProceso", 2);
+                                                        sesion.setAttribute("Proceso", p);
+                                                        sesion.setAttribute("Modelo", p.getModeloId());
+
+                                                        /////Comienza para saber si el modelo en cuestion tiene preguntas abiertas
+                                                        boolean tienePreguntasAbiertas = false;
+                                                        List<Pregunta> preguntasModelo = p.getModeloId().getPreguntaList();
+                                                        for (Pregunta pregunta : preguntasModelo) {
+                                                            if (pregunta.getTipo().equals("2")) {
+                                                                tienePreguntasAbiertas = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                        if (tienePreguntasAbiertas) {
+                                                            sesion.setAttribute("abiertas", "true");
+                                                        } else {
+                                                            sesion.setAttribute("abiertas", "false");
+                                                        }
+                                                        /////////Termina 
+
+
+                                                    } else {
+                                                        sesion.setAttribute("EstadoProceso", 0);
+                                                        //  session.setAttribute("Proceso", p);
+                                                        //session.setAttribute("Modelo", p.getModeloId());
+                                                    }
+                                                }
+                                            } else {
+                                                sesion.setAttribute("EstadoProceso", 0);
+                                            }
+                                            String url = "/WEB-INF/vista/comiteCentral/control/comitePrograma/index.jsp";
+                                            RequestDispatcher rd = request.getRequestDispatcher(url);
+                                            rd.forward(request, response);
                                         } else {
+
                                             if (action.equals("inicioCC")) {
                                                 String url = "/WEB-INF/vista/comiteCentral/inicio.jsp";
                                                 RequestDispatcher rd = request.getRequestDispatcher(url);

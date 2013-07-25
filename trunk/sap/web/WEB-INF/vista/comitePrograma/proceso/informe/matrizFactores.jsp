@@ -246,7 +246,7 @@
                         </tbody>
                     </table>
                     <br/>          
-                    <div id="grafica" style="min-width: 400px; height: 500px; margin: 0 auto"></div>
+                    <div id="grafica" style="height: 500px; margin: 0 auto" class="span10"></div>
 
                     <table class="table">
                         <thead>
