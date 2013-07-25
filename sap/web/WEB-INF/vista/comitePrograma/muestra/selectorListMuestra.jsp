@@ -179,7 +179,7 @@
                                     <c:forEach items="${listPoblacion}" var="item" varStatus="iter">
 
                                         <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter55">
-
+                                            
 
                                             <c:if test="${item.personaId.id == row.muestrapersonaId.cedula}">
 
