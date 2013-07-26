@@ -7,9 +7,9 @@
                 <i class="icon-info-sign"></i> No existen proceso activos
             </div>
             <div id="menu" style="padding: 8px 0pt;" class="well">
-
                 <ul class="nav nav-list">  
                     <button id="west-closer" class="close">&laquo;</button>
+                    <li><a href="#controlPanel"><i class="icon-level-up"></i>Regresar al panel</a></li>
                     <li class="nav-header">Proceso de Autoevaluación</li>
                         <%-- <li><a href="#preparedCrearProceso"><i class="icon-plus"></i> Crear Proceso</a></li>--%>
                     <li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>
@@ -21,6 +21,7 @@
             <div id="menu" style="padding: 8px 0pt;" class="well">
                 <ul class="nav nav-list">  
                     <button id="west-closer" class="close">&laquo;</button>
+                    <li><a href="#controlPanel"><i class="icon-level-up"></i>Regresar al panel</a></li>
                     <li class="nav-header">Proceso de Autoevaluación</li>
                     <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
                     <li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Ponderar Factores</a></li>
@@ -34,6 +35,7 @@
             <div id="menu" style="padding: 8px 0pt;" class="well">
                 <ul class="nav nav-list">  
                     <button id="west-closer" class="close">&laquo;</button>
+                    <li><a href="#controlPanel"><i class="icon-level-up"></i>Regresar al panel</a></li>
                     <li class="nav-header">Proceso de Autoevaluación</li>
                     <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
                     <li><a href="#listPonderacionFactor"><i class="icon-list"></i> Factores</a></li>
@@ -57,6 +59,7 @@
             <div id="menu" style="padding: 8px 0pt;" class="well">
                 <ul class="nav nav-list">  
                     <button id="west-closer" class="close">&laquo;</button>
+                    <li><a href="#controlPanel"><i class="icon-level-up"></i>Regresar al panel</a></li>
                     <li class="nav-header">Proceso de Autoevaluación</li>
                     <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
                     <li><a href="#listPonderacionFactor"><i class="icon-list"></i> Factores</a></li>

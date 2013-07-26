@@ -23,7 +23,7 @@
                                         <c:out value="${row.objetivo}"/>
                                     </td>
                                     <td class="action span2" style="text-align:center;">
-                                        <a href="#vistaPreviaEncuesta&${row.id}" title="Vista previa"><i class="icon-eye-open"></i></a>
+                                        <a href="#vistaPreviaPEncuesta&${row.id}" title="Vista previa"><i class="icon-eye-open"></i></a>
                                     </td>
                                 </tr>
                             </c:forEach>
