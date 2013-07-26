@@ -193,7 +193,7 @@ public class cpController extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
 
-            } else if (action.equals("verProceso")) {
+            } else if (action.equals("verPProceso")) {
 
                 int id = Integer.parseInt(request.getParameter("id"));
 
@@ -530,7 +530,7 @@ public class cpController extends HttpServlet {
                 sesion.setAttribute("listaE2", encuestaFacade.findByModelo(modelo));
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
-            } else if (action.equals("vistaPreviaEncuesta")) {
+            } else if (action.equals("vistaPreviaPEncuesta")) {
                 String idE = request.getParameter("id");
                 Encuesta e = encuestaFacade.find(Integer.parseInt(idE));
                 sesion.setAttribute("encuesta", e);

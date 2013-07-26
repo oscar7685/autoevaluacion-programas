@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link media="print" href="<%=request.getContextPath()%>/css/print.css" rel="stylesheet"/>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.PrintArea.js"></script>
 <script type="text/javascript">
     $(function() {
         var inst = $("#ins").val();

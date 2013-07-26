@@ -322,7 +322,7 @@ $(function() {
                                             actualizaEnlaces(hash);
                                         } //fin success
                                     }); //fin del $.ajax
-                                }  else if (hash.indexOf("#verProceso") !== -1) {
+                                }  else if (hash.indexOf("#verPProceso") !== -1) {
                                     var cual = hash.split("&");
                                     hash = cual[0];
                                     var url3 = "/sap/controladorCP?action=";
@@ -405,7 +405,7 @@ $(function() {
                                         //fin success
                                     }); //fin del $.ajax
                                 } else if (hash.indexOf("#detalleFactor") !== -1 || hash.indexOf("#detalleCaracteristica") !== -1 || hash.indexOf("#detalleIndicador") !== -1
-                                        || hash.indexOf("#detallePregunta") !== -1 ) {
+                                        || hash.indexOf("#detallePregunta") !== -1 || hash.indexOf("#vistaPreviaPEncuesta") !== -1 ) {
                                     var cual = hash.split("&");
                                     hash = cual[0];
                                     var url3 = "/sap/controladorCP?action=";
