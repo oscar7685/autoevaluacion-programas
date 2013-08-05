@@ -130,7 +130,7 @@
 
     });
 </script>
-<c:if test="${selectorFuente != 'Estudiante'}">
+<c:if test="${selectorFuente != 'Estudiante' && tipoLogin=='Comite central'}">
     <div class="input-append span10 input-prepend" style="text-align: right; margin-left: 0px;">
         <form id="formGenearAleatorio">
             <span class="add-on">#</span><input name="numero" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn" data-content="<p style='text-align: justify'>Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button>
@@ -138,11 +138,17 @@
     </div>
 </c:if>
 <c:if test="${EstadoProceso == 2}">
-    <a class="span9" style="text-align: right; margin-left: 30px; text-align: right; cursor: pointer" id="actEnlace"><i class="icon-refresh"></i> Actualizar</a>  
-    <a  class="span1" style="text-align: right; margin-left: 0px; text-align: right; cursor: pointer" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
+    <div class="span10">
+        <a style="float:right; cursor: pointer" id="actEnlace"><i class="icon-refresh"></i> Actualizar</a>  
+        <a style="float:right; padding-right: 10px; cursor: pointer" id="printEnlace"><i class="icon-print"></i> Imprimir</a>      
+    </div>
+
 </c:if>
 <c:if test="${EstadoProceso != 2}">
-    <a  class="span10" style="text-align: right; margin-left: 0px; text-align: right; cursor: pointer" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
+    <div class="span10">
+        <a  style="float: right; cursor: pointer" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
+    </div>
+
 </c:if>
 <div id="printMuestra">
     <p style="font-weight: bold">Muestra generada para la fuente ${Fuente.nombre}. ${Programa.getNombre()}</p>
@@ -179,7 +185,7 @@
                                     <c:forEach items="${listPoblacion}" var="item" varStatus="iter">
 
                                         <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter55">
-                                            
+
 
                                             <c:if test="${item.personaId.id == row.muestrapersonaId.cedula}">
 
@@ -265,24 +271,13 @@
                             </tbody>
                         </table>
                         <p id="total" style="font-weight: bold">Total: ${contador + 1}</p>
-                        <c:if test="${selectorFuente != 'Docente' && selectorFuente != 'Estudiante' }">
-                            <a href="#preparedEvaluador" class="btn btn-large btn-primary llamador"><i class="icon-plus"> </i><i class="icon-user"></i> Registrar Evaluador</a>
-                        </c:if>
-                        <c:if test="${EstadoProceso == 2}">
-                            <c:if test="${selectorFuente == 'Estudiante' && Semestre != '--'}">
-                                <a id="bpreparedEditarMuestra" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
-                            </c:if>
+                        <c:if test="${EstadoProceso == 2 && tipoLogin=='Comite central'}">
+                            <a id="bpreparedEditarMuestra" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
                         </c:if>
                     </div>
                 </c:when>
                 <c:otherwise>
                     No  se ha generado la muestra para la fuente seleccionada.
-                    <br><br>
-                    <c:if test="${EstadoProceso == 2}">
-                        <c:if test="${selectorFuente != 'Docente' && selectorFuente != 'Estudiante' }">
-                            <a href="#preparedEvaluador" class="btn btn-large btn-primary llamador"><i class="icon-plus"> </i><i class="icon-user"></i> Registrar Evaluador</a>
-                        </c:if>
-                    </c:if>
                 </c:otherwise>
             </c:choose>
         </div>

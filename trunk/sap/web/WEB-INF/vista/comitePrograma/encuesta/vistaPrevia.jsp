@@ -23,7 +23,7 @@
 
 </style>
 <div class="span10">
-    <a id="printEnlace" style="float: right;"><i class="icon-print"></i> Imprimir</a>      
+    <a id="printEnlace" style="float: right; cursor: pointer;"><i class="icon-print"></i> Imprimir</a>      
 </div>
 
 <br>

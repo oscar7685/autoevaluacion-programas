@@ -1,7 +1,6 @@
 hacer editar muestra para cada una de las fuentes
 poner limitaciones a los diferentes pasos de un proceso
 Hacer la parte de informe y plan de mejoramiento
-entrar a los procesos desde el comite central
 
 hacer el ver encuesta de una fuente X aleatoriamente
 hacer el logo
@@ -14,10 +13,12 @@ hacer q se expanda al entrar a llenar la info numerica y documental automaticame
 hacer que el recordar contraseña funcione
 hacer que la validacion en la ponderación funcione en internet explorer
 hacer el actualizar y el mostrar el porcentaje
+
+tampoco actualiza las preguntas a cerrar
 mostrar navegacion con breadcrumbs
 Optimize JPA for performance.
 
-
+agregar la linea <script src="<%=request.getContextPath()%>/script/highcharts-more.js"></script> a index especial
 
 para diana 
 /*

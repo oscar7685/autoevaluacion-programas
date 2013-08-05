@@ -81,7 +81,7 @@
             ['4', ${cuatros[status.index]}],
     {
     name: '5',
-            y: ${ceros[status.index]},
+            y: ${cincos[status.index]},
             sliced: true,
             selected: true },
     ]
