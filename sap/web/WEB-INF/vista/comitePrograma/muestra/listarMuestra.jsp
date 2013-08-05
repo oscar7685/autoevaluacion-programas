@@ -16,7 +16,7 @@
                 $("#listM").empty();
                 $("#divSemestre").hide();
             }
-            else {
+            else {//para hacer el editar muestra
                 $("#divSemestre").hide();
                 $("#listM").empty();
                 $.ajax({
