@@ -46,7 +46,7 @@ public class Numericadocumental implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1000)
+    @Size(min = 1, max = 2000)
     @Column(name = "documento")
     private String documento;
     @Basic(optional = false)

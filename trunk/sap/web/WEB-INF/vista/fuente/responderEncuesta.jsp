@@ -163,7 +163,7 @@
                                         <td>${status.count}</td>   
                                         <td><p>${pregunta.pregunta}</p></td>
                                         <td>
-                                            <textarea name="pregunta${pregunta.getId()}" id="pregunta${pregunta.getId()}" cols="8" rows="2" class="required"></textarea>
+                                            <textarea name="pregunta${pregunta.getId()}" id="pregunta${pregunta.getId()}" cols="8" rows="2" class="required" maxlength="1000"></textarea>
                                         </td>
                                     </tr>
                                 </c:when>
@@ -195,7 +195,7 @@
                                         <td>${status.count}</td>   
                                         <td><p>${resultado.preguntaId.pregunta}</p></td>
                                         <td>
-                                            <textarea name="pregunta${resultado.preguntaId.getId()}" id="pregunta${resultado.preguntaId.getId()}" cols="8" rows="2">${resultado.getRespuestaAbierta()}</textarea>
+                                            <textarea name="pregunta${resultado.preguntaId.getId()}" id="pregunta${resultado.preguntaId.getId()}" cols="8" rows="2" maxlength="1000">${resultado.getRespuestaAbierta()}</textarea>
                                         </td>
                                     </tr>
                                 </c:when>
@@ -267,7 +267,7 @@
             </tbody>
         </table>
         <label>Observaciones y/o comentarios</label>
-        <textarea rows="4" class="input-block-level"  placeholder="Observaciones y/o comentarios" name="observaciones">${encabezado.comentarios}</textarea>
+        <textarea rows="4" class="input-block-level"  placeholder="Observaciones y/o comentarios" name="observaciones" maxlength="1000">${encabezado.comentarios}</textarea>
         <div class="row"> 
             <div class="span5">
                 <div class="pagination"></div>

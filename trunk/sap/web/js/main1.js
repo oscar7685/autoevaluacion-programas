@@ -40,10 +40,10 @@ $(function() {
                 , west__togglerTip_open: "Ocultar menú"
                 , west__enableCursorHotkey: false
                 , west__onclose_end: function() {
-            //$("#conte").removeClass("span10").addClass("span12")
+            $("#conte").removeClass("span10").addClass("span12");
         }
         , west__onopen_end: function() {
-            //$("#conte").removeClass("span12").addClass("span10")
+            $("#conte").removeClass("span12").addClass("span10");
         }
         , south__paneClass: "ui-layout-pane"
                 , west__togglerContent_open: ""
@@ -66,7 +66,18 @@ $(function() {
         $("a[href='" + hash + "']").parent().addClass("active");
     };
 
+    $("a[href='#preparedInfoNumerica']").click(function() {
+        setTimeout(function() {
+            $("#west-closer").trigger("click");
+        }, 500);
 
+    });
+    $("a[href='#preparedInfoDocumental']").click(function() {
+        setTimeout(function() {
+            $("#west-closer").trigger("click");
+        }, 500);
+
+    });
     var menuProceso0 = function() {
         $("#menu0").html('<div  align="center" class="alert alert-block">' +
                 ' <i class="icon-info-sign"></i> No existen proceso activos' +
