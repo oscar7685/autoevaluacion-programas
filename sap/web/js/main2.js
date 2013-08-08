@@ -319,10 +319,16 @@ $(function() {
                                             if (hash === "#listPonderacionCara2") {
                                                 hash = "#listPonderacionCara";
                                             }
+                                            if (hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental") {
+                                                setTimeout(function() {
+                                                    $("#west-closer").trigger("click");
+                                                }, 500);
+                                            }
+
                                             actualizaEnlaces(hash);
                                         } //fin success
                                     }); //fin del $.ajax
-                                }  else if (hash.indexOf("#verPProceso") !== -1) {
+                                } else if (hash.indexOf("#verPProceso") !== -1) {
                                     var cual = hash.split("&");
                                     hash = cual[0];
                                     var url3 = "/sap/controladorCP?action=";
@@ -344,7 +350,7 @@ $(function() {
 
                                         } //fin success
                                     }); //fin del $.ajax
-                                }  else if (hash === "#preparedEvaluador") {
+                                } else if (hash === "#preparedEvaluador") {
                                     var url3 = "/sap/" + hash;
                                     url3 = url3.replace('#', "controladorCP?action=");
                                     //$("div.ui-layout-center").empty();
@@ -405,7 +411,7 @@ $(function() {
                                         //fin success
                                     }); //fin del $.ajax
                                 } else if (hash.indexOf("#detalleFactor") !== -1 || hash.indexOf("#detalleCaracteristica") !== -1 || hash.indexOf("#detalleIndicador") !== -1
-                                        || hash.indexOf("#detallePregunta") !== -1 || hash.indexOf("#vistaPreviaPEncuesta") !== -1 ) {
+                                        || hash.indexOf("#detallePregunta") !== -1 || hash.indexOf("#vistaPreviaPEncuesta") !== -1) {
                                     var cual = hash.split("&");
                                     hash = cual[0];
                                     var url3 = "/sap/controladorCP?action=";

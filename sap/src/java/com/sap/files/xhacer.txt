@@ -1,15 +1,14 @@
-hacer editar muestra para cada una de las fuentes
+revisar editar muestra para cada una de las fuentes
+Si una misma persona sale seleccionada con diferentes proyectos debe mostrale 2 encuestas
 poner limitaciones a los diferentes pasos de un proceso
 Hacer la parte de informe y plan de mejoramiento
 
 hacer el ver encuesta de una fuente X aleatoriamente
 hacer el logo
-Si una misma persona sale seleccionada con diferentes proyectos debe mostrale 2 encuestas
 
 hacer el cambiar contrasenia para los estudiantes y para el comite central
 editar indicador falta que muestre el instrumento asociado si es recien creado
 al momento de querer quitar un instrumento a un indicador no lo hace en el editar indicador
-hacer q se expanda al entrar a llenar la info numerica y documental automaticamente
 hacer que el recordar contraseña funcione
 hacer que la validacion en la ponderación funcione en internet explorer
 hacer el actualizar y el mostrar el porcentaje

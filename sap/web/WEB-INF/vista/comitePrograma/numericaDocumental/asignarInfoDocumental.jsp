@@ -70,7 +70,7 @@
                                             <input type="hidden" name="InfoCambio${item.id}" value="0">    
                                         <td style="text-align: justify;">${item.codigo} ${item.nombre}</td>
                                         <td>
-                                            <textarea name="nombreDocumento${item.id}" rows="4" class="cambiable span2" placeholder="Documento asociado">${itemDC.documento}</textarea>
+                                            <textarea name="nombreDocumento${item.id}" rows="4" class="cambiable span3" placeholder="Documento asociado" maxlength="2000">${itemDC.documento}</textarea>
                                         </td>
                                         <td>
                                             <textarea name="responsableDocumento${item.id}" rows="4" class="cambiable span2" placeholder="Responsable">${itemDC.responsable}</textarea>
@@ -139,7 +139,7 @@
                                     <input type="hidden" name="InfoCambio${item.id}" value="0">
                                     <td style="text-align: justify;">${item.codigo} ${item.nombre}</td>
                                     <td>
-                                        <textarea name="nombreDocumento${item.id}" rows="4" class="cambiable span2" placeholder="Documento asociado"></textarea>
+                                        <textarea name="nombreDocumento${item.id}" rows="4" class="cambiable span3" placeholder="Documento asociado" maxlength="2000"></textarea>
                                     </td>
                                     <td>
                                         <textarea name="responsableDocumento${item.id}" rows="4" class="cambiable span2" placeholder="Responsable"></textarea>
