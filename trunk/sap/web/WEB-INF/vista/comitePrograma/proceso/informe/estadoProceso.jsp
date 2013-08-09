@@ -140,9 +140,11 @@
                         <div class="span2" style="margin-left: 30px; text-align: right;"><a style="cursor: pointer" id="actEnlaceEstado"><i class="icon-refresh"></i> Actualizar</a></div>
                     </div>
                 </c:if>
-                <p>
-                    Detalle:
-                </p>
+                <div>
+                    <p>
+                        Detalle:
+                    </p>
+                </div>
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <th>Descripción</th>
@@ -161,18 +163,24 @@
                 </table> 
                 <br>
                 <p>Informes: </p>
-                <table class="table table-striped table-bordered table-condensed">
-                    <tbody>
-                        <tr>
-                            <td> <i class="icon-bar-chart">  </i><a  href="<%=request.getContextPath()%>/#informeMatrizCaracteristicas">Matriz de calidad por caracter&iacute;sticas</a><br/>
-                            </td>
-                            <td> <i class="icon-bar-chart">  </i><a  href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de calidad por factores</a><br/>
-                            </td>
-                            <td> <i class="icon-random">  </i><a  id="encuestaAleatoria"  href="<%=request.getContextPath()%>/#encuestaAleatoria">Ver encuesta aleatoria respondida</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div>
+                    <a  href="<%=request.getContextPath()%>/#informeMatrizFactores" class="btn btn-warning"><i class="icon-bar-chart">  </i>Matriz de calidad por factores</a>
+                    <a  href="<%=request.getContextPath()%>/#informeMatrizCaracteristicas" class="btn btn-warning"><i class="icon-bar-chart">  </i>Matriz de calidad por caracter&iacute;sticas</a>
+                    <div class="btn-group">
+                        <a class="btn btn-warning" href="<%=request.getContextPath()%>/#encuestaAleatoria"><i class="icon-random"></i> Ver al azar encuesta respondida</a>
+                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#encuestaXaleatoria&1">de un estudiante</a></li>
+                            <li><a href="#encuestaXaleatoria&2">de un docente</a></li>
+                            <li><a href="#encuestaXaleatoria&4">de un egresado</a></li>
+                            <li><a href="#encuestaXaleatoria&3">de un administrativo</a></li>
+                            <li><a href="#encuestaXaleatoria&5">de un director de programa</a></li>
+                            <li><a href="#encuestaXaleatoria&6">de un empleador</a></li>
+                        </ul>
+                    </div>
+                </div>
                 <br>
                 <p>Estado general del proceso:</p>
                 <table class="table table-striped table-bordered table-condensed">

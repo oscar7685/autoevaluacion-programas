@@ -3,21 +3,20 @@ Si una misma persona sale seleccionada con diferentes proyectos debe mostrale 2 
 poner limitaciones a los diferentes pasos de un proceso
 Hacer la parte de informe y plan de mejoramiento
 
-hacer el ver encuesta de una fuente X aleatoriamente
 hacer el logo
 
 hacer el cambiar contrasenia para los estudiantes y para el comite central
-editar indicador falta que muestre el instrumento asociado si es recien creado
-al momento de querer quitar un instrumento a un indicador no lo hace en el editar indicador
 hacer que el recordar contraseña funcione
 hacer que la validacion en la ponderación funcione en internet explorer
-hacer el actualizar y el mostrar el porcentaje
+hacer el actualizar y el mostrar el porcentaje con stacked
 
 tampoco actualiza las preguntas a cerrar
 mostrar navegacion con breadcrumbs
 Optimize JPA for performance.
 
+#####################SIA###################################
 agregar la linea <script src="<%=request.getContextPath()%>/script/highcharts-more.js"></script> a index especial
+quitar  console.log("clickl"); del archivo menu.jsp
 
 para diana 
 /*

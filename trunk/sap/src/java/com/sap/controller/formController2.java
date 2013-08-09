@@ -458,7 +458,7 @@ public class formController2 extends HttpServlet {
                                             if (action.equals("editarIndicadorCC")) {
                                                 String id = request.getParameter("id");
                                                 Indicador i = indicadorFacade.find(Integer.parseInt(id));
-                                                i.setInstrumentoList(i.getInstrumentoList());
+                                                sesion.setAttribute("instrumentos", instrumentoFacade.findAll());
                                                 sesion.setAttribute("indicador", i);
                                                 String url = "/WEB-INF/vista/comiteCentral/indicador/editar.jsp";
                                                 RequestDispatcher rd = request.getRequestDispatcher(url);
@@ -474,6 +474,16 @@ public class formController2 extends HttpServlet {
                                                     Modelo m2 = (Modelo) sesion.getAttribute("modelo");
                                                     String instrumentos[] = request.getParameterValues("instrumento");
                                                     List<Instrumento> instrumentoList = new ArrayList<Instrumento>();
+                                                    
+                                                    List<Instrumento> instrumentosIniciales = i.getInstrumentoList();
+                                                    for (Instrumento instrumento : instrumentosIniciales) {
+                                                        instrumento.getIndicadorList().remove(i);
+                                                        instrumentoFacade.edit(instrumento);
+                                                    }
+                                                    
+                                                    i.setInstrumentoList(null);
+                                                    indicadorFacade.edit(i);
+                                                    
                                                     if (instrumentos != null) {
                                                         for (int k = 0; k < instrumentos.length; k++) {
                                                             Instrumento instr = instrumentoFacade.find(Integer.parseInt(instrumentos[k]));

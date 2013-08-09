@@ -77,7 +77,7 @@ public abstract class AbstractFacade<T> {
         q.setParameter("name2", m2);
         return (T) q.getSingleResult();
     }
-
+    
     public T findBySingle3(String property1, Object m1, String property2, Object m2, String property3, Object m3) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
@@ -176,6 +176,15 @@ public abstract class AbstractFacade<T> {
         Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property1 + " = :name1 and c." + property2 + " = :name2", entityClass);
         q.setParameter("name1", m1);
         q.setParameter("name2", m2);
+        return q.getResultList();
+    }
+    public List<T> findByList3(String property1, Object m1, String property2, Object m2, String property3, Object m3) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property1 + " = :name1 and c." + property2 + " = :name2 and c." + property3 + " = :name3", entityClass);
+        q.setParameter("name1", m1);
+        q.setParameter("name2", m2);
+        q.setParameter("name3", m3);
         return q.getResultList();
     }
 

@@ -39,6 +39,7 @@ import com.sap.ejb.RepresentanteFacade;
 import com.sap.ejb.ResultadoevaluacionFacade;
 import com.sap.entity.Administrativo;
 import com.sap.entity.Agenciagubernamental;
+import com.sap.entity.Asignacionencuesta;
 import com.sap.entity.Caracteristica;
 import com.sap.entity.Directorprograma;
 import com.sap.entity.Docente;
@@ -48,6 +49,7 @@ import com.sap.entity.Encabezado;
 import com.sap.entity.Encuesta;
 import com.sap.entity.Estudiante;
 import com.sap.entity.Factor;
+import com.sap.entity.Fuente;
 import com.sap.entity.Indicador;
 import com.sap.entity.Instrumento;
 import com.sap.entity.Modelo;
@@ -76,6 +78,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -2404,6 +2407,55 @@ public class cpController extends HttpServlet {
                         resultadoevaluacionFacade.edit(resultadoevaluacion);
                     }
                 }
+            } else if (action.contains("encuestaAleatoria") || action.contains("encuestaXaleatoria")) {
+                String idFuente = request.getParameter("id");
+                int idf = Integer.parseInt(idFuente);
+                Proceso pro = (Proceso) sesion.getAttribute("Proceso");
+                Modelo m = pro.getModeloId();
+                int indiceEncuesta;
+                int indiceEncabezado;
+                Encuesta en = null;
+                if (idFuente != null && !idFuente.equals("")) {
+                    List<Asignacionencuesta> asignacionEncuesta = m.getAsignacionencuestaList();
+                    for (int i = 0; i < asignacionEncuesta.size(); i++) {
+                        if (asignacionEncuesta.get(i).getFuenteId().getId() == idf) {
+                            en = asignacionEncuesta.get(i).getEncuestaId();
+                            break;
+                        }
+                    }
+                    sesion.setAttribute("encuesta", en);
+                    List<Encabezado> encabezados = encabezadoFacade.findByList3("procesoId", pro, "encuestaId", en, "estado", "terminado");
+                    Random generador2 = new Random();
+                    if (encabezados.size() > 0) {
+                        indiceEncabezado = generador2.nextInt(encabezados.size());
+                        List<Resultadoevaluacion> resultados = resultadoevaluacionFacade.findByList("encabezadoId", encabezados.get(indiceEncabezado));
+                        sesion.setAttribute("resultados", resultados);
+                    }
+                } else {
+                    List<Encuesta> encuestas = m.getEncuestaList();
+
+                    boolean busca = true;
+                    int limite = 0;
+                    while (busca && limite < 20) {
+                        Random generador = new Random();
+                        indiceEncuesta = generador.nextInt(encuestas.size());
+                        en = encuestas.get(indiceEncuesta);
+                        sesion.setAttribute("encuesta", en);
+                        List<Encabezado> encabezados = encabezadoFacade.findByList3("procesoId", pro, "encuestaId", en, "estado", "terminado");
+                        Random generador2 = new Random();
+                        if (encabezados.size() > 0) {
+                            indiceEncabezado = generador2.nextInt(encabezados.size());
+                            List<Resultadoevaluacion> resultados = resultadoevaluacionFacade.findByList("encabezadoId", encabezados.get(indiceEncabezado));
+                            sesion.setAttribute("resultados", resultados);
+                            busca = false;
+                        }
+                        limite++;
+                    }
+                }
+                String url = "/WEB-INF/vista/comitePrograma/proceso/informe/encuestaAleatoria.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+
             } else {
                 if (action.equals("contrasena")) {
                     String url = "/WEB-INF/vista/comitePrograma/contrasena.jsp";
