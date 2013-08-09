@@ -302,7 +302,7 @@ $(function() {
                                         || hash === "#preparedEditPonderarCara" || hash === "#generarMuestraAleatoria" || hash === "#preparedEditarMuestra"
                                         || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
                                         || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
-                                        || hash === "#listEncuestas" || hash === "#cerrarPreguntas") {
+                                        || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria") {
                                     var url3 = "/sap/" + hash;
                                     url3 = url3.replace('#', "controladorCP?action=");
                                     $("div.ui-layout-center").empty();
@@ -411,7 +411,7 @@ $(function() {
                                         //fin success
                                     }); //fin del $.ajax
                                 } else if (hash.indexOf("#detalleFactor") !== -1 || hash.indexOf("#detalleCaracteristica") !== -1 || hash.indexOf("#detalleIndicador") !== -1
-                                        || hash.indexOf("#detallePregunta") !== -1 || hash.indexOf("#vistaPreviaPEncuesta") !== -1) {
+                                        || hash.indexOf("#detallePregunta") !== -1 || hash.indexOf("#vistaPreviaPEncuesta") !== -1 || hash.indexOf("#encuestaXaleatoria") !== -1) {
                                     var cual = hash.split("&");
                                     hash = cual[0];
                                     var url3 = "/sap/controladorCP?action=";
