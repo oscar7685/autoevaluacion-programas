@@ -27,9 +27,10 @@
                 <fieldset>
                     <legend>Editar Coordinador</legend>
                     <div class="control-group">
-                        <label for="codigo"  class="control-label">C&oacute;digo</label>
+                        <label for="codigox"  class="control-label">C&oacute;digo</label>
                         <div class="controls">
-                            <input disabled="" type="text" name="codigo" id="codigo" class="input-xlarge uneditable-input {required:true, positiveNumber:true}" value="${representante.id}"/>
+                            <input disabled="" type="text" name="codigox" id="codigox" class="input-xlarge uneditable-input {required:true, positiveNumber:true}" value="${representante.id}"/>
+                            <input type="hidden" name="codigo" value="${representante.id}">
                         </div>
                     </div>
                     <div class="control-group">

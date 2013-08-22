@@ -1,5 +1,5 @@
 revisar editar muestra para cada una de las fuentes
-Si una misma persona sale seleccionada con diferentes proyectos debe mostrale 2 encuestas
+Si una misma persona sale seleccionada con diferentes procesos debe mostrale 2 encuestas
 poner limitaciones a los diferentes pasos de un proceso
 Hacer la parte de informe y plan de mejoramiento
 
@@ -13,10 +13,6 @@ hacer el actualizar y el mostrar el porcentaje con stacked
 tampoco actualiza las preguntas a cerrar
 mostrar navegacion con breadcrumbs
 Optimize JPA for performance.
-
-#####################SIA###################################
-agregar la linea <script src="<%=request.getContextPath()%>/script/highcharts-more.js"></script> a index especial
-quitar  console.log("clickl"); del archivo menu.jsp
 
 para diana 
 /*
