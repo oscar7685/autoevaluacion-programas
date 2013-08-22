@@ -55,7 +55,8 @@
                                       4: La información requerida en el indicador está completa y en proceso de actualización.<br/>
                                       3: La información requerida en el indicador está en proceso de elaboración.<br/>
                                       2: Se detectó la inexistencia de la información requerida en el indicador. Ya se previó su elaboración.<br/>
-                                      1: La información requerida en el indicador no existe y no se ha previsto su elaboración.</p>" data-original-title="Escala de gradación"></i></th>
+                                      1: La información requerida en el indicador no existe y no se ha previsto su elaboración.<br/>
+                                      0: No aplica</p>" data-original-title="Escala de gradación"></i></th>
                         <th>Acci&oacute;n a implementar u observaci&oacute;n</th>
                         </thead>
                         <tbody>
@@ -122,6 +123,14 @@
                                                         <option value="5">5</option>
                                                     </c:otherwise>
                                                 </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${itemNC.evaluacion == 0}">
+                                                        <option selected="selected" value="0">0</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="0">0</option>
+                                                    </c:otherwise>
+                                                </c:choose>        
                                             </select>
                                             <input type="hidden"  value="${itemNC.id}" name="idNumDoc${item.id}">
                                         </td>
@@ -156,6 +165,7 @@
                                             <option value="3">3</option>
                                             <option value="4">4</option>
                                             <option value="5">5</option>
+                                            <option value="0">0</option>
                                         </select>
                                         <input type="hidden"  value="${item.id}" name="idIndicadorNum${item.id}">
                                     </td>
