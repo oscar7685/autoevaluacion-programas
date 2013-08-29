@@ -1,5 +1,11 @@
+hacer en el de autoevaluacion institucional filtros para ver los informes
+    solo encuestas
+    solo distancia
+    solo presencial
+    Todo
+
+
 revisar editar muestra para cada una de las fuentes
-Si una misma persona sale seleccionada con diferentes procesos debe mostrale 2 encuestas
 poner limitaciones a los diferentes pasos de un proceso
 Hacer la parte de informe y plan de mejoramiento
 
@@ -9,6 +15,10 @@ hacer el cambiar contrasenia para los estudiantes y para el comite central
 hacer que el recordar contraseña funcione
 hacer que la validacion en la ponderación funcione en internet explorer
 hacer el actualizar y el mostrar el porcentaje con stacked
+
+filtrar respuestas por fuentes y municipios
+unificar plantilla de los planes de mejoramiento
+hacer seguimiento a los planes de mejoramiento
 
 tampoco actualiza las preguntas a cerrar
 mostrar navegacion con breadcrumbs
