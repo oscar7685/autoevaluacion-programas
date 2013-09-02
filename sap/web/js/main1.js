@@ -117,8 +117,8 @@ $(function() {
                 '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>' +
                 '<li><a href="#listEncuestas"><i class="icon-check"></i> Encuestas</a></li>' +
                 ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
-                ' <li><a href = "#listMuestra"><i class = "icon-file-alt"></i> Información Numérica</a></li>' +
-                ' <li><a href = "#listMuestra"><i class = "icon-list-ol"></i> Información Documental</a></li>' +
+                ' <li><a href = "#listarEvaluarNum"><i class = "icon-file-alt"></i> Información Numérica</a></li>' +
+                ' <li><a href = "#listarEvaluarDoc"><i class = "icon-list-ol"></i> Información Documental</a></li>' +
                 ' <li class = "nav-header"> Estado del proceso </li>' +
                 ' <li><a  id = "informeEncuesta"  href = "#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
                 '</ul>' +
@@ -135,8 +135,9 @@ $(function() {
                 '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
                 '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>' +
                 ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
-                ' <li><a href = "#listMuestra"><i class = "icon-file-alt"></i> Información Numérica</a></li>' +
-                ' <li><a href = "#listMuestra"><i class = "icon-list-ol"></i> Información Documental</a></li>' +
+                ' <li><a href = "#listarEvaluarNum"><i class = "icon-file-alt"></i> Información Numérica</a></li>' +
+                ' <li><a href = "#listarEvaluarDoc"><i class = "icon-list-ol"></i> Información Documental</a></li>' +
+                ' <li class = "nav-header"> Estado del proceso </li>' +
                 ' <li><a  id = "informeEncuesta"  href = "#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
                 ' <li class="divider"></li>' +
                 '<li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>' +
