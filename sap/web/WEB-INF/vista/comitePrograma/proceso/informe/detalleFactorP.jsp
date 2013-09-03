@@ -190,13 +190,13 @@
     <div class="row">
         <div id="conte" class="span10">
             <div class="btn-group offset7">
-                <a class="btn active" style="cursor:default;">Todo</a>
-                <a class="btn" href="#detallePFactor&${factor.id}">S&oacute;lo percepci&oacute;n</a>
+                <a class="btn" href="#detalleFactor&${factor.id}">Todo</a>
+                <a class="btn active" style="cursor:default;">S&oacute;lo percepci&oacute;n</a>
             </div>
             <legend>Factor: ${factor.nombre}</legend>
             <ul class="breadcrumb">
-                <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Factores</a> <span class="divider">/</span></li>
-                <li><a href="<%=request.getContextPath()%>/#informeMatrizCaracteristicas">Matriz de Calidad de Características</a> <span class="divider">/</span></li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatrizFactoresP">Matriz de Calidad de Factores</a> <span class="divider">/</span></li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatrizCaracteristicasP">Matriz de Calidad de Características</a> <span class="divider">/</span></li>
                 <li class="active tool" data-placement="top" rel="tooltip" data-original-title="${factor.nombre}">Factor ${factor.codigo}</li>
 
             </ul>
@@ -226,7 +226,7 @@
                                                 ${caracteristica.codigo}
                                             </td>
                                             <td style="text-align: left">   
-                                                <a href="#detalleCaracteristica&${caracteristica.id}" data="${caracteristica.nombre}">${caracteristica.nombre}</a> 
+                                                <a href="#detallePCaracteristica&${caracteristica.id}" data="${caracteristica.nombre}">${caracteristica.nombre}</a> 
                                             </td>
                                             <td>   
                                                 ${ponderacionesCDF.get(indice).nivelimportancia}
