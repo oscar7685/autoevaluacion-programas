@@ -285,15 +285,15 @@
     <div class="row">
         <div id="conte" class="span10">
             <div class="btn-group offset7">
-                <a class="btn active" style="cursor:default;">Todo</a>
-                <a class="btn" href="#detallePIndicador&${indicador.id}">S&oacute;lo percepci&oacute;n</a>
+                <a class="btn" href="#detalleIndicador&${indicador.id}" >Todo</a>
+                <a class="btn active" style="cursor:default;">S&oacute;lo percepci&oacute;n</a>
             </div>
              <legend>Indicador: ${indicador.nombre}</legend>
             <ul class="breadcrumb">
-                <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Factores</a> <span class="divider">/</span></li>
-                <li><a href="<%=request.getContextPath()%>/#informeMatrizCaracteristicas">Matriz de Calidad de Características</a> <span class="divider">/</span></li>
-                <li><a class="tool" data-placement="top" rel="tooltip" data-original-title="${indicador.getCaracteristicaId().getFactorId().nombre}" href="#detalleFactor&${indicador.getCaracteristicaId().getFactorId().id}">Factor ${indicador.getCaracteristicaId().getFactorId().codigo}</a> <span class="divider">/</span></li>
-                <li><a class="tool" data-placement="top" rel="tooltip" data-original-title="${indicador.getCaracteristicaId().nombre}"  href="#detalleCaracteristica&${indicador.getCaracteristicaId().id}" data="${indicador.getCaracteristicaId().nombre}">Característica ${indicador.getCaracteristicaId().codigo}</a><span class="divider">/</span></li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatrizFactoresP">Matriz de Calidad de Factores</a> <span class="divider">/</span></li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatrizCaracteristicasP">Matriz de Calidad de Características</a> <span class="divider">/</span></li>
+                <li><a class="tool" data-placement="top" rel="tooltip" data-original-title="${indicador.getCaracteristicaId().getFactorId().nombre}" href="#detallePFactor&${indicador.getCaracteristicaId().getFactorId().id}">Factor ${indicador.getCaracteristicaId().getFactorId().codigo}</a> <span class="divider">/</span></li>
+                <li><a class="tool" data-placement="top" rel="tooltip" data-original-title="${indicador.getCaracteristicaId().nombre}"  href="#detallePCaracteristica&${indicador.getCaracteristicaId().id}" data="${indicador.getCaracteristicaId().nombre}">Característica ${indicador.getCaracteristicaId().codigo}</a><span class="divider">/</span></li>
                 <li class="active tool" data-placement="top" rel="tooltip" data-original-title="${indicador.nombre}">Indicador ${indicador.codigo}</li>
             </ul>
             <br>
