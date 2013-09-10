@@ -94,6 +94,8 @@ import javax.servlet.http.HttpSession;
 public class cpController extends HttpServlet {
 
     @EJB
+    private PersonaFacade personaFacade;
+    @EJB
     private ResultadoevaluacionFacade resultadoevaluacionFacade;
     @EJB
     private EncuestaFacade encuestaFacade;
@@ -1095,7 +1097,7 @@ public class cpController extends HttpServlet {
                     id++;
 
                     String pass = passwordGenerator.getPassword(
-                            passwordGenerator.MAYUSCULAS
+                            passwordGenerator.NUMEROS
                             + passwordGenerator.NUMEROS, 6);
 
 
@@ -1105,6 +1107,7 @@ public class cpController extends HttpServlet {
                     String mail = "correo@correo.com";
 
                     Muestrapersona mp1 = new Muestrapersona();
+                    Persona per = new Persona();
                     String idx = "00" + programa.getId() + proceso.getId() + muestra.getId() + "-" + id;
                     mp1.setCedula(idx);
                     mp1.setNombre(nombre);
@@ -1113,11 +1116,49 @@ public class cpController extends HttpServlet {
                     mp1.setMail(mail);
                     mp1.setMuestraId((Muestra) sesion.getAttribute("Muestra"));
 
+                    per.setId(idx);
+                    per.setNombre(nombre);
+                    per.setApellido(apellido);
+                    per.setPassword(pass);
+                    per.setMail(mail);
+                    personaFacade.create(per);
+
+
                     muestrapersonaFacade.create(mp1);
 
                     String fuente = (String) sesion.getAttribute("selectorFuente");
 
-                    if (fuente.equals("Docente")) {
+                    if (fuente.equals("Estudiante")) {
+                        Estudiante est = new Estudiante();
+                        Fuente fuenteEst = fuenteFacade.find(1);
+                        est.setFuenteId(fuenteEst);
+                        est.setSemestre("03");
+                        est.setPeriodo("2");
+                        est.setAnio("2013");
+                        est.setPersonaId(per);
+                        est.setId(idx);
+                        est.setProgramaId(programa);
+                        estudianteFacade.create(est);
+
+                        Muestra m = (Muestra) sesion.getAttribute("Muestra");
+
+                        Muestraestudiante me1 = new Muestraestudiante();
+                        me1.setCodigo(idx);
+                        me1.setPeriodo("2");
+                        me1.setProgramaId(programa);
+                        me1.setSemestre("03");
+                        me1.setAnio("2013");
+                        me1.setMuestrapersonaId(mp1);
+                        muestraestudianteFacade.create(me1);
+                    } else if (fuente.equals("Docente")) {
+                        Docente doc = new Docente();
+                        Fuente fuenteDoc = fuenteFacade.find(2);
+                        doc.setFuenteId(fuenteDoc);
+                        doc.setTipo("--");
+                        doc.setPersonaId(per);
+                        doc.setProgramaId(programa);
+                        docenteFacade.create(doc);
+
                         Muestra m = (Muestra) sesion.getAttribute("Muestra");
 
                         Muestradocente md1 = new Muestradocente();
@@ -1125,12 +1166,27 @@ public class cpController extends HttpServlet {
                         md1.setMuestrapersonaId(mp1);
                         muestradocenteFacade.create(md1);
                     } else if (fuente.equals("Egresado")) {
+                        Egresado egre = new Egresado();
+                        Fuente fuenteEgr = fuenteFacade.find(4);
+                        egre.setFuenteId(fuenteEgr);
+                        egre.setPersonaId(per);
+                        egre.setProgramaId(programa);
+                        egresadoFacade.create(egre);
+
                         Muestra m = (Muestra) sesion.getAttribute("Muestra");
 
                         Muestraegresado meg1 = new Muestraegresado();
                         meg1.setMuestrapersonaId(mp1);
                         muestraegresadoFacade.create(meg1);
                     } else if (fuente.equals("Administrativo")) {
+                        Administrativo admin = new Administrativo();
+                        Fuente fuenteAdmin = fuenteFacade.find(3);
+                        admin.setFuenteId(fuenteAdmin);
+                        admin.setPersonaId(per);
+                        admin.setProgramaId(programa);
+                        admin.setCargo("--");
+                        administrativoFacade.create(admin);
+
                         Muestra m = (Muestra) sesion.getAttribute("Muestra");
 
                         Muestraadministrativo mad1 = new Muestraadministrativo();
@@ -1138,12 +1194,28 @@ public class cpController extends HttpServlet {
                         mad1.setMuestrapersonaId(mp1);
                         muestraadministrativoFacade.create(mad1);
                     } else if (fuente.equals("Directivo")) {
+                        Directorprograma dir = new Directorprograma();
+                        Fuente fuenteDir = fuenteFacade.find(5);
+                        dir.setFuenteId(fuenteDir);
+                        dir.setPersonaId(per);
+                        dir.setProgramaId(programa);
+                        directorprogramaFacade.create(dir);
+
                         Muestra m = (Muestra) sesion.getAttribute("Muestra");
 
                         Muestradirector mdir1 = new Muestradirector();
                         mdir1.setMuestrapersonaId(mp1);
                         muestradirectorFacade.create(mdir1);
                     } else if (fuente.equals("Empleador")) {
+                        Empleador emp = new Empleador();
+                        Fuente fuenteEmp = fuenteFacade.find(6);
+                        emp.setFuenteId(fuenteEmp);
+                        emp.setPersonaId(per);
+                        emp.setProgramaId(programa);
+                        emp.setCargo("Representante");
+                        emp.setEmpresa("Empresa Aleatoria");
+                        empleadorFacade.create(emp);
+
                         Muestra m = (Muestra) sesion.getAttribute("Muestra");
 
                         Muestraempleador mem1 = new Muestraempleador();
@@ -2655,7 +2727,7 @@ public class cpController extends HttpServlet {
                         sesion.setAttribute("tres", tres);
                         sesion.setAttribute("cuatros", cuatros);
                         sesion.setAttribute("cincos", cincos);
-                    } 
+                    }
                 }
                 sesion.setAttribute("indicador", in);
 
@@ -2663,7 +2735,7 @@ public class cpController extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
 
-            }else if (action.equals(
+            } else if (action.equals(
                     "detallePregunta")) {
                 sesion.setAttribute("numerico", null);
                 sesion.setAttribute("documental", null);

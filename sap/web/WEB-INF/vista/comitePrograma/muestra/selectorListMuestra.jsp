@@ -47,9 +47,9 @@
         var Fecha = Dia[Hoy.getDay()] + " " + Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las " + Hora + ":" + Minutos + ":" + Segundos;
         $("#hora").html(" " + Fecha);
 
-
+        
         $("button[rel=popover2]")
-                .popover({placement: 'left'}).click(function(e) {
+                .popover({trigger: "hover", placement: 'left'}).click(function(e) {
             e.preventDefault();
 
             $(this).popover('hide');
@@ -130,10 +130,10 @@
 
     });
 </script>
-<c:if test="${selectorFuente != 'Estudiante' && tipoLogin=='Comite central'}">
+<c:if test="${tipoLogin=='Comite central'}">
     <div class="input-append span10 input-prepend" style="text-align: right; margin-left: 0px;">
         <form id="formGenearAleatorio">
-            <span class="add-on">#</span><input name="numero" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn" data-content="<p style='text-align: justify'>Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button>
+            <span class="add-on">#</span><input name="numero" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn" data-content="Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer." rel="popover2"  value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button>
         </form>
     </div>
 </c:if>
