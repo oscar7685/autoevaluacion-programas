@@ -51,7 +51,7 @@ public class Ponderacioncaracteristica implements Serializable {
     private double ponderacion;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1000)
+    @Size(min = 1, max = 2000)
     @Column(name = "justificacion")
     private String justificacion;
     @JoinColumn(name = "caracteristica_id", referencedColumnName = "id")
