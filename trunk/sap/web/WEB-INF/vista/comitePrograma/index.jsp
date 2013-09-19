@@ -38,7 +38,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </a>
-                        <a href="index.html" class="brand">SAP - ${Programa.getNombre()}</a>
+                        <a class="brand" style="padding-top: 10px; padding-bottom: 5px;" href="#"><img src="css/images/SAPLETRAS.png"/> ${Programa.getNombre()}</a>
                         <div class="nav-collapse collapse">
                             <ul class="nav barra" >
                                 <li class="active"><a href="#inicio"><i class="icon-home"></i> Inicio</a></li>

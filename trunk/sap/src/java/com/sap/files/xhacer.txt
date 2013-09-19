@@ -1,15 +1,7 @@
-hacer en el de autoevaluacion institucional filtros para ver los informes
-    solo encuestas
-    solo distancia
-    solo presencial
-    Todo
-
-
 revisar editar muestra para cada una de las fuentes
 poner limitaciones a los diferentes pasos de un proceso
 Hacer la parte de informe y plan de mejoramiento
 
-hacer el logo
 
 hacer el cambiar contrasenia para los estudiantes y para el comite central
 hacer que el recordar contraseña funcione
