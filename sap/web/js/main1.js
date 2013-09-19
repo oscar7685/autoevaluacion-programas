@@ -1,6 +1,6 @@
 $(function() {
-    if ($(".brand").text().length > 65) {
-        $(".brand").css("font-size", "22px");
+    if ($(".brand").text().length > 60) {
+        $(".brand").css("font-size", "18px");
     }
     location = "/sap/#inicio";
     $(document).ajaxStart(function() {
