@@ -146,7 +146,7 @@ public class formController2 extends HttpServlet {
                 }
             } else if (action.equals("controlPanelCC")) {
 
-                sesion.setAttribute("listProcesos", procesoFacade.findByList("fechacierre", "--"));
+                sesion.setAttribute("listProcesos", procesoFacade.findAll());
 
                 String url = "/WEB-INF/vista/comiteCentral/control/controlPanel.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);

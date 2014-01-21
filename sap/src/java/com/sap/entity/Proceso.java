@@ -71,6 +71,8 @@ public class Proceso implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Encabezado> encabezadoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
+    private List<Proyectoestrategico> proyectoestrategicoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Numericadocumental> numericadocumentalList;
     @JoinColumn(name = "modelo_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -166,6 +168,15 @@ public class Proceso implements Serializable {
 
     public void setEncabezadoList(List<Encabezado> encabezadoList) {
         this.encabezadoList = encabezadoList;
+    }
+
+    @XmlTransient
+    public List<Proyectoestrategico> getProyectoestrategicoList() {
+        return proyectoestrategicoList;
+    }
+
+    public void setProyectoestrategicoList(List<Proyectoestrategico> proyectoestrategicoList) {
+        this.proyectoestrategicoList = proyectoestrategicoList;
     }
 
     @XmlTransient

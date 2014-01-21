@@ -247,6 +247,30 @@
                                     </c:when>
                                 </c:choose>       
                             </c:forEach>
+                              <tr>
+                                            <td style="text-align: left">   
+                                                Total
+                                            </td>
+
+                                            <td style="text-align: left">   
+                                                100
+                                            </td>
+                                            <td>   
+                                               
+                                            </td>
+                                            <td>   
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index]}"/>
+                                            </td>
+                                            <td>   
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index] * ponderacionesF.get(indice2).ponderacion}"/>
+                                            </td>
+                                            <td>   
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${5 * ponderacionesF.get(indice2).ponderacion}"/>
+                                            </td>
+                                            <td>   
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index] * 20}"/>%
+                                            </td>
+                                        </tr>          
                         </tbody>
                     </table>
                     <br/>          

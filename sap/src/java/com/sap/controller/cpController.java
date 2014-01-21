@@ -227,6 +227,10 @@ public class cpController extends HttpServlet {
                 String url = "/WEB-INF/vista/comitePrograma/proceso/crear.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
+            } else if (action.equals("planMejoramiento")) {
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/plan.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
             } else if (action.equals("crearProceso")) {
 
 

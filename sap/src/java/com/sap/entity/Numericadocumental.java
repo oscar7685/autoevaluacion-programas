@@ -51,17 +51,17 @@ public class Numericadocumental implements Serializable {
     private String documento;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 500)
+    @Size(min = 1, max = 2000)
     @Column(name = "responsable")
     private String responsable;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 500)
+    @Size(min = 1, max = 2000)
     @Column(name = "medio")
     private String medio;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 500)
+    @Size(min = 1, max = 2000)
     @Column(name = "lugar")
     private String lugar;
     @Basic(optional = false)
@@ -70,7 +70,7 @@ public class Numericadocumental implements Serializable {
     private int evaluacion;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 500)
+    @Size(min = 1, max = 2000)
     @Column(name = "accion")
     private String accion;
     @JoinColumn(name = "indicador_id", referencedColumnName = "id")
