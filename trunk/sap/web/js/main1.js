@@ -126,7 +126,7 @@ $(function() {
                 );
     };
     var menuProceso3 = function() {
-        $("#menu0").html('<div align="center" class="alert alert-error"><i class="icon-play-sign"></i> Proceso finalizado</div>' +
+        $("#menu0").html('<div align="center" class="alert alert-error" style="margin-bottom:5px;"><i class="icon-play-sign"></i> Proceso finalizado</div>' +
                 '<div id="menu" style="padding: 8px 0pt;" class="well">' +
                 '<ul class="nav nav-list">' +
                 '<button id="west-closer" class="close">&laquo;</button>' +

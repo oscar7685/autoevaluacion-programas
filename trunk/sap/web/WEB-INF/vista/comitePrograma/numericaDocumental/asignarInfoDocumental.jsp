@@ -74,13 +74,13 @@
                                             <textarea name="nombreDocumento${item.id}" rows="4" class="cambiable span3" placeholder="Documento asociado" maxlength="2000">${itemDC.documento}</textarea>
                                         </td>
                                         <td>
-                                            <textarea name="responsableDocumento${item.id}" rows="4" class="cambiable span2" placeholder="Responsable">${itemDC.responsable}</textarea>
+                                            <textarea name="responsableDocumento${item.id}" rows="4" class="cambiable span2" placeholder="Responsable" maxlength="2000">${itemDC.responsable}</textarea>
                                         </td>
                                         <td>
-                                            <textarea name="medioDocumento${item.id}" rows="4" class="cambiable span1" placeholder="Medio">${itemDC.medio}</textarea>
+                                            <textarea name="medioDocumento${item.id}" rows="4" class="cambiable span1" placeholder="Medio" maxlength="2000">${itemDC.medio}</textarea>
                                         </td>
                                         <td>
-                                            <textarea name="lugarDocumento${item.id}" rows="4" class="cambiable span2" placeholder="Lugar">${itemDC.lugar}</textarea>
+                                            <textarea name="lugarDocumento${item.id}" rows="4" class="cambiable span2" placeholder="Lugar" maxlength="2000">${itemDC.lugar}</textarea>
                                         </td>
                                         <td>
                                             <select class="cambiable span1"  name="evaluacionDoc${item.id}">
@@ -136,7 +136,7 @@
                                             <input type="hidden"  value="${itemDC.id}" name="idNumDoc${item.id}">
                                         </td>
                                         <td>
-                                            <textarea name="accionDocumento${item.id}" rows="4" class="cambiable span2" placeholder="Acci&oacute;n a implementar u observaci&oacute;n">${itemDC.accion}</textarea>
+                                            <textarea name="accionDocumento${item.id}" rows="4" class="cambiable span2" placeholder="Acci&oacute;n a implementar u observaci&oacute;n" maxlength="2000">${itemDC.accion}</textarea>
                                         </td>
                                         </tr> 
                                     </c:when>
@@ -151,13 +151,13 @@
                                         <textarea name="nombreDocumento${item.id}" rows="4" class="cambiable span3" placeholder="Documento asociado" maxlength="2000"></textarea>
                                     </td>
                                     <td>
-                                        <textarea name="responsableDocumento${item.id}" rows="4" class="cambiable span2" placeholder="Responsable"></textarea>
+                                        <textarea name="responsableDocumento${item.id}" rows="4" class="cambiable span2" placeholder="Responsable" maxlength="2000"></textarea>
                                     </td>
                                     <td>
-                                        <textarea name="medioDocumento${item.id}" rows="4" class="cambiable span1" placeholder="Medio"></textarea>
+                                        <textarea name="medioDocumento${item.id}" rows="4" class="cambiable span1" placeholder="Medio" maxlength="2000"></textarea>
                                     </td>
                                     <td>
-                                        <textarea name="lugarDocumento${item.id}" rows="4" class="cambiable span2" placeholder="Lugar"></textarea>
+                                        <textarea name="lugarDocumento${item.id}" rows="4" class="cambiable span2" placeholder="Lugar" maxlength="2000"></textarea>
                                     </td>
                                     <td>
                                         <select class="cambiable span1"  name="evaluacionDoc${item.id}">
@@ -171,7 +171,7 @@
                                         <input type="hidden"  value="${item.id}" name="idIndicadorDoc${item.id}">
                                     </td>
                                     <td>
-                                        <textarea name="accionDocumento${item.id}" rows="4" class="cambiable span2" placeholder="Acci&oacute;n a implementar u observaci&oacute;n"></textarea>
+                                        <textarea name="accionDocumento${item.id}" rows="4" class="cambiable span2" placeholder="Acci&oacute;n a implementar u observaci&oacute;n" maxlength="2000"></textarea>
                                     </td>
                                     </tr>
                                 </c:when>

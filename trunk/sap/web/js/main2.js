@@ -102,7 +102,28 @@ $(function() {
                 '<li><a href="#listarEncuestas"><i class="icon-tasks"></i> Listar encuestas</a></li>' +
                 '</ul>');
     };
-
+    
+    var menuProceso3 = function() {
+        $("#menu0").html('<div align="center" class="alert alert-error" style="margin-bottom:5px;"><i class="icon-play-sign"></i> Proceso finalizado</div>' +
+                '<div id="menu" style="padding: 8px 0pt;" class="well">' +
+                '<ul class="nav nav-list">' +
+                '<button id="west-closer" class="close">&laquo;</button>' +
+                '<li><a href="#controlPanel"><i class="icon-level-up"></i>Regresar al panel</a></li>'+
+                '<li class="nav-header">Proceso de Autoevaluación</li>' +
+                '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
+                '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
+                '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>' +
+                '<li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
+                '<li><a href = "#listarEvaluarNum"><i class = "icon-file-alt"></i> Información Numérica</a></li>' +
+                '<li><a href = "#listarEvaluarDoc"><i class = "icon-list-ol"></i> Información Documental</a></li>' +
+                '<li class = "nav-header"> Estado del proceso </li>' +
+                '<li><a  id = "informeEncuesta"  href = "#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
+                '<li class = "nav-header"> Plan de Mejoramiento </li>' +
+                '<li><a href="#planMejoramiento"><i class="icon-exchange"></i> Plan de mejoramiento</a></li>' +
+                '</ul>' +
+                '</div>'
+                );
+    };
     var hash;
     $(window).hashchange(function() {
         hash = location.hash;
@@ -302,7 +323,8 @@ $(function() {
                                         || hash === "#preparedEditPonderarCara" || hash === "#generarMuestraAleatoria" || hash === "#preparedEditarMuestra"
                                         || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
                                         || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
-                                        || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP") {
+                                        || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
+                                        || hash === "#planMejoramiento") {
                                     var url3 = "/sap/" + hash;
                                     url3 = url3.replace('#', "controladorCP?action=");
                                     $("div.ui-layout-center").empty();
@@ -346,7 +368,7 @@ $(function() {
                                             $("#contenido").show(200, function() {
                                                 $("#dancing-dots-text").remove();
                                             });
-                                            location = "/sap/#inicio";
+                                            //location = "/sap/#inicio";
 
                                         } //fin success
                                     }); //fin del $.ajax
