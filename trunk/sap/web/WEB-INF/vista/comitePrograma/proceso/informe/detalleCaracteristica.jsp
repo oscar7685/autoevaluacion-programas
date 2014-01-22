@@ -8,13 +8,14 @@
     }
 </style>
 <script type="text/javascript">
-    $(function () {
+    
+
+    var chart;
+            $(document).ready(function() {
     $('.tool').tooltip().click(function(e){
     $(this).tooltip('hide');
     });
-            var chart;
-            $(document).ready(function() {
-    chart = new Highcharts.Chart({
+            chart = new Highcharts.Chart({
     chart: {
     renderTo: 'grafica',
             type: 'column',
@@ -30,9 +31,11 @@
         <c:choose>
             <c:when test="${cum4>0}">
                 <c:choose>
-                    <c:when test="${indicadores.size()!=status.index+1}">
-                    '${caracteristica2.codigo}-${caracteristica2.nombre}',</c:when><c:otherwise>
-                            '${caracteristica2.codigo}-${caracteristica2.nombre}'
+                    <c:when test="${indicadores.size()!=status2.index+1}">
+                    '${caracteristica2.codigo}'+'-'+'${caracteristica2.nombre}',
+                    </c:when>
+                    <c:otherwise>
+                                '${caracteristica2.codigo}'+'-'+'${caracteristica2.nombre}'
                     </c:otherwise>
                 </c:choose>    
             </c:when>             
@@ -118,8 +121,7 @@
                             {
                             y: ${cumplimientoIN[status33.index]},
                                     color: '#AA4643'
-                            },</c:otherwise></c:choose></c:when>
-                    <c:otherwise>
+                            },</c:otherwise></c:choose></c:when><c:otherwise>
                         <c:choose>
                             <c:when test="${cumplimientoIN[status33.index]>=4.5}">
                             {
@@ -184,7 +186,6 @@
         }]
         });
         });
-        });
 </script>
 <div class="hero-unit">
     <div class="row">
@@ -218,7 +219,7 @@
                             <c:set var="indice" value="0"></c:set>
                             <c:forEach items="${indicadores}" var="indicador" varStatus="iter">
                                 <fmt:parseNumber var="cum"  value="${cumplimientoIN[iter.index]}" />
-                                    <c:choose>
+                                <c:choose>
                                     <c:when test="${cum>0}"> 
                                         <tr>
                                             <td style="text-align: left">   
