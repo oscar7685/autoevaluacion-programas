@@ -114,7 +114,7 @@
                             {
                             y: ${cumplimientoF[status.index]},
                                     color: '#AA4643'
-                            },</c:otherwise></c:choose>                    </c:when>
+                            },</c:otherwise></c:choose></c:when>
                     <c:otherwise>
                         <c:choose>
                             <c:when test="${cumplimientoF[status.index]>=4.5}">
@@ -215,6 +215,8 @@
                         </thead>
                         <tbody>
                             <c:set var="indice2" value="0"></c:set>
+                            <c:set var="final" value="0"></c:set>
+                            <c:set var="ponderaciones" value="0"></c:set>
                             <c:forEach items="${factores}" var="factor" varStatus="iter2">
                                 <fmt:parseNumber var="cum2"  value="${cumplimientoF[iter2.index]}" />
                                 <c:choose>
@@ -232,6 +234,7 @@
                                             </td>
                                             <td>   
                                                 <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index]}"/>
+                                                
                                             </td>
                                             <td>   
                                                 <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index] * ponderacionesF.get(indice2).ponderacion}"/>
@@ -243,35 +246,40 @@
                                                 <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index] * 20}"/>%
                                             </td>
                                         </tr>
+                                        <c:set var="final" value="${final+((ponderacionesF.get(indice2).ponderacion)*(cumplimientoF[iter2.index]))}"></c:set>
+                                        <c:set var="ponderaciones" value="${ponderaciones+ponderacionesF.get(indice2).ponderacion}"></c:set>
                                         <c:set var="indice2" value="${indice2+1}"></c:set>
+                                        
                                     </c:when>
                                 </c:choose>       
                             </c:forEach>
-                              <tr>
-                                            <td style="text-align: left">   
-                                                Total
-                                            </td>
-
-                                            <td style="text-align: left">   
-                                                100
-                                            </td>
-                                            <td>   
-                                               
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index]}"/>
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index] * ponderacionesF.get(indice2).ponderacion}"/>
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${5 * ponderacionesF.get(indice2).ponderacion}"/>
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index] * 20}"/>%
-                                            </td>
-                                        </tr>          
                         </tbody>
+                        <tfoot>
+                                <td>   
+
+                                </td>            
+                                <td style="text-align: left;font-weight: bold;">   
+                                    Total
+                                </td>
+
+                                <td>   
+                                    100
+                                </td>
+                                    
+                                <td>   
+                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${final/ponderaciones}"/>
+                                    
+                                </td>
+                                <td>   
+
+                                </td>
+                                <td>   
+
+                                </td>
+                                <td>   
+                                    <fmt:formatNumber type="number" maxFractionDigits="1" value="${(final/ponderaciones)*20}"/>%
+                                </td>
+                            </tfoot>
                     </table>
                     <br/>          
                     <div id="grafica" style="height: 500px; margin: 0 auto" class="span10"></div>
