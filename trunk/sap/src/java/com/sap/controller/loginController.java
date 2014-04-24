@@ -509,6 +509,9 @@ public class loginController extends HttpServlet {
                                 if (r != null && r.getPassword().equals(pw) && r.getRol().equals("Comite central")) {
                                     session.setAttribute("tipoLogin", "Comite central");
                                     session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
+                                    SessionCountListener sessionCountListener = new SessionCountListener();
+                                    session.setAttribute("cantidad",sessionCountListener.getCount());
+                                    session.setAttribute("representantesLogueados",sessionCountListener.representantesLogueados);
                                     out.println(0);
                                 } else {
                                     out.println(1);
@@ -523,6 +526,8 @@ public class loginController extends HttpServlet {
                                     out.println(0);
                                     session.setAttribute("tipoLogin", "Comite programa");
                                     session.setAttribute("representante", r);
+                                    SessionCountListener sessionListener2 = new SessionCountListener();
+                                    SessionCountListener.representantesLogueados.add(r);
                                     session.setAttribute("Programa", r.getProgramaId());
 
                                     List procesos = (List) procesoFacade.findByPrograma(r.getProgramaId());

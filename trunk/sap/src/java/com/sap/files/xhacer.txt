@@ -1,11 +1,16 @@
-mostrar alerta si mas del 30% responde que no sabe en una pregunta
+﻿mostrar alerta si mas del 30% responde que no sabe en una pregunta
 mostrar la desviacion estandar en el promedio de respuesta
 sacar los resultados con promedio x fuente
-Guardar automaticamente la info numerica y documental.
+
+
+//Guardar automaticamente la info numerica y documental.
 
 revisar editar muestra para cada una de las fuentes
 poner limitaciones a los diferentes pasos de un proceso
-Hacer la parte de informe y plan de mejoramiento
+
+
+
+//Hacer la parte de informe y plan de mejoramiento
 
 
 hacer el cambiar contrasenia para los estudiantes y para el comite central
@@ -14,6 +19,8 @@ hacer que la validacion en la ponderación funcione en internet explorer
 hacer el actualizar y el mostrar el porcentaje con stacked
 
 filtrar respuestas por fuentes y municipios
+
+
 unificar plantilla de los planes de mejoramiento
 hacer seguimiento a los planes de mejoramiento
 
