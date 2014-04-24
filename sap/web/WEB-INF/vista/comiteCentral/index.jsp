@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -66,7 +67,7 @@
             </div>        
 
         </div><!--North-->
-
+        
         <div class="ui-layout-south ui-widget-content"> 
             <footer id="footer" class="contenedor_footer fondo_footer">
                 <div class="links">
@@ -124,6 +125,18 @@
                         <li class="divider"></li>
                         <li><a href="#controlPanel"><i class="icon-th"></i> Panel de Control</a></li>
                     </ul>
+                </div>
+                <div>
+                    <div style="padding: 8px 0pt;" class="well">
+                        <ul class="nav nav-list">  
+                            <li class="nav-header">¿Qui&eacute;n est&aacute; en l&iacute;nea&quest;</li>
+                            <li><a href="#"><i class="icon-group"></i> Hay ${cantidad} persona(s) en linea</a></li>
+                            <c:forEach items="${representantesLogueados}" var="representante" varStatus="index" end="1">
+                                <li><a href="#"><i class="icon-user"></i> ${representante.nombre}</a></li>    
+                                </c:forEach>
+                            </ui>
+                    </div>
+
                 </div>
             </div>
         </div><!--/West-->
