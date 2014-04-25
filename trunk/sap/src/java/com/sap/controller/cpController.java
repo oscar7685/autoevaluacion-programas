@@ -35,6 +35,7 @@ import com.sap.ejb.PonderacionfactorFacade;
 import com.sap.ejb.PreguntaFacade;
 import com.sap.ejb.ProcesoFacade;
 import com.sap.ejb.ProgramaFacade;
+import com.sap.ejb.ProyectoestrategicoFacade;
 import com.sap.ejb.RepresentanteFacade;
 import com.sap.ejb.ResultadoevaluacionFacade;
 import com.sap.entity.Administrativo;
@@ -69,6 +70,7 @@ import com.sap.entity.Ponderacionfactor;
 import com.sap.entity.Pregunta;
 import com.sap.entity.Proceso;
 import com.sap.entity.Programa;
+import com.sap.entity.Proyectoestrategico;
 import com.sap.entity.Representante;
 import com.sap.entity.Resultadoevaluacion;
 import java.io.IOException;
@@ -93,6 +95,8 @@ import javax.servlet.http.HttpSession;
  */
 public class cpController extends HttpServlet {
 
+    @EJB
+    private ProyectoestrategicoFacade proyectoestrategicoFacade;
     @EJB
     private PersonaFacade personaFacade;
     @EJB
@@ -163,9 +167,8 @@ public class cpController extends HttpServlet {
     private InstrumentoFacade instrumentoFacade;
 
     /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -181,7 +184,6 @@ public class cpController extends HttpServlet {
         Programa programa = (Programa) sesion.getAttribute("Programa");
         Modelo modelo = (Modelo) sesion.getAttribute("Modelo");
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
-
 
         try {
             if (action.equals("indexCP")) {
@@ -206,7 +208,6 @@ public class cpController extends HttpServlet {
 
                 Proceso p = procesoFacade.find(id);
 
-
                 sesion.setAttribute("Proceso", p);
                 sesion.setAttribute("Modelo", p.getModeloId());
                 sesion.setAttribute("EstadoProceso", 3);
@@ -228,11 +229,11 @@ public class cpController extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("planMejoramiento")) {
-                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/plan.jsp";
+                sesion.setAttribute("listProyectoEstrategico", proyectoestrategicoFacade.findByList("procesoId", sesion.getAttribute("Proceso")));
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/estrategico/listar.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("crearProceso")) {
-
 
                 Proceso p = new Proceso();
 
@@ -317,7 +318,6 @@ public class cpController extends HttpServlet {
                     Double ponderacion = Double.parseDouble(request.getParameter("ponderacion" + pf.getId()));
                     String justificacion = request.getParameter("justificacion" + pf.getId());
 
-
                     pf.setJustificacion(justificacion);
                     pf.setPonderacion(ponderacion);
                     ponderacionfactorFacade.edit(pf);
@@ -346,7 +346,6 @@ public class cpController extends HttpServlet {
                             double vi = pc1.getNivelimportancia();
 
                             //System.out.println("Ponderacion FActor: " + pf.getPonderacion());
-
                             double a = (100 * vi) / suma;
                             double b = ((pf.getPonderacion() * a) / 100);
 
@@ -363,10 +362,6 @@ public class cpController extends HttpServlet {
                             PonderacioncaracteristicaFacade.edit(pc1);
                         }
                     }
-
-
-
-
 
                 }
 
@@ -403,7 +398,6 @@ public class cpController extends HttpServlet {
                     PonderacioncaracteristicaFacade.create(pc);
                 }
 
-
                 List lpc = PonderacioncaracteristicaFacade.findByList("procesoId", sesion.getAttribute("Proceso"));
 
                 i = lpc.iterator();
@@ -432,7 +426,6 @@ public class cpController extends HttpServlet {
                     }
 
                     //  System.out.println("Suma: " + suma);
-
                     double a = (100 * vi) / suma;
                     double b = ((pf.getPonderacion() * a) / 100);
 
@@ -450,7 +443,6 @@ public class cpController extends HttpServlet {
                     PonderacioncaracteristicaFacade.edit(pc);
 
                 }
-
 
             } else if (action.equals("preparedEditPonderarCara")) {
                 sesion.setAttribute("listPonderacionCara", PonderacioncaracteristicaFacade.findByList("procesoId", sesion.getAttribute("Proceso")));
@@ -505,7 +497,6 @@ public class cpController extends HttpServlet {
                     }
 
                     //System.out.println("Suma: " + suma);
-
                     double a = (100 * vi) / suma;
                     double b = ((pf.getPonderacion() * a) / 100);
 
@@ -523,7 +514,6 @@ public class cpController extends HttpServlet {
                     PonderacioncaracteristicaFacade.edit(pc);
 
                 }
-
 
             } else if (action.equals("listPonderacionCara")) {
                 if (ponderacionfactorFacade.findByList("procesoId", proceso).isEmpty()) {
@@ -569,7 +559,6 @@ public class cpController extends HttpServlet {
                     rd.forward(request, response);
                 }
 
-
             } else if (action.equals("generarMuestra")) {
 
                 Muestra m = new Muestra();
@@ -577,7 +566,6 @@ public class cpController extends HttpServlet {
                 muestraFacade.create(m);
 
                 sesion.setAttribute("Muestra", m);
-
 
                 //Tamaño muestra
                 double n = 0;
@@ -600,8 +588,6 @@ public class cpController extends HttpServlet {
                 if (N != 0.0) {
                     n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
                 }
-
-
 
                 double cociente = n / N;
 
@@ -631,7 +617,6 @@ public class cpController extends HttpServlet {
                             mp.setMail(per.getMail());
                             mp.setMuestraId(m);
 
-
                             muestrapersonaFacade.create(mp);
 
                             Muestraestudiante me = new Muestraestudiante();
@@ -646,9 +631,7 @@ public class cpController extends HttpServlet {
                         }
                     }
 
-
                 }
-
 
                 //********************************Docente
                 int tamanioMuestra = 0;
@@ -663,7 +646,6 @@ public class cpController extends HttpServlet {
                     tamanioMuestra = (int) Math.floor(n);
 
                     List<Docente> ld = docenteFacade.generarMuestra(programa, tamanioMuestra);
-
 
                     it = ld.iterator();
 
@@ -694,7 +676,6 @@ public class cpController extends HttpServlet {
                 }
 
                 //********************************Egresado
-
                 aux = egresadoFacade.countByProperty("programaId", sesion.getAttribute("Programa"));
 
                 N = aux;
@@ -732,10 +713,7 @@ public class cpController extends HttpServlet {
                     }
                 }
 
-
-
                 //********************************Director
-
                 aux = directorprogramaFacade.countByProperty("programaId", sesion.getAttribute("Programa"));
 
                 N = aux;
@@ -774,10 +752,7 @@ public class cpController extends HttpServlet {
 
                 }
 
-
-
                 //********************************Administrativo
-
                 aux = administrativoFacade.countByProperty("programaId", sesion.getAttribute("Programa"));
 
                 N = aux;
@@ -817,10 +792,7 @@ public class cpController extends HttpServlet {
 
                 }
 
-
-
                 //********************************EMpleador
-
                 aux = empleadorFacade.countByProperty("programaId", sesion.getAttribute("Programa"));
 
                 N = aux;
@@ -860,10 +832,7 @@ public class cpController extends HttpServlet {
                     }
                 }
 
-
-
                 //********************************Agencia
-
                 aux = agenciagubernamentalFacade.count();
 
                 N = aux;
@@ -902,8 +871,6 @@ public class cpController extends HttpServlet {
                     }
                 }
 
-
-
             } else if (action.equals("selectorListMuestra")) {
                 String fuente = "";
 
@@ -913,8 +880,6 @@ public class cpController extends HttpServlet {
                     fuente = request.getParameter("fuente");
                     sesion.setAttribute("selectorFuente", fuente);
                 }
-
-
 
                 Muestra m = (Muestra) sesion.getAttribute("Muestra");
                 if (fuente.equals("Estudiante")) {
@@ -962,12 +927,6 @@ public class cpController extends HttpServlet {
                     sesion.setAttribute("Fuente", fuenteFacade.find(7));
                 }
 
-
-
-
-
-
-
                 String url = "/WEB-INF/vista/comitePrograma/muestra/selectorListMuestra.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
@@ -996,7 +955,6 @@ public class cpController extends HttpServlet {
                 while (it.hasNext()) {
                     mp = (Muestrapersona) it.next();
                 }
-
 
                 if (mp == null) {
                     Muestrapersona mp1 = new Muestrapersona();
@@ -1062,7 +1020,6 @@ public class cpController extends HttpServlet {
                     System.out.println("Cedula Duplicada Para Este Proceso");
                 }
 
-
             } else if (action.equals("iniciarProceso")) {
 
                 Proceso p = (Proceso) sesion.getAttribute("Proceso");
@@ -1104,7 +1061,6 @@ public class cpController extends HttpServlet {
                             passwordGenerator.NUMEROS
                             + passwordGenerator.NUMEROS, 6);
 
-
                     String nombre = "Usuario";
                     String apellido = "Aleatorio";
                     String cedula = programa.getId() + proceso.getId() + " - ";
@@ -1126,7 +1082,6 @@ public class cpController extends HttpServlet {
                     per.setPassword(pass);
                     per.setMail(mail);
                     personaFacade.create(per);
-
 
                     muestrapersonaFacade.create(mp1);
 
@@ -1564,8 +1519,6 @@ public class cpController extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
 
-
-
             } else if (action.equals("selectorListSemestre")) {
 
                 String semestre = request.getParameter("semestre"); //parametro que viene x post
@@ -1605,8 +1558,6 @@ public class cpController extends HttpServlet {
                     }
 
                 }
-
-
 
                 String url = "/WEB-INF/vista/comitePrograma/muestra/selectorListMuestra.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
@@ -1679,8 +1630,6 @@ public class cpController extends HttpServlet {
                             infonumerica.setAccion(accionDoc);
                             numericadocumentalFacade.edit(infonumerica);
 
-
-
                         } else {
                             if (cambio.equals("1")) {
                                 Numericadocumental infonumerica2 = numericadocumentalFacade.find(Integer.parseInt(idNumDoc));
@@ -1735,14 +1684,11 @@ public class cpController extends HttpServlet {
                             infonumerica.setAccion(accionDoc);
                             numericadocumentalFacade.edit(infonumerica);
 
-
-
                         } else {
                             if (cambio.equals("1")) {
                                 Numericadocumental infonumerica2 = numericadocumentalFacade.find(Integer.parseInt(idNumDoc));
                                 numericadocumentalFacade.remove(infonumerica2);
                             }
-
 
                         }
                     } else {
@@ -1925,7 +1871,6 @@ public class cpController extends HttpServlet {
                             cumplimientoC2[j] = (float) sumaCumplimientoIndicadores / califica2;
                         }
 
-
                         ponderacionesC.add(ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(caracteristicas.get(j), p));
                     }
                     for (int i = 0; i < factores.get(i2).getCaracteristicaList().size(); i++) {
@@ -1940,7 +1885,6 @@ public class cpController extends HttpServlet {
                         cumplimientoF[i2] = suma2 / sumaPon;
                         cumplimientoF[i2] = (float) (Math.rint(cumplimientoF[i2] * 10) / 10);
                     }
-
 
                 }
                 sesion.setAttribute("factores", factores);
@@ -2019,7 +1963,6 @@ public class cpController extends HttpServlet {
                             cumplimientoC2[j] = (float) sumaCumplimientoIndicadores / califica2;
                         }
 
-
                         ponderacionesC.add(ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(caracteristicas.get(j), p));
                     }
                     for (int i = 0; i < factores.get(i2).getCaracteristicaList().size(); i++) {
@@ -2034,7 +1977,6 @@ public class cpController extends HttpServlet {
                         cumplimientoF[i2] = suma2 / sumaPon;
                         cumplimientoF[i2] = (float) (Math.rint(cumplimientoF[i2] * 10) / 10);
                     }
-
 
                 }
                 sesion.setAttribute("factores", factores);
@@ -2146,11 +2088,9 @@ public class cpController extends HttpServlet {
 
                     }
 
-
                     ponderacionesC.add(ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(caracteristicas.get(j), p));
 
                 }
-
 
                 sesion.setAttribute("caracteristicas", caracteristicas);
                 sesion.setAttribute("ponderacionesC", ponderacionesC);
@@ -2221,11 +2161,9 @@ public class cpController extends HttpServlet {
 
                     }
 
-
                     ponderacionesC.add(ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(caracteristicas.get(j), p));
 
                 }
-
 
                 sesion.setAttribute("caracteristicas", caracteristicas);
                 sesion.setAttribute("ponderacionesC", ponderacionesC);
@@ -2339,7 +2277,6 @@ public class cpController extends HttpServlet {
                     ponderacionesC.add(ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(caracteristicas.get(j), p));
                 }
 
-
                 sesion.setAttribute("factor", f);
                 sesion.setAttribute("caracteristicasDF", caracteristicas);
                 sesion.setAttribute("ponderacionesCDF", ponderacionesC);
@@ -2413,7 +2350,6 @@ public class cpController extends HttpServlet {
 
                     ponderacionesC.add(ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(caracteristicas.get(j), p));
                 }
-
 
                 sesion.setAttribute("factor", f);
                 sesion.setAttribute("caracteristicasDF", caracteristicas);
@@ -2511,7 +2447,6 @@ public class cpController extends HttpServlet {
 
                 }
 
-
                 sesion.setAttribute("indicadores", indicadores);
                 sesion.setAttribute("cumplimientoIN", cumplimiento);
                 sesion.setAttribute("caracteristica", c);
@@ -2567,7 +2502,6 @@ public class cpController extends HttpServlet {
                     cumplimiento[j] = (float) (Math.rint(cumplimiento[j] * 10) / 10);
 
                 }
-
 
                 sesion.setAttribute("indicadores", indicadores);
                 sesion.setAttribute("cumplimientoIN", cumplimiento);
@@ -2909,6 +2843,41 @@ public class cpController extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
 
+            } else if (action.equals("crearProyectoEstrategico")) {
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/estrategico/crear.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("editarPEstrategico")) {
+                String id = request.getParameter("id");
+                Proyectoestrategico p = proyectoestrategicoFacade.find(Integer.parseInt(id));
+                 sesion.setAttribute("proyecto", p);
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/estrategico/editar.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("crearProyectoEst")) {
+                Proyectoestrategico proy = new Proyectoestrategico();
+                String proyecto = (String) request.getParameter("proyecto");
+                String objetivo = (String) request.getParameter("objetivo");
+                proy.setObjetivo(objetivo);
+                proy.setProyecto(proyecto);
+                Proceso procesop = (Proceso) sesion.getAttribute("Proceso");
+                proy.setProcesoId(procesop);
+                proyectoestrategicoFacade.create(proy);
+                sesion.setAttribute("listProyectoEstrategico", proyectoestrategicoFacade.findByList("procesoId", sesion.getAttribute("Proceso")));
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/estrategico/listar.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("EditarProyectoEst")) {
+                Proyectoestrategico proy = (Proyectoestrategico) sesion.getAttribute("proyecto");
+                String proyecto = (String) request.getParameter("proyecto");
+                String objetivo = (String) request.getParameter("objetivo");
+                proy.setObjetivo(objetivo);
+                proy.setProyecto(proyecto);
+                proyectoestrategicoFacade.edit(proy);
+                sesion.setAttribute("listProyectoEstrategico", proyectoestrategicoFacade.findByList("procesoId", sesion.getAttribute("Proceso")));
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/estrategico/listar.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
             } else {
                 if (action.equals("contrasena")) {
                     String url = "/WEB-INF/vista/comitePrograma/contrasena.jsp";
@@ -2940,8 +2909,7 @@ public class cpController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -2955,8 +2923,7 @@ public class cpController extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP
-     * <code>POST</code> method.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response

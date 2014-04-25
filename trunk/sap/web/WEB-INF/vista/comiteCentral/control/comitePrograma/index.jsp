@@ -44,11 +44,11 @@
                     <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>
                     <li><a href="#preparedInfoNumerica"><i class="icon-list-ol"></i> Información Numérica</a></li>
                     <li><a href="#preparedInfoDocumental"><i class="icon-file-alt"></i> Información Documental</a></li>
-                    <c:choose>
-                        <c:when test="${abiertas == 'true'}">
+                        <c:choose>
+                            <c:when test="${abiertas == 'true'}">
                             <li><a href="#cerrarPreguntas"><i class="icon-lock"></i> Cerrar preguntas</a></li>
-                        </c:when>
-                    </c:choose>
+                            </c:when>
+                        </c:choose>
                     <li class="nav-header">Estado del proceso</li>
                     <li><a  id="informeEncuesta"  href="#estadoProceso"><i class="icon-bar-chart"></i> Estado del proceso</a></li>
                 </ul>
@@ -77,3 +77,12 @@
         </c:otherwise>
     </c:choose>
 </div>
+<c:choose>
+    <c:when test="${EstadoProceso == 0}">
+        <script type="text/javascript" >
+            $(function() {
+                location = "#listarProceso";
+            });
+        </script>
+    </c:when>
+</c:choose>
