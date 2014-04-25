@@ -324,7 +324,7 @@ $(function() {
                                         || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
                                         || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                                         || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
-                                        || hash === "#planMejoramiento") {
+                                        || hash === "#planMejoramiento" || hash==="#crearProyectoEstrategico") {
                                     var url3 = "/sap/" + hash;
                                     url3 = url3.replace('#', "controladorCP?action=");
                                     $("div.ui-layout-center").empty();
@@ -388,6 +388,27 @@ $(function() {
                                         } //fin success
                                     }); //fin del $.ajax
                                     actualizaEnlaces(hash);
+                                }else if(hash.indexOf("#editarPEstrategico") !== -1){
+                                    console.log("entra!!");
+                                     var cual = hash.split("&");
+                                    hash = cual[0];
+                                    var url3 = "/sap/controladorCP?action=";
+                                    url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
+                                    $("div.ui-layout-center").empty();
+                                    $.ajax({
+                                        type: "POST",
+                                        url: url3,
+                                        success: function(data)
+                                        {
+                                            $("#contenido").append(data);
+                                            actualizaEnlaces();
+                                            $("#contenido").show(200, function() {
+                                                $("#dancing-dots-text").remove();
+                                            });
+                                            
+                                        } //fin success
+                                    }); //fin del $.ajax
+                                    
                                 }
                                 else if (hash === "#preparedPonderarFactor") {
                                     var url3 = "/sap/" + hash;
