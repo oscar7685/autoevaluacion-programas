@@ -37,9 +37,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Hallazgo.findAll", query = "SELECT h FROM Hallazgo h"),
     @NamedQuery(name = "Hallazgo.findByIdhallazgo", query = "SELECT h FROM Hallazgo h WHERE h.idhallazgo = :idhallazgo"),
+    @NamedQuery(name = "Hallazgo.findByHallazgo", query = "SELECT h FROM Hallazgo h WHERE h.hallazgo = :hallazgo"),
     @NamedQuery(name = "Hallazgo.findByEstrategia", query = "SELECT h FROM Hallazgo h WHERE h.estrategia = :estrategia"),
     @NamedQuery(name = "Hallazgo.findByMeta", query = "SELECT h FROM Hallazgo h WHERE h.meta = :meta"),
-    @NamedQuery(name = "Hallazgo.findByIndicadorDeCumplimiento", query = "SELECT h FROM Hallazgo h WHERE h.indicadorDeCumplimiento = :indicadorDeCumplimiento"),
+    @NamedQuery(name = "Hallazgo.findByIndicadorCumplimiento", query = "SELECT h FROM Hallazgo h WHERE h.indicadorCumplimiento = :indicadorCumplimiento"),
     @NamedQuery(name = "Hallazgo.findByResponsable", query = "SELECT h FROM Hallazgo h WHERE h.responsable = :responsable"),
     @NamedQuery(name = "Hallazgo.findByFinanciacion", query = "SELECT h FROM Hallazgo h WHERE h.financiacion = :financiacion"),
     @NamedQuery(name = "Hallazgo.findByEstado", query = "SELECT h FROM Hallazgo h WHERE h.estado = :estado"),
@@ -60,14 +61,17 @@ public class Hallazgo implements Serializable {
     @Column(name = "idhallazgo")
     private Integer idhallazgo;
     @Size(max = 2000)
+    @Column(name = "hallazgo")
+    private String hallazgo;
+    @Size(max = 2000)
     @Column(name = "estrategia")
     private String estrategia;
     @Size(max = 2000)
     @Column(name = "meta")
     private String meta;
     @Size(max = 2000)
-    @Column(name = "indicador de cumplimiento")
-    private String indicadorDeCumplimiento;
+    @Column(name = "indicador_cumplimiento")
+    private String indicadorCumplimiento;
     @Size(max = 2000)
     @Column(name = "responsable")
     private String responsable;
@@ -127,6 +131,14 @@ public class Hallazgo implements Serializable {
         this.idhallazgo = idhallazgo;
     }
 
+    public String getHallazgo() {
+        return hallazgo;
+    }
+
+    public void setHallazgo(String hallazgo) {
+        this.hallazgo = hallazgo;
+    }
+
     public String getEstrategia() {
         return estrategia;
     }
@@ -143,12 +155,12 @@ public class Hallazgo implements Serializable {
         this.meta = meta;
     }
 
-    public String getIndicadorDeCumplimiento() {
-        return indicadorDeCumplimiento;
+    public String getIndicadorCumplimiento() {
+        return indicadorCumplimiento;
     }
 
-    public void setIndicadorDeCumplimiento(String indicadorDeCumplimiento) {
-        this.indicadorDeCumplimiento = indicadorDeCumplimiento;
+    public void setIndicadorCumplimiento(String indicadorCumplimiento) {
+        this.indicadorCumplimiento = indicadorCumplimiento;
     }
 
     public String getResponsable() {

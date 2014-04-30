@@ -25,13 +25,13 @@
                     <div class="control-group">
                         <label for="proyecto" class="control-label">Proyecto estrat&eacute;gico</label>
                         <div class="controls">
-                            <textarea rows="3" name="proyecto" id="proyecto" class="input-xxlarge {required:true}">${proyecto.proyecto}</textarea>
+                            <textarea rows="3" name="proyecto" id="proyecto" class="input-xxlarge {required:true}">${proyectoE.proyecto}</textarea>
                         </div>
                     </div>
                     <div class="control-group">
                         <label for="objetivo" class="control-label">Objetivo</label>
                         <div class="controls">
-                            <textarea rows="6" name="objetivo" id="objetivo" class="input-xxlarge {required:true}">${proyecto.objetivo}</textarea>
+                            <textarea rows="6" name="objetivo" id="objetivo" class="input-xxlarge {required:true}">${proyectoE.objetivo}</textarea>
                         </div>
                     </div>
                     <div class="form-actions">

@@ -16,6 +16,7 @@ import com.sap.ejb.EncuestaFacade;
 import com.sap.ejb.EstudianteFacade;
 import com.sap.ejb.FactorFacade;
 import com.sap.ejb.FuenteFacade;
+import com.sap.ejb.HallazgoFacade;
 import com.sap.ejb.IndicadorFacade;
 import com.sap.ejb.InstrumentoFacade;
 import com.sap.ejb.ModeloFacade;
@@ -51,6 +52,7 @@ import com.sap.entity.Encuesta;
 import com.sap.entity.Estudiante;
 import com.sap.entity.Factor;
 import com.sap.entity.Fuente;
+import com.sap.entity.Hallazgo;
 import com.sap.entity.Indicador;
 import com.sap.entity.Instrumento;
 import com.sap.entity.Modelo;
@@ -76,8 +78,10 @@ import com.sap.entity.Resultadoevaluacion;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -95,6 +99,8 @@ import javax.servlet.http.HttpSession;
  */
 public class cpController extends HttpServlet {
 
+    @EJB
+    private HallazgoFacade hallazgoFacade;
     @EJB
     private ProyectoestrategicoFacade proyectoestrategicoFacade;
     @EJB
@@ -212,9 +218,22 @@ public class cpController extends HttpServlet {
                 sesion.setAttribute("Modelo", p.getModeloId());
                 sesion.setAttribute("EstadoProceso", 3);
 
+            } else if (action.equals("verProyectoEstrategico")) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                Proyectoestrategico pe = proyectoestrategicoFacade.find(id);
+                List<Hallazgo> ha = hallazgoFacade.findByList("proyectoestrategicoIdproyectoestrategico", pe);
+                sesion.setAttribute("listHallazgos", ha);
+                sesion.setAttribute("proyectoE", pe);
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/hallazgos/listar.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+
+            } else if (action.equals("crearHallazgo")) {
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/hallazgos/crear.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
             } else if (action.equals("detalleProceso")) {
                 Proceso p = (Proceso) sesion.getAttribute("Proceso");
-
                 ArrayList<Proceso> l = new ArrayList<Proceso>();
                 l.add(procesoFacade.find(p.getId()));
                 sesion.setAttribute("listProceso", l);
@@ -375,6 +394,44 @@ public class cpController extends HttpServlet {
                 String url = "/WEB-INF/vista/comitePrograma/ponderacion/ponderarCara.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
+            } else if (action.equals("crearHallazgo2")) {
+                Proyectoestrategico pe = (Proyectoestrategico) sesion.getAttribute("proyectoE");
+
+                String hallazgo = (String) request.getParameter("hallazgo");
+                String estrategia = (String) request.getParameter("estrategia");
+                String metas = (String) request.getParameter("metas");
+                String indicador = (String) request.getParameter("indicador");
+                String responsable = (String) request.getParameter("responsable");
+                String financiacion = (String) request.getParameter("financiacion");
+                String fechaI = (String) request.getParameter("fechaI");
+                String fechaF = (String) request.getParameter("fechaF");
+
+                SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                Date dateI = null;
+                Date dateF = null;
+                try {
+
+                    dateI = formatoDelTexto.parse(fechaI);
+                    dateF = formatoDelTexto.parse(fechaF);
+
+                } catch (Exception ex) {
+
+                    ex.printStackTrace();
+
+                }
+
+                Hallazgo h = new Hallazgo();
+                h.setEstrategia(estrategia);
+                h.setHallazgo(hallazgo);
+                h.setMeta(metas);
+                h.setIndicadorCumplimiento(indicador);
+                h.setResponsable(responsable);
+                h.setFinanciacion(financiacion);
+                h.setFechaFinal(dateF);
+                h.setFechaInicio(dateI);
+                h.setProyectoestrategicoIdproyectoestrategico(pe);
+                hallazgoFacade.create(h);
+                        
             } else if (action.equals("ponderarCara")) {
                 Ponderacioncaracteristica pc = new Ponderacioncaracteristica();
 
@@ -524,6 +581,13 @@ public class cpController extends HttpServlet {
                 }
             } else if (action.equals("listPonderacionCara2")) {
                 String url = "/WEB-INF/vista/comitePrograma/ponderacion/listarpc.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("listarHallazgos")) {
+                Proyectoestrategico pe = (Proyectoestrategico) sesion.getAttribute("proyectoE");
+                List<Hallazgo> ha = hallazgoFacade.findByList("proyectoestrategicoIdproyectoestrategico", pe);
+                sesion.setAttribute("listHallazgos", ha);
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/hallazgos/listar.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("listEncuestas")) {
@@ -2850,7 +2914,7 @@ public class cpController extends HttpServlet {
             } else if (action.equals("editarPEstrategico")) {
                 String id = request.getParameter("id");
                 Proyectoestrategico p = proyectoestrategicoFacade.find(Integer.parseInt(id));
-                 sesion.setAttribute("proyecto", p);
+                sesion.setAttribute("proyectoE", p);
                 String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/estrategico/editar.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
@@ -2868,7 +2932,7 @@ public class cpController extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("EditarProyectoEst")) {
-                Proyectoestrategico proy = (Proyectoestrategico) sesion.getAttribute("proyecto");
+                Proyectoestrategico proy = (Proyectoestrategico) sesion.getAttribute("proyectoE");
                 String proyecto = (String) request.getParameter("proyecto");
                 String objetivo = (String) request.getParameter("objetivo");
                 proy.setObjetivo(objetivo);
