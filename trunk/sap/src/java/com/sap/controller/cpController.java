@@ -249,7 +249,7 @@ public class cpController extends HttpServlet {
                 rd.forward(request, response);
             } else if (action.equals("planMejoramiento")) {
                 sesion.setAttribute("listProyectoEstrategico", proyectoestrategicoFacade.findByList("procesoId", sesion.getAttribute("Proceso")));
-                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/estrategico/listar.jsp";
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/plan.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("crearProceso")) {
@@ -429,9 +429,16 @@ public class cpController extends HttpServlet {
                 h.setFinanciacion(financiacion);
                 h.setFechaFinal(dateF);
                 h.setFechaInicio(dateI);
+                h.setFechaSeguimiento(dateF);
                 h.setProyectoestrategicoIdproyectoestrategico(pe);
                 hallazgoFacade.create(h);
-                        
+                
+                Hallazgo recienCreado = hallazgoFacade.findUltimo("idhallazgo").get(0);
+                List<Hallazgo> hallagos = pe.getHallazgoList();
+                hallagos.add(recienCreado);
+                pe.setHallazgoList(hallagos);
+                proyectoestrategicoFacade.edit(pe);
+
             } else if (action.equals("ponderarCara")) {
                 Ponderacioncaracteristica pc = new Ponderacioncaracteristica();
 
@@ -588,6 +595,11 @@ public class cpController extends HttpServlet {
                 List<Hallazgo> ha = hallazgoFacade.findByList("proyectoestrategicoIdproyectoestrategico", pe);
                 sesion.setAttribute("listHallazgos", ha);
                 String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/hallazgos/listar.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("listarProyectosE")) {
+                sesion.setAttribute("listProyectoEstrategico", proyectoestrategicoFacade.findByList("procesoId", sesion.getAttribute("Proceso")));
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/estrategico/listar.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("listEncuestas")) {
@@ -2918,6 +2930,13 @@ public class cpController extends HttpServlet {
                 String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/estrategico/editar.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
+            } else if (action.equals("editarHallazgo")) {
+                String id = request.getParameter("id");
+                Hallazgo h = hallazgoFacade.find(Integer.parseInt(id));
+                sesion.setAttribute("hallazgo", h);
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/hallazgos/editar.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
             } else if (action.equals("crearProyectoEst")) {
                 Proyectoestrategico proy = new Proyectoestrategico();
                 String proyecto = (String) request.getParameter("proyecto");
@@ -2942,6 +2961,40 @@ public class cpController extends HttpServlet {
                 String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/estrategico/listar.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
+            } else if (action.equals("editarHallazgo2")) {
+                Hallazgo h = (Hallazgo) sesion.getAttribute("hallazgo");
+                String ha = (String) request.getParameter("hallazgo");
+                String estrategia = (String) request.getParameter("estrategia");
+                String metas = (String) request.getParameter("metas");
+                String indicador = (String) request.getParameter("indicador");
+                String responsable = (String) request.getParameter("responsable");
+                String financiacion = (String) request.getParameter("financiacion");
+                String fechaI = (String) request.getParameter("fechaI");
+                String fechaF = (String) request.getParameter("fechaF");
+                SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                Date dateI = null;
+                Date dateF = null;
+                try {
+
+                    dateI = formatoDelTexto.parse(fechaI);
+                    dateF = formatoDelTexto.parse(fechaF);
+
+                } catch (Exception ex) {
+
+                    ex.printStackTrace();
+
+                }
+
+                h.setHallazgo(ha);
+                h.setEstrategia(estrategia);
+                h.setMeta(metas);
+                h.setIndicadorCumplimiento(indicador);
+                h.setResponsable(responsable);
+                h.setFinanciacion(financiacion);
+                h.setFechaInicio(dateI);
+                h.setFechaFinal(dateF);
+                h.setFechaSeguimiento(dateF);
+                hallazgoFacade.edit(h);
             } else {
                 if (action.equals("contrasena")) {
                     String url = "/WEB-INF/vista/comitePrograma/contrasena.jsp";

@@ -9,7 +9,7 @@
                     url: "/sap/controladorCP?action=crearProyectoEst",
                     data: $("#formCrearProyectoEst").serialize(),
                     success: function() {
-                        location = "/sap/#planMejoramiento";
+                        location = "/sap/#listarProyectosE";
                     } //fin success
                 }); //fin $.ajax    */
             }
@@ -19,6 +19,11 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
+            <ul class="breadcrumb">
+                <li><a href="<%=request.getContextPath()%>/#planMejoramiento">Plan de mejoramiento</a> <span class="divider">/</span></li>
+                <li><a href="<%=request.getContextPath()%>/#listarProyectosE">Proyectos estratégicos</a> <span class="divider">/</span></li>
+                <li class="active">Crear</li>
+            </ul>
             <form id="formCrearProyectoEst" class="form-horizontal" method="post">
                 <fieldset>
                     <legend>Crear proyecto estrat&eacute;gico</legend>
