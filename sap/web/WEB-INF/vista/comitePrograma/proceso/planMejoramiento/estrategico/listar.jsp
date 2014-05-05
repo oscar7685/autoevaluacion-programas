@@ -3,6 +3,10 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
+            <ul class="breadcrumb">
+                <li><a href="<%=request.getContextPath()%>/#planMejoramiento">Plan de mejoramiento</a> <span class="divider">/</span></li>
+                <li class="active">Proyectos estratégicos</li>
+            </ul>
             <h3>Listado de  Proyectos Estrategicos</h3>
             <c:choose>
                 <c:when test="${fn:length(listProyectoEstrategico)!= 0}">
