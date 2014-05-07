@@ -35,6 +35,11 @@ public class IndicadorFacade extends AbstractFacade<Indicador> {
         q.setParameter("modelo", m);
         return q.getResultList();
     }
+    public List findByModeloYenOrden(Modelo m) {
+        Query q = em.createNamedQuery("Indicador.findByModeloYenOrden");
+        q.setParameter("modelo", m);
+        return q.getResultList();
+    }
     
         public List findByCaracteristica(Caracteristica c) {
         Query q = em.createNamedQuery("Indicador.findByCaracteristica");

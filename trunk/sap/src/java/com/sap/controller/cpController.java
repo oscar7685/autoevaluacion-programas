@@ -432,7 +432,7 @@ public class cpController extends HttpServlet {
                 h.setFechaSeguimiento(dateF);
                 h.setProyectoestrategicoIdproyectoestrategico(pe);
                 hallazgoFacade.create(h);
-                
+
                 Hallazgo recienCreado = hallazgoFacade.findUltimo("idhallazgo").get(0);
                 List<Hallazgo> hallagos = pe.getHallazgoList();
                 hallagos.add(recienCreado);
@@ -1838,6 +1838,131 @@ public class cpController extends HttpServlet {
                 String url = "/WEB-INF/vista/comitePrograma/proceso/informe/estadoProceso.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
+            } else if (action.equals("todosResultados")) {
+                Proceso p = (Proceso) sesion.getAttribute("Proceso");
+                Modelo m = p.getModeloId();
+                List<Indicador> indicadores = indicadorFacade.findByModeloYenOrden(m);
+                
+                Numericadocumental[] numerico = new Numericadocumental[indicadores.size()]; //numerica x indicador
+                Numericadocumental[] documental = new Numericadocumental[indicadores.size()]; //documental x indicador
+                List indicadoresP = new ArrayList();
+                
+                List<Factor> factores = factorFacade.findByModelo(m);
+                List<Caracteristica> caracteristicas = caracteristicaFacade.findByModelo(m);
+                
+                List<Ponderacionfactor> ponderacionesF = new ArrayList<Ponderacionfactor>(); //ponderacion de los factores
+                float cumplimientoF[] = new float[factores.size()];
+                List<Ponderacioncaracteristica> ponderacionesC = new ArrayList<Ponderacioncaracteristica>(); //ponderacion de las caracteristicas
+                float cumplimientoC[] = new float[caracteristicas.size()];
+                
+                
+                
+                float promedioPregunta;
+                float suma;
+                float numP;
+                
+                int indice = 0;
+                for (Indicador in : indicadores) {
+                    List<Instrumento> instr = in.getInstrumentoList();
+                    for (int i = 0; i < instr.size(); i++) {
+                        Instrumento instrumento = instr.get(i);
+                        if (instrumento.getId() == 1) {
+                            List<Pregunta> preguntas = in.getPreguntaList();
+                            float promediorespuestas[] = new float[preguntas.size()];
+                            int ceros[] = new int[preguntas.size()];
+                            int unos[] = new int[preguntas.size()];
+                            int dos[] = new int[preguntas.size()];
+                            int tres[] = new int[preguntas.size()];
+                            int cuatros[] = new int[preguntas.size()];
+                            int cincos[] = new int[preguntas.size()];
+
+                            for (int l = 0; l < preguntas.size(); l++) {
+                                Pregunta pregunta = preguntas.get(l);
+                                promedioPregunta = 0;
+                                suma = 0;
+                                numP = 0;
+                                List<Resultadoevaluacion> respuestas = pregunta.getResultadoevaluacionList();
+                                for (int n = 0; n < respuestas.size(); n++) {
+                                    if (respuestas.get(n).getEncabezadoId().getEstado().equals("terminado") && respuestas.get(n).getEncabezadoId().getProcesoId().getId() == p.getId() && respuestas.get(n).getRespuesta() != null && (respuestas.get(n).getRespuesta().equals("1") || respuestas.get(n).getRespuesta().equals("2") || respuestas.get(n).getRespuesta().equals("3") || respuestas.get(n).getRespuesta().equals("4") || respuestas.get(n).getRespuesta().equals("5"))) {
+                                        if (respuestas.get(n).getRespuesta().equals("1")) {
+                                            unos[l]++;
+                                        }
+                                        if (respuestas.get(n).getRespuesta().equals("2")) {
+                                            dos[l]++;
+                                        }
+                                        if (respuestas.get(n).getRespuesta().equals("3")) {
+                                            tres[l]++;
+                                        }
+                                        if (respuestas.get(n).getRespuesta().equals("4")) {
+                                            cuatros[l]++;
+                                        }
+                                        if (respuestas.get(n).getRespuesta().equals("5")) {
+                                            cincos[l]++;
+                                        }
+                                        suma += Integer.parseInt(respuestas.get(n).getRespuesta());
+                                        numP++;
+                                    } else {
+                                        if (respuestas.get(n).getEncabezadoId().getEstado().equals("terminado") && respuestas.get(n).getEncabezadoId().getProcesoId().getId() == p.getId() && respuestas.get(n).getRespuesta() != null && respuestas.get(n).getRespuesta().equals("0")) {
+                                            ceros[l]++;
+                                        }
+
+                                    }
+                                    if (suma > 0) {
+                                        promedioPregunta = (float) suma / numP;
+                                        promediorespuestas[l] = (float) (Math.rint(promedioPregunta * 10) / 10);
+
+                                    }
+                                }
+                            }
+
+                            sesion.setAttribute("promediorepuestas", promediorespuestas);
+                            sesion.setAttribute("ceros", ceros);
+                            sesion.setAttribute("unos", unos);
+                            sesion.setAttribute("dos", dos);
+                            sesion.setAttribute("tres", tres);
+                            sesion.setAttribute("cuatros", cuatros);
+                            sesion.setAttribute("cincos", cincos);
+                            indicadoresP.add(promediorespuestas);
+                        } else {
+                            indicadoresP.add(null);
+                            if (instrumento.getId() == 2) {
+                                Numericadocumental numDoc1 = numericadocumentalFacade.findBySingle3("indicadorId", in, "procesoId", p, "instrumentoId", instrumento);
+                                sesion.setAttribute("numerico", numDoc1);
+                                numerico[indice] = numDoc1;
+
+                            } else {
+                                if (instrumento.getId() == 3) {
+                                    Numericadocumental numDoc2 = numericadocumentalFacade.findBySingle3("indicadorId", in, "procesoId", p, "instrumentoId", instrumento);
+                                    sesion.setAttribute("documental", numDoc2);
+                                    documental[indice] = numDoc2;
+
+                                }
+                            }
+                        }
+                    }
+                    indice++;
+                }
+                sesion.setAttribute("ponderacionesF", ponderacionesF);
+                sesion.setAttribute("cumplimientoF", cumplimientoF);
+                sesion.setAttribute("ponderacionesC", ponderacionesC);
+                sesion.setAttribute("cumplimientoC", cumplimientoC);
+//                sesion.setAttribute("cumplimientoI", cumplimientoI);
+                
+                sesion.setAttribute("promedioE", indicadoresP);
+                sesion.setAttribute("promedioFe", indicadoresP);
+                sesion.setAttribute("promedioFd", indicadoresP);
+                sesion.setAttribute("promedioFem", indicadoresP);
+                sesion.setAttribute("promedioFgr", indicadoresP);
+                sesion.setAttribute("promedioFAd", indicadoresP);
+                sesion.setAttribute("promedioFdir", indicadoresP);
+                
+                sesion.setAttribute("numerico", numerico);
+                sesion.setAttribute("documental", documental);
+
+                String url = "/WEB-INF/vista/comitePrograma/proceso/informe/resultados.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+
             } else if (action.equals(
                     "informeMatrizFactores")) {
                 Proceso p = (Proceso) sesion.getAttribute("Proceso");

@@ -105,6 +105,21 @@
                             </div>
                         </div>
                     </div>
+                    <legend>Seguimiento Actividades a realizar</legend>        
+                    <div class="span4">
+                        <div class="control-group">
+                            <label for="estado" class="control-label">Estado</label>
+                            <div class="controls">
+                                <select name="estado" id="estado" class="span4 {required:true}">
+                                    <option>No iniciada</option>
+                                    <option>En espera</option>
+                                    <option>Cancelada</option>
+                                    <option>En ejecución</option>
+                                    <option>Finalizada</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>        
                     <div class="form-actions span8">
                         <button class="btn btn-primary" type="submit">Editar Hallazgo</button>
                         <button class="btn" type="reset">Cancelar</button>

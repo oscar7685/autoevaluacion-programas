@@ -3,7 +3,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="hero-unit">
     <div style="margin-left: -30px;">
-        <div id="conte" class="span10" style="text-align: justify">
+        <div id="conte" class="span12" style="text-align: justify">
             <div class="row">
                 <ul class="breadcrumb">
                     <li class="active">Plan de mejoramiento<span class="divider">/</span></li>
@@ -50,6 +50,7 @@
                         <th>Fecha final</th>    
                         <th>Responsable</th>    
                         <th>Financiación</th>    
+                        <th>Estado</th>    
                         </thead>
                         <tbody>
                             <c:forEach items="${proyecto.hallazgoList}" var="item" varStatus="iter">
@@ -77,6 +78,9 @@
                                     </td>
                                     <td>   
                                         <c:out value="${item.financiacion}"/>
+                                    </td>
+                                    <td>   
+                                        <c:out value="${item.estado}"/>
                                     </td>
                                 </tr>
                             </c:forEach>

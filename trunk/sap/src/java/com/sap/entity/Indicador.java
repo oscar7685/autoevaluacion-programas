@@ -39,7 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Indicador.findByNombre", query = "SELECT i FROM Indicador i WHERE i.nombre = :nombre"),
     @NamedQuery(name = "Indicador.findByCaracteristica", query = "SELECT i FROM Indicador i WHERE i.caracteristicaId = :caracteristica"),
     @NamedQuery(name = "Indicador.findByUltimo", query = "SELECT i FROM Indicador i order by i.id desc"),
-    @NamedQuery(name = "Indicador.findByModelo", query = "SELECT i FROM Indicador i WHERE i.modeloId = :modelo")})
+    @NamedQuery(name = "Indicador.findByModelo", query = "SELECT i FROM Indicador i WHERE i.modeloId = :modelo"),
+    @NamedQuery(name = "Indicador.findByModeloYenOrden", query = "SELECT i FROM Indicador i WHERE i.modeloId = :modelo order by i.caracteristicaId.id asc, i.id asc")})
 public class Indicador implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

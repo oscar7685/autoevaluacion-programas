@@ -143,6 +143,24 @@ $(function() {
 
             urlx = url3;
 
+
+        } else if (hash === "#todosResultados") {
+            var url3 = "/sap/" + hash;
+            url3 = url3.replace('#', "controladorCP?action=");
+            $("div.ui-layout-center").empty();
+            $.ajax({
+                type: "POST",
+                url: url3,
+                success: function(data)
+                {
+                    $("#contenido").append(data);
+                    $("#contenido").show(200, function() {
+                        $("#dancing-dots-text").remove();
+                    });
+
+                } //fin success
+            }); //fin del $.ajax
+
         } else if (hash.indexOf("#finalizarPro") !== -1) {
             $('#modalCc2').modal();
 
@@ -341,7 +359,7 @@ $(function() {
                                             if (hash === "#listPonderacionCara2") {
                                                 hash = "#listPonderacionCara";
                                             }
-                                            if (hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental") {
+                                            if (hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental" || hash === "#planMejoramiento") {
                                                 setTimeout(function() {
                                                     $("#west-closer").trigger("click");
                                                 }, 500);
