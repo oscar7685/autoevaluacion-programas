@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Factor.findByNombre", query = "SELECT f FROM Factor f WHERE f.nombre = :nombre"),
     @NamedQuery(name = "Factor.findByModelo", query = "SELECT f FROM Factor f WHERE f.modeloId = :modelo")})
 public class Factor implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,6 +78,15 @@ public class Factor implements Serializable {
 
     public Integer getId() {
         return id;
+    }
+
+    public int CantiIndicadores() {
+        int cantInd = 0;
+        List<Caracteristica> caracteristicas = this.getCaracteristicaList();
+        for (int i = 0; i < caracteristicas.size(); i++) {
+            cantInd += caracteristicas.get(i).getIndicadorList().size();
+        }
+        return cantInd;
     }
 
     public void setId(Integer id) {
@@ -149,5 +159,5 @@ public class Factor implements Serializable {
     public String toString() {
         return "com.sap.entity.Factor[ id=" + id + " ]";
     }
-    
+
 }
