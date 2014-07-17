@@ -144,7 +144,7 @@ $(function() {
             urlx = url3;
 
 
-        } else if (hash === "#todosResultados") {
+        } else if (hash === "#todosResultados" || hash === "#todosResultados2" || hash === "#todosResultados3") {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
@@ -342,7 +342,8 @@ $(function() {
                                         || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
                                         || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                                         || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
-                                        || hash === "#planMejoramiento" || hash === "#crearProyectoEstrategico" || hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#listarProyectosE") {
+                                        || hash === "#planMejoramiento" || hash === "#crearProyectoEstrategico" || hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#listarProyectosE"
+                                        || hash === "#comentarios") {
                                     var url3 = "/sap/" + hash;
                                     url3 = url3.replace('#', "controladorCP?action=");
                                     $("div.ui-layout-center").empty();
@@ -425,7 +426,7 @@ $(function() {
                                                 $("div.ui-layout-center").affix();
                                             }, 500);
 
-                                            $("div.ui-layout-center").affix('refresh');
+                                            //$("div.ui-layout-center").affix('refresh');
                                             actualizaEnlaces(hash);
                                         }
                                         //fin success

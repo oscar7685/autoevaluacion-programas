@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Encabezado.findByFecha", query = "SELECT e FROM Encabezado e WHERE e.fecha = :fecha"),
     @NamedQuery(name = "Encabezado.findByVars", query = "SELECT e FROM Encabezado e WHERE e.procesoId = :proceso and e.muestrapersonaId = :persona and e.fuenteId = :fuente and e.encuestaId = :encuesta"),
     @NamedQuery(name = "Encabezado.findByUltimo", query = "SELECT e FROM Encabezado e order by e.id desc"),
+    @NamedQuery(name = "Encabezado.findByComentarios", query = "SELECT e FROM Encabezado e WHERE e.procesoId = :proceso and e.fuenteId =:fuente and e.estado='terminado' and e.comentarios!=''"),
     @NamedQuery(name = "Encabezado.findByEstado", query = "SELECT e FROM Encabezado e WHERE e.estado = :estado")})
 public class Encabezado implements Serializable {
 

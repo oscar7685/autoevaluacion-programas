@@ -47,4 +47,11 @@ public class EncabezadoFacade extends AbstractFacade<Encabezado> {
         q.setMaxResults(1);
         return (Encabezado)q.getSingleResult() ;
     }
+    
+    public List findByComentarios(Fuente f, Proceso p) {
+        Query q = em.createNamedQuery("Encabezado.findByComentarios");
+        q.setParameter("fuente", f);
+        q.setParameter("proceso", p);
+        return q.getResultList();
+    }
 }

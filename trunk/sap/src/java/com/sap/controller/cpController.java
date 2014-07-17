@@ -1999,12 +1999,14 @@ public class cpController extends HttpServlet {
                             }
                         } else {
                             if (instrumento.getId() == 2) {
+                                System.out.println("indicador: "+in.getId());
                                 Numericadocumental numDoc1 = numericadocumentalFacade.findBySingle3("indicadorId", in, "procesoId", p, "instrumentoId", instrumento);
                                 calificacionNum = numDoc1.getEvaluacion();
                                 numerico[indice] = calificacionNum;
 
                             } else {
                                 if (instrumento.getId() == 3) {
+                                    System.out.println("indicador2: "+in.getId());
                                     Numericadocumental numDoc2 = numericadocumentalFacade.findBySingle3("indicadorId", in, "procesoId", p, "instrumentoId", instrumento);
                                     calificacionDoc = numDoc2.getEvaluacion();
                                     documental[indice] = calificacionDoc;
@@ -3125,7 +3127,8 @@ public class cpController extends HttpServlet {
                 sesion.setAttribute("acerrar", null);
                 List<Resultadoevaluacion> acerrar = new ArrayList<Resultadoevaluacion>();
                 Proceso pro = (Proceso) sesion.getAttribute("Proceso");
-                List<Encabezado> encabezados = encabezadoFacade.findByList2("estado", "terminado", "procesoId", pro);
+                acerrar = resultadoevaluacionFacade.findPreguntasCerrarDesdeResultado(pro);
+                /*List<Encabezado> encabezados = encabezadoFacade.findByList2("estado", "terminado", "procesoId", pro);
                 for (Encabezado encabezado : encabezados) {
                     List<Resultadoevaluacion> resultados = resultadoevaluacionFacade.findByList("encabezadoId", encabezado);
                     for (Resultadoevaluacion resultadoevaluacion : resultados) {
@@ -3133,7 +3136,8 @@ public class cpController extends HttpServlet {
                             acerrar.add(resultadoevaluacion);
                         }
                     }
-                }
+                }*/
+                
                 sesion.setAttribute("acerrar", acerrar);
                 String url = "/WEB-INF/vista/comitePrograma/proceso/cerrarPregunta.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
@@ -3201,6 +3205,32 @@ public class cpController extends HttpServlet {
 
             } else if (action.equals("crearProyectoEstrategico")) {
                 String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/estrategico/crear.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("comentarios")) {
+                String url = "/WEB-INF/vista/comitePrograma/proceso/informe/comentarios.jsp";
+                Proceso pro = (Proceso) sesion.getAttribute("Proceso");
+                Fuente est = fuenteFacade.find(1);
+                Fuente doc = fuenteFacade.find(2);
+                Fuente admi = fuenteFacade.find(3);
+                Fuente egr = fuenteFacade.find(4);
+                Fuente dir = fuenteFacade.find(5);
+                Fuente emp = fuenteFacade.find(6);
+                
+                List<Encabezado> estudiantes = encabezadoFacade.findByComentarios(est, pro);
+                List<Encabezado> docentes = encabezadoFacade.findByComentarios(doc, pro);
+                List<Encabezado> administrativos = encabezadoFacade.findByComentarios(admi, pro);
+                List<Encabezado> egresados = encabezadoFacade.findByComentarios(egr, pro);
+                List<Encabezado> directores = encabezadoFacade.findByComentarios(dir, pro);
+                List<Encabezado> empleadores = encabezadoFacade.findByComentarios(emp, pro);
+                
+                sesion.setAttribute("estudiantes",estudiantes);
+                sesion.setAttribute("docentes",docentes);
+                sesion.setAttribute("administrativos",administrativos);
+                sesion.setAttribute("egresados",egresados);
+                sesion.setAttribute("directores",directores);
+                sesion.setAttribute("empleadores",empleadores);
+                
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("editarPEstrategico")) {

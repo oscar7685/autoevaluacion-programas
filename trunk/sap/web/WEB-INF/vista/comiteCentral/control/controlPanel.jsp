@@ -74,7 +74,7 @@
                                             <span class="label label-success"><i class="icon-flag-checkered"></i> Proceso finalizado</span>
                                         </td>
                                         <td>
-                                           
+
                                         </td>
                                     </tr>
                                 </c:if>    

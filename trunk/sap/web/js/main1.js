@@ -17,38 +17,38 @@ $(function() {
     myLayout = $('body').layout({
         //	enable showOverflow on west-pane so CSS popups will overlap north pane
         west__size: 280
-                , center__paneSelector: ".ui-layout-center"
-                , north__paneClass: "ui-layout-pane2"
+        , center__paneSelector: ".ui-layout-center"
+        , north__paneClass: "ui-layout-pane2"
                 //	reference only - these options are NOT required because 'true' is the default
-                , closable: true	// pane can open & close
-                , resizable: false	// when open, pane can be resized 
-                , slidable: false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
-                , north__size: 1
-                , north__closable: false
-                , north__maxSize: 1
-                , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
-                , north__spacing_open: 0		// no resizer-bar when open (zero height)
-                , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
-                , south__closable: false
-                , south__spacing_open: 0		// no resizer-bar when open (zero height)
-                , west__spacing_open: 0
-                , west__spacing_closed: 20
-                , west__togglerLength_closed: 35
-                , west__togglerAlign_closed: "top"
-                , west__togglerContent_closed: "<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
-                , west__togglerTip_closed: "Mostrar menú"
-                , west__togglerTip_open: "Ocultar menú"
-                , west__enableCursorHotkey: false
-                , west__onclose_end: function() {
+        , closable: true	// pane can open & close
+        , resizable: false	// when open, pane can be resized 
+        , slidable: false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
+        , north__size: 1
+        , north__closable: false
+        , north__maxSize: 1
+        , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
+        , north__spacing_open: 0		// no resizer-bar when open (zero height)
+        , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
+        , south__closable: false
+        , south__spacing_open: 0		// no resizer-bar when open (zero height)
+        , west__spacing_open: 0
+        , west__spacing_closed: 20
+        , west__togglerLength_closed: 35
+        , west__togglerAlign_closed: "top"
+        , west__togglerContent_closed: "<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
+        , west__togglerTip_closed: "Mostrar menú"
+        , west__togglerTip_open: "Ocultar menú"
+        , west__enableCursorHotkey: false
+        , west__onclose_end: function() {
             $("#conte").removeClass("span10").addClass("span12");
         }
         , west__onopen_end: function() {
             $("#conte").removeClass("span12").addClass("span10");
         }
         , south__paneClass: "ui-layout-pane"
-                , west__togglerContent_open: ""
-                , west__minSize: 200
-                , west__maxSize: 350
+        , west__togglerContent_open: ""
+        , west__minSize: 200
+        , west__maxSize: 350
 
 
     });
@@ -165,7 +165,8 @@ $(function() {
                 || hash === "#preparedEditPonderarCara" || hash === "#generarMuestraAleatoria" || hash === "#preparedEditarMuestra"
                 || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
                 || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
-                || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP" ) {
+                || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
+                || hash === "#comentarios") {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
@@ -313,7 +314,7 @@ $(function() {
                         $("div.ui-layout-center").affix();
                     }, 500);
 
-                    $("div.ui-layout-center").affix('refresh');
+                    // $("div.ui-layout-center").affix('refresh');
                     actualizaEnlaces(hash);
                 }
                 //fin success
@@ -338,7 +339,7 @@ $(function() {
                 //fin success
             }); //fin del $.ajax
         } else if (hash.indexOf("#detalleFactor") !== -1 || hash.indexOf("#detalleCaracteristica") !== -1 || hash.indexOf("#detalleIndicador") !== -1
-                || hash.indexOf("#detallePregunta") !== -1 || hash.indexOf("#vistaPreviaPEncuesta") !== -1 || hash.indexOf("#encuestaXaleatoria") !== -1 || hash.indexOf("#detallePFactor")!== -1 || hash.indexOf("#detallePCaracteristica") !== -1 || hash.indexOf("#detallePIndicador") !== -1) {
+                || hash.indexOf("#detallePregunta") !== -1 || hash.indexOf("#vistaPreviaPEncuesta") !== -1 || hash.indexOf("#encuestaXaleatoria") !== -1 || hash.indexOf("#detallePFactor") !== -1 || hash.indexOf("#detallePCaracteristica") !== -1 || hash.indexOf("#detallePIndicador") !== -1) {
             var cual = hash.split("&");
             hash = cual[0];
             var url3 = "/sap/controladorCP?action=";

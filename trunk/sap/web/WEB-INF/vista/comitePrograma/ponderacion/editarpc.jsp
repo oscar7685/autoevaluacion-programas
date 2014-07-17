@@ -1,4 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<style type="text/css">
+    .popover{
+        min-width:550px;
+        width: auto;
+        text-align: center;
+    }
+    .popover-title {
+        font-weight: bold;
+    }
+</style>
 <script type="text/javascript">
     $(function() {
         $("#formEditPonderarCara").validate({
@@ -13,6 +23,15 @@
                 }); //fin $.ajax    
             }
         });
+
+        $("#popover").popover({
+            trigger: 'hover',
+            placement: 'bottom',
+            html: true,
+            content: function() {
+                return '<img src="<%=request.getContextPath()%>/img/escalaCaract.png" />';
+            }
+        });
     });
 </script>
 <div class="hero-unit">
@@ -21,7 +40,7 @@
             <ul class="nav nav-pills">
                 <form id="formEditPonderarCara" class="form-horizontal" method="post">
                     <fieldset>
-                        <legend>Ponderación de Característica</legend>
+                        <legend>Ponderación de Característica <i id="popover" class="icon-question-sign" rel="popover" data-title="Escala nivel de importancia"></i></legend>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -32,7 +51,16 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <c:set var="idfactor" value="0"></c:set>
                                 <c:forEach items="${listPonderacionCara}" var="row" varStatus="iter">
+                                    <c:choose>
+                                        <c:when test="${row.caracteristicaId.factorId.id != idfactor}">
+                                            <tr class="info">
+                                                <td colspan="4">Factor ${row.caracteristicaId.factorId.codigo}: ${row.caracteristicaId.factorId.nombre}</td>   
+                                                <c:set var="idfactor" value="${row.caracteristicaId.factorId.id}"></c:set>
+                                            </tr>   
+                                        </c:when>
+                                    </c:choose>
                                     <tr id="PonderacionCaracteristica${iter.index+1}">    
                                         <td>   
                                             <c:out value="${row.caracteristicaId.codigo}"/>

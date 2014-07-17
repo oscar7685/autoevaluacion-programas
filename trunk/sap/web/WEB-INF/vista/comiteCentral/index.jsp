@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/otro.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/css/dataTables.tableTools.css">
         <style type="text/css">
             .table-condensed th,
             .table-condensed td {
@@ -154,6 +155,7 @@
         <script src="<%=request.getContextPath()%>/js/highcharts-more.js"></script>
         <script src="<%=request.getContextPath()%>/js/exporting.js"></script>
         <script src="<%=request.getContextPath()%>/js/jquery.dataTables.min.js"></script>
+        <script src="<%=request.getContextPath()%>/js/dataTables.tableTools.js"></script>
         <script src="<%=request.getContextPath()%>/js/jquery.PrintArea.js"></script>
         <script src="<%=request.getContextPath()%>/js/main2.js"></script>
 

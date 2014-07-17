@@ -173,6 +173,7 @@
         <script src="<%=request.getContextPath()%>/js/highcharts-more.js"></script>
         <script src="<%=request.getContextPath()%>/js/exporting.js"></script>
         <script src="<%=request.getContextPath()%>/js/jquery.dataTables.min.js"></script>
+        <script src="<%=request.getContextPath()%>/js/dataTables.tableTools.js"></script>
         <script src="<%=request.getContextPath()%>/js/main1.js"></script>
 
 
