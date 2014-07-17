@@ -1,4 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<style type="text/css">
+    .popover-content{
+        font-size: 14px;
+        font-weight: normal;
+        line-height: 40px;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        line-height: 1.42857;
+    }
+</style>
 <script type="text/javascript">
     $(function() {
         $("a[data-dismiss='alert']").click(function(e) {
@@ -99,6 +108,10 @@
 
             }
         });
+        $("#popoverF").popover({
+            trigger: 'hover',
+            placement: 'bottom'
+        });
     });
 </script>
 <div class="subnav span10" style="position: fixed;">
@@ -128,7 +141,7 @@
             <ul class="nav nav-pills">
                 <form id="formEditPonderarFactor" class="form-horizontal" method="post">
                     <fieldset>
-                        <legend>Ponderación de Factores</legend>
+                        <legend>Ponderación de Factores <i id="popoverF" class="icon-question-sign" rel="popover" data-content="La suma de la ponderación de los factores debe ser 100" data-title="Ponderación de factores"></i></legend>
                         <div class="alert alert-block alert-error" style="display:none" id="PonderacionFactores">
                             <a href="#" data-dismiss="alert" class="close">×</a>
                             <h4 class="alert-heading">Ha ocurrido un error!</h4>

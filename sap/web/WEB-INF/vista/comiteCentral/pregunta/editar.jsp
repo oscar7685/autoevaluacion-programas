@@ -1,4 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style type="text/css">
+    .popover{
+        min-width:500px;
+        width: auto;
+    }
+</style>
 <script type="text/javascript">
     $(function() {
         $("#tipo").on('mouseleave', function(e) {

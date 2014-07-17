@@ -118,7 +118,7 @@
                 </div>
                 <div class="span3">
                     <br/>
-                    <p><a title="Universidad de Cartagena" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="/sap/img/selloAcreditacion.png"></a></p>
+                    <p><a title="Universidad de Cartagena" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="/sap/img/MEDALLA.png" style="margin-top: -30px;width: 180px;"></a></p>
                 </div>
                 <div class="span2"></div>
             </div>

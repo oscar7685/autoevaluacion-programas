@@ -77,7 +77,7 @@ public abstract class AbstractFacade<T> {
         q.setParameter("name2", m2);
         return (T) q.getSingleResult();
     }
-    
+
     public T findBySingle3(String property1, Object m1, String property2, Object m2, String property3, Object m3) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
@@ -90,7 +90,6 @@ public abstract class AbstractFacade<T> {
         } catch (Exception e) {
             return null;
         }
-
 
     }
 
@@ -165,7 +164,7 @@ public abstract class AbstractFacade<T> {
     public List<T> findUltimo(String id) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c  ORDER BY c."+id+" DESC", entityClass);
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c  ORDER BY c." + id + " DESC", entityClass);
         q.setMaxResults(1);
         return q.getResultList();
     }
@@ -185,6 +184,17 @@ public abstract class AbstractFacade<T> {
         q.setParameter("name2", m2);
         return q.getResultList();
     }
+    
+    public List<T> findPreguntasCerrarDesdeResultado(Object m1) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c  JOIN c.encabezadoId c2 "
+                + "JOIN c.preguntaId c3 WHERE c2.estado = 'terminado' and c2.procesoId=:name1 and c3.tipo='2' ORDER BY c3.id", entityClass);
+        q.setParameter("name1", m1);
+        System.out.println("query: "+q.toString());
+        return q.getResultList();
+    }
+
     public List<T> findByList3(String property1, Object m1, String property2, Object m2, String property3, Object m3) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
