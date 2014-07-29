@@ -1,10 +1,12 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.sap.ejb;
 
-import com.sap.entity.Proyectoestrategico;
+import com.sap.entity.Metas;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author Ususario
  */
 @Stateless
-public class ProyectoestrategicoFacade extends AbstractFacade<Proyectoestrategico> {
+public class MetasFacade extends AbstractFacade<Metas> {
     @PersistenceContext(unitName = "sapPU")
     private EntityManager em;
 
@@ -23,8 +25,8 @@ public class ProyectoestrategicoFacade extends AbstractFacade<Proyectoestrategic
         return em;
     }
 
-    public ProyectoestrategicoFacade() {
-        super(Proyectoestrategico.class);
+    public MetasFacade() {
+        super(Metas.class);
     }
     
 }

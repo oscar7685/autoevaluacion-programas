@@ -7,9 +7,9 @@
 package com.sap.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,8 +21,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -38,83 +36,28 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Hallazgo.findAll", query = "SELECT h FROM Hallazgo h"),
     @NamedQuery(name = "Hallazgo.findByIdhallazgo", query = "SELECT h FROM Hallazgo h WHERE h.idhallazgo = :idhallazgo"),
     @NamedQuery(name = "Hallazgo.findByHallazgo", query = "SELECT h FROM Hallazgo h WHERE h.hallazgo = :hallazgo"),
-    @NamedQuery(name = "Hallazgo.findByEstrategia", query = "SELECT h FROM Hallazgo h WHERE h.estrategia = :estrategia"),
-    @NamedQuery(name = "Hallazgo.findByMeta", query = "SELECT h FROM Hallazgo h WHERE h.meta = :meta"),
-    @NamedQuery(name = "Hallazgo.findByIndicadorCumplimiento", query = "SELECT h FROM Hallazgo h WHERE h.indicadorCumplimiento = :indicadorCumplimiento"),
-    @NamedQuery(name = "Hallazgo.findByResponsable", query = "SELECT h FROM Hallazgo h WHERE h.responsable = :responsable"),
-    @NamedQuery(name = "Hallazgo.findByFinanciacion", query = "SELECT h FROM Hallazgo h WHERE h.financiacion = :financiacion"),
-    @NamedQuery(name = "Hallazgo.findByEstado", query = "SELECT h FROM Hallazgo h WHERE h.estado = :estado"),
-    @NamedQuery(name = "Hallazgo.findByPorcentajeCumplimiento", query = "SELECT h FROM Hallazgo h WHERE h.porcentajeCumplimiento = :porcentajeCumplimiento"),
-    @NamedQuery(name = "Hallazgo.findByObservaciones", query = "SELECT h FROM Hallazgo h WHERE h.observaciones = :observaciones"),
-    @NamedQuery(name = "Hallazgo.findByEstadoInterno", query = "SELECT h FROM Hallazgo h WHERE h.estadoInterno = :estadoInterno"),
-    @NamedQuery(name = "Hallazgo.findByFechaInicio", query = "SELECT h FROM Hallazgo h WHERE h.fechaInicio = :fechaInicio"),
-    @NamedQuery(name = "Hallazgo.findByFechaFinal", query = "SELECT h FROM Hallazgo h WHERE h.fechaFinal = :fechaFinal"),
-    @NamedQuery(name = "Hallazgo.findByFechaSeguimiento", query = "SELECT h FROM Hallazgo h WHERE h.fechaSeguimiento = :fechaSeguimiento"),
-    @NamedQuery(name = "Hallazgo.findByCorreos", query = "SELECT h FROM Hallazgo h WHERE h.correos = :correos"),
-    @NamedQuery(name = "Hallazgo.findByContinuarEnvio", query = "SELECT h FROM Hallazgo h WHERE h.continuarEnvio = :continuarEnvio"),
-    @NamedQuery(name = "Hallazgo.findByEnviarCorreoCada", query = "SELECT h FROM Hallazgo h WHERE h.enviarCorreoCada = :enviarCorreoCada")})
+    @NamedQuery(name = "Hallazgo.findByTipo", query = "SELECT h FROM Hallazgo h WHERE h.tipo = :tipo")})
 public class Hallazgo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idhallazgo")
+    @Column(name = "idhallazgo", nullable = false)
     private Integer idhallazgo;
-    @Size(max = 2000)
-    @Column(name = "hallazgo")
+    @Size(max = 3000)
+    @Column(name = "hallazgo", length = 3000)
     private String hallazgo;
-    @Size(max = 2000)
-    @Column(name = "estrategia")
-    private String estrategia;
-    @Size(max = 2000)
-    @Column(name = "meta")
-    private String meta;
-    @Size(max = 2000)
-    @Column(name = "indicador_cumplimiento")
-    private String indicadorCumplimiento;
-    @Size(max = 2000)
-    @Column(name = "responsable")
-    private String responsable;
-    @Size(max = 2000)
-    @Column(name = "financiacion")
-    private String financiacion;
     @Size(max = 45)
-    @Column(name = "estado")
-    private String estado;
-    @Column(name = "porcentaje_cumplimiento")
-    private Integer porcentajeCumplimiento;
-    @Size(max = 45)
-    @Column(name = "observaciones")
-    private String observaciones;
-    @Size(max = 45)
-    @Column(name = "estado_interno")
-    private String estadoInterno;
-    @Column(name = "fecha_inicio")
-    @Temporal(TemporalType.DATE)
-    private Date fechaInicio;
-    @Column(name = "fecha_final")
-    @Temporal(TemporalType.DATE)
-    private Date fechaFinal;
-    @Column(name = "fecha_seguimiento")
-    @Temporal(TemporalType.DATE)
-    private Date fechaSeguimiento;
-    @Size(max = 1000)
-    @Column(name = "correos")
-    private String correos;
-    @Size(max = 45)
-    @Column(name = "continuar_envio")
-    private String continuarEnvio;
-    @Size(max = 45)
-    @Column(name = "enviar_correo_cada")
-    private String enviarCorreoCada;
-    @OneToMany(mappedBy = "hallazgoPadre")
-    private List<Hallazgo> hallazgoList;
-    @JoinColumn(name = "hallazgo_padre", referencedColumnName = "idhallazgo")
-    @ManyToOne
-    private Hallazgo hallazgoPadre;
-    @JoinColumn(name = "proyectoestrategico_idproyectoestrategico", referencedColumnName = "idproyectoestrategico")
+    @Column(name = "tipo", length = 45)
+    private String tipo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hallazgoIdhallazgo")
+    private List<Objetivos> objetivosList;
+    @JoinColumn(name = "proceso_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
-    private Proyectoestrategico proyectoestrategicoIdproyectoestrategico;
+    private Proceso procesoId;
+    @JoinColumn(name = "caracteristica_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false)
+    private Caracteristica caracteristicaId;
 
     public Hallazgo() {
     }
@@ -139,149 +82,37 @@ public class Hallazgo implements Serializable {
         this.hallazgo = hallazgo;
     }
 
-    public String getEstrategia() {
-        return estrategia;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setEstrategia(String estrategia) {
-        this.estrategia = estrategia;
-    }
-
-    public String getMeta() {
-        return meta;
-    }
-
-    public void setMeta(String meta) {
-        this.meta = meta;
-    }
-
-    public String getIndicadorCumplimiento() {
-        return indicadorCumplimiento;
-    }
-
-    public void setIndicadorCumplimiento(String indicadorCumplimiento) {
-        this.indicadorCumplimiento = indicadorCumplimiento;
-    }
-
-    public String getResponsable() {
-        return responsable;
-    }
-
-    public void setResponsable(String responsable) {
-        this.responsable = responsable;
-    }
-
-    public String getFinanciacion() {
-        return financiacion;
-    }
-
-    public void setFinanciacion(String financiacion) {
-        this.financiacion = financiacion;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public Integer getPorcentajeCumplimiento() {
-        return porcentajeCumplimiento;
-    }
-
-    public void setPorcentajeCumplimiento(Integer porcentajeCumplimiento) {
-        this.porcentajeCumplimiento = porcentajeCumplimiento;
-    }
-
-    public String getObservaciones() {
-        return observaciones;
-    }
-
-    public void setObservaciones(String observaciones) {
-        this.observaciones = observaciones;
-    }
-
-    public String getEstadoInterno() {
-        return estadoInterno;
-    }
-
-    public void setEstadoInterno(String estadoInterno) {
-        this.estadoInterno = estadoInterno;
-    }
-
-    public Date getFechaInicio() {
-        return fechaInicio;
-    }
-
-    public void setFechaInicio(Date fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
-    public Date getFechaFinal() {
-        return fechaFinal;
-    }
-
-    public void setFechaFinal(Date fechaFinal) {
-        this.fechaFinal = fechaFinal;
-    }
-
-    public Date getFechaSeguimiento() {
-        return fechaSeguimiento;
-    }
-
-    public void setFechaSeguimiento(Date fechaSeguimiento) {
-        this.fechaSeguimiento = fechaSeguimiento;
-    }
-
-    public String getCorreos() {
-        return correos;
-    }
-
-    public void setCorreos(String correos) {
-        this.correos = correos;
-    }
-
-    public String getContinuarEnvio() {
-        return continuarEnvio;
-    }
-
-    public void setContinuarEnvio(String continuarEnvio) {
-        this.continuarEnvio = continuarEnvio;
-    }
-
-    public String getEnviarCorreoCada() {
-        return enviarCorreoCada;
-    }
-
-    public void setEnviarCorreoCada(String enviarCorreoCada) {
-        this.enviarCorreoCada = enviarCorreoCada;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     @XmlTransient
-    public List<Hallazgo> getHallazgoList() {
-        return hallazgoList;
+    public List<Objetivos> getObjetivosList() {
+        return objetivosList;
     }
 
-    public void setHallazgoList(List<Hallazgo> hallazgoList) {
-        this.hallazgoList = hallazgoList;
+    public void setObjetivosList(List<Objetivos> objetivosList) {
+        this.objetivosList = objetivosList;
     }
 
-    public Hallazgo getHallazgoPadre() {
-        return hallazgoPadre;
+    public Proceso getProcesoId() {
+        return procesoId;
     }
 
-    public void setHallazgoPadre(Hallazgo hallazgoPadre) {
-        this.hallazgoPadre = hallazgoPadre;
+    public void setProcesoId(Proceso procesoId) {
+        this.procesoId = procesoId;
     }
 
-    public Proyectoestrategico getProyectoestrategicoIdproyectoestrategico() {
-        return proyectoestrategicoIdproyectoestrategico;
+    public Caracteristica getCaracteristicaId() {
+        return caracteristicaId;
     }
 
-    public void setProyectoestrategicoIdproyectoestrategico(Proyectoestrategico proyectoestrategicoIdproyectoestrategico) {
-        this.proyectoestrategicoIdproyectoestrategico = proyectoestrategicoIdproyectoestrategico;
+    public void setCaracteristicaId(Caracteristica caracteristicaId) {
+        this.caracteristicaId = caracteristicaId;
     }
 
     @Override

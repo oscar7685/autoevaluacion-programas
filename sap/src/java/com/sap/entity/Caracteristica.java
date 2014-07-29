@@ -1,7 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.sap.entity;
 
 import java.io.Serializable;
@@ -39,28 +41,29 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Caracteristica.findByFactor", query = "SELECT c FROM Caracteristica c WHERE c.factorId = :factor"),
     @NamedQuery(name = "Caracteristica.findByModelo", query = "SELECT c FROM Caracteristica c WHERE c.modeloId = :modelo")})
 public class Caracteristica implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "codigo")
+    @Column(name = "codigo", nullable = false, length = 100)
     private String codigo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, length = 500)
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "caracteristicaId")
     private List<Ponderacioncaracteristica> ponderacioncaracteristicaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "caracteristicaId")
+    private List<Hallazgo> hallazgoList;
     @OneToMany(mappedBy = "caracteristicaId")
     private List<Indicador> indicadorList;
-    @JoinColumn(name = "modelo_id", referencedColumnName = "id")
+    @JoinColumn(name = "modelo_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private Modelo modeloId;
     @JoinColumn(name = "factor_id", referencedColumnName = "id")
@@ -118,6 +121,15 @@ public class Caracteristica implements Serializable {
     }
 
     @XmlTransient
+    public List<Hallazgo> getHallazgoList() {
+        return hallazgoList;
+    }
+
+    public void setHallazgoList(List<Hallazgo> hallazgoList) {
+        this.hallazgoList = hallazgoList;
+    }
+
+    @XmlTransient
     public List<Indicador> getIndicadorList() {
         return indicadorList;
     }
@@ -166,5 +178,5 @@ public class Caracteristica implements Serializable {
     public String toString() {
         return "com.sap.entity.Caracteristica[ id=" + id + " ]";
     }
-
+    
 }
