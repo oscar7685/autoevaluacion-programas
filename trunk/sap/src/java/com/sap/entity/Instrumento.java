@@ -13,8 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -42,20 +40,17 @@ public class Instrumento implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, length = 255)
     private String nombre;
     @Size(max = 500)
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", length = 500)
     private String descripcion;
-    @JoinTable(name = "instrumentohasindicador", joinColumns = {
-        @JoinColumn(name = "instrumento_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "indicador_id", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "instrumentoList")
     private List<Indicador> indicadorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "instrumentoId")
     private List<Numericadocumental> numericadocumentalList;
