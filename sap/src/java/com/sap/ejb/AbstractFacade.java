@@ -96,7 +96,10 @@ public abstract class AbstractFacade<T> {
     public List<T> findByList(String property, Object m) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        return getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name", entityClass).setParameter("name", m).getResultList();
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name", entityClass);
+        q.setParameter("name", m);
+        System.out.println("query:"+q);
+        return q.getResultList();
     }
 
     public List<T> generarMuestra(Object m, int tamanio) {

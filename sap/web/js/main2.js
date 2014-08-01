@@ -118,8 +118,8 @@ $(function() {
                 '<li><a href = "#listarEvaluarDoc"><i class = "icon-list-ol"></i> Información Documental</a></li>' +
                 '<li class = "nav-header"> Estado del proceso </li>' +
                 '<li><a  id = "informeEncuesta"  href = "#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
-                '<li class = "nav-header"> Plan de Mejoramiento </li>' +
-                '<li><a href="#planMejoramiento"><i class="icon-exchange"></i> Plan de mejoramiento</a></li>' +
+                '<li class = "nav-header"> Plan de Aseguramiento </li>' +
+                '<li><a href="#planMejoramiento"><i class="icon-exchange"></i> Plan de aseguramiento</a></li>' +
                 '</ul>' +
                 '</div>'
                 );
@@ -342,7 +342,7 @@ $(function() {
                                         || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
                                         || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                                         || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
-                                        || hash === "#planMejoramiento" || hash === "#crearProyectoEstrategico" || hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#listarProyectosE"
+                                        || hash === "#planMejoramiento" || hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#crearObjetivo"
                                         || hash === "#comentarios") {
                                     var url3 = "/sap/" + hash;
                                     url3 = url3.replace('#', "controladorCP?action=");
@@ -352,6 +352,9 @@ $(function() {
                                         url: url3,
                                         success: function(data)
                                         {
+                                            if (hash === "#planMejoramiento") {
+                                                actualizaEnlaces(hash);
+                                            }
                                             $("#contenido").append(data);
                                             $("#contenido").show(400, function() {
                                                 $("#dancing-dots-text").remove();
@@ -360,12 +363,13 @@ $(function() {
                                             if (hash === "#listPonderacionCara2") {
                                                 hash = "#listPonderacionCara";
                                             }
-                                            if (hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental" || hash === "#planMejoramiento") {
+                                            if (hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental") {
                                                 setTimeout(function() {
                                                     $("#west-closer").trigger("click");
                                                 }, 500);
                                             }
-                                            if (!hash === "#planMejoramiento") {
+                                            if (hash !== "#planMejoramiento" && hash !== "#crearHallazgo" && hash !== "#listarHallazgos"
+                                                    && hash !== "#crearObjetivo") {
                                                 actualizaEnlaces(hash);
                                             }
 
@@ -472,7 +476,8 @@ $(function() {
                                             });
                                         } //fin success
                                     }); //fin del $.ajax
-                                } else if (hash.indexOf("#verProyectoEstrategico") !== -1 || hash.indexOf("#editarPEstrategico") !== -1 || hash.indexOf("#editarHallazgo") !== -1) {
+                                } else if (hash.indexOf("#listarObjetivos") !== -1 || hash.indexOf("#editarHallazgo") !== -1
+                                        || hash.indexOf("#verMetas") !== -1 || hash.indexOf("#editarObjetivo") !== -1) {
                                     var cual = hash.split("&");
                                     hash = cual[0];
                                     var url3 = "/sap/controladorCP?action=";

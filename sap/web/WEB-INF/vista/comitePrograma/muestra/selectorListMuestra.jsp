@@ -47,7 +47,7 @@
         var Fecha = Dia[Hoy.getDay()] + " " + Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las " + Hora + ":" + Minutos + ":" + Segundos;
         $("#hora").html(" " + Fecha);
 
-        
+
         $("button[rel=popover2]")
                 .popover({trigger: "hover", placement: 'left'}).click(function(e) {
             e.preventDefault();
@@ -160,9 +160,10 @@
     </c:if>
     <div id="listM2" class="span10" style="margin-left: 0px;">
         <div class="span10" style="margin-left: 0px;">
-            <c:choose>
-                <c:when test="${fn:length(listMuestraSeleccionada)!= 0}">
-                    <div id="editM">
+            <div id="editM">
+                <c:choose>
+                    <c:when test="${fn:length(listMuestraSeleccionada)!= 0}">
+
                         <c:if test="${EstadoProceso == 2}">
                             <div class="btn-group" data-toggle="buttons-radio">
                                 <button type="button" class="btn btn-primary active">Todos</button>
@@ -274,12 +275,16 @@
                         <c:if test="${EstadoProceso == 2 && tipoLogin=='Comite central'}">
                             <a id="bpreparedEditarMuestra" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
                         </c:if>
-                    </div>
-                </c:when>
-                <c:otherwise>
-                    No  se ha generado la muestra para la fuente seleccionada.
-                </c:otherwise>
-            </c:choose>
+
+                    </c:when>
+                    <c:otherwise>
+                        No  se ha generado la muestra para la fuente seleccionada.
+                        <c:if test="${EstadoProceso == 2 && tipoLogin=='Comite central'}">
+                            <a id="bpreparedEditarMuestra" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </div>
     </div>
 </div>
