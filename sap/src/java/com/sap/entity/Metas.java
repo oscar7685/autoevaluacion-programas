@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Metas.findByIdmeta", query = "SELECT m FROM Metas m WHERE m.idmeta = :idmeta"),
     @NamedQuery(name = "Metas.findByEstrategia", query = "SELECT m FROM Metas m WHERE m.estrategia = :estrategia"),
     @NamedQuery(name = "Metas.findByMeta", query = "SELECT m FROM Metas m WHERE m.meta = :meta"),
-    @NamedQuery(name = "Metas.findByIndicadorDeCumplimiento", query = "SELECT m FROM Metas m WHERE m.indicadorDeCumplimiento = :indicadorDeCumplimiento"),
+    @NamedQuery(name = "Metas.findByIndicadorCumplimiento", query = "SELECT m FROM Metas m WHERE m.indicadorCumplimiento = :indicadorCumplimiento"),
     @NamedQuery(name = "Metas.findByResponsable", query = "SELECT m FROM Metas m WHERE m.responsable = :responsable"),
     @NamedQuery(name = "Metas.findByFinanciacion", query = "SELECT m FROM Metas m WHERE m.financiacion = :financiacion"),
     @NamedQuery(name = "Metas.findByEstado", query = "SELECT m FROM Metas m WHERE m.estado = :estado"),
@@ -54,33 +54,33 @@ public class Metas implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idmeta", nullable = false)
+    @Column(name = "idmeta")
     private Integer idmeta;
     @Size(max = 2000)
-    @Column(name = "estrategia", length = 2000)
+    @Column(name = "estrategia")
     private String estrategia;
     @Size(max = 2000)
-    @Column(name = "meta", length = 2000)
+    @Column(name = "meta")
     private String meta;
     @Size(max = 2000)
-    @Column(name = "indicador de cumplimiento", length = 2000)
-    private String indicadorDeCumplimiento;
+    @Column(name = "indicador_cumplimiento")
+    private String indicadorCumplimiento;
     @Size(max = 2000)
-    @Column(name = "responsable", length = 2000)
+    @Column(name = "responsable")
     private String responsable;
     @Size(max = 2000)
-    @Column(name = "financiacion", length = 2000)
+    @Column(name = "financiacion")
     private String financiacion;
     @Size(max = 45)
-    @Column(name = "estado", length = 45)
+    @Column(name = "estado")
     private String estado;
     @Column(name = "porcentaje_cumplimiento")
     private Integer porcentajeCumplimiento;
     @Size(max = 45)
-    @Column(name = "observaciones", length = 45)
+    @Column(name = "observaciones")
     private String observaciones;
     @Size(max = 45)
-    @Column(name = "estado_interno", length = 45)
+    @Column(name = "estado_interno")
     private String estadoInterno;
     @Column(name = "fecha_inicio")
     @Temporal(TemporalType.DATE)
@@ -92,15 +92,15 @@ public class Metas implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaSeguimiento;
     @Size(max = 1000)
-    @Column(name = "correos", length = 1000)
+    @Column(name = "correos")
     private String correos;
     @Size(max = 45)
-    @Column(name = "continuar_envio", length = 45)
+    @Column(name = "continuar_envio")
     private String continuarEnvio;
     @Size(max = 45)
-    @Column(name = "enviar_correo_cada", length = 45)
+    @Column(name = "enviar_correo_cada")
     private String enviarCorreoCada;
-    @JoinColumn(name = "objetivos_idobjetivos", referencedColumnName = "idobjetivos", nullable = false)
+    @JoinColumn(name = "objetivos_idobjetivos", referencedColumnName = "idobjetivos")
     @ManyToOne(optional = false)
     private Objetivos objetivosIdobjetivos;
 
@@ -135,12 +135,12 @@ public class Metas implements Serializable {
         this.meta = meta;
     }
 
-    public String getIndicadorDeCumplimiento() {
-        return indicadorDeCumplimiento;
+    public String getIndicadorCumplimiento() {
+        return indicadorCumplimiento;
     }
 
-    public void setIndicadorDeCumplimiento(String indicadorDeCumplimiento) {
-        this.indicadorDeCumplimiento = indicadorDeCumplimiento;
+    public void setIndicadorCumplimiento(String indicadorCumplimiento) {
+        this.indicadorCumplimiento = indicadorCumplimiento;
     }
 
     public String getResponsable() {

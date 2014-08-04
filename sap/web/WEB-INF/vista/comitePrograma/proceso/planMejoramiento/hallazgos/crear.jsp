@@ -3,6 +3,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript" language="JavaScript">
     $(document).ready(function() {
+        $('.tool').tooltip().click(function(e) {
+            $(this).tooltip('hide');
+        });
         $("#formCrearHallazgo").validate({
             submitHandler: function() {
                 $.ajax({
@@ -29,7 +32,7 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="home">
                         <ul class="breadcrumb">
-                            <li><a href="<%=request.getContextPath()%>/#listarHallazgos">Hallazgos</a> <span class="divider">/</span></li>
+                            <li><a href="<%=request.getContextPath()%>/#listarHallazgos" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar hallazgos">Hallazgos</a> <span class="divider">/</span></li>
                             <li>Crear</li>
                             <a id="printEnlace" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
                         </ul>

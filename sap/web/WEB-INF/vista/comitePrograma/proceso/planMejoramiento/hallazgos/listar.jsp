@@ -14,7 +14,7 @@
                     <div class="tab-pane active" id="home">
                         <ul class="breadcrumb">
                             <li>Hallazgos</li>
-                            <a id="printEnlace" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
+                            <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
                         </ul>
                         <h3>Listado de  Hallazgos</h3>
                         <c:choose>
@@ -49,8 +49,8 @@
                         </c:choose>
                         <a href="#crearHallazgo" class="btn btn-large btn-primary"><i class="icon-plus"></i> Crear hallazgo</a>    
                     </div>
-                            
-                     <div class="tab-pane" id="profile">
+
+                    <div class="tab-pane" id="profile">
                         <ul class="breadcrumb">
                             <li>Fortalezas</li>
                             <a id="printEnlace" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
