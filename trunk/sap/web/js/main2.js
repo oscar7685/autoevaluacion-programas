@@ -342,7 +342,7 @@ $(function() {
                                         || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
                                         || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                                         || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
-                                        || hash === "#planMejoramiento" || hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#crearObjetivo"
+                                        || hash === "#planMejoramiento" || hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#crearObjetivo" || hash === "#crearMeta"
                                         || hash === "#comentarios") {
                                     var url3 = "/sap/" + hash;
                                     url3 = url3.replace('#', "controladorCP?action=");
@@ -369,7 +369,7 @@ $(function() {
                                                 }, 500);
                                             }
                                             if (hash !== "#planMejoramiento" && hash !== "#crearHallazgo" && hash !== "#listarHallazgos"
-                                                    && hash !== "#crearObjetivo") {
+                                                    && hash !== "#crearObjetivo" && hash !== "#crearMeta") {
                                                 actualizaEnlaces(hash);
                                             }
 
@@ -477,7 +477,7 @@ $(function() {
                                         } //fin success
                                     }); //fin del $.ajax
                                 } else if (hash.indexOf("#listarObjetivos") !== -1 || hash.indexOf("#editarHallazgo") !== -1
-                                        || hash.indexOf("#verMetas") !== -1 || hash.indexOf("#editarObjetivo") !== -1) {
+                                        || hash.indexOf("#verMetas") !== -1 || hash.indexOf("#editarObjetivo") !== -1 || hash.indexOf("#editarMeta") !== -1) {
                                     var cual = hash.split("&");
                                     hash = cual[0];
                                     var url3 = "/sap/controladorCP?action=";

@@ -1,16 +1,28 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/datepicker.css">
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" language="JavaScript">
     $(document).ready(function() {
-        $("#formCrearObjetivo").validate({
+        $('.tool').tooltip().click(function(e) {
+            $(this).tooltip('hide');
+        });
+        $('#inicio').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+        $('#final').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+
+        $("#formCrearMeta").validate({
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/controladorCP?action=crearObjetivo2",
-                    data: $("#formCrearObjetivo").serialize(),
+                    url: "/sap/controladorCP?action=crearMeta2",
+                    data: $("#formCrearMeta").serialize(),
                     success: function() {
-                        location = "/sap/#listarObjetivos&${hallazgo.idhallazgo}";
+                        location = "/sap/#verMetas&${objetivo.idobjetivos}";
                     } //fin success
                 }); //fin $.ajax    */
             }
@@ -29,24 +41,64 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="home">
                         <ul class="breadcrumb">
-                            <li><a href="<%=request.getContextPath()%>/#listarHallazgos">Hallazgos</a> <span class="divider">/</span></li>
-                            <li><a href="<%=request.getContextPath()%>/#editarHallazgo&${hallazgo.idhallazgo}">Hallazgos X</a> <span class="divider">/</span></li>
-                            <li><a href="<%=request.getContextPath()%>/#listarObjetivos&${hallazgo.idhallazgo}">Objetivos</a> <span class="divider">/</span></li>
+                            <li><a href="<%=request.getContextPath()%>/#listarHallazgos" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar hallazgos">Hallazgos</a> <span class="divider">/</span></li>
+                            <li><a href="<%=request.getContextPath()%>/#editarHallazgo&${hallazgo.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="${hallazgo.hallazgo}">Hallazgo</a> <span class="divider">/</span></li>
+                            <li><a href="<%=request.getContextPath()%>/#listarObjetivos&${hallazgo.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar objetivos">Objetivos</a> <span class="divider">/</span></li>
+                            <li><a href="<%=request.getContextPath()%>/#editarObjetivo&${objetivo.idobjetivos}" class="tool" data-placement="top" rel="tooltip" data-original-title="${objetivo.objetivo}">Objetivo</a> <span class="divider">/</span></li>
+                            <li><a href="<%=request.getContextPath()%>/#verMetas&${objetivo.idobjetivos}" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar metas">Metas</a> <span class="divider">/</span></li>
                             <li>Crear</li>
                             <a id="printEnlace" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
                         </ul>
 
-                        <form id="formCrearObjetivo" class="form-horizontal" method="post">
+                        <form id="formCrearMeta" class="form-horizontal" method="post">
                             <fieldset>
-                                <legend>Crear objetivo</legend>
+                                <legend>Crear meta</legend>
                                 <div class="control-group">
-                                    <label for="objetivo" class="control-label">Objetivo</label>
+                                    <label for="meta" class="control-label">Meta</label>
                                     <div class="controls">
-                                        <textarea rows="4" name="objetivo" id="objetivo" class="input-xxlarge {required:true}"></textarea>
+                                        <textarea rows="2" name="meta" id="meta" class="input-xxlarge {required:true}"></textarea>
                                     </div>
                                 </div>
+                                <div class="control-group">
+                                    <label for="estrategia" class="control-label">Estrategia</label>
+                                    <div class="controls">
+                                        <textarea rows="2" name="estrategia" id="estrategia" class="input-xxlarge {required:true}"></textarea>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="indicador" class="control-label">Indicador de cumplimiento</label>
+                                    <div class="controls">
+                                        <textarea rows="2" name="indicador" id="indicador" class="input-xxlarge {required:true}"></textarea>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="inicio" class="control-label">Fecha de Inicio</label>
+                                    <div class="controls">
+                                        <input type="text" name="inicio" id="inicio" class="form-control"
+                                               value="" >
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="final" class="control-label">Fecha Final</label>
+                                    <div class="controls">
+                                        <input type="text" name="final" id="final" class="form-control"
+                                               value="" >
+                                    </div>
+                                </div>    
+                                <div class="control-group">
+                                    <label for="responsables" class="control-label">Responsables</label>
+                                    <div class="controls">
+                                        <textarea rows="2" name="responsables" id="responsables" class="input-xxlarge {required:true}"></textarea>
+                                    </div>
+                                </div>    
+                                <div class="control-group">
+                                    <label for="recursos" class="control-label">Recursos o Financiación</label>
+                                    <div class="controls">
+                                        <textarea rows="2" name="recursos" id="recursos" class="input-xxlarge {required:true}"></textarea>
+                                    </div>
+                                </div>    
                                 <div class="form-actions span8">
-                                    <button class="btn btn-primary" type="submit">Crear Objetivo</button>
+                                    <button class="btn btn-primary" type="submit">Crear meta</button>
                                     <button class="btn" type="reset">Cancelar</button>
                                 </div>
                             </fieldset>
