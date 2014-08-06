@@ -226,12 +226,24 @@ public class cpController extends HttpServlet {
                 String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/hallazgos/crear.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
+            } else if (action.equals("crearFortaleza")) {
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/fortalezas/crear.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
             } else if (action.equals("crearObjetivo")) {
                 String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/objetivos/crear.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
+            } else if (action.equals("crear2Objetivo")) {
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/objetivos2/crear.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
             } else if (action.equals("crearMeta")) {
                 String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/metas/crear.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("crear2Meta")) {
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/metas2/crear.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("detalleProceso")) {
@@ -419,10 +431,41 @@ public class cpController extends HttpServlet {
                 hallagos.add(recienCreado);
                 pr.setHallazgoList(hallagos);
                 procesoFacade.edit(pr);
+            } else if (action.equals("crearFortaleza2")) {
+                Proceso pr = (Proceso) proceso;
+                String hallazgo = (String) request.getParameter("hallazgo");
+                String caracteristica = (String) request.getParameter("caracteristica");
+                Caracteristica c = caracteristicaFacade.find(Integer.parseInt(caracteristica));
+
+                Hallazgo h = new Hallazgo();
+                h.setHallazgo(hallazgo);
+                h.setCaracteristicaId(c);
+                h.setProcesoId(proceso);
+                h.setTipo("fortaleza");
+                hallazgoFacade.create(h);
+
+                Hallazgo recienCreado = hallazgoFacade.findUltimo("idhallazgo").get(0);
+                List<Hallazgo> hallagos = pr.getHallazgoList();
+                hallagos.add(recienCreado);
+                pr.setHallazgoList(hallagos);
+                procesoFacade.edit(pr);
 
             } else if (action.equals("crearObjetivo2")) {
                 String objetivo = (String) request.getParameter("objetivo");
                 Hallazgo h = (Hallazgo) sesion.getAttribute("hallazgo");
+                Objetivos o = new Objetivos();
+                o.setObjetivo(objetivo);
+                o.setHallazgoIdhallazgo(h);
+                objetivosFacade.create(o);
+
+                Objetivos recienCreado = objetivosFacade.findUltimo("idobjetivos").get(0);
+                List<Objetivos> objetivos = h.getObjetivosList();
+                objetivos.add(recienCreado);
+                h.setObjetivosList(objetivos);
+                hallazgoFacade.edit(h);
+            } else if (action.equals("crear2Objetivo2")) {
+                String objetivo = (String) request.getParameter("objetivo");
+                Hallazgo h = (Hallazgo) sesion.getAttribute("fortaleza");
                 Objetivos o = new Objetivos();
                 o.setObjetivo(objetivo);
                 o.setHallazgoIdhallazgo(h);
@@ -482,7 +525,97 @@ public class cpController extends HttpServlet {
                 metas.add(recienCreado);
                 o.setMetasList(metas);
                 objetivosFacade.edit(o);
+            } else if (action.equals("crear2Meta2")) {
+                Objetivos o = (Objetivos) sesion.getAttribute("objetivo");
+                String meta = (String) request.getParameter("meta");
+                String estrategia = (String) request.getParameter("estrategia");
+                String indicador = (String) request.getParameter("indicador");
+                String finicio = (String) request.getParameter("inicio");
+                String ffinal = (String) request.getParameter("final");
+                String responsables = (String) request.getParameter("responsables");
+                String recursos = (String) request.getParameter("recursos");
+
+                SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                Date fechaI = null;
+                try {
+
+                    fechaI = formatoDelTexto.parse(finicio);
+
+                } catch (Exception ex) {
+
+                    ex.printStackTrace();
+
+                }
+                Date fechaF = null;
+                try {
+
+                    fechaF = formatoDelTexto.parse(ffinal);
+
+                } catch (Exception ex) {
+
+                    ex.printStackTrace();
+
+                }
+
+                Metas m = new Metas();
+                m.setMeta(meta);
+                m.setEstrategia(estrategia);
+                m.setIndicadorCumplimiento(indicador);
+                m.setResponsable(responsables);
+                m.setFinanciacion(recursos);
+                m.setObjetivosIdobjetivos(o);
+                m.setFechaInicio(fechaI);
+                m.setFechaFinal(fechaF);
+
+                metasFacade.create(m);
+
+                Metas recienCreado = metasFacade.findUltimo("idmeta").get(0);
+                List<Metas> metas = o.getMetasList();
+                metas.add(recienCreado);
+                o.setMetasList(metas);
+                objetivosFacade.edit(o);
             } else if (action.equals("editarMeta2")) {
+                Metas m = (Metas) sesion.getAttribute("meta");
+                String meta = (String) request.getParameter("meta");
+                String estrategia = (String) request.getParameter("estrategia");
+                String indicador = (String) request.getParameter("indicador");
+                String finicio = (String) request.getParameter("inicio");
+                String ffinal = (String) request.getParameter("final");
+                String responsables = (String) request.getParameter("responsables");
+                String recursos = (String) request.getParameter("recursos");
+
+                SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                Date fechaI = null;
+                try {
+
+                    fechaI = formatoDelTexto.parse(finicio);
+
+                } catch (Exception ex) {
+
+                    ex.printStackTrace();
+
+                }
+                Date fechaF = null;
+                try {
+
+                    fechaF = formatoDelTexto.parse(ffinal);
+
+                } catch (Exception ex) {
+
+                    ex.printStackTrace();
+
+                }
+
+                m.setMeta(meta);
+                m.setEstrategia(estrategia);
+                m.setIndicadorCumplimiento(indicador);
+                m.setResponsable(responsables);
+                m.setFinanciacion(recursos);
+                m.setFechaInicio(fechaI);
+                m.setFechaFinal(fechaF);
+
+                metasFacade.edit(m);
+            } else if (action.equals("editar2Meta2")) {
                 Metas m = (Metas) sesion.getAttribute("meta");
                 String meta = (String) request.getParameter("meta");
                 String estrategia = (String) request.getParameter("estrategia");
@@ -683,6 +816,14 @@ public class cpController extends HttpServlet {
                 String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/hallazgos/listar.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
+            } else if (action.equals("listarFortalezas")) {
+                List<Hallazgo> ha = hallazgoFacade.findByList2("procesoId", proceso, "tipo", "hallazgo");
+                List<Hallazgo> forta = hallazgoFacade.findByList2("procesoId", proceso, "tipo", "fortaleza");
+                sesion.setAttribute("listHallazgos", ha);
+                sesion.setAttribute("listFortalezas", forta);
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/fortalezas/listar.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
             } else if (action.equals("listarObjetivos")) {
                 String id = request.getParameter("id");
                 Hallazgo h = hallazgoFacade.find(Integer.parseInt(id));
@@ -694,6 +835,17 @@ public class cpController extends HttpServlet {
                 String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/objetivos/listar.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
+            } else if (action.equals("listar2Objetivos")) {
+                String id = request.getParameter("id");
+                Hallazgo fortaleza = hallazgoFacade.find(Integer.parseInt(id));
+                List<Objetivos> objetivos = objetivosFacade.findByList("hallazgoIdhallazgo", fortaleza);
+                List<Hallazgo> halla = hallazgoFacade.findByList2("procesoId", proceso, "tipo", "hallazgo");
+                sesion.setAttribute("listObjetivos", objetivos);
+                sesion.setAttribute("fortaleza", fortaleza);
+                sesion.setAttribute("listHallazgos", halla);
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/objetivos2/listar.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
             } else if (action.equals("verMetas")) {
                 String id = request.getParameter("id");
                 Objetivos o = objetivosFacade.find(Integer.parseInt(id));
@@ -703,6 +855,17 @@ public class cpController extends HttpServlet {
                 sesion.setAttribute("objetivo", o);
                 sesion.setAttribute("listFortalezas", forta);
                 String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/metas/listar.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("ver2Metas")) {
+                String id = request.getParameter("id");
+                Objetivos o = objetivosFacade.find(Integer.parseInt(id));
+                List<Metas> metas = metasFacade.findByList("objetivosIdobjetivos", o);
+                List<Hallazgo> halla = hallazgoFacade.findByList2("procesoId", proceso, "tipo", "hallazgo");
+                sesion.setAttribute("listMetas", metas);
+                sesion.setAttribute("objetivo", o);
+                sesion.setAttribute("listHallazgos", halla);
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/metas2/listar.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("listEncuestas")) {
@@ -719,6 +882,10 @@ public class cpController extends HttpServlet {
                 rd.forward(request, response);
             } else if (action.equals("PM")) {
                 String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/vistaPreviaPlan.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("PM2")) {
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/vistaPreviaPlan2.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("listMuestra")) {
@@ -3347,6 +3514,13 @@ public class cpController extends HttpServlet {
                 String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/hallazgos/editar.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
+            } else if (action.equals("editarFortaleza")) {
+                String id = request.getParameter("id");
+                Hallazgo h = hallazgoFacade.find(Integer.parseInt(id));
+                sesion.setAttribute("hallazgo", h);
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/fortalezas/editar.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
             } else if (action.equals("editarObjetivo")) {
                 String id = request.getParameter("id");
                 Objetivos o = objetivosFacade.find(Integer.parseInt(id));
@@ -3354,11 +3528,25 @@ public class cpController extends HttpServlet {
                 String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/objetivos/editar.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
+            } else if (action.equals("editar2Objetivo")) {
+                String id = request.getParameter("id");
+                Objetivos o = objetivosFacade.find(Integer.parseInt(id));
+                sesion.setAttribute("objetivo", o);
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/objetivos2/editar.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
             } else if (action.equals("editarMeta")) {
                 String id = request.getParameter("id");
                 Metas m = metasFacade.find(Integer.parseInt(id));
                 sesion.setAttribute("meta", m);
                 String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/metas/editar.jsp";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("editar2Meta")) {
+                String id = request.getParameter("id");
+                Metas m = metasFacade.find(Integer.parseInt(id));
+                sesion.setAttribute("meta", m);
+                String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/metas2/editar.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else if (action.equals("editarHallazgo2")) {
@@ -3373,7 +3561,24 @@ public class cpController extends HttpServlet {
                     h.setCaracteristicaId(c);
                 }
                 hallazgoFacade.edit(h);
+            } else if (action.equals("editarFortaleza2")) {
+                Hallazgo h = (Hallazgo) sesion.getAttribute("hallazgo");
+                String hallazgo = (String) request.getParameter("hallazgo");
+                String caracteristica = (String) request.getParameter("caracteristica");
+                int idCar = Integer.parseInt(caracteristica);
+                Caracteristica c = caracteristicaFacade.find(idCar);
+
+                h.setHallazgo(hallazgo);
+                if (idCar != h.getCaracteristicaId().getId()) {
+                    h.setCaracteristicaId(c);
+                }
+                hallazgoFacade.edit(h);
             } else if (action.equals("editarObjetivo2")) {
+                Objetivos o = (Objetivos) sesion.getAttribute("objetivo");
+                String objetivo = (String) request.getParameter("objetivo");
+                o.setObjetivo(objetivo);
+                objetivosFacade.edit(o);
+            } else if (action.equals("editar2Objetivo2")) {
                 Objetivos o = (Objetivos) sesion.getAttribute("objetivo");
                 String objetivo = (String) request.getParameter("objetivo");
                 o.setObjetivo(objetivo);

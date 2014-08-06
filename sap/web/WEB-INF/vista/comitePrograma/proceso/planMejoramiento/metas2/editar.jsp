@@ -19,10 +19,10 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/controladorCP?action=editarMeta2",
+                    url: "/sap/controladorCP?action=editar2Meta2",
                     data: $("#formEditarMeta").serialize(),
                     success: function() {
-                        location = "/sap/#verMetas&${objetivo.idobjetivos}";
+                        location = "/sap/#ver2Metas&${objetivo.idobjetivos}";
                     } //fin success
                 }); //fin $.ajax    */
             }
@@ -34,20 +34,59 @@
         <div id="conte" class="span10" style="text-align: justify">
             <div class="row">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#home" role="tab" data-toggle="tab">Plan de mejoramiento</a></li>
-                    <li><a href="#profile" role="tab" data-toggle="tab">Plan de mantenimiento</a></li>
+                    <li><a href="#home" role="tab" data-toggle="tab">Plan de mejoramiento</a></li>
+                    <li class="active"><a href="#profile" role="tab" data-toggle="tab">Plan de mantenimiento</a></li>
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane active" id="home">
+                 <div class="tab-pane" id="home">
                         <ul class="breadcrumb">
-                            <li><a href="<%=request.getContextPath()%>/#listarHallazgos" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar hallazgos">Hallazgos</a> <span class="divider">/</span></li>
-                            <li><a href="<%=request.getContextPath()%>/#editarHallazgo&${hallazgo.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="${hallazgo.hallazgo}">Hallazgo</a> <span class="divider">/</span></li>
-                            <li><a href="<%=request.getContextPath()%>/#listarObjetivos&${hallazgo.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar objetivos">Objetivos</a> <span class="divider">/</span></li>
-                            <li><a href="<%=request.getContextPath()%>/#editarObjetivo&${objetivo.idobjetivos}" class="tool" data-placement="top" rel="tooltip" data-original-title="${objetivo.objetivo}">Objetivo</a> <span class="divider">/</span></li>
-                            <li><a href="<%=request.getContextPath()%>/#verMetas&${objetivo.idobjetivos}" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar metas">Metas</a> <span class="divider">/</span></li>
-                            <li>Editar</li>
+                            <li>Hallazgos</li>
                             <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
+                        </ul>
+                        <h3>Listado de  Hallazgos</h3>
+                        <c:choose>
+                            <c:when test="${fn:length(listHallazgos)!= 0}">
+                                <table class="table table-striped table-bordered table-condensed">
+                                    <thead>
+                                    <th>Hallazgo</th>
+                                    <th>Caracteristica</th>    
+                                    <th>Acci&oacute;n</th>    
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${listHallazgos}" var="item" varStatus="iter">
+                                            <tr>
+                                                <td>   
+                                                    <c:out value="${item.hallazgo}"/>
+                                                </td>
+                                                <td>   
+                                                    <c:out value="${item.caracteristicaId.nombre}"/>
+                                                </td>
+                                                <td>   
+                                                    <a href="#editarHallazgo&${item.idhallazgo}" title="Editar"><i class="icon-edit"></i></a>
+                                                    <a href="#listarObjetivos&${item.idhallazgo}" title="Ver objetivos"><i class="icon-signin"></i></a>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </c:when>
+                            <c:otherwise>
+                                Aun no existen Hallazgos para este plan de mejoramiento.<br/>
+                            </c:otherwise>
+                        </c:choose>
+                        <a href="#crearHallazgo" class="btn btn-large btn-primary"><i class="icon-plus"></i> Crear hallazgo</a>      
+                    </div>
+
+                    <div class="tab-pane active" id="profile">
+                         <ul class="breadcrumb">
+                            <li><a href="<%=request.getContextPath()%>/#listarFortalezas" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar fortalezas">Fortalezas</a> <span class="divider">/</span></li>
+                            <li><a href="<%=request.getContextPath()%>/#editarFortaleza&${fortaleza.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="${fortaleza.hallazgo}">Fortaleza</a> <span class="divider">/</span></li>
+                            <li><a href="<%=request.getContextPath()%>/#listar2Objetivos&${fortaleza.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar objetivos">Objetivos</a> <span class="divider">/</span></li>
+                            <li><a href="<%=request.getContextPath()%>/#editar2Objetivo&${objetivo.idobjetivos}" class="tool" data-placement="top" rel="tooltip" data-original-title="${objetivo.objetivo}">Objetivo</a> <span class="divider">/</span></li>
+                            <li><a href="<%=request.getContextPath()%>/#ver2Metas&${objetivo.idobjetivos}" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar metas">Metas</a> <span class="divider">/</span></li>
+                            <li>Editar</li>
+                            <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
                         </ul>
 
                         <form id="formEditarMeta" class="form-horizontal" method="post">
@@ -103,46 +142,6 @@
                                 </div>
                             </fieldset>
                         </form>
-
-                    </div>
-
-                    <div class="tab-pane" id="profile">
-                         <ul class="breadcrumb">
-                            <li>Fortalezas</li>
-                            <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
-                        </ul>
-                        <h3>Listado de  Fortalezas</h3>
-                      <c:choose>
-                            <c:when test="${fn:length(listFortalezas)!= 0}">
-                                <table class="table table-striped table-bordered table-condensed">
-                                    <thead>
-                                    <th>Fortaleza</th>
-                                    <th>Caracteristica</th>    
-                                    <th>Acci&oacute;n</th>    
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${listFortalezas}" var="item" varStatus="iter">
-                                            <tr>
-                                                <td>   
-                                                    <c:out value="${item.hallazgo}"/>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${item.caracteristicaId.nombre}"/>
-                                                </td>
-                                                <td>   
-                                                    <a href="#editarFortaleza&${item.idhallazgo}" title="Editar"><i class="icon-edit"></i></a>
-                                                    <a href="#listar2Objetivos&${item.idhallazgo}" title="Ver objetivos"><i class="icon-signin"></i></a>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </c:when>
-                            <c:otherwise>
-                                Aun no existen Fortalezas para este plan de mantenimiento.<br/>
-                            </c:otherwise>
-                        </c:choose>
-                        <a href="#crearFortaleza" class="btn btn-large btn-primary"><i class="icon-plus"></i> Crear fortaleza</a>    
                     </div>        
                 </div>
             </div>

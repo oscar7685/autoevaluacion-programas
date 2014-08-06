@@ -36,7 +36,7 @@
                             <li><a href="<%=request.getContextPath()%>/#editarHallazgo&${hallazgo.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="${hallazgo.hallazgo}">Hallazgo</a> <span class="divider">/</span></li>
                             <li><a href="<%=request.getContextPath()%>/#listarObjetivos&${hallazgo.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar objetivos">Objetivos</a> <span class="divider">/</span></li>
                             <li>Crear</li>
-                            <a id="printEnlace" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
+                            <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
                         </ul>
 
                         <form id="formCrearObjetivo" class="form-horizontal" method="post">
@@ -58,54 +58,31 @@
                     </div>
 
                     <div class="tab-pane" id="profile">
-                        <ul class="breadcrumb">
+                         <ul class="breadcrumb">
                             <li>Fortalezas</li>
-                            <a id="printEnlace" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
+                            <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
                         </ul>
                         <h3>Listado de  Fortalezas</h3>
-                        <c:choose>
+                      <c:choose>
                             <c:when test="${fn:length(listFortalezas)!= 0}">
                                 <table class="table table-striped table-bordered table-condensed">
                                     <thead>
                                     <th>Fortaleza</th>
-                                    <th>Estrategia</th>    
-                                    <th>Meta</th>    
-                                    <th>Indicador de cumplimiento</th>    
-                                    <th>Fecha inicio</th>    
-                                    <th>Fecha final</th>    
-                                    <th>Responsable</th>    
-                                    <th>Financiación</th>    
-                                    <th></th>    
+                                    <th>Caracteristica</th>    
+                                    <th>Acci&oacute;n</th>    
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${listFortalezas}" var="item2" varStatus="iter2">
+                                        <c:forEach items="${listFortalezas}" var="item" varStatus="iter">
                                             <tr>
                                                 <td>   
-                                                    <c:out value="${item2.hallazgo}"/>
+                                                    <c:out value="${item.hallazgo}"/>
                                                 </td>
                                                 <td>   
-                                                    <c:out value="${item2.estrategia}"/>
+                                                    <c:out value="${item.caracteristicaId.nombre}"/>
                                                 </td>
                                                 <td>   
-                                                    <c:out value="${item2.meta}"/>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${item2.indicadorCumplimiento}"/>
-                                                </td>
-                                                <td>   
-                                                    <fmt:formatDate pattern='yyyy/MM/dd' value='${item2.fechaInicio}' />    
-                                                </td>
-                                                <td>   
-                                                    <fmt:formatDate pattern='yyyy/MM/dd' value='${item2.fechaFinal}' />
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${item2.responsable}"/>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${item2.financiacion}"/>
-                                                </td>
-                                                <td>   
-                                                    <a href="#editarHallazgo&${item2.idhallazgo}" title="Editar"><i class="icon-edit"></i></a>
+                                                    <a href="#editarFortaleza&${item.idhallazgo}" title="Editar"><i class="icon-edit"></i></a>
+                                                    <a href="#listar2Objetivos&${item.idhallazgo}" title="Ver objetivos"><i class="icon-signin"></i></a>
                                                 </td>
                                             </tr>
                                         </c:forEach>
