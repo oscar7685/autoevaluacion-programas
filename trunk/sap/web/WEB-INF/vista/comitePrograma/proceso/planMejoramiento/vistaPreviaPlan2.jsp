@@ -43,7 +43,7 @@
                                 <td>VERSIÓN:00</td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; text-align: center;">PLAN DE MEJORAMIENTO</td>
+                                <td style="width: 50%; text-align: center;">PLAN DE MANTENIMIENTO</td>
                                 <td>FECHA:07/04/2012</td>
                             </tr>
                         </tbody>
@@ -52,7 +52,7 @@
 
                     <c:forEach items="${Proceso.hallazgoList}" var="item">
                         <c:choose>
-                            <c:when test="${item.tipo =='hallazgo'}">
+                            <c:when test="${item.tipo =='fortaleza'}">
                                 <table class="table table-bordered table-striped">
                                     <tbody>
                                         <tr>
@@ -71,7 +71,7 @@
                                             <td colspan="2">${item.caracteristicaId.codigo} - ${item.caracteristicaId.nombre}</td>   
                                         </tr>
                                         <tr>
-                                            <td><strong>Hallazgo:</strong></td>
+                                            <td><strong>Fortaleza:</strong></td>
                                             <td colspan="2">${item.hallazgo}</td>   
                                         </tr>
                                     </tbody>

@@ -342,8 +342,8 @@ $(function() {
                                         || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
                                         || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                                         || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
-                                        || hash === "#planMejoramiento" || hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#crearObjetivo" || hash === "#crearMeta"
-                                        || hash === "#comentarios") {
+                                        || hash === "#planMejoramiento" || hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#crearObjetivo" || hash === "#crearMeta" || hash === "#crear2Meta" || hash === "#listarFortalezas"
+                                        || hash === "#comentarios" || hash === "#crearFortaleza" || hash === "#crear2Objetivo") {
                                     var url3 = "/sap/" + hash;
                                     url3 = url3.replace('#', "controladorCP?action=");
                                     $("div.ui-layout-center").empty();
@@ -368,8 +368,8 @@ $(function() {
                                                     $("#west-closer").trigger("click");
                                                 }, 500);
                                             }
-                                            if (hash !== "#planMejoramiento" && hash !== "#crearHallazgo" && hash !== "#listarHallazgos"
-                                                    && hash !== "#crearObjetivo" && hash !== "#crearMeta") {
+                                            if (hash !== "#planMejoramiento" && hash !== "#crearHallazgo" && hash !== "#listarHallazgos" && hash !== "#listarFortalezas"
+                                                    && hash !== "#crearObjetivo" && hash !== "#crear2Objetivo" && hash !== "#crearMeta" && hash !== "#crear2Meta" && hash !== "#crearFortaleza") {
                                                 actualizaEnlaces(hash);
                                             }
 
@@ -476,8 +476,8 @@ $(function() {
                                             });
                                         } //fin success
                                     }); //fin del $.ajax
-                                } else if (hash.indexOf("#listarObjetivos") !== -1 || hash.indexOf("#editarHallazgo") !== -1
-                                        || hash.indexOf("#verMetas") !== -1 || hash.indexOf("#editarObjetivo") !== -1 || hash.indexOf("#editarMeta") !== -1) {
+                                } else if (hash.indexOf("#listarObjetivos") !== -1 || hash.indexOf("#editarHallazgo") !== -1 || hash.indexOf("#editarFortaleza") !== -1
+                                        || hash.indexOf("#verMetas") !== -1 || hash.indexOf("#ver2Metas") !== -1 || hash.indexOf("#editarObjetivo") !== -1 || hash.indexOf("#editar2Objetivo") !== -1 || hash.indexOf("#editarMeta") !== -1 || hash.indexOf("#editar2Meta") !== -1 || hash.indexOf("#listar2Objetivos") !== -1) {
                                     var cual = hash.split("&");
                                     hash = cual[0];
                                     var url3 = "/sap/controladorCP?action=";

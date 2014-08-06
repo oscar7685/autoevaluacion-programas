@@ -6,12 +6,12 @@
         <div id="conte" class="span10" style="text-align: justify">
             <div class="row">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#home" role="tab" data-toggle="tab">Plan de mejoramiento</a></li>
-                    <li><a href="#profile" role="tab" data-toggle="tab">Plan de mantenimiento</a></li>
+                    <li><a href="#home" role="tab" data-toggle="tab">Plan de mejoramiento</a></li>
+                    <li class="active"><a href="#profile" role="tab" data-toggle="tab">Plan de mantenimiento</a></li>
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane active" id="home">
+                    <div class="tab-pane" id="home">
                         <ul class="breadcrumb">
                             <li>Hallazgos</li>
                             <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
@@ -44,18 +44,18 @@
                                 </table>
                             </c:when>
                             <c:otherwise>
-                                Aun no existen Hallazgos para este plan de estrat&eacute;gico.<br/>
+                                Aun no existen Hallazgos para este plan de mantenimiento.<br/>
                             </c:otherwise>
                         </c:choose>
                         <a href="#crearHallazgo" class="btn btn-large btn-primary"><i class="icon-plus"></i> Crear hallazgo</a>    
                     </div>
 
-                    <div class="tab-pane" id="profile">
+                    <div class="tab-pane active" id="profile">
                         <ul class="breadcrumb">
                             <li>Fortalezas</li>
                             <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
                         </ul>
-                         <h3>Listado de  Fortalezas</h3>
+                        <h3>Listado de  Fortalezas</h3>
                       <c:choose>
                             <c:when test="${fn:length(listFortalezas)!= 0}">
                                 <table class="table table-striped table-bordered table-condensed">
