@@ -150,7 +150,7 @@
                         <p style="color: #FFFFFF; text-align: justify">El sistema de autoevaluación de programas es un apoyo fundamental para los procesos de autoevaluación que debe realizar los programas, ya sea con fines de Acreditación o con fines de renovación de registro calificado.</p>
                         <br/>
                         <p style="color: #FFFFFF;  text-align: right">Desarrollado por el Centro de Autoevaluaci&oacute;n</p>
-                        <p style="color: #FFFFFF; text-align: right">Edna Margarita Gómez Bustamante, Oscar Javier Ballesteros Pacheco, Arturo Gonzales Villamizar.</p>
+                        <p style="color: #FFFFFF; text-align: right">Martín Emilio Monroy Ríos, Edna Margarita Gómez Bustamante, Oscar Javier Ballesteros Pacheco, Arturo Gonzales Villamizar.</p>
                         <%--  </div>--%>
                     </div>
                 </div><!-- /.modal-content -->
