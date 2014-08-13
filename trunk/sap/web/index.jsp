@@ -60,8 +60,9 @@
                     <div class="nav-collapse collapse">
                         <ul class="nav barra" >
                             <li class="active"><a href="#inicio"><i class="icon-home"></i> Inicio</a></li>
-                            <li><a href="#contacto"><i class="icon-phone"></i> Contacto</a></li>
-                            <li ><a href="#"><i class="icon-info-sign"></i> Acerca de</a></li>
+                           
+                            <li><a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto"><i class="icon-phone"></i> Contacto</a></li>
+                            <li ><a href="#" id="enlaceAcercaDe"><i class="icon-info-sign"></i> Acerca de</a></li>
                             <li><a href="#ingresar"><i class="icon-user"></i>Ingresar</a></li>
                         </ul>
                     </div>
@@ -135,5 +136,25 @@
         <script src="js/jquery.ba-hashchange.min.js"></script>
         <script type='text/javascript' src='js/slider.js'></script>
         <script src="js/main.js"></script>
+        
+          <div class="modal fade" id="ModalAcercaDe" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content" style="background-color: #282728;">
+                    <div class="modal-header" style="padding-bottom: 19px; border-bottom:0;">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body" align="center">
+                        <img src="<%=request.getContextPath()%>/css/images/SAPLETRAS.png"/>
+                        <br>
+                        <p style="color: #FFFFFF; text-align: right">SAP-UdeC v1.0</p>
+                        <p style="color: #FFFFFF; text-align: justify">El sistema de autoevaluación de programas es un apoyo fundamental para los procesos de autoevaluación que debe realizar los programas, ya sea con fines de Acreditación o con fines de renovación de registro calificado.</p>
+                        <br/>
+                        <p style="color: #FFFFFF;  text-align: right">Desarrollado por el Centro de Autoevaluaci&oacute;n</p>
+                        <p style="color: #FFFFFF; text-align: right">Edna Margarita Gómez Bustamante, Oscar Javier Ballesteros Pacheco, Arturo Gonzales Villamizar.</p>
+                        <%--  </div>--%>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </body>
 </html>
