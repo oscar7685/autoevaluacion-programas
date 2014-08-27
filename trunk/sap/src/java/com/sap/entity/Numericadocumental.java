@@ -16,7 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -44,60 +43,38 @@ public class Numericadocumental implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2000)
+    @Size(max = 2000)
     @Column(name = "documento")
     private String documento;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2000)
+    @Size(max = 2000)
     @Column(name = "responsable")
     private String responsable;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2000)
+    @Size(max = 2000)
     @Column(name = "medio")
     private String medio;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2000)
+    @Size(max = 2000)
     @Column(name = "lugar")
     private String lugar;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "evaluacion")
-    private int evaluacion;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2000)
+    private Integer evaluacion;
+    @Size(max = 2000)
     @Column(name = "accion")
     private String accion;
-    @JoinColumn(name = "indicador_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Indicador indicadorId;
-    @JoinColumn(name = "instrumento_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Instrumento instrumentoId;
     @JoinColumn(name = "proceso_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Proceso procesoId;
+    @JoinColumn(name = "instrumento_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Instrumento instrumentoId;
+    @JoinColumn(name = "indicador_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Indicador indicadorId;
 
     public Numericadocumental() {
     }
 
     public Numericadocumental(Integer id) {
         this.id = id;
-    }
-
-    public Numericadocumental(Integer id, String documento, String responsable, String medio, String lugar, int evaluacion, String accion) {
-        this.id = id;
-        this.documento = documento;
-        this.responsable = responsable;
-        this.medio = medio;
-        this.lugar = lugar;
-        this.evaluacion = evaluacion;
-        this.accion = accion;
     }
 
     public Integer getId() {
@@ -140,11 +117,11 @@ public class Numericadocumental implements Serializable {
         this.lugar = lugar;
     }
 
-    public int getEvaluacion() {
+    public Integer getEvaluacion() {
         return evaluacion;
     }
 
-    public void setEvaluacion(int evaluacion) {
+    public void setEvaluacion(Integer evaluacion) {
         this.evaluacion = evaluacion;
     }
 
@@ -156,12 +133,12 @@ public class Numericadocumental implements Serializable {
         this.accion = accion;
     }
 
-    public Indicador getIndicadorId() {
-        return indicadorId;
+    public Proceso getProcesoId() {
+        return procesoId;
     }
 
-    public void setIndicadorId(Indicador indicadorId) {
-        this.indicadorId = indicadorId;
+    public void setProcesoId(Proceso procesoId) {
+        this.procesoId = procesoId;
     }
 
     public Instrumento getInstrumentoId() {
@@ -172,12 +149,12 @@ public class Numericadocumental implements Serializable {
         this.instrumentoId = instrumentoId;
     }
 
-    public Proceso getProcesoId() {
-        return procesoId;
+    public Indicador getIndicadorId() {
+        return indicadorId;
     }
 
-    public void setProcesoId(Proceso procesoId) {
-        this.procesoId = procesoId;
+    public void setIndicadorId(Indicador indicadorId) {
+        this.indicadorId = indicadorId;
     }
 
     @Override

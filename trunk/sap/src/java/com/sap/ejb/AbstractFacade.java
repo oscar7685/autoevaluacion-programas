@@ -98,7 +98,7 @@ public abstract class AbstractFacade<T> {
         cq.select(cq.from(entityClass));
         Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name", entityClass);
         q.setParameter("name", m);
-        System.out.println("query:"+q);
+        System.out.println("query:" + q);
         return q.getResultList();
     }
 
@@ -187,14 +187,14 @@ public abstract class AbstractFacade<T> {
         q.setParameter("name2", m2);
         return q.getResultList();
     }
-    
+
     public List<T> findPreguntasCerrarDesdeResultado(Object m1) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c  JOIN c.encabezadoId c2 "
                 + "JOIN c.preguntaId c3 WHERE c2.estado = 'terminado' and c2.procesoId=:name1 and c3.tipo='2' ORDER BY c3.id", entityClass);
         q.setParameter("name1", m1);
-        System.out.println("query: "+q.toString());
+        System.out.println("query: " + q.toString());
         return q.getResultList();
     }
 
