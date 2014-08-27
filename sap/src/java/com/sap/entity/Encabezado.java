@@ -58,7 +58,7 @@ public class Encabezado implements Serializable {
     @Size(max = 45)
     @Column(name = "estado")
     private String estado;
-    @Size(max = 1000)
+    @Size(max = 2000)
     @Column(name = "comentarios")
     private String comentarios;
     @JoinColumn(name = "muestrapersona_id", referencedColumnName = "id")

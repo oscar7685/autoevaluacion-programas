@@ -4,12 +4,20 @@ $(function() {
 
     location = "/sap/#inicio";
     $(document).ajaxStart(function() {
-        $("div.ui-layout-center").append("<div id='contenido'></div>");
-        //$("#contenido").hide();
-        $("div.ui-layout-center").append(""
-                + "<div id='dancing-dots-text'>"
-                + "Cargando <span><span>.</span><span>.</span><span>.</span><span>.</span><span>.</span></span> "
-                + "</div>");
+        if ($("div.ui-layout-center").find('div#contenido').length === 0) {
+            $("div.ui-layout-center").append("<div id='contenido'></div>");
+            //$("#contenido").hide();
+            $("div.ui-layout-center").append(""
+                    + "<div id='dancing-dots-text'>"
+                    + "Cargando <span><span>.</span><span>.</span><span>.</span><span>.</span><span>.</span></span> "
+                    + "</div>");
+        } else {
+            $("div.ui-layout-center").append(""
+                    + "<div id='dancing-dots-text'>"
+                    + "Cargando <span><span>.</span><span>.</span><span>.</span><span>.</span><span>.</span></span> "
+                    + "</div>");
+        }
+
     });
 
     var myLayout;

@@ -267,7 +267,7 @@
             </tbody>
         </table>
         <label>Observaciones y/o comentarios</label>
-        <textarea rows="4" class="input-block-level"  placeholder="Observaciones y/o comentarios" name="observaciones" maxlength="1000">${encabezado.comentarios}</textarea>
+        <textarea rows="4" class="input-block-level"  placeholder="Observaciones y/o comentarios" name="observaciones" maxlength="1999">${encabezado.comentarios}</textarea>
         <div class="row"> 
             <div class="span5">
                 <div class="pagination"></div>

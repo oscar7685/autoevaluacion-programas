@@ -1928,7 +1928,7 @@ public class cpController extends HttpServlet {
                 }
                 sesion.setAttribute("lisrInidicadorsNum", indicadoresNum); // son todos los que son numericos
                 sesion.setAttribute("listaNum", listaNum);//son la numerica documental que ya estan en la tabla calificados
-                String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoNumerica.jsp";
+                String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoNumerica2.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
 
@@ -1947,118 +1947,103 @@ public class cpController extends HttpServlet {
                 }
                 sesion.setAttribute("lisrInidicadorsDoc", indicadoresDoc); // son todos los que son documentales
                 sesion.setAttribute("listaDoc", listaDoc);//son los que ya estan en la tabla calificados
-                String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoDocumental.jsp";
+                String url = "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoDocumental2.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
 
             } else if (action.equals("registrarInfoNumerica")) {
+                String indicador = request.getParameter("indicador");
+                String columna = request.getParameter("columna");
+                String valor = request.getParameter("valor");
+
                 Proceso p = (Proceso) proceso;
-                List<Indicador> indicadoresNumericos = (List<Indicador>) sesion.getAttribute("lisrInidicadorsNum");
+                Indicador aux = indicadorFacade.find(Integer.parseInt(indicador));
+                Instrumento ins = instrumentoFacade.find(2);
 
-                for (Indicador i : indicadoresNumericos) {
+                Numericadocumental infonumerica = numericadocumentalFacade.findBySingle3("procesoId", p, "indicadorId", aux, "instrumentoId", ins);
 
-                    String nombreDoc = request.getParameter("nombreDocumento" + i.getId());
-                    String responDoc = request.getParameter("responsableDocumento" + i.getId());
-                    String medioDoc = request.getParameter("medioDocumento" + i.getId());
-                    String lugarDoc = request.getParameter("lugarDocumento" + i.getId());
-                    int evaluDoc = Integer.parseInt(request.getParameter("evaluacionNum" + i.getId()));
-                    String accionDoc = request.getParameter("accionDocumento" + i.getId());
-                    String cambio = request.getParameter("InfoCambio" + i.getId());
-                    String idNumDoc = request.getParameter("idNumDoc" + i.getId());
+                if (infonumerica == null) {
+                    Numericadocumental infonumerica3 = new Numericadocumental();
+                    infonumerica3.setProcesoId(p);
+                    infonumerica3.setIndicadorId(aux);
+                    infonumerica3.setInstrumentoId(ins);
 
-                    if (idNumDoc != null && !idNumDoc.equals("")) {//si existia
-                        if (!nombreDoc.equals("") && !responDoc.equals("") && !medioDoc.equals("")
-                                && !lugarDoc.equals("") && !accionDoc.equals("") && cambio.equals("1")) {
-
-                            Numericadocumental infonumerica = numericadocumentalFacade.find(Integer.parseInt(idNumDoc));
-                            infonumerica.setDocumento(nombreDoc);
-                            infonumerica.setResponsable(responDoc);
-                            infonumerica.setMedio(medioDoc);
-                            infonumerica.setMedio(medioDoc);
-                            infonumerica.setLugar(lugarDoc);
-                            infonumerica.setEvaluacion(evaluDoc);
-                            infonumerica.setAccion(accionDoc);
-                            numericadocumentalFacade.edit(infonumerica);
-
-                        } else {
-                            if (cambio.equals("1")) {
-                                Numericadocumental infonumerica2 = numericadocumentalFacade.find(Integer.parseInt(idNumDoc));
-                                numericadocumentalFacade.remove(infonumerica2);
-                            }
-                        }
-                    } else {
-                        if (!nombreDoc.equals("") && !responDoc.equals("") && !medioDoc.equals("")
-                                && !lugarDoc.equals("") && !accionDoc.equals("") && cambio.equals("1")) {
-                            Numericadocumental infonumerica3 = new Numericadocumental();
-                            infonumerica3.setDocumento(nombreDoc);
-                            infonumerica3.setResponsable(responDoc);
-                            infonumerica3.setMedio(medioDoc);
-                            infonumerica3.setMedio(medioDoc);
-                            infonumerica3.setLugar(lugarDoc);
-                            infonumerica3.setEvaluacion(evaluDoc);
-                            infonumerica3.setAccion(accionDoc);
-                            infonumerica3.setProcesoId(p);
-                            infonumerica3.setIndicadorId(i);
-                            infonumerica3.setInstrumentoId(instrumentoFacade.find(2));
-                            numericadocumentalFacade.create(infonumerica3);
-                        }
-
+                    if (columna.equals("1")) {
+                        infonumerica3.setDocumento(valor);
+                    } else if (columna.equals("2")) {
+                        infonumerica3.setResponsable(valor);
+                    } else if (columna.equals("3")) {
+                        infonumerica3.setMedio(valor);
+                    } else if (columna.equals("4")) {
+                        infonumerica3.setLugar(valor);
+                    } else if (columna.equals("5")) {
+                        infonumerica3.setEvaluacion(Integer.parseInt(valor));
+                    } else if (columna.equals("6")) {
+                        infonumerica3.setAccion(valor);
                     }
+                    numericadocumentalFacade.create(infonumerica3);
+                } else {
+                    if (columna.equals("1")) {
+                        infonumerica.setDocumento(valor);
+                    } else if (columna.equals("2")) {
+                        infonumerica.setResponsable(valor);
+                    } else if (columna.equals("3")) {
+                        infonumerica.setMedio(valor);
+                    } else if (columna.equals("4")) {
+                        infonumerica.setLugar(valor);
+                    } else if (columna.equals("5")) {
+                        infonumerica.setEvaluacion(Integer.parseInt(valor));
+                    } else if (columna.equals("6")) {
+                        infonumerica.setAccion(valor);
+                    }
+                    numericadocumentalFacade.edit(infonumerica);
                 }
-            } else if (action.equals("registrarInfoDocumental")) {
+           } else if (action.equals("registrarInfoDocumental")) {
+                String indicador = request.getParameter("indicador");
+                String columna = request.getParameter("columna");
+                String valor = request.getParameter("valor");
+
                 Proceso p = (Proceso) proceso;
-                List<Indicador> indicadoresDocumentales = (List<Indicador>) sesion.getAttribute("lisrInidicadorsDoc");
+                Indicador aux = indicadorFacade.find(Integer.parseInt(indicador));
+                Instrumento ins = instrumentoFacade.find(3);
 
-                for (Indicador i : indicadoresDocumentales) {
+                Numericadocumental infonumerica = numericadocumentalFacade.findBySingle3("procesoId", p, "indicadorId", aux, "instrumentoId", ins);
 
-                    String nombreDoc = request.getParameter("nombreDocumento" + i.getId());
-                    String responDoc = request.getParameter("responsableDocumento" + i.getId());
-                    String medioDoc = request.getParameter("medioDocumento" + i.getId());
-                    String lugarDoc = request.getParameter("lugarDocumento" + i.getId());
-                    int evaluDoc = Integer.parseInt(request.getParameter("evaluacionDoc" + i.getId()));
-                    String accionDoc = request.getParameter("accionDocumento" + i.getId());
-                    String cambio = request.getParameter("InfoCambio" + i.getId());
-                    String idNumDoc = request.getParameter("idNumDoc" + i.getId());
+                if (infonumerica == null) {
+                    Numericadocumental infonumerica3 = new Numericadocumental();
+                    infonumerica3.setProcesoId(p);
+                    infonumerica3.setIndicadorId(aux);
+                    infonumerica3.setInstrumentoId(ins);
 
-                    if (idNumDoc != null && !idNumDoc.equals("")) {//si existia
-                        if (!nombreDoc.equals("") && !responDoc.equals("") && !medioDoc.equals("")
-                                && !lugarDoc.equals("") && !accionDoc.equals("") && cambio.equals("1")) {
-
-                            Numericadocumental infonumerica = numericadocumentalFacade.find(Integer.parseInt(idNumDoc));
-                            infonumerica.setDocumento(nombreDoc);
-                            infonumerica.setResponsable(responDoc);
-                            infonumerica.setMedio(medioDoc);
-                            infonumerica.setMedio(medioDoc);
-                            infonumerica.setLugar(lugarDoc);
-                            infonumerica.setEvaluacion(evaluDoc);
-                            infonumerica.setAccion(accionDoc);
-                            numericadocumentalFacade.edit(infonumerica);
-
-                        } else {
-                            if (cambio.equals("1")) {
-                                Numericadocumental infonumerica2 = numericadocumentalFacade.find(Integer.parseInt(idNumDoc));
-                                numericadocumentalFacade.remove(infonumerica2);
-                            }
-
-                        }
-                    } else {
-                        if (!nombreDoc.equals("") && !responDoc.equals("") && !medioDoc.equals("")
-                                && !lugarDoc.equals("") && !accionDoc.equals("") && cambio.equals("1")) {
-                            Numericadocumental infonumerica3 = new Numericadocumental();
-                            infonumerica3.setDocumento(nombreDoc);
-                            infonumerica3.setResponsable(responDoc);
-                            infonumerica3.setMedio(medioDoc);
-                            infonumerica3.setMedio(medioDoc);
-                            infonumerica3.setLugar(lugarDoc);
-                            infonumerica3.setEvaluacion(evaluDoc);
-                            infonumerica3.setAccion(accionDoc);
-                            infonumerica3.setProcesoId(p);
-                            infonumerica3.setIndicadorId(i);
-                            infonumerica3.setInstrumentoId(instrumentoFacade.find(3));
-                            numericadocumentalFacade.create(infonumerica3);
-                        }
-
+                    if (columna.equals("1")) {
+                        infonumerica3.setDocumento(valor);
+                    } else if (columna.equals("2")) {
+                        infonumerica3.setResponsable(valor);
+                    } else if (columna.equals("3")) {
+                        infonumerica3.setMedio(valor);
+                    } else if (columna.equals("4")) {
+                        infonumerica3.setLugar(valor);
+                    } else if (columna.equals("5")) {
+                        infonumerica3.setEvaluacion(Integer.parseInt(valor));
+                    } else if (columna.equals("6")) {
+                        infonumerica3.setAccion(valor);
                     }
+                    numericadocumentalFacade.create(infonumerica3);
+                } else {
+                    if (columna.equals("1")) {
+                        infonumerica.setDocumento(valor);
+                    } else if (columna.equals("2")) {
+                        infonumerica.setResponsable(valor);
+                    } else if (columna.equals("3")) {
+                        infonumerica.setMedio(valor);
+                    } else if (columna.equals("4")) {
+                        infonumerica.setLugar(valor);
+                    } else if (columna.equals("5")) {
+                        infonumerica.setEvaluacion(Integer.parseInt(valor));
+                    } else if (columna.equals("6")) {
+                        infonumerica.setAccion(valor);
+                    }
+                    numericadocumentalFacade.edit(infonumerica);
                 }
             } else if (action.equals("estadoProceso")) {
                 Proceso p = (Proceso) proceso;
