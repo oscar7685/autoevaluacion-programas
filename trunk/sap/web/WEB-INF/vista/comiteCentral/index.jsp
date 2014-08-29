@@ -53,7 +53,7 @@
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#">Perfil</a></li>
+                                        <li><a target="_blank" href="DescargarLog">Descargar Log</a></li>
                                         <li><a href="#">Cambiar Contrase&ntilde;a</a></li>
                                         <li class="divider"></li>
                                         <li><a href="<%=request.getContextPath()%>/#CerrarSesion">Cerrar Sesion</a></li>

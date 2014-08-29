@@ -272,14 +272,14 @@
                             </tbody>
                         </table>
                         <p id="total" style="font-weight: bold">Total: ${contador + 1}</p>
-                        <c:if test="${EstadoProceso == 2 && tipoLogin=='Comite central'}">
+                        <c:if test="${(EstadoProceso == 2 || EstadoProceso == 1) && tipoLogin=='Comite central'}">
                             <a id="bpreparedEditarMuestra" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
                         </c:if>
 
                     </c:when>
                     <c:otherwise>
                         No  se ha generado la muestra para la fuente seleccionada.
-                        <c:if test="${EstadoProceso == 2 && tipoLogin=='Comite central'}">
+                        <c:if test="${(EstadoProceso == 2 || EstadoProceso == 1) && tipoLogin=='Comite central'}">
                             <a id="bpreparedEditarMuestra" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
                         </c:if>
                     </c:otherwise>

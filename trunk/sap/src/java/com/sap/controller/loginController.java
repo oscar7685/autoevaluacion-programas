@@ -42,6 +42,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -49,6 +50,7 @@ import javax.servlet.http.HttpSession;
  */
 public class loginController extends HttpServlet {
 
+    private final static Logger logger = Logger.getLogger(loginController.class);
     @EJB
     private EncabezadoFacade encabezadoFacade;
     @EJB
@@ -77,9 +79,8 @@ public class loginController extends HttpServlet {
     private ProcesoFacade procesoFacade;
 
     /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -108,8 +109,7 @@ public class loginController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -123,8 +123,7 @@ public class loginController extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP
-     * <code>POST</code> method.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -138,6 +137,7 @@ public class loginController extends HttpServlet {
         if (action != null) {
             request.getSession().invalidate();
         } else {
+
             String un = (String) request.getParameter("un");
             String pw = (String) request.getParameter("pw");
             String tp = (String) request.getParameter("tp");
@@ -177,7 +177,6 @@ public class loginController extends HttpServlet {
                                 aux3 = encuestaFacade.findByModelo(m);
                                 session.setAttribute("proceso", proceso);
 
-
                             }
                             if (aux3 != null) {
                                 for (int k = 0; k < aux3.size(); k++) {
@@ -202,7 +201,6 @@ public class loginController extends HttpServlet {
                         }
                     }
                 }
-
 
             } else {
                 if (tp != null && tp.equals("Egresados")) {
@@ -236,7 +234,6 @@ public class loginController extends HttpServlet {
                                     auxE3 = encuestaFacade.findByModelo(m);
                                     session.setAttribute("proceso", proceso);
 
-
                                 }
                                 if (auxE3 != null) {
                                     for (int i = 0; i < auxE3.size(); i++) {
@@ -261,7 +258,6 @@ public class loginController extends HttpServlet {
 
                         }
                     }
-
 
                 } else {
                     if (tp != null && tp.equals("Docentes")) {
@@ -295,7 +291,6 @@ public class loginController extends HttpServlet {
                                         auxD3 = encuestaFacade.findByModelo(m);
                                         session.setAttribute("proceso", proceso);
 
-
                                     }
                                     if (auxD3 != null) {
                                         for (int i = 0; i < auxD3.size(); i++) {
@@ -317,7 +312,6 @@ public class loginController extends HttpServlet {
                                         out.println(1);
                                     }
                                 }
-
 
                             }
                         }
@@ -354,7 +348,6 @@ public class loginController extends HttpServlet {
                                             auxDi3 = encuestaFacade.findByModelo(m);
                                             session.setAttribute("proceso", proceso);
 
-
                                         }
                                         if (auxDi3 != null) {
                                             for (int i = 0; i < auxDi3.size(); i++) {
@@ -377,7 +370,6 @@ public class loginController extends HttpServlet {
                                             out.println(1);
                                         }
                                     }
-
 
                                 }
                             }
@@ -414,7 +406,6 @@ public class loginController extends HttpServlet {
                                             auxA3 = encuestaFacade.findByModelo(m);
                                             session.setAttribute("proceso", proceso);
 
-
                                         }
                                         if (auxA3 != null) {
                                             for (int i = 0; i < auxA3.size(); i++) {
@@ -438,7 +429,6 @@ public class loginController extends HttpServlet {
                                     }
                                 }
                             }
-
 
                         } else if (tp != null && tp.equals("Empleadores")) {
                             Muestrapersona persona = null;
@@ -472,7 +462,6 @@ public class loginController extends HttpServlet {
                                             auxEm3 = encuestaFacade.findByModelo(m);
                                             session.setAttribute("proceso", proceso);
 
-
                                         }
                                         if (auxEm3 != null) {
                                             for (int i = 0; i < auxEm3.size(); i++) {
@@ -497,7 +486,6 @@ public class loginController extends HttpServlet {
                                 }
                             }
 
-
                         } else {
                             if (tp != null && tp.equals("Comite central")) {
 
@@ -505,13 +493,18 @@ public class loginController extends HttpServlet {
                                 try {
                                     r = representanteFacade.find(Integer.parseInt(un));
                                 } catch (Exception e) {
+                                    logger.error("codigo de representante es no numerico");
                                 }
                                 if (r != null && r.getPassword().equals(pw) && r.getRol().equals("Comite central")) {
+                                    if (logger.isDebugEnabled()) {
+                                        logger.debug("Credenciales validas");
+                                    }
+                                    
                                     session.setAttribute("tipoLogin", "Comite central");
                                     session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
                                     SessionCountListener sessionCountListener = new SessionCountListener();
-                                    session.setAttribute("cantidad",sessionCountListener.getCount());
-                                    session.setAttribute("representantesLogueados",sessionCountListener.representantesLogueados);
+                                    session.setAttribute("cantidad", sessionCountListener.getCount());
+                                    session.setAttribute("representantesLogueados", sessionCountListener.representantesLogueados);
                                     out.println(0);
                                 } else {
                                     out.println(1);
@@ -543,7 +536,7 @@ public class loginController extends HttpServlet {
                                                 session.setAttribute("EstadoProceso", 2);
                                                 session.setAttribute("Proceso", p);
                                                 session.setAttribute("Modelo", p.getModeloId());
-                                                
+
                                                 /////Comienza para saber si el modelo en cuestion tiene preguntas abiertas
                                                 boolean tienePreguntasAbiertas = false;
                                                 List<Pregunta> preguntasModelo = p.getModeloId().getPreguntaList();
@@ -560,7 +553,6 @@ public class loginController extends HttpServlet {
                                                 }
                                                 /////////Termina 
 
-
                                             } else {
                                                 session.setAttribute("EstadoProceso", 0);
                                                 //  session.setAttribute("Proceso", p);
@@ -573,7 +565,6 @@ public class loginController extends HttpServlet {
                                 } else {
                                     out.println(1);
                                 }
-
 
                             } else {
                                 out.println(1);

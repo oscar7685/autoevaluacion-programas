@@ -10,7 +10,7 @@ import java.util.List;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-public class SessionCountListener implements HttpSessionListener {
+public class SessionCountListener implements HttpSessionListener, ServletContextListener {
 
     private static int numberOfSessionsCount = 0;
     public static List<Representante> representantesLogueados = new ArrayList<Representante>();
@@ -30,6 +30,16 @@ public class SessionCountListener implements HttpSessionListener {
     public static final int getCount() {
         return SessionCountListener.numberOfSessionsCount;
     }
-    
-    
+
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+        ServletContext context = sce.getServletContext();
+        System.setProperty("rootPath", context.getRealPath("/"));
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+        
+    }
+
 }
