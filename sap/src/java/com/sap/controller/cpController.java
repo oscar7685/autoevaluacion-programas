@@ -94,6 +94,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -176,6 +177,8 @@ public class cpController extends HttpServlet {
     @EJB
     private InstrumentoFacade instrumentoFacade;
 
+    private final static Logger LOGGER = Logger.getLogger(cpController.class);
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -196,7 +199,11 @@ public class cpController extends HttpServlet {
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
 
         try {
-            if (action.equals("indexCP")) {
+            if (action == null) {
+                String url = "error404.html";
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else if (action.equals("indexCP")) {
                 String url = "/WEB-INF/vista/comitePrograma/index.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
@@ -493,8 +500,6 @@ public class cpController extends HttpServlet {
                     fechaI = formatoDelTexto.parse(finicio);
 
                 } catch (Exception ex) {
-
-                    ex.printStackTrace();
 
                 }
                 Date fechaF = null;
@@ -1998,7 +2003,7 @@ public class cpController extends HttpServlet {
                     }
                     numericadocumentalFacade.edit(infonumerica);
                 }
-           } else if (action.equals("registrarInfoDocumental")) {
+            } else if (action.equals("registrarInfoDocumental")) {
                 String indicador = request.getParameter("indicador");
                 String columna = request.getParameter("columna");
                 String valor = request.getParameter("valor");
@@ -3593,6 +3598,14 @@ public class cpController extends HttpServlet {
                     }
                 }
             }
+        } catch (ServletException e) {
+            LOGGER.error("hay ocurrido un error de tipo ServletException en algun lugar del cpController: " + e);
+        } catch (IOException e) {
+            LOGGER.error("hay ocurrido un error e tipo IOException en algun lugar del cpController: " + e);
+        } catch (NumberFormatException e) {
+            LOGGER.error("hay ocurrido un error de tipo NumberFormatException en algun lugar del cpController: " + e);
+        } catch (Exception e) {
+            LOGGER.error("hay ocurrido un error en algun lugar del cpController: " + e);
         } finally {
             out.close();
         }

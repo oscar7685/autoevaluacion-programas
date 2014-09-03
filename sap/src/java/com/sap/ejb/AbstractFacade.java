@@ -4,18 +4,20 @@
  */
 package com.sap.ejb;
 
+import com.sap.controller.loginController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Ususario
  */
 public abstract class AbstractFacade<T> {
-
+    private final static Logger LOGGER = Logger.getLogger(AbstractFacade.class);
     private Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
@@ -88,6 +90,7 @@ public abstract class AbstractFacade<T> {
         try {
             return (T) q.getSingleResult();
         } catch (Exception e) {
+            LOGGER.warn("Excepcion en el metodo findBySingle3"+e);
             return null;
         }
 
