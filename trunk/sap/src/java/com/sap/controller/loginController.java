@@ -50,7 +50,7 @@ import org.apache.log4j.Logger;
  */
 public class loginController extends HttpServlet {
 
-    private final static Logger logger = Logger.getLogger(loginController.class);
+    private final static Logger LOGGER = Logger.getLogger(loginController.class);
     @EJB
     private EncabezadoFacade encabezadoFacade;
     @EJB
@@ -492,12 +492,12 @@ public class loginController extends HttpServlet {
                                 Representante r = null;
                                 try {
                                     r = representanteFacade.find(Integer.parseInt(un));
-                                } catch (Exception e) {
-                                    logger.error("codigo de representante es no numerico");
+                                } catch (NumberFormatException e) {
+                                    LOGGER.error("codigo de representante es no numerico"+e);
                                 }
                                 if (r != null && r.getPassword().equals(pw) && r.getRol().equals("Comite central")) {
-                                    if (logger.isDebugEnabled()) {
-                                        logger.debug("Credenciales validas");
+                                    if (LOGGER.isDebugEnabled()) {
+                                        LOGGER.debug("Credenciales validas");
                                     }
                                     
                                     session.setAttribute("tipoLogin", "Comite central");
@@ -513,13 +513,16 @@ public class loginController extends HttpServlet {
                                 Representante r = null;
                                 try {
                                     r = representanteFacade.find(Integer.parseInt(un));
-                                } catch (Exception e) {
+                                } catch (NumberFormatException e) {
+                                    LOGGER.error("Codigo invalido: "+e);
                                 }
                                 if (r != null && r.getPassword().equals(pw) && r.getRol().equals("Comite programa")) {
+                                    if (LOGGER.isDebugEnabled()) {
+                                        LOGGER.debug("Credenciales validas");
+                                    }
                                     out.println(0);
                                     session.setAttribute("tipoLogin", "Comite programa");
                                     session.setAttribute("representante", r);
-                                    SessionCountListener sessionListener2 = new SessionCountListener();
                                     SessionCountListener.representantesLogueados.add(r);
                                     session.setAttribute("Programa", r.getProgramaId());
 

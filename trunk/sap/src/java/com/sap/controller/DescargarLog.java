@@ -14,12 +14,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Ususario
  */
 public class DescargarLog extends HttpServlet {
+
+    private final static Logger LOGGER = Logger.getLogger(DescargarLog.class);
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,11 +37,8 @@ public class DescargarLog extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String SOURCE_FOLDER = "";
-        String ruta = "";
         try {
-            SOURCE_FOLDER = request.getSession().getServletContext().getRealPath("/logs/");
-            ruta = request.getSession().getServletContext().getRealPath("/logs/");
+            String ruta = request.getSession().getServletContext().getRealPath("/logs/");
             ruta += "\\logging.log";
 
             File f2 = new File(ruta);
@@ -59,7 +59,12 @@ public class DescargarLog extends HttpServlet {
 
             inStream.close();
             outStream.close();
-        } finally {
+        } catch (IOException e) {
+            LOGGER.error("ha ocurrido un error del tipo IOException: "+e);
+        } catch(Exception e){
+            LOGGER.error("ha ocurrido un error: "+e);
+        }
+        finally {
             //out.close();
         }
     }

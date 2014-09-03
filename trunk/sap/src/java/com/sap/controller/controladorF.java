@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -39,11 +40,13 @@ public class controladorF extends HttpServlet {
     private ResultadoevaluacionFacade resultadoevaluacionFacade;
     @EJB
     private EncabezadoFacade encabezadoFacade;
+    private final static String RESPONDER = "responderE";
+    private final static String GUARDAR = "guardarE";
+    private final static Logger LOGGER = Logger.getLogger(controladorF.class);
 
     /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -56,95 +59,100 @@ public class controladorF extends HttpServlet {
         HttpSession session = request.getSession();
         String action = (String) request.getParameter("action");
         try {
-            if (action.equals("indexF")) {
-                String url = "/WEB-INF/vista/fuente/index.jsp";
+        if (action.equals("indexF")) {
+            String url = "/WEB-INF/vista/fuente/index.jsp";
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+
+        } else {
+            if (action.equals("responderEncuestaF")) {
+                String url = "/WEB-INF/vista/fuente/responderEncuesta.jsp";
+                Proceso p = (Proceso) session.getAttribute("proceso");
+                Muestrapersona persona = (Muestrapersona) session.getAttribute("persona");
+                Fuente fuente = (Fuente) session.getAttribute("fuente");
+                Encuesta encuesta = (Encuesta) session.getAttribute("encuesta");
+                List<Encabezado> encabExistentes = encabezadoFacade.findByVars(p, encuesta, fuente, persona);
+                List<Glosario> palabras = glosarioFacade.findAll();
+                Encabezado enc = null;
+                if (encabExistentes != null && encabExistentes.size() > 0) {
+                    for (int i = 0; i < encabExistentes.size(); i++) {
+                        enc = encabExistentes.get(i);
+                    }
+                }
+                if (enc != null) {
+                    session.setAttribute("respuestas", resultadoevaluacionFacade.findByEncabezado(enc));
+                    session.setAttribute("encabezado", enc);
+                }
+                session.setAttribute("palabras", palabras);
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
-
             } else {
-                if (action.equals("responderEncuestaF")) {
-                    String url = "/WEB-INF/vista/fuente/responderEncuesta.jsp";
+                if (RESPONDER.equals(request.getParameter("action")) || GUARDAR.equals(request.getParameter("action"))) {
+
                     Proceso p = (Proceso) session.getAttribute("proceso");
                     Muestrapersona persona = (Muestrapersona) session.getAttribute("persona");
+                    String observaciones = (String) request.getParameter("observaciones");
                     Fuente fuente = (Fuente) session.getAttribute("fuente");
                     Encuesta encuesta = (Encuesta) session.getAttribute("encuesta");
+                    List<Pregunta> preguntas = encuesta.getPreguntaList();
+                    String estado = "guardada";
+
+                    if (RESPONDER.equals(request.getParameter("action"))) {
+                        estado = "terminado";
+                    }
                     List<Encabezado> encabExistentes = encabezadoFacade.findByVars(p, encuesta, fuente, persona);
-                    List<Glosario> palabras = glosarioFacade.findAll();
                     Encabezado enc = null;
                     if (encabExistentes != null && encabExistentes.size() > 0) {
                         for (int i = 0; i < encabExistentes.size(); i++) {
                             enc = encabExistentes.get(i);
                         }
                     }
-                    if (enc != null) {
-                        session.setAttribute("respuestas", resultadoevaluacionFacade.findByEncabezado(enc));
-                        session.setAttribute("encabezado", enc);
-                    }
-                    session.setAttribute("palabras", palabras);
-                    RequestDispatcher rd = request.getRequestDispatcher(url);
-                    rd.forward(request, response);
-                } else {
-                    if (request.getParameter("action").equals("responderE") || request.getParameter("action").equals("guardarE")) {
 
-                        Proceso p = (Proceso) session.getAttribute("proceso");
-                        Muestrapersona persona = (Muestrapersona) session.getAttribute("persona");
-                        String observaciones = (String) request.getParameter("observaciones");
-                        Fuente fuente = (Fuente) session.getAttribute("fuente");
-                        Encuesta encuesta = (Encuesta) session.getAttribute("encuesta");
-                        List<Pregunta> preguntas = encuesta.getPreguntaList();
-                        String estado = "guardada";
+                    if (enc == null) {
+                        enc = new Encabezado();
+                        enc.setProcesoId(p);
+                        enc.setEncuestaId(encuesta);
+                        enc.setEstado(estado);
+                        enc.setFuenteId(fuente);
+                        enc.setMuestrapersonaId(persona);
+                        enc.setComentarios(observaciones);
+                        enc.setFecha(new Date(new java.util.Date().getTime()));
+                        encabezadoFacade.create(enc);
 
-                        if (request.getParameter("action").equals("responderE")) {
-                            estado = "terminado";
-                        }
-                        List<Encabezado> encabExistentes = encabezadoFacade.findByVars(p, encuesta, fuente, persona);
-                        Encabezado enc = null;
-                        if (encabExistentes != null && encabExistentes.size() > 0) {
-                            for (int i = 0; i < encabExistentes.size(); i++) {
-                                enc = encabExistentes.get(i);
-                            }
-                        }
-
-                        if (enc == null) {
-                            enc = new Encabezado();
-                            enc.setProcesoId(p);
-                            enc.setEncuestaId(encuesta);
-                            enc.setEstado(estado);
-                            enc.setFuenteId(fuente);
-                            enc.setMuestrapersonaId(persona);
-                            enc.setComentarios(observaciones);
-                            enc.setFecha(new Date(new java.util.Date().getTime()));
-                            encabezadoFacade.create(enc);
-
-
-                            Encabezado recienCreado = encabezadoFacade.findByUltimo();
-                            for (int i = 0; i < preguntas.size(); i++) {
+                        Encabezado recienCreado = encabezadoFacade.findByUltimo();
+                        try {
+                            for (Pregunta pregunta : preguntas) {
                                 Resultadoevaluacion re = new Resultadoevaluacion();
                                 re.setEncabezadoId(recienCreado);
-                                re.setPreguntaId(preguntas.get(i));
-                                String respuesta1 = (String) request.getParameter("pregunta" + preguntas.get(i).getId());
-                                if (preguntas.get(i).getTipo().equals("1")) {
+                                re.setPreguntaId(pregunta);
+                                String respuesta1 = (String) request.getParameter("pregunta" + pregunta.getId());
+                                if (pregunta.getTipo().equals("1")) {
                                     re.setRespuesta(respuesta1);
                                 } else {
-                                    if (preguntas.get(i).getTipo().equals("2")) {
+                                    if (pregunta.getTipo().equals("2")) {
                                         re.setRespuestaAbierta(respuesta1);
                                     }
                                 }
                                 resultadoevaluacionFacade.create(re);
                             }
-                            recienCreado.setResultadoevaluacionList(resultadoevaluacionFacade.findByEncabezado(recienCreado));
-                            encabezadoFacade.edit(recienCreado);
-                            if (request.getParameter("action").equals("responderE")) {
-                                session.setAttribute("encuesta", null);
-                            }
+                        } catch (Exception e) {
+                            LOGGER.error("Ha ocurrido un error guardando las repuestas: " + e);
+                        }
 
-                        } else {
-                            enc.setEstado(estado);
-                            enc.setComentarios(observaciones);
-                            enc.setFecha(new Date(new java.util.Date().getTime()));
-                            encabezadoFacade.edit(enc);
-                           
-                            List<Resultadoevaluacion> listaRe = enc.getResultadoevaluacionList();
+                        recienCreado.setResultadoevaluacionList(resultadoevaluacionFacade.findByEncabezado(recienCreado));
+                        encabezadoFacade.edit(recienCreado);
+                        if (RESPONDER.equals(request.getParameter("action"))) {
+                            session.setAttribute("encuesta", null);
+                        }
+
+                    } else {
+                        enc.setEstado(estado);
+                        enc.setComentarios(observaciones);
+                        enc.setFecha(new Date(new java.util.Date().getTime()));
+                        encabezadoFacade.edit(enc);
+
+                        List<Resultadoevaluacion> listaRe = enc.getResultadoevaluacionList();
+                        try {
                             for (int i = 0; i < preguntas.size(); i++) {
                                 String respuesta = (String) request.getParameter("pregunta" + preguntas.get(i).getId());
                                 if (preguntas.get(i).getTipo().equals("1")) {
@@ -155,55 +163,49 @@ public class controladorF extends HttpServlet {
                                     }
                                 }
                                 listaRe.get(i).setPreguntaId(preguntas.get(i));
-                               
+
                                 resultadoevaluacionFacade.edit(listaRe.get(i));
                             }
-
-                            if (request.getParameter("action").equals("responderE")) {
-                                session.setAttribute("encuesta", null);
-                            }
+                        }catch(Exception e){
+                            LOGGER.error("Ha ocurrido un error guardando las repuestas2"+e);
                         }
+
+                        if (request.getParameter("action").equals("responderE")) {
+                            session.setAttribute("encuesta", null);
+                        }
+                    }
+                } else {
+                    if (action.equals("inicioCC")) {
+                        String url = "/WEB-INF/vista/fuente/inicio.jsp";
+                        RequestDispatcher rd = request.getRequestDispatcher(url);
+                        rd.forward(request, response);
+
                     } else {
-                        if (action.equals("inicioCC")) {
-                            String url = "/WEB-INF/vista/fuente/inicio.jsp";
+                        if (action.equals("contrasena")) {
+                            String url = "/WEB-INF/vista/comitePrograma/contrasena.jsp";
                             RequestDispatcher rd = request.getRequestDispatcher(url);
                             rd.forward(request, response);
-
                         } else {
-                            if (action.equals("contrasena")) {
-                                String url = "/WEB-INF/vista/comitePrograma/contrasena.jsp";
-                                RequestDispatcher rd = request.getRequestDispatcher(url);
-                                rd.forward(request, response);
-                            } else {
-                                if (action.equals("cambiarClave")) {
-                                   /* Representante r = (Representante) sesion.getAttribute("representante");
-                                    String actual = request.getParameter("actual");
-                                    String nueva1 = request.getParameter("nueva1");
-                                    String nueva2 = request.getParameter("nueva2");
-
-                                    if (r.getPassword().equals(actual)) {
-                                        if (nueva1.equals(nueva2)) {
-                                            r.setPassword(nueva1);
-                                            //representanteFacade.edit(r);
-                                            //out.print(0);
-                                        }
-                                    } else {
-                                        // out.print(1);
-                                    }*/
-                                }
-                            }
+                            if (action.equals("cambiarClave")) {
+                                  
                         }
                     }
                 }
             }
-        } catch (Exception e) {
+        }
+    }
+        } catch (ServletException e) {
+            LOGGER.error("Ha ocurrido un error de tipo ServletException: "+e);
+        } catch (IOException e) {
+            LOGGER.error("Ha ocurrido un error de tipo IOException: "+e);
+        }catch (Exception e){
+            LOGGER.error("Ha ocurrido un error: "+e);
         }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -217,8 +219,7 @@ public class controladorF extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP
-     * <code>POST</code> method.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response

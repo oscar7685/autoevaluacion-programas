@@ -1,9 +1,9 @@
-﻿mostrar alerta si mas del 30% responde que no sabe en una pregunta
+mostrar alerta si mas del 30% responde que no sabe en una pregunta
 mostrar la desviacion estandar en el promedio de respuesta
 sacar los resultados con promedio x fuente
 
 
-//Guardar automaticamente la info numerica y documental.
+
 
 revisar editar muestra para cada una de las fuentes
 poner limitaciones a los diferentes pasos de un proceso

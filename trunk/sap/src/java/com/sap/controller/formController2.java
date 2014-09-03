@@ -48,6 +48,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -88,6 +89,8 @@ public class formController2 extends HttpServlet {
     @EJB
     private MuestraFacade muestraFacade;
 
+    private final static Logger LOGGER = Logger.getLogger(formController2.class);
+    
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -830,8 +833,15 @@ public class formController2 extends HttpServlet {
                     }
                 }
             }
-        } catch (Exception e) {
-        }
+        } catch (ServletException e) {
+            LOGGER.error("Ha ocurrido un error de tipo ServletException: "+e);
+        } catch (IOException e) {
+            LOGGER.error("Ha ocurrido un error de tipo IOException: "+e);
+        } catch (NumberFormatException e) {
+            LOGGER.error("Ha ocurrido un error de tipo NumberFormatException: "+e);
+        } catch (Exception e){
+            LOGGER.error("Ha ocurrido un error: "+e);
+       }
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
