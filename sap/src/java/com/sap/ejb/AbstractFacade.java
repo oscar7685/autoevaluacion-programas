@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
  * @author Ususario
  */
 public abstract class AbstractFacade<T> {
+
     private final static Logger LOGGER = Logger.getLogger(AbstractFacade.class);
     private Class<T> entityClass;
 
@@ -90,7 +91,9 @@ public abstract class AbstractFacade<T> {
         try {
             return (T) q.getSingleResult();
         } catch (Exception e) {
-            LOGGER.warn("Excepcion en el metodo findBySingle3"+e);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Excepcion en el metodo findBySingle3" + e);
+            }
             return null;
         }
 
@@ -174,6 +177,7 @@ public abstract class AbstractFacade<T> {
         q.setMaxResults(1);
         return q.getResultList();
     }
+
     public List<T> findLast(Object muestra) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));

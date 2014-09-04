@@ -38,8 +38,8 @@ public class DescargarLog extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         try {
-            String ruta = request.getSession().getServletContext().getRealPath("/logs/");
-            ruta += "\\logging.log";
+            String ruta = request.getSession().getServletContext().getRealPath("../../config/");
+            ruta += "\\logSap.log";
 
             File f2 = new File(ruta);
             FileInputStream inStream = new FileInputStream(f2);
