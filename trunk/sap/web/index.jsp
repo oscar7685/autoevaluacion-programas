@@ -1,7 +1,7 @@
 <%
     HttpSession session1 = request.getSession();
     String aux = (String) session1.getAttribute("tipoLogin");
-    if (aux == null || aux.equals("")) {
+    if (aux == null || aux.isEmpty()) {
         session1.invalidate();
     } else {
         if (aux.equals("Comite programa")) {
@@ -123,7 +123,7 @@
                 </div>
                 <div class="span2"></div>
             </div>
-            <hr>
+            <hr style="margin-top: 10px;">
             <footer>
                 <p>&copy; Universidad de Cartagena 2013</p>
             </footer>

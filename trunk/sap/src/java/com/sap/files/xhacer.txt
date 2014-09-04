@@ -36,7 +36,4 @@ el indicador 7.39.3 es solo numerica
 
 eliminar preguntas abiertas 3.12.5.2 y 3.12.5.3
 
-indicador 4.22.3 cambió a: 
-"Verificación de la correspondencia entre las metodologías de enseñanza-aprendizaje que se emplean en el programa y el desarrollo de los contenidos del plan de estudios."
-y se califica con Información documental
 */
