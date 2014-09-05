@@ -136,7 +136,7 @@ public class controladorF extends HttpServlet {
                                 resultadoevaluacionFacade.create(re);
                             }
                         } catch (Exception e) {
-                            LOGGER.error("Ha ocurrido un error guardando las repuestas: " + e);
+                            LOGGER.error("Ha ocurrido un error guardando las repuestas: ", e);
                         }
 
                         recienCreado.setResultadoevaluacionList(resultadoevaluacionFacade.findByEncabezado(recienCreado));
@@ -167,7 +167,7 @@ public class controladorF extends HttpServlet {
                                 resultadoevaluacionFacade.edit(listaRe.get(i));
                             }
                         }catch(Exception e){
-                            LOGGER.error("Ha ocurrido un error guardando las repuestas2"+e);
+                            LOGGER.error("Ha ocurrido un error guardando las repuestas2",e);
                         }
 
                         if (request.getParameter("action").equals("responderE")) {
@@ -195,11 +195,11 @@ public class controladorF extends HttpServlet {
         }
     }
         } catch (ServletException e) {
-            LOGGER.error("Ha ocurrido un error de tipo ServletException: "+e);
+            LOGGER.error("Ha ocurrido un error de tipo ServletException: ",e);
         } catch (IOException e) {
-            LOGGER.error("Ha ocurrido un error de tipo IOException: "+e);
+            LOGGER.error("Ha ocurrido un error de tipo IOException: ",e);
         }catch (Exception e){
-            LOGGER.error("Ha ocurrido un error: "+e);
+            LOGGER.error("Ha ocurrido un error: ",e);
         }
     }
 
