@@ -92,7 +92,7 @@ public abstract class AbstractFacade<T> {
             return (T) q.getSingleResult();
         } catch (Exception e) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Excepcion en el metodo findBySingle3" + e);
+                LOGGER.debug("Excepcion en el metodo findBySingle3" , e);
             }
             return null;
         }

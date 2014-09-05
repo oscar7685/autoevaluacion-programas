@@ -493,7 +493,7 @@ public class loginController extends HttpServlet {
                                 try {
                                     r = representanteFacade.find(Integer.parseInt(un));
                                 } catch (NumberFormatException e) {
-                                    LOGGER.error("codigo de representante es no numerico"+e);
+                                    LOGGER.error("codigo de representante es no numerico",e);
                                 }
                                 if (r != null && r.getPassword().equals(pw) && r.getRol().equals("Comite central")) {
                                     if (LOGGER.isDebugEnabled()) {
@@ -514,7 +514,7 @@ public class loginController extends HttpServlet {
                                 try {
                                     r = representanteFacade.find(Integer.parseInt(un));
                                 } catch (NumberFormatException e) {
-                                    LOGGER.error("Codigo invalido: "+e);
+                                    LOGGER.error("Codigo invalido: ",e);
                                 }
                                 if (r != null && r.getPassword().equals(pw) && r.getRol().equals("Comite programa")) {
                                     if (LOGGER.isDebugEnabled()) {

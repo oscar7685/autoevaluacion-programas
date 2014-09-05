@@ -834,13 +834,13 @@ public class formController2 extends HttpServlet {
                 }
             }
         } catch (ServletException e) {
-            LOGGER.error("Ha ocurrido un error de tipo ServletException: "+e);
+            LOGGER.error("Ha ocurrido un error de tipo ServletException: ",e);
         } catch (IOException e) {
-            LOGGER.error("Ha ocurrido un error de tipo IOException: "+e);
+            LOGGER.error("Ha ocurrido un error de tipo IOException: ",e);
         } catch (NumberFormatException e) {
-            LOGGER.error("Ha ocurrido un error de tipo NumberFormatException: "+e);
+            LOGGER.error("Ha ocurrido un error de tipo NumberFormatException: ",e);
         } catch (Exception e){
-            LOGGER.error("Ha ocurrido un error: "+e);
+            LOGGER.error("Ha ocurrido un error: ",e);
        }
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

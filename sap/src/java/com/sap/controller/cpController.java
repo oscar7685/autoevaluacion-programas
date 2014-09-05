@@ -3599,13 +3599,13 @@ public class cpController extends HttpServlet {
                 }
             }
         } catch (ServletException e) {
-            LOGGER.error("hay ocurrido un error de tipo ServletException en algun lugar del cpController: " + e);
+            LOGGER.error("hay ocurrido un error de tipo ServletException en algun lugar del cpController: ", e);
         } catch (IOException e) {
-            LOGGER.error("hay ocurrido un error e tipo IOException en algun lugar del cpController: " + e);
+            LOGGER.error("hay ocurrido un error e tipo IOException en algun lugar del cpController: ", e);
         } catch (NumberFormatException e) {
-            LOGGER.error("hay ocurrido un error de tipo NumberFormatException en algun lugar del cpController: " + e);
+            LOGGER.error("hay ocurrido un error de tipo NumberFormatException en algun lugar del cpController: ", e);
         } catch (Exception e) {
-            LOGGER.error("hay ocurrido un error en algun lugar del cpController: " + e);
+            LOGGER.error("hay ocurrido un error en algun lugar del cpController: ",  e);
         } finally {
             out.close();
         }

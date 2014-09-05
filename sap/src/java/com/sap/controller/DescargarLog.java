@@ -60,9 +60,9 @@ public class DescargarLog extends HttpServlet {
             inStream.close();
             outStream.close();
         } catch (IOException e) {
-            LOGGER.error("ha ocurrido un error del tipo IOException: "+e);
+            LOGGER.error("ha ocurrido un error del tipo IOException: ",e);
         } catch(Exception e){
-            LOGGER.error("ha ocurrido un error: "+e);
+            LOGGER.error("ha ocurrido un error: ",e);
         }
         finally {
             //out.close();
