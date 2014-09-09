@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <filter>
+        <filter-name>FilterSession</filter-name>
+        <filter-class>com.sap.filters.FilterSession</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterSession</filter-name>
+        <servlet-name>formController2</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>FilterSession</filter-name>
+        <servlet-name>cpController</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>FilterSession</filter-name>
+        <servlet-name>controladorF</servlet-name>
+    </filter-mapping>
     <listener>
         <listener-class>com.sap.controller.SessionCountListener</listener-class>
     </listener>

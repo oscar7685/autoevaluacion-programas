@@ -134,7 +134,7 @@ public class loginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = (String) request.getParameter("action");
-        if (action != null) {
+         if (action != null) {
             request.getSession().invalidate();
         } else {
 
