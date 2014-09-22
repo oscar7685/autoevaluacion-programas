@@ -1,24 +1,110 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script type="text/javascript">
-    $(function() {
-        $.validator.addMethod('positiveNumber',
-                function(value) {
-                    return (Number(value) > 0) && (value == parseInt(value, 10));
-                }, 'Ingrese un numero entero positivo.');
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bootstrap-tagsinput.css" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/typeaheadjs.css" />
+<style type="text/css">
+    .twitter-typeahead .tt-query,
+    .twitter-typeahead .tt-hint {
+        margin-bottom: 0;
+    }
 
-        $("#formCrearCoordinador").validate({
+    .twitter-typeahead .tt-hint
+    {
+        display: none;
+    }
+
+    .tt-dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        display: none;
+        float: left;
+        min-width: 160px;
+        padding: 5px 0;
+        margin: 2px 0 0;
+        list-style: none;
+        font-size: 14px;
+        background-color: #ffffff;
+        border: 1px solid #cccccc;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 4px;
+        -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        background-clip: padding-box;
+    }
+    .tt-suggestion > p {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: normal;
+        line-height: 1.428571429;
+        color: #333333;
+        white-space: nowrap;
+    }
+    .tt-suggestion > p:hover,
+    .tt-suggestion > p:focus,
+    .tt-suggestion.tt-cursor p {
+        color: #ffffff;
+        text-decoration: none;
+        outline: 0;
+        background-color: #428bca;
+    }
+</style>
+<script src="<%=request.getContextPath()%>/js/typeahead.bundle.js"></script>
+<script src="<%=request.getContextPath()%>/js/bootstrap-tagsinput.min.js"></script>
+<script type="text/javascript">
+            $(function() {
+
+            var programas = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
+                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                    local: [
+    <c:forEach items="${programas}" var="programa" varStatus="status">
+        <c:choose>
+            <c:when test="${(status.index+1) != programas.size()}">
+                    {
+                    value: '${programa.id}',
+                            text: '${programa.nombre}'
+                    },
+            </c:when>
+            <c:otherwise>
+                    {
+                    value: '${programa.id}',
+                            text: '${programa.nombre}'
+                    }
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+                    ]
+            });
+                    programas.initialize();
+                    var elt = $('#inputProgramas');
+                    elt.tagsinput({
+                    itemValue: 'value',
+                            itemText: 'text',
+                            typeaheadjs: {
+                            name: 'programas',
+                                    displayKey: 'text',
+                                    source: programas.ttAdapter()
+                            }
+                    });
+                    $.validator.addMethod('positiveNumber',
+                            function(value) {
+                            return (Number(value) > 0) && (value == parseInt(value, 10));
+                            }, 'Ingrese un numero entero positivo.');
+                    $("#formCrearCoordinador").validate({
             submitHandler: function() {
-                $.ajax({
-                    type: 'POST',
+            $.ajax({
+            type: 'POST',
                     url: "/sap/controladorCC?action=crearCoordinador",
                     data: $("#formCrearCoordinador").serialize(),
                     success: function() {
-                        location = "/sap/#listarCoordinadores";
+                    location = "/sap/#listarCoordinadores";
                     } //fin success
-                }); //fin $.ajax    
+            }); //fin $.ajax    
             }
-        });
-    });
+            });
+            });
 </script>
 <div class="hero-unit">
     <div class="row">
@@ -59,12 +145,7 @@
                     <div class="control-group">
                         <label for="programa"  class="control-label">Programa</label>
                         <div class="controls">
-                            <select name="programa" id="programa" class="input-xlarge {required:true}">
-                                <option></option>
-                                <c:forEach items="${programas}" var="item">
-                                    <option value="${item.id}">${item.nombre}</option>
-                                </c:forEach>
-                            </select>
+                            <input type="text" name="programas" id="inputProgramas"/>
                         </div>
                     </div>
 

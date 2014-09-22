@@ -134,7 +134,7 @@ public class loginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = (String) request.getParameter("action");
-         if (action != null) {
+        if (action != null) {
             request.getSession().invalidate();
         } else {
 
@@ -166,7 +166,7 @@ public class loginController extends HttpServlet {
                             }
                         }
                         if (estudiante != null) {
-                            out.println(0);
+                            out.print(0);
                             session.setAttribute("tipoLogin", "Fuente");
                             session.setAttribute("programa", estudiante.getProgramaId());
                             session.setAttribute("persona", persona);
@@ -195,7 +195,7 @@ public class loginController extends HttpServlet {
                             break;
                         } else {
                             if (i + 1 == aux.size()) {
-                                out.println(1);
+                                out.print(1);
                             }
 
                         }
@@ -223,7 +223,7 @@ public class loginController extends HttpServlet {
                                 }
                             }
                             if (egresado != null) {
-                                out.println(0);
+                                out.print(0);
                                 session.setAttribute("tipoLogin", "Fuente");
                                 session.setAttribute("programa", egresado.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
                                 session.setAttribute("persona", persona);
@@ -252,7 +252,7 @@ public class loginController extends HttpServlet {
                                 break;
                             } else {
                                 if (l + 1 == aux.size()) {
-                                    out.println(1);
+                                    out.print(1);
                                 }
                             }
 
@@ -280,7 +280,7 @@ public class loginController extends HttpServlet {
                                     }
                                 }
                                 if (docente != null) {
-                                    out.println(0);
+                                    out.print(0);
                                     session.setAttribute("tipoLogin", "Fuente");
                                     session.setAttribute("programa", docente.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
                                     session.setAttribute("persona", persona);
@@ -309,7 +309,7 @@ public class loginController extends HttpServlet {
                                     break;
                                 } else {
                                     if (l + 1 == aux.size()) {
-                                        out.println(1);
+                                        out.print(1);
                                     }
                                 }
 
@@ -337,7 +337,7 @@ public class loginController extends HttpServlet {
                                         }
                                     }
                                     if (director != null) {
-                                        out.println(0);
+                                        out.print(0);
                                         session.setAttribute("tipoLogin", "Fuente");
                                         session.setAttribute("programa", director.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
                                         session.setAttribute("persona", persona);
@@ -367,7 +367,7 @@ public class loginController extends HttpServlet {
                                         break;
                                     } else {
                                         if (l + 1 == aux.size()) {
-                                            out.println(1);
+                                            out.print(1);
                                         }
                                     }
 
@@ -395,7 +395,7 @@ public class loginController extends HttpServlet {
                                         }
                                     }
                                     if (administrativo != null) {
-                                        out.println(0);
+                                        out.print(0);
                                         session.setAttribute("tipoLogin", "Fuente");
                                         session.setAttribute("programa", administrativo.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
                                         session.setAttribute("persona", persona);
@@ -424,7 +424,7 @@ public class loginController extends HttpServlet {
                                         break;
                                     } else {
                                         if (l + 1 == aux.size()) {
-                                            out.println(1);
+                                            out.print(1);
                                         }
                                     }
                                 }
@@ -451,7 +451,7 @@ public class loginController extends HttpServlet {
                                         }
                                     }
                                     if (empleador != null) {
-                                        out.println(0);
+                                        out.print(0);
                                         session.setAttribute("tipoLogin", "Fuente");
                                         session.setAttribute("programa", empleador.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
                                         session.setAttribute("persona", persona);
@@ -480,7 +480,7 @@ public class loginController extends HttpServlet {
                                         break;
                                     } else {
                                         if (l + 1 == aux.size()) {
-                                            out.println(1);
+                                            out.print(1);
                                         }
                                     }
                                 }
@@ -493,84 +493,89 @@ public class loginController extends HttpServlet {
                                 try {
                                     r = representanteFacade.find(Integer.parseInt(un));
                                 } catch (NumberFormatException e) {
-                                    LOGGER.error("codigo de representante es no numerico",e);
+                                    LOGGER.error("codigo de representante es no numerico", e);
                                 }
                                 if (r != null && r.getPassword().equals(pw) && r.getRol().equals("Comite central")) {
                                     if (LOGGER.isDebugEnabled()) {
                                         LOGGER.debug("Credenciales validas");
                                     }
-                                    
+
                                     session.setAttribute("tipoLogin", "Comite central");
                                     session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
                                     SessionCountListener sessionCountListener = new SessionCountListener();
                                     session.setAttribute("cantidad", sessionCountListener.getCount());
                                     session.setAttribute("representantesLogueados", sessionCountListener.representantesLogueados);
-                                    out.println(0);
+                                    out.print(0);
                                 } else {
-                                    out.println(1);
+                                    out.print(1);
                                 }
                             } else if (tp != null && tp.equals("Comite programa")) {
                                 Representante r = null;
                                 try {
                                     r = representanteFacade.find(Integer.parseInt(un));
                                 } catch (NumberFormatException e) {
-                                    LOGGER.error("Codigo invalido: ",e);
+                                    LOGGER.error("Codigo invalido: ", e);
                                 }
                                 if (r != null && r.getPassword().equals(pw) && r.getRol().equals("Comite programa")) {
                                     if (LOGGER.isDebugEnabled()) {
                                         LOGGER.debug("Credenciales validas");
                                     }
-                                    out.println(0);
+                                    out.print(0);
                                     session.setAttribute("tipoLogin", "Comite programa");
                                     session.setAttribute("representante", r);
                                     SessionCountListener.representantesLogueados.add(r);
-                                    session.setAttribute("Programa", r.getProgramaId());
+                                    if (r.getProgramaList() != null && r.getProgramaList().size() == 1) {
+                                        session.setAttribute("Programa", r.getProgramaList().get(0));
+                                        List procesos = (List) procesoFacade.findByPrograma(r.getProgramaList().get(0));
+                                        if (!procesos.isEmpty()) {
+                                            Iterator iter = procesos.iterator();
+                                            while (iter.hasNext()) {
+                                                Proceso p = (Proceso) iter.next();
+                                                if (p.getFechainicio().equals("En Configuración")) {
+                                                    session.setAttribute("EstadoProceso", 1);
+                                                    session.setAttribute("Proceso", p);
+                                                    session.setAttribute("Modelo", p.getModeloId());
+                                                } else if (p.getFechacierre().equals("--")) {
+                                                    session.setAttribute("EstadoProceso", 2);
+                                                    session.setAttribute("Proceso", p);
+                                                    session.setAttribute("Modelo", p.getModeloId());
 
-                                    List procesos = (List) procesoFacade.findByPrograma(r.getProgramaId());
-                                    if (!procesos.isEmpty()) {
-                                        Iterator iter = procesos.iterator();
-                                        while (iter.hasNext()) {
-                                            Proceso p = (Proceso) iter.next();
-                                            if (p.getFechainicio().equals("En Configuración")) {
-                                                session.setAttribute("EstadoProceso", 1);
-                                                session.setAttribute("Proceso", p);
-                                                session.setAttribute("Modelo", p.getModeloId());
-                                            } else if (p.getFechacierre().equals("--")) {
-                                                session.setAttribute("EstadoProceso", 2);
-                                                session.setAttribute("Proceso", p);
-                                                session.setAttribute("Modelo", p.getModeloId());
-
-                                                /////Comienza para saber si el modelo en cuestion tiene preguntas abiertas
-                                                boolean tienePreguntasAbiertas = false;
-                                                List<Pregunta> preguntasModelo = p.getModeloId().getPreguntaList();
-                                                for (Pregunta pregunta : preguntasModelo) {
-                                                    if (pregunta.getTipo().equals("2")) {
-                                                        tienePreguntasAbiertas = true;
-                                                        break;
+                                                    /////Comienza para saber si el modelo en cuestion tiene preguntas abiertas
+                                                    boolean tienePreguntasAbiertas = false;
+                                                    List<Pregunta> preguntasModelo = p.getModeloId().getPreguntaList();
+                                                    for (Pregunta pregunta : preguntasModelo) {
+                                                        if (pregunta.getTipo().equals("2")) {
+                                                            tienePreguntasAbiertas = true;
+                                                            break;
+                                                        }
                                                     }
-                                                }
-                                                if (tienePreguntasAbiertas) {
-                                                    session.setAttribute("abiertas", "true");
-                                                } else {
-                                                    session.setAttribute("abiertas", "false");
-                                                }
-                                                /////////Termina 
+                                                    if (tienePreguntasAbiertas) {
+                                                        session.setAttribute("abiertas", "true");
+                                                    } else {
+                                                        session.setAttribute("abiertas", "false");
+                                                    }
+                                                    /////////Termina 
 
-                                            } else {
-                                                session.setAttribute("EstadoProceso", 0);
-                                                //  session.setAttribute("Proceso", p);
-                                                //session.setAttribute("Modelo", p.getModeloId());
+                                                } else {
+                                                    session.setAttribute("EstadoProceso", 0);
+                                                    //  session.setAttribute("Proceso", p);
+                                                    //session.setAttribute("Modelo", p.getModeloId());
+                                                }
                                             }
+                                        } else {
+                                            session.setAttribute("EstadoProceso", 0);
                                         }
-                                    } else {
-                                        session.setAttribute("EstadoProceso", 0);
+                                    } else if (r.getProgramaList() != null && r.getProgramaList().size() > 1) {
+                                        session.setAttribute("Programas", r.getProgramaList());
+                                        session.setAttribute("EstadoProceso2", 4);
                                     }
+
                                 } else {
-                                    out.println(1);
+                                    out.print(1);
                                 }
 
                             } else {
-                                out.println(1);
+                                out.print(1);
                             }
                         }
                     }

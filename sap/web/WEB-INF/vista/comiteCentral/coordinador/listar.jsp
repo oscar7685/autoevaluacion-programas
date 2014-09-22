@@ -23,7 +23,18 @@
                                         <c:out value="${row.nombre}"/>
                                     </td>
                                     <td>   
-                                        <c:out value="${row.programaId.nombre}"/>
+                                        <c:forEach items="${row.programaList}" var="programa" varStatus="iterP">
+                                            <c:choose>
+                                                <c:when test="${(iterP.index + 1) != row.programaList.size()}">
+                                                    <c:out value="${programa.nombre}, "/>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:out value="${programa.nombre}"/>
+                                                </c:otherwise>
+                                            </c:choose>
+                                                
+                                        </c:forEach>
+
                                     </td>
                                     <td class="action span2">
                                         <a href="#editarCoordinador&${row.id}" title="Editar"><i class="icon-edit"></i></a>
@@ -37,6 +48,7 @@
                     No existen Coordinadores de programa registrados en el sistema.
                 </c:otherwise>
             </c:choose>
+            <a href="#crearCoordinador" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Crear coordinador</a>
         </div>
     </div>
 </div>    

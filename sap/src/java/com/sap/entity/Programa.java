@@ -14,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -59,6 +61,11 @@ public class Programa implements Serializable {
     @Size(max = 255)
     @Column(name = "tipoformacion")
     private String tipoformacion;
+    @JoinTable(name = "programa_has_representante", joinColumns = {
+        @JoinColumn(name = "programa_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "representante_id", referencedColumnName = "id")})
+    @ManyToMany
+    private List<Representante> representanteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaId")
     private List<Administrativo> administrativoList;
     @JoinColumn(name = "facultad_id", referencedColumnName = "id")
@@ -72,8 +79,6 @@ public class Programa implements Serializable {
     private List<Muestraestudiante> muestraestudianteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaId")
     private List<Egresado> egresadoList;
-    @OneToMany(mappedBy = "programaId")
-    private List<Representante> representanteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaId")
     private List<Proceso> procesoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaId")
@@ -134,6 +139,15 @@ public class Programa implements Serializable {
     }
 
     @XmlTransient
+    public List<Representante> getRepresentanteList() {
+        return representanteList;
+    }
+
+    public void setRepresentanteList(List<Representante> representanteList) {
+        this.representanteList = representanteList;
+    }
+
+    @XmlTransient
     public List<Administrativo> getAdministrativoList() {
         return administrativoList;
     }
@@ -184,15 +198,6 @@ public class Programa implements Serializable {
 
     public void setEgresadoList(List<Egresado> egresadoList) {
         this.egresadoList = egresadoList;
-    }
-
-    @XmlTransient
-    public List<Representante> getRepresentanteList() {
-        return representanteList;
-    }
-
-    public void setRepresentanteList(List<Representante> representanteList) {
-        this.representanteList = representanteList;
     }
 
     @XmlTransient

@@ -717,7 +717,7 @@ public class formController2 extends HttpServlet {
                                                 r.setApellido(apellidos);
                                                 r.setPassword(clave);
                                                 r.setMail(correo);
-                                                r.setProgramaId(p);
+                                                //r.setProgramaId(p);
                                                 r.setPrivilegioList(null);
                                                 r.setRol("Comite programa");
                                                 representanteFacade.create(r);
@@ -760,7 +760,7 @@ public class formController2 extends HttpServlet {
                                                                 r.setApellido(apellidos);
                                                                 r.setPassword(clave);
                                                                 r.setMail(correo);
-                                                                r.setProgramaId(p);
+                                                                //r.setProgramaId(p);
                                                                 representanteFacade.edit(r);
                                                             }
                                                         }

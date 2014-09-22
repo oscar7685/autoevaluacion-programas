@@ -118,12 +118,12 @@ public class FilterSession implements Filter {
                 rd.forward(request, response);
             }
 
-        } catch (Throwable t) {
-            // If an exception is thrown somewhere down the filter chain,
-            // we still want to execute our after processing, and then
-            // rethrow the problem after that.
-            problem = t;
-            t.printStackTrace();
+        } catch (IOException t) {
+            LOGGER.error("Ha ocurrido un error", t);
+        } catch (ServletException t) {
+            LOGGER.error("Ha ocurrido un error", t);
+        } catch (Exception e) {
+            LOGGER.error("Ha ocurrido un error", e);
         }
 
         doAfterProcessing(request, response);
