@@ -68,7 +68,7 @@
             </div>        
 
         </div><!--North-->
-        
+
         <div class="ui-layout-south ui-widget-content"> 
             <footer id="footer" class="contenedor_footer fondo_footer">
                 <div class="links">
@@ -117,12 +117,13 @@
                     <ul class="nav nav-list">  
                         <button id="west-closer" class="close">&laquo;</button>
                         <li class="nav-header">Modelo</li>
-                        <li><a href="#crearModelo"><i class="icon-plus"></i> Crear Modelo</a></li>
                         <li><a href="#listarModelo"><i class="icon-reorder"></i> Listar Modelos</a></li>
                         <li class="divider"></li>
                         <li class="nav-header">Coordinadores</li>
-                        <li><a href="#crearCoordinador"><i class="icon-plus"></i> Crear Coordinador</a></li>
                         <li><a href="#listarCoordinadores"><i class="icon-reorder"></i> Listar Coordinadores</a></li>
+                        <li class="divider"></li>
+                        <li class="nav-header">Programas</li>
+                        <li><a href="#listarProgramas"><i class="icon-reorder"></i> Listar Programas</a></li>
                         <li class="divider"></li>
                         <li><a href="#controlPanel"><i class="icon-th"></i> Panel de Control</a></li>
                     </ul>
@@ -132,8 +133,8 @@
                         <ul class="nav nav-list">  
                             <li class="nav-header">¿Qui&eacute;n est&aacute; en l&iacute;nea&quest;</li>
                             <li><a href="#"><i class="icon-group"></i> Hay ${cantidad} persona(s) en linea</a></li>
-                            <c:forEach items="${representantesLogueados}" var="representante" varStatus="index" end="1">
-                                <li><a href="#"><i class="icon-user"></i> ${representante.nombre}</a></li>    
+                                <c:forEach items="${representantesLogueados}" var="representante" varStatus="index" end="1">
+                                <li><a href="#"><i class="icon-user"></i> ${representante.nombre}</a></li>
                                 </c:forEach>
                             </ui>
                     </div>

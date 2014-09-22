@@ -1,7 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.sap.entity;
 
 import java.io.Serializable;
@@ -13,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -67,14 +68,13 @@ public class Representante implements Serializable {
     @Size(max = 45)
     @Column(name = "mail")
     private String mail;
+    @ManyToMany(mappedBy = "representanteList")
+    private List<Programa> programaList;
     @JoinTable(name = "representantehasprivilegio", joinColumns = {
         @JoinColumn(name = "representante_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "privilegio_id", referencedColumnName = "id")})
     @ManyToMany
     private List<Privilegio> privilegioList;
-    @JoinColumn(name = "programa_id", referencedColumnName = "id")
-    @ManyToOne
-    private Programa programaId;
 
     public Representante() {
     }
@@ -140,20 +140,21 @@ public class Representante implements Serializable {
     }
 
     @XmlTransient
+    public List<Programa> getProgramaList() {
+        return programaList;
+    }
+
+    public void setProgramaList(List<Programa> programaList) {
+        this.programaList = programaList;
+    }
+
+    @XmlTransient
     public List<Privilegio> getPrivilegioList() {
         return privilegioList;
     }
 
     public void setPrivilegioList(List<Privilegio> privilegioList) {
         this.privilegioList = privilegioList;
-    }
-
-    public Programa getProgramaId() {
-        return programaId;
-    }
-
-    public void setProgramaId(Programa programaId) {
-        this.programaId = programaId;
     }
 
     @Override

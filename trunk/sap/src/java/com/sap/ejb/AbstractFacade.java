@@ -5,6 +5,8 @@
 package com.sap.ejb;
 
 import com.sap.controller.loginController;
+import com.sap.entity.Proceso;
+import com.sap.entity.Programa;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -81,6 +83,22 @@ public abstract class AbstractFacade<T> {
         return (T) q.getSingleResult();
     }
 
+    public List<Proceso> findByListReprestanteMultiple(String property, Object m) {
+        List<Programa> programas = (List<Programa>) m;
+        List<Proceso> procesos = new ArrayList<Proceso>();
+        for (Programa programa : programas) {
+            javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+            cq.select(cq.from(entityClass));
+            Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name1", entityClass);
+            q.setParameter("name1", programa);
+            List<Proceso> procesoxprograma = q.getResultList();
+            if (!procesoxprograma.isEmpty()) {
+                procesos.addAll(procesoxprograma);
+            }
+        }
+        return procesos;
+    }
+
     public T findBySingle3(String property1, Object m1, String property2, Object m2, String property3, Object m3) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
@@ -92,7 +110,7 @@ public abstract class AbstractFacade<T> {
             return (T) q.getSingleResult();
         } catch (Exception e) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Excepcion en el metodo findBySingle3" , e);
+                LOGGER.debug("Excepcion en el metodo findBySingle3", e);
             }
             return null;
         }

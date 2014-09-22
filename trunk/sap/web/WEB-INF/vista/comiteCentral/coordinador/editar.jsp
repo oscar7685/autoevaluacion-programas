@@ -64,7 +64,7 @@
                                 <option></option>
                                 <c:forEach items="${programas}" var="item">
                                     <c:choose>
-                                        <c:when test="${representante.programaId.id == item.id}">
+                                        <c:when test="${representante.programaId.id == item.id}"><!--Cambiar esta parte!! programaId no existe!!-->
                                             <option value="${item.id}" selected="">${item.nombre}</option>        
                                         </c:when>
                                         <c:otherwise>

@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -38,7 +39,13 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </a>
-                        <a class="brand" style="padding-top: 10px; padding-bottom: 5px;" href="#"><img src="css/images/SAPLETRAS.png"/> ${Programa.getNombre()}</a>
+                        <a class="brand" style="padding-top: 10px; padding-bottom: 5px;" href="#"><img src="css/images/SAPLETRAS.png"/> 
+                            <c:choose>
+                                <c:when test="${Programa!= null}">
+                                    ${Programa.getNombre()}    
+                                </c:when>    
+                            </c:choose>
+                        </a>
                         <div class="nav-collapse collapse">
                             <ul class="nav barra" >
                                 <li class="active"><a href="#inicio"><i class="icon-home"></i> Inicio</a></li>
@@ -87,6 +94,15 @@
         <div id="ui-layout-west" class="ui-layout-west">
             <div id="menu0" class="ui-layout-content">
                 <c:choose>
+                    <c:when test="${EstadoProceso2 == 4}">
+                        <div id="menu" style="padding: 8px 0pt;" class="well">
+                            <ul class="nav nav-list">  
+                                <button id="west-closer" class="close">&laquo;</button>
+                                <li class="nav-header">Proceso de Autoevaluación</li>
+                                <li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>
+                            </ul>
+                        </div>
+                    </c:when>
                     <c:when test="${EstadoProceso == 0}">
                         <div  align="center" class="alert alert-block">
                             <i class="icon-info-sign"></i> No existen proceso activos
@@ -177,7 +193,7 @@
         <script src="<%=request.getContextPath()%>/js/main1.js"></script>
 
 
-    
+
 
         <div class="modal hide fade" id="modalCp3">
             <div class="modal-header">

@@ -22,13 +22,13 @@ $(function() {
                     type: 'post',
                     success: function(msg) {
 
-                        if (msg == 0)
+                        if (msg === '0')
                         {
                             document.location = '/sap/';
 
 
                         } else {
-                            if (msg == 1) {
+                            if (msg === '1') {
                                 $("#login-error").append("<label generated='true' class='error'>Usuario y/o Contrase&nacute;a incorrectos.</label>");
                                 $("#login-error").show();
                             }

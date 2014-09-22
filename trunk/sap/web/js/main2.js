@@ -76,15 +76,16 @@ $(function() {
 
     var menuModelo = function() {
         $(".ui-layout-content > .alert").remove();
-        $("#menu").html('<ul class="nav nav-list"> ' +
+        $("#menu").html('<ul class="nav nav-list">' +
                 '<button id="west-closer" class="close">&laquo;</button>' +
                 '<li class="nav-header">Modelo</li>' +
-                '<li><a href="#crearModelo"><i class="icon-plus"></i> Crear Modelo</a></li>' +
                 '<li><a href="#listarModelo"><i class="icon-reorder"></i> Listar Modelos</a></li>' +
                 '<li class="divider"></li>' +
                 '<li class="nav-header">Coordinadores</li>' +
-                '<li><a href="#crearCoordinador"><i class="icon-plus"></i> Crear Coordinador</a></li>' +
                 '<li><a href="#listarCoordinadores"><i class="icon-reorder"></i> Listar Coordinadores</a></li>' +
+                '<li class="divider"></li>' +
+                '<li class="nav-header">Programas</li>' +
+                '<li><a href="#listarProgramas"><i class="icon-reorder"></i> Listar Programas</a></li>' +
                 '<li class="divider"></li>' +
                 '<li><a href="#controlPanel"><i class="icon-th"></i> Panel de Control</a></li>' +
                 '</ul>');

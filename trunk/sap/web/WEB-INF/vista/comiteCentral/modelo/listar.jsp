@@ -3,7 +3,7 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-           
+
             <h3>Listado de  Modelos</h3>
             <c:choose>
                 <c:when test="${fn:length(listaM)!= 0}">
@@ -36,6 +36,7 @@
                     No Existen Modelos Registrados en el Sistema.
                 </c:otherwise>
             </c:choose>
+            <a href="#crearModelo" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Crear modelo</a>
         </div>
     </div>
 </div>    

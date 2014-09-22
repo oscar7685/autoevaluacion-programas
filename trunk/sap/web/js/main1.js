@@ -223,8 +223,13 @@ $(function() {
                 url: url3,
                 success: function(data)
                 {
-                    $("#contenido").append(data);
-                    menuProceso3();
+                    if (data === '1') {
+                        menuProceso1();
+                    }else if(data==='2'){
+                        menuProceso2();
+                    }else if(data==='3'){
+                        menuProceso3();
+                    }
                     myLayout.addCloseBtn("#west-closer", "west");
                     actualizaEnlaces();
                     $("#contenido").show(200, function() {

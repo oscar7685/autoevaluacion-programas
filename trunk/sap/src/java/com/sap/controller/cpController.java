@@ -194,7 +194,21 @@ public class cpController extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession sesion = request.getSession();
         String action = (String) request.getParameter("action");
-        Programa programa = (Programa) sesion.getAttribute("Programa");
+        Programa programa = null;
+        List<Programa> programas = null;
+        try {
+            programa = (Programa) sesion.getAttribute("Programa");
+        } catch (Exception e) {
+            LOGGER.error("ha ocurrido un error buscando el programa" + e);
+        }
+        if (programa == null) {
+            try {
+                programas = (List<Programa>) sesion.getAttribute("Programas");
+            } catch (Exception e) {
+                LOGGER.error("ha ocurrido un error buscando el programa" + e);
+            }
+        }
+
         Modelo modelo = (Modelo) sesion.getAttribute("Modelo");
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
 
@@ -214,20 +228,50 @@ public class cpController extends HttpServlet {
                 rd.forward(request, response);
 
             } else if (action.equals("listarProceso")) {
-                sesion.setAttribute("listProceso", procesoFacade.findByList("programaId", programa));
+                if (programa != null) {
+                    sesion.setAttribute("listProceso", procesoFacade.findByList("programaId", programa));
+                }
+                if (programas != null) {
+                    sesion.setAttribute("listProceso", procesoFacade.findByListReprestanteMultiple("programaId", programas));
+                }
                 String url = "/WEB-INF/vista/comitePrograma/proceso/listar.jsp";
                 RequestDispatcher rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
 
             } else if (action.equals("verPProceso")) {
-
+                System.out.println("entra!!");
                 int id = Integer.parseInt(request.getParameter("id"));
 
                 Proceso p = procesoFacade.find(id);
 
                 sesion.setAttribute("Proceso", p);
                 sesion.setAttribute("Modelo", p.getModeloId());
-                sesion.setAttribute("EstadoProceso", 3);
+                if (p.getFechainicio().equals("En Configuración")) {
+                    sesion.setAttribute("EstadoProceso", 1);
+                    out.print(1);
+                } else if (p.getFechacierre().equals("--")) {
+                    sesion.setAttribute("EstadoProceso", 2);
+                    out.print(2);
+                    /////Comienza para saber si el modelo en cuestion tiene preguntas abiertas
+                    boolean tienePreguntasAbiertas = false;
+                    List<Pregunta> preguntasModelo = p.getModeloId().getPreguntaList();
+                    for (Pregunta pregunta : preguntasModelo) {
+                        if (pregunta.getTipo().equals("2")) {
+                            tienePreguntasAbiertas = true;
+                            break;
+                        }
+                    }
+                    if (tienePreguntasAbiertas) {
+                        sesion.setAttribute("abiertas", "true");
+                    } else {
+                        sesion.setAttribute("abiertas", "false");
+                    }
+                    /////////Termina 
+
+                } else {
+                    sesion.setAttribute("EstadoProceso", 3);
+                    out.print(3);
+                }
 
             } else if (action.equals("crearHallazgo")) {
                 String url = "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/hallazgos/crear.jsp";
@@ -2445,6 +2489,7 @@ public class cpController extends HttpServlet {
                                         if (instrumento.getId() == 3) {
                                             Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
                                             if (numDoc != null) {
+                                                //posible excepcion
                                                 calificacionDoc = (float) numDoc.getEvaluacion();
                                             }
 
@@ -2661,6 +2706,7 @@ public class cpController extends HttpServlet {
                                     if (instrumento.getId() == 3) {
                                         Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
                                         if (numDoc != null) {
+                                            //excepcion en camino!!
                                             calificacionDoc = (float) numDoc.getEvaluacion();
                                         }
 
@@ -3605,7 +3651,7 @@ public class cpController extends HttpServlet {
         } catch (NumberFormatException e) {
             LOGGER.error("hay ocurrido un error de tipo NumberFormatException en algun lugar del cpController: ", e);
         } catch (Exception e) {
-            LOGGER.error("hay ocurrido un error en algun lugar del cpController: ",  e);
+            LOGGER.error("hay ocurrido un error en algun lugar del cpController: ", e);
         } finally {
             out.close();
         }
