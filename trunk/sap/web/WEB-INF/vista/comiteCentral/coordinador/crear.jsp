@@ -55,56 +55,58 @@
 <script type="text/javascript">
             $(function() {
 
-            var programas = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
-                    queryTokenizer: Bloodhound.tokenizers.whitespace,
-                    local: [
+    var programas = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            local: [
     <c:forEach items="${programas}" var="programa" varStatus="status">
         <c:choose>
             <c:when test="${(status.index+1) != programas.size()}">
-                    {
-                    value: '${programa.id}',
-                            text: '${programa.nombre}'
-                    },
-            </c:when>
-            <c:otherwise>
-                    {
-                    value: '${programa.id}',
-                            text: '${programa.nombre}'
-                    }
+            {
+            value: '${programa.id}',
+                    text: '${programa.nombre}'
+            },</c:when><c:otherwise>
+            {
+            value: '${programa.id}',
+                    text: '${programa.nombre}'
+            }
             </c:otherwise>
         </c:choose>
     </c:forEach>
-                    ]
-            });
-                    programas.initialize();
-                    var elt = $('#inputProgramas');
-                    elt.tagsinput({
-                    itemValue: 'value',
-                            itemText: 'text',
-                            typeaheadjs: {
-                            name: 'programas',
-                                    displayKey: 'text',
-                                    source: programas.ttAdapter()
-                            }
-                    });
-                    $.validator.addMethod('positiveNumber',
-                            function(value) {
-                            return (Number(value) > 0) && (value == parseInt(value, 10));
-                            }, 'Ingrese un numero entero positivo.');
-                    $("#formCrearCoordinador").validate({
-            submitHandler: function() {
-            $.ajax({
-            type: 'POST',
-                    url: "/sap/controladorCC?action=crearCoordinador",
-                    data: $("#formCrearCoordinador").serialize(),
-                    success: function() {
-                    location = "/sap/#listarCoordinadores";
-                    } //fin success
-            }); //fin $.ajax    
-            }
-            });
-            });
+        ]
+        });
+                programas.initialize();
+                var elt = $('#inputProgramas');
+                elt.tagsinput({
+        itemValue: 'value',
+                itemText: 'text',
+                typeaheadjs: {
+        name: 'programas',
+                displayKey: 'text',
+                source: programas.ttAdapter()
+        }
+        });
+                $.validator.addMethod('positiveNumber',
+                function(value) {
+                return (Number(value) > 0) && (value == parseInt(value, 10));
+                }, 'Ingrese un numero entero positivo.');
+                $("#formCrearCoordinador").validate({
+        submitHandler: function() {
+        if (elt.tagsinput('items').length){
+                $.ajax({
+                 type: 'POST',
+                 url: "/sap/controladorCC?action=crearCoordinador",
+                 data: $("#formCrearCoordinador").serialize(),
+                 success: function() {
+                 location = "/sap/#listarCoordinadores";
+                 } //fin success
+                 }); //fin $.ajax
+        } else{
+        alert("debe seleccionar al menos un programa");
+        }
+        }
+        });
+        });
 </script>
 <div class="hero-unit">
     <div class="row">
@@ -139,7 +141,7 @@
                     <div class="control-group">
                         <label for="correo"  class="control-label">Correo electr&oacute;nico</label>
                         <div class="controls">
-                            <input type="text" name="correo" id="correo" class="input-xlarge" value=""/>
+                            <input type="text" name="correo" id="correo" class="input-xlarge {required:true}" value=""/>
                         </div>
                     </div>
                     <div class="control-group">

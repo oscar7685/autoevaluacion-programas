@@ -1,6 +1,93 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bootstrap-tagsinput.css" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/typeaheadjs.css" />
+<style type="text/css">
+    .twitter-typeahead .tt-query,
+    .twitter-typeahead .tt-hint {
+        margin-bottom: 0;
+    }
+
+    .twitter-typeahead .tt-hint
+    {
+        display: none;
+    }
+
+    .tt-dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        display: none;
+        float: left;
+        min-width: 160px;
+        padding: 5px 0;
+        margin: 2px 0 0;
+        list-style: none;
+        font-size: 14px;
+        background-color: #ffffff;
+        border: 1px solid #cccccc;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 4px;
+        -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        background-clip: padding-box;
+    }
+    .tt-suggestion > p {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: normal;
+        line-height: 1.428571429;
+        color: #333333;
+        white-space: nowrap;
+    }
+    .tt-suggestion > p:hover,
+    .tt-suggestion > p:focus,
+    .tt-suggestion.tt-cursor p {
+        color: #ffffff;
+        text-decoration: none;
+        outline: 0;
+        background-color: #428bca;
+    }
+</style>
+<script src="<%=request.getContextPath()%>/js/typeahead.bundle.js"></script>
+<script src="<%=request.getContextPath()%>/js/bootstrap-tagsinput.min.js"></script>
 <script type="text/javascript">
     $(function() {
+        var programas = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            local: [
+    <c:forEach items="${programas}" var="programa" varStatus="status">
+        <c:choose>
+            <c:when test="${(status.index+1) != programas.size()}">
+            {
+            value: '${programa.id}',
+                    text: '${programa.nombre}'
+            },</c:when><c:otherwise>
+            {
+            value: '${programa.id}',
+                    text: '${programa.nombre}'
+            }
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+        ]
+        });
+                programas.initialize();
+                var elt = $('#inputProgramas');
+                elt.tagsinput({
+        itemValue: 'value',
+                itemText: 'text',
+                typeaheadjs: {
+        name: 'programas',
+                displayKey: 'text',
+                source: programas.ttAdapter()
+        }
+        });
+        <c:forEach items="${representante.programaList}" var="programa">
+            elt.tagsinput('add', { value: ${programa.id}, text: '${programa.nombre}' });
+            </c:forEach>
         $.validator.addMethod('positiveNumber',
                 function(value) {
                     return (Number(value) > 0) && (value == parseInt(value, 10));
@@ -8,15 +95,19 @@
 
         $("#formEditarCoordinador").validate({
             submitHandler: function() {
+        if (elt.tagsinput('items').length){
                 $.ajax({
-                    type: 'POST',
-                    url: "/sap/controladorCC?action=editarCoordinador",
-                    data: $("#formEditarCoordinador").serialize(),
-                    success: function() {
-                        location = "/sap/#listarCoordinadores";
-                    } //fin success
-                }); //fin $.ajax    
-            }
+                 type: 'POST',
+                 url: "/sap/controladorCC?action=editarCoordinador",
+                 data: $("#formEditarCoordinador").serialize(),
+                 success: function() {
+                 location = "/sap/#listarCoordinadores";
+                 } //fin success
+                 }); //fin $.ajax
+        } else{
+        alert("debe seleccionar al menos un programa");
+        }
+        }
         });
     });
 </script>
@@ -60,24 +151,9 @@
                     <div class="control-group">
                         <label for="programa"  class="control-label">Programa</label>
                         <div class="controls">
-                            <select name="programa" id="programa" class="input-xlarge {required:true}">
-                                <option></option>
-                                <c:forEach items="${programas}" var="item">
-                                    <c:choose>
-                                        <c:when test="${representante.programaId.id == item.id}"><!--Cambiar esta parte!! programaId no existe!!-->
-                                            <option value="${item.id}" selected="">${item.nombre}</option>        
-                                        </c:when>
-                                        <c:otherwise>
-                                            <option value="${item.id}">${item.nombre}</option>        
-                                        </c:otherwise>
-                                    </c:choose>
-
-                                </c:forEach>
-                            </select>
+                            <input type="text" name="programas" id="inputProgramas"/>
                         </div>
                     </div>
-
-
                     <div class="form-actions">
                         <button class="btn btn-primary" type="submit">Editar Coordinador</button>
                         <button class="btn" type="reset">Cancelar</button>

@@ -4,7 +4,6 @@
  */
 package com.sap.ejb;
 
-import com.sap.controller.loginController;
 import com.sap.entity.Proceso;
 import com.sap.entity.Programa;
 import java.util.ArrayList;
@@ -73,7 +72,7 @@ public abstract class AbstractFacade<T> {
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name", entityClass).setParameter("name", m).getSingleResult();
     }
-
+    
     public T findBySingle2(String property1, Object m1, String property2, Object m2) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
@@ -122,7 +121,6 @@ public abstract class AbstractFacade<T> {
         cq.select(cq.from(entityClass));
         Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name", entityClass);
         q.setParameter("name", m);
-        System.out.println("query:" + q);
         return q.getResultList();
     }
 

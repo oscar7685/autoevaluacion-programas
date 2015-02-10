@@ -5,6 +5,9 @@
 package com.sap.ejb;
 
 import com.sap.entity.Encabezado;
+import com.sap.entity.Encuesta;
+import com.sap.entity.Pregunta;
+import com.sap.entity.Proceso;
 import com.sap.entity.Resultadoevaluacion;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,6 +21,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class ResultadoevaluacionFacade extends AbstractFacade<Resultadoevaluacion> {
+
     @PersistenceContext(unitName = "sapPU")
     private EntityManager em;
 
@@ -29,9 +33,41 @@ public class ResultadoevaluacionFacade extends AbstractFacade<Resultadoevaluacio
     public ResultadoevaluacionFacade() {
         super(Resultadoevaluacion.class);
     }
-     public List findByEncabezado(Encabezado e) {
+
+    public List findByEncabezado(Encabezado e) {
         Query q = em.createNamedQuery("Resultadoevaluacion.findByEncabezado");
         q.setParameter("encabezado", e);
+        return q.getResultList();
+    }
+
+    public List findResultadosxPreguntaxEncuestaxProceso(Proceso p, Encuesta e, Pregunta pre) {
+        Query q = em.createNamedQuery("Resultadoevaluacion.findResultadosxPreguntaxEncuestaxProceso");
+        q.setParameter("pregunta", pre);
+        q.setParameter("encuesta", e);
+        q.setParameter("proceso", p);
+        return q.getResultList();
+    }
+
+    public List findResultadosxPreguntaxEncuestaxProcesoxValor(Proceso p, Encuesta e, Pregunta pre, String valor) {
+        Query q = em.createNamedQuery("Resultadoevaluacion.findResultadosxPreguntaxEncuestaxProcesoxValor");
+        q.setParameter("pregunta", pre);
+        q.setParameter("encuesta", e);
+        q.setParameter("proceso", p);
+        q.setParameter("valor", valor);
+        return q.getResultList();
+    }
+
+    public List findResultadosxPreguntaxEncuestaxProcesoxValor1(Proceso p, Pregunta pre) {
+        Query q = em.createNamedQuery("Resultadoevaluacion.findResultadosxPreguntaxEncuestaxProcesoxValor1");
+        q.setParameter("pregunta", pre);
+        q.setParameter("proceso", p);
+        return q.getResultList();
+    }
+    public List findResultadosxPreguntaxEncuestaxProcesoxValor2(Proceso p, Pregunta pre, Encuesta e) {
+        Query q = em.createNamedQuery("Resultadoevaluacion.findResultadosxPreguntaxEncuestaxProcesoxValor2");
+        q.setParameter("pregunta", pre);
+        q.setParameter("proceso", p);
+        q.setParameter("encuesta", e);
         return q.getResultList();
     }
     
