@@ -18,6 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class PreguntaFacade extends AbstractFacade<Pregunta> {
+
     @PersistenceContext(unitName = "sapPU")
     private EntityManager em;
 
@@ -29,10 +30,10 @@ public class PreguntaFacade extends AbstractFacade<Pregunta> {
     public PreguntaFacade() {
         super(Pregunta.class);
     }
-    
+
     public List findByModelo(Modelo m) {
         Query q = em.createNamedQuery("Pregunta.findByModelo");
         q.setParameter("modelo", m);
         return q.getResultList();
-}
+    }
 }

@@ -24,38 +24,38 @@ $(function() {
     myLayout = $('body').layout({
         //	enable showOverflow on west-pane so CSS popups will overlap north pane
         west__size: 270
-        , center__paneSelector: ".ui-layout-center"
-        , north__paneClass: "ui-layout-pane2"
+                , center__paneSelector: ".ui-layout-center"
+                , north__paneClass: "ui-layout-pane2"
                 //	reference only - these options are NOT required because 'true' is the default
-        , closable: true	// pane can open & close
-        , resizable: false	// when open, pane can be resized 
-        , slidable: false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
-        , north__size: 1
-        , north__closable: false
-        , north__maxSize: 1
-        , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
-        , north__spacing_open: 0		// no resizer-bar when open (zero height)
-        , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
-        , south__closable: false
-        , south__spacing_open: 0		// no resizer-bar when open (zero height)
-        , west__spacing_open: 0
-        , west__spacing_closed: 20
-        , west__togglerLength_closed: 35
-        , west__togglerAlign_closed: "top"
-        , west__togglerContent_closed: "<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
-        , west__togglerTip_closed: "Mostrar menú"
-        , west__togglerTip_open: "Ocultar menú"
-        , west__enableCursorHotkey: false
-        , west__onclose_end: function() {
+                , closable: true	// pane can open & close
+                , resizable: false	// when open, pane can be resized 
+                , slidable: false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
+                , north__size: 1
+                , north__closable: false
+                , north__maxSize: 1
+                , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
+                , north__spacing_open: 0		// no resizer-bar when open (zero height)
+                , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
+                , south__closable: false
+                , south__spacing_open: 0		// no resizer-bar when open (zero height)
+                , west__spacing_open: 0
+                , west__spacing_closed: 20
+                , west__togglerLength_closed: 35
+                , west__togglerAlign_closed: "top"
+                , west__togglerContent_closed: "<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
+                , west__togglerTip_closed: "Mostrar menú"
+                , west__togglerTip_open: "Ocultar menú"
+                , west__enableCursorHotkey: false
+                , west__onclose_end: function() {
             $("#conte").removeClass("span10").addClass("span12");
         }
         , west__onopen_end: function() {
             $("#conte").removeClass("span12").addClass("span10");
         }
         , south__paneClass: "ui-layout-pane"
-        , west__togglerContent_open: ""
-        , west__minSize: 200
-        , west__maxSize: 350
+                , west__togglerContent_open: ""
+                , west__minSize: 200
+                , west__maxSize: 350
 
 
     });
@@ -395,14 +395,19 @@ $(function() {
                                         url: url3,
                                         success: function(data)
                                         {
-                                            $("#contenido").append(data);
-                                            menuProceso3();
+                                            if (data === '1') {
+                                                menuProceso1();
+                                            } else if (data === '2') {
+                                                menuProceso2();
+                                            } else if (data === '3') {
+                                                menuProceso3();
+                                            }
                                             myLayout.addCloseBtn("#west-closer", "west");
                                             actualizaEnlaces();
                                             $("#contenido").show(200, function() {
                                                 $("#dancing-dots-text").remove();
                                             });
-                                            //location = "/sap/#inicio";
+                                            location = "/sap/#inicio";
 
                                         } //fin success
                                     }); //fin del $.ajax

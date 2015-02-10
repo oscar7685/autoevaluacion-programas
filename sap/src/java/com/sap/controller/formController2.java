@@ -88,9 +88,8 @@ public class formController2 extends HttpServlet {
     private PonderacioncaracteristicaFacade PonderacioncaracteristicaFacade;
     @EJB
     private MuestraFacade muestraFacade;
-
     private final static Logger LOGGER = Logger.getLogger(formController2.class);
-    
+
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -477,16 +476,16 @@ public class formController2 extends HttpServlet {
                                                     Modelo m2 = (Modelo) sesion.getAttribute("modelo");
                                                     String instrumentos[] = request.getParameterValues("instrumento");
                                                     List<Instrumento> instrumentoList = new ArrayList<Instrumento>();
-                                                    
+
                                                     List<Instrumento> instrumentosIniciales = i.getInstrumentoList();
                                                     for (Instrumento instrumento : instrumentosIniciales) {
                                                         instrumento.getIndicadorList().remove(i);
                                                         instrumentoFacade.edit(instrumento);
                                                     }
-                                                    
+
                                                     i.setInstrumentoList(null);
                                                     indicadorFacade.edit(i);
-                                                    
+
                                                     if (instrumentos != null) {
                                                         for (int k = 0; k < instrumentos.length; k++) {
                                                             Instrumento instr = instrumentoFacade.find(Integer.parseInt(instrumentos[k]));
@@ -704,23 +703,36 @@ public class formController2 extends HttpServlet {
                                     } else {
                                         if (action.toLowerCase().contains("coordinador")) {
                                             if (action.equals("crearCoordinador")) {
+                                                List<Programa> progra = new ArrayList<Programa>();
                                                 String id2 = request.getParameter("codigo");
                                                 String nombre = request.getParameter("nombre");
                                                 String apellidos = request.getParameter("apellidos");
                                                 String clave = request.getParameter("clave");
                                                 String correo = request.getParameter("correo");
-                                                String programa = request.getParameter("programa");
-                                                Programa p = programaFacade.find(Integer.parseInt(programa));
+                                                String prog = request.getParameter("programas");
+                                                String[] programas = prog.split(",");
+                                                for (String idprograma : programas) {
+                                                    Programa p = programaFacade.find(Integer.parseInt(idprograma));
+                                                    progra.add(p);
+                                                }
+
                                                 Representante r = new Representante();
                                                 r.setId(Integer.parseInt(id2));
                                                 r.setNombre(nombre);
                                                 r.setApellido(apellidos);
                                                 r.setPassword(clave);
                                                 r.setMail(correo);
-                                                //r.setProgramaId(p);
+                                                r.setProgramaList(progra);
                                                 r.setPrivilegioList(null);
                                                 r.setRol("Comite programa");
                                                 representanteFacade.create(r);
+                                                for (Programa p : progra) {
+                                                    List<Representante> rep = p.getRepresentanteList();
+                                                    rep.add(r);
+                                                    p.setRepresentanteList(rep);
+                                                    programaFacade.edit(p);
+                                                }
+
 
                                             } else {
                                                 if (action.equals("crearCoordinadorCC")) {
@@ -747,21 +759,47 @@ public class formController2 extends HttpServlet {
 
                                                         } else {
                                                             if (action.equals("editarCoordinador")) {
+                                                                List<Programa> progra = new ArrayList<Programa>();
                                                                 Representante r = (Representante) sesion.getAttribute("representante");
+                                                                List<Programa> antiguosP = r.getProgramaList();
                                                                 String id2 = request.getParameter("codigo");
                                                                 String nombre = request.getParameter("nombre");
                                                                 String apellidos = request.getParameter("apellidos");
                                                                 String clave = request.getParameter("clave");
                                                                 String correo = request.getParameter("correo");
-                                                                String programa = request.getParameter("programa");
-                                                                Programa p = programaFacade.find(Integer.parseInt(programa));
+                                                                String prog = request.getParameter("programas");
+                                                                String[] programas = prog.split(",");
+                                                                for (String idprograma : programas) {
+                                                                    Programa p = programaFacade.find(Integer.parseInt(idprograma));
+                                                                    progra.add(p);
+                                                                }
+                                                               
+                                                                //quitamos los "antiguos" programas
+                                                                for (Programa program : antiguosP) {
+                                                                    List<Representante> re = program.getRepresentanteList();
+                                                                    re.remove(r);
+                                                                    program.setRepresentanteList(re);
+                                                                    programaFacade.edit(program);
+                                                                }
+                                                                
+                                                                //metemos a los "nuevos" programas
+                                                                for (Programa program : progra) {
+                                                                    List<Representante> re = program.getRepresentanteList();
+                                                                    re.add(r);
+                                                                    program.setRepresentanteList(re);
+                                                                    programaFacade.edit(program);
+                                                                }
+                                                                
                                                                 r.setId(Integer.parseInt(id2));
                                                                 r.setNombre(nombre);
                                                                 r.setApellido(apellidos);
                                                                 r.setPassword(clave);
                                                                 r.setMail(correo);
-                                                                //r.setProgramaId(p);
+                                                                r.setProgramaList(progra);
                                                                 representanteFacade.edit(r);
+                                                                
+                                                                
+
                                                             }
                                                         }
 
@@ -834,14 +872,14 @@ public class formController2 extends HttpServlet {
                 }
             }
         } catch (ServletException e) {
-            LOGGER.error("Ha ocurrido un error de tipo ServletException: ",e);
+            LOGGER.error("Ha ocurrido un error de tipo ServletException: ", e);
         } catch (IOException e) {
-            LOGGER.error("Ha ocurrido un error de tipo IOException: ",e);
+            LOGGER.error("Ha ocurrido un error de tipo IOException: ", e);
         } catch (NumberFormatException e) {
-            LOGGER.error("Ha ocurrido un error de tipo NumberFormatException: ",e);
-        } catch (Exception e){
-            LOGGER.error("Ha ocurrido un error: ",e);
-       }
+            LOGGER.error("Ha ocurrido un error de tipo NumberFormatException: ", e);
+        } catch (Exception e) {
+            LOGGER.error("Ha ocurrido un error: ", e);
+        }
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 

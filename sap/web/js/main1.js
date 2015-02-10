@@ -107,18 +107,18 @@ $(function() {
                 '</div>');
     };
     var menuProceso2 = function() {
-        $("#menu0").html('<div align="center" class="alert alert-success"><i class="icon-play-sign"></i> Proceso en ejecución</div>' +
+        $("#menu0").html('<div align="center" class="alert alert-success"><i class="icon-play-sign"></i> Proceso en ejecuci&oacute;n</div>' +
                 '<div id="menu" style="padding: 8px 0pt;" class="well">' +
                 '<ul class="nav nav-list">' +
                 '<button id="west-closer" class="close">&laquo;</button>' +
-                '<li class="nav-header">Proceso de Autoevaluación</li>' +
+                '<li class="nav-header">Proceso de Autoevaluaci&oacute;n</li>' +
                 '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
                 '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
-                '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>' +
+                '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Caracter&iacute;sticas</a></li>' +
                 '<li><a href="#listEncuestas"><i class="icon-check"></i> Encuestas</a></li>' +
                 ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
-                ' <li><a href = "#listarEvaluarNum"><i class = "icon-file-alt"></i> Información Numérica</a></li>' +
-                ' <li><a href = "#listarEvaluarDoc"><i class = "icon-list-ol"></i> Información Documental</a></li>' +
+                ' <li><a href = "#preparedInfoNumerica"><i class = "icon-file-alt"></i> Informaci&oacute;n Num&eacute;rica</a></li>' +
+                ' <li><a href = "#preparedInfoDocumental"><i class = "icon-list-ol"></i> Informaci&oacute;n Documental</a></li>' +
                 ' <li class = "nav-header"> Estado del proceso </li>' +
                 ' <li><a  id = "informeEncuesta"  href = "#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
                 '</ul>' +
