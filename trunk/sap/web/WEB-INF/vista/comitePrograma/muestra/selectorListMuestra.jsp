@@ -173,7 +173,7 @@
                             </div>
                             <br><br>
                         </c:if>
-                        <table class="table table-striped table-bordered table-condensed">
+                        <table id="tablaX" class="table table-striped table-bordered table-condensed">
                             <thead>
                             <th>Cedula</th>    
                             <th>Nombre</th>
@@ -183,16 +183,10 @@
                             <tbody>
                                 <c:if test="${EstadoProceso == 2}">
 
-                                    <c:forEach items="${listPoblacion}" var="item" varStatus="iter">
-
                                         <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter55">
-
-
-                                            <c:if test="${item.personaId.id == row.muestrapersonaId.cedula}">
-
                                                 <c:set var="varaux" value="0"/>
                                                 <c:forEach items="${listEncabezado}" var="item3" >
-                                                    <c:if test="${item.personaId.id == item3.muestrapersonaId.cedula}">
+                                                    <c:if test="${row.muestrapersonaId.cedula == item3.muestrapersonaId.cedula}">
                                                         <c:set var="varaux" value="1"/>
                                                         <c:if test="${item3.estado.equals('terminado')}">
                                                             <tr class="terminadoC">
@@ -245,10 +239,9 @@
                                                     </tr>
 
                                                 </c:if>
-                                            </c:if>
                                             <c:set var="contador" value="${iter55.index}"></c:set>
                                         </c:forEach>
-                                    </c:forEach> 
+                                   
                                 </c:if>
                                 <c:if test="${EstadoProceso != 2}">
                                     <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter44">
@@ -288,3 +281,4 @@
         </div>
     </div>
 </div>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTableSinPaginacion.js"></script>

@@ -24,22 +24,22 @@
                     <c:if test="${item.personaId.id == item2.muestrapersonaId.cedula}">
                         <c:set var="varaux" value="0"/>
                         <c:forEach items="${listEncabezado}" var="item3" varStatus="iter2">
-                            <c:if test="${item.personaId.id == item3.muestrapersonaId.cedula}">
+                            <c:if test="${item2.muestrapersonaId.id == item3.muestrapersonaId.id}">
                                 <c:set var="varaux" value="1"/>
                                 <c:if test="${item3.estado == 'terminado'}">
                                     <li id="itemblockVerde">
                                         <c:set var="auxx" value="0"></c:set>
-                                        <strong>${item.personaId.nombre} ${item.personaId.apellido}</strong><br/> 
-                                        <span class="fcbkitem_text">${item.personaId.id}</span>
-                                        <input id="itemblockinput" name="${item.personaId.id}" type="hidden" checked="checked" value="0"/>
+                                        <strong>${item2.muestrapersonaId.nombre} ${item2.muestrapersonaId.apellido}</strong><br/> 
+                                        <span class="fcbkitem_text">${item2.muestrapersonaId.cedula}</span>
+                                        <input id="itemblockinput" name="${item2.muestrapersonaId.cedula}" type="hidden" checked="checked" value="0"/>
                                     </li>
                                 </c:if>
                                 <c:if test="${item3.estado == 'guardada'}">
                                     <li id="itemblockAzul">
                                         <c:set var="auxx" value="0"></c:set>
-                                        <strong>${item.personaId.nombre} ${item.personaId.apellido}</strong><br/> 
-                                        <span class="fcbkitem_text">${item.personaId.id}</span>
-                                        <input name="${item.personaId.id}" type="hidden" checked="checked" value="0"/>
+                                        <strong>${item.personaId.nombre} ${item2.muestrapersonaId.apellido}</strong><br/> 
+                                        <span class="fcbkitem_text">${item2.muestrapersonaId.cedula}</span>
+                                        <input name="${item2.muestrapersonaId.cedula}" type="hidden" checked="checked" value="0"/>
                                     </li>
                                 </c:if>                   
                             </c:if>
@@ -47,9 +47,9 @@
                         <c:if test="${varaux == 0}">
                             <li id="itemblockRojo">
                                 <c:set var="auxx" value="0"></c:set>
-                                <strong>${item.personaId.nombre} ${item.personaId.apellido}</strong><br/> 
-                                <span class="fcbkitem_text">${item.personaId.id}</span>
-                                <input name="${item.personaId.id}" type="hidden" checked="checked" value="0"/>
+                                <strong>${item2.muestrapersonaId.nombre} ${item2.muestrapersonaId.apellido}</strong><br/> 
+                                <span class="fcbkitem_text">${item2.muestrapersonaId.cedula}</span>
+                                <input name="${item2.muestrapersonaId.cedula}" type="hidden" checked="checked" value="0"/>
                             </li>
                         </c:if>
                     </c:if>
@@ -82,7 +82,7 @@
                 type: 'POST',
                 url: "/sap/controladorCP?action=editarMuestra",
                 data: $("#formEditarMuestra").serialize(),
-                success: function(datos) {
+                success: function() {
                     $("#listM").empty();
                     $.ajax({
                         type: 'POST',
@@ -99,28 +99,20 @@
             }); //fin $.ajax    
 
         });
-        
+
         $("#botonCancelar").click(function() {
+            $("#listM").empty();
             $.ajax({
                 type: 'POST',
-                url: "/sap/controladorCP?action=editarMuestra",
-                data: $("#formEditarMuestra").serialize(),
+                url: "/sap/controladorCP?action=selectorListSemestre",
+                data: $("#formListarMuestra").serialize(),
                 success: function(datos) {
-                    $("#listM").empty();
-                    $.ajax({
-                        type: 'POST',
-                        url: "/sap/controladorCP?action=selectorListSemestre",
-                        data: $("#formListarMuestra").serialize(),
-                        success: function(datos) {
-                            $("#listM").append(datos);
-                            $("#contenido").show(200, function() {
-                                $("#dancing-dots-text").remove();
-                            });
-                        } //fin success
-                    }); //fin $.ajax    
+                    $("#listM").append(datos);
+                    $("#contenido").show(200, function() {
+                        $("#dancing-dots-text").remove();
+                    });
                 } //fin success
             }); //fin $.ajax    
-
         });
     });
 </script>
