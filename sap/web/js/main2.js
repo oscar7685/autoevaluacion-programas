@@ -407,7 +407,7 @@ $(function() {
                                             $("#contenido").show(200, function() {
                                                 $("#dancing-dots-text").remove();
                                             });
-                                            location = "/sap/#inicio";
+                                            //location = "/sap/#inicio";
 
                                         } //fin success
                                     }); //fin del $.ajax

@@ -57,7 +57,7 @@ public class cpController extends HttpServlet {
 
 
         } catch (Exception e) {
-            LOGGER.error("Se ha presentado un error"+e);
+            LOGGER.error("Se ha presentado un error", e);
             RequestDispatcher rd = request.getRequestDispatcher("error404.html");
             rd.forward(request, response);
         }

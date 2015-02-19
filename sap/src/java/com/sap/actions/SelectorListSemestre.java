@@ -8,6 +8,7 @@ import com.sap.ejb.EncabezadoFacade;
 import com.sap.ejb.EstudianteFacade;
 import com.sap.ejb.FuenteFacade;
 import com.sap.ejb.MuestraadministrativoFacade;
+import com.sap.ejb.MuestradirectorFacade;
 import com.sap.ejb.MuestradocenteFacade;
 import com.sap.ejb.MuestraegresadoFacade;
 import com.sap.ejb.MuestraempleadorFacade;
@@ -32,11 +33,12 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class SelectorListSemestre implements Action {
+
+    MuestradirectorFacade muestradirectorFacade = lookupMuestradirectorFacadeBean();
     MuestraadministrativoFacade muestraadministrativoFacade = lookupMuestraadministrativoFacadeBean();
     MuestraempleadorFacade muestraempleadorFacade = lookupMuestraempleadorFacadeBean();
     MuestraegresadoFacade muestraegresadoFacade = lookupMuestraegresadoFacadeBean();
     MuestradocenteFacade muestradocenteFacade = lookupMuestradocenteFacadeBean();
-
     EncabezadoFacade encabezadoFacade = lookupEncabezadoFacadeBean();
     EstudianteFacade estudianteFacade = lookupEstudianteFacadeBean();
     FuenteFacade fuenteFacade = lookupFuenteFacadeBean();
@@ -77,6 +79,10 @@ public class SelectorListSemestre implements Action {
                     } else {
                         if ("Administrativo".equals(fuente)) {
                             sesion.setAttribute("listMuestraSeleccionada", muestraadministrativoFacade.findByList("muestrapersonaId.muestraId", m));
+                        } else {
+                            if ("Directivo".equals(fuente)) {
+                                sesion.setAttribute("listMuestraSeleccionada", muestradirectorFacade.findByList("muestrapersonaId.muestraId", m));
+                            }
                         }
                     }
                 }
@@ -161,6 +167,16 @@ public class SelectorListSemestre implements Action {
         try {
             Context c = new InitialContext();
             return (MuestraadministrativoFacade) c.lookup("java:global/sap/MuestraadministrativoFacade!com.sap.ejb.MuestraadministrativoFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private MuestradirectorFacade lookupMuestradirectorFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (MuestradirectorFacade) c.lookup("java:global/sap/MuestradirectorFacade!com.sap.ejb.MuestradirectorFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
